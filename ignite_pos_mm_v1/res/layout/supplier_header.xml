@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:skscalable="http://schemas.android.com/apk/res/com.ignite.pos"
+    android:id="@+id/RelativeLayout1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:id="@+id/LinearLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/bg_green_stroke"
+        android:orientation="horizontal"
+        android:padding="5dp" >
+
+        <com.smk.skscalableview.ScalableTextView
+            android:id="@+id/ScalableTextView02"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="2dp"
+            android:layout_weight="15"
+            android:gravity="left|center_vertical"
+            android:text="ေဘာင္ခ်ာနံပါတ္"
+            android:textSize="20dp" />
+
+        <com.smk.skscalableview.ScalableTextView
+            android:id="@+id/ScalableTextView03"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginRight="2dp"
+            android:layout_weight="15"
+            android:gravity="left|center_vertical"
+            android:text="ေန႔ရက္"
+            android:textSize="20dp" />
+
+        <com.smk.skscalableview.ScalableTextView
+            android:id="@+id/ScalableTextView01"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginRight="5dp"
+            android:layout_weight="15"
+            android:gravity="left|center_vertical"
+            android:text="လကၠားဆုိင္အမည္"
+            android:textSize="20dp" />
+
+        <com.smk.skscalableview.ScalableTextView
+            android:id="@+id/ScalableTextView06"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginRight="5dp"
+            android:layout_weight="15"
+            android:gravity="right|center_vertical"
+            android:text="စုစုေပါင္းတန္ဖုိး"
+            android:textSize="20dp" />
+
+        <com.smk.skscalableview.ScalableLinearLayout
+            android:id="@+id/ScalableLinearLayout01"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="13"
+            android:gravity="right|center_vertical"
+            android:orientation="horizontal"
+            android:padding="5dp" >
+
+            <Button
+                android:id="@+id/btn_confirm"
+                android:layout_width="60dp"
+                android:layout_height="match_parent"
+                android:layout_marginRight="5dp"
+                android:background="@drawable/bg_btn_green_corner"
+                android:padding="5dp"
+                android:text="Confirm"
+                android:textColor="@color/white"
+                android:textSize="12dp"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/btn_view_detail"
+                android:layout_width="60dp"
+                android:layout_height="match_parent"
+                android:layout_marginRight="5dp"
+                android:background="@drawable/girditem_border"
+                android:padding="5dp"
+                android:text="View Detail"
+                android:textColor="@color/white"
+                android:textSize="12dp"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/btn_vou_update"
+                android:layout_width="60dp"
+                android:layout_height="match_parent"
+                android:layout_marginRight="5dp"
+                android:background="@drawable/bg_btn_blue_corner"
+                android:padding="5dp"
+                android:text="Update"
+                android:textColor="@color/white"
+                android:textSize="12dp"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/btn_delete"
+                android:layout_width="60dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/bg_btn_red_corner"
+                android:text="Delete"
+                android:textColor="@color/white"
+                android:textSize="12dp"
+                android:visibility="gone" />
+
+            <com.ignite.custom.view.CustomButton
+                android:id="@+id/btn_print"
+                android:layout_width="150dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/bg_gray_corner"
+                android:gravity="center_vertical|center_horizontal"
+                android:text="Print ထုတ္မည္"
+                android:textColor="@color/black"
+                android:textSize="18dp"
+                android:visibility="visible" />
+
+        </com.smk.skscalableview.ScalableLinearLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

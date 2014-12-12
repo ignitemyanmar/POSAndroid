@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="20dp" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="20dp"
+        android:gravity="top|center_horizontal"
+        android:orientation="horizontal" >
+
+        <LinearLayout
+            android:id="@+id/LinearLayout01"
+            android:layout_width="400dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:background="@color/transprant_white"
+            android:orientation="vertical"
+            android:padding="20dp" >
+
+            <com.ignite.custom.view.CustomButton
+                android:id="@+id/btn_sale_return_report"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/bg_button"
+                android:text="ျပန္၀င္ပစၥည္းမွတ္တမ္း"
+                android:textColor="@color/white"
+                android:textSize="20dp"
+                android:visibility="visible" />
+
+            <com.ignite.custom.view.CustomButton
+                android:id="@+id/btn_sale_history_report"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@drawable/bg_button"
+                android:text="အေရာင္းျပင္ဆင္မွတ္တမ္း"
+                android:textColor="@color/white"
+                android:textSize="20dp"
+                android:visibility="visible" />
+
+        </LinearLayout>
+
+        <View
+            android:id="@+id/view1"
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_marginRight="10dp"
+            android:background="@color/gray" />
+
+        <LinearLayout
+            android:id="@+id/LinearLayout1"
+            android:layout_width="400dp"
+            android:layout_height="wrap_content"
+            android:background="@color/transprant_white"
+            android:orientation="vertical"
+            android:padding="20dp" >
+
+            <com.ignite.custom.view.CustomButton
+                android:id="@+id/btn_stock_report"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/bg_button"
+                android:text="ပစၥည္းလက္က်န္မွတ္တမ္း"
+                android:textColor="@color/white"
+                android:textSize="20dp"
+                android:visibility="visible" />
+
+            <com.ignite.custom.view.CustomButton
+                android:id="@+id/btn_ledger_report"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/bg_button"
+                android:text="ပစၥည္း အ၀င္/ထြက္ မွတ္တမ္း"
+                android:textColor="@color/white"
+                android:textSize="20dp" />
+
+            <com.ignite.custom.view.CustomButton
+                android:id="@+id/btn_profit_report"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/bg_button"
+                android:text="အျမတ္မွတ္တမ္း"
+                android:textColor="@color/white"
+                android:textSize="20dp"
+                android:visibility="visible" />
+
+            <com.ignite.custom.view.CustomButton
+                android:id="@+id/btn_slow_moving_report"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@drawable/bg_button"
+                android:text="အေရာင္းထုိင္းမွတ္တမ္း"
+                android:textColor="@color/white"
+                android:textSize="20dp"
+                android:visibility="visible" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res/com.ignite.pos"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"
+        android:gravity="top"
+        android:padding="5dp" >
+
+        <com.smk.skscalableview.ScalableTextView
+            android:id="@+id/txt_co_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"
+            android:layout_weight="17"
+            android:gravity="top|center_vertical"
+            android:text="-"
+            android:textColor="@color/black" />
+
+        <com.smk.skscalableview.ScalableTextView
+            android:id="@+id/txt_sup_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"
+            android:layout_weight="17"
+            android:gravity="top|center_vertical"
+            android:text="-"
+            android:textColor="@color/black" />
+
+        <com.smk.skscalableview.ScalableTextView
+            android:id="@+id/txtCity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"
+            android:layout_weight="17"
+            android:gravity="top|center_vertical"
+            android:text="-"
+            android:textColor="@color/black" />
+
+        <com.smk.skscalableview.ScalableTextView
+            android:id="@+id/txtPhone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"
+            android:layout_weight="17"
+            android:gravity="top|center_vertical"
+            android:text="-"
+            android:textColor="@color/black" />
+
+        <com.smk.skscalableview.ScalableTextView
+            android:id="@+id/txtAddress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"
+            android:layout_weight="17"
+            android:gravity="top|center_vertical"
+            android:text="-"
+            android:textColor="@color/black" />
+
+        <com.smk.skscalableview.ScalableLinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="17"
+            android:gravity="center"
+            android:orientation="horizontal" >
+
+            <com.ignite.custom.view.CustomButton
+                android:id="@+id/btnDelete"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left|center_vertical"
+                android:layout_marginRight="5dp"
+                android:background="@drawable/bg_btn_red"
+                android:text="ဖ်က္မည္"
+                android:textColor="@color/white"
+                android:textSize="18dp"
+                android:visibility="visible" />
+
+            <com.ignite.custom.view.CustomButton
+                android:id="@+id/btn_update"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right|center_vertical"
+                android:background="@drawable/bg_button"
+                android:padding="5dp"
+                android:text="ျပင္မည္"
+                android:textColor="@color/white"
+                android:textSize="18dp" />
+
+        </com.smk.skscalableview.ScalableLinearLayout>
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/view1"
+        android:layout_width="wrap_content"
+        android:layout_height="1dp"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/linearLayout1"
+        android:background="@color/dark_gray" />
+
+</RelativeLayout>

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/RelativeLayout1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:id="@+id/LinearLayout1"
+        android:layout_width="500dp"
+        android:layout_height="150dp"
+        android:layout_centerInParent="true"
+        android:background="@color/gray"
+        android:orientation="vertical"
+        android:padding="10dp" >
+
+        <com.ignite.custom.view.CustomTextView
+            android:id="@+id/CustomTextView1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:gravity="center_horizontal"
+            android:text="ျပန္၀င္မည့္ အေရအတြက္ေရြးပါ"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/dark_gray"
+            android:textSize="18dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="30" >
+
+            <com.smk.skscalableview.ScalableLinearLayout
+                android:id="@+id/ScalableLinearLayout1"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="30"
+                android:gravity="center"
+                android:orientation="vertical" >
+
+                <Button
+                    android:id="@+id/btn_plus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_btn_green_corner"
+                    android:text="+" />
+            </com.smk.skscalableview.ScalableLinearLayout>
+
+            <com.smk.skscalableview.ScalableTextView
+                android:id="@+id/txt_return_qty"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="30"
+                android:gravity="center"
+                android:text="1"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+
+            <com.smk.skscalableview.ScalableLinearLayout
+                android:id="@+id/ScalableLinearLayout1"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="30"
+                android:gravity="center"
+                android:orientation="vertical" >
+
+                <Button
+                    android:id="@+id/btn_minus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_btn_green_corner"
+                    android:text="-" />
+            </com.smk.skscalableview.ScalableLinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

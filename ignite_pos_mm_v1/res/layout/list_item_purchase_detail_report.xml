@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/lst_item_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+
+
+
+
+    <LinearLayout
+        android:id="@+id/LinearLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"
+        android:clickable="false"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="5dp" >
+
+        <com.smk.skscalableview.ScalableTextView
+            android:id="@+id/txt_item_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_weight="20"
+            android:gravity="left|center_vertical"
+            android:text="-"
+            android:textSize="18dp" />
+
+        <com.smk.skscalableview.ScalableTextView
+            android:id="@+id/txt_qty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="20"
+            android:gravity="center_vertical|center_horizontal"
+            android:text="-"
+            android:textSize="18dp" />
+
+        <com.smk.skscalableview.ScalableTextView
+            android:id="@+id/txt_unit_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:layout_weight="20"
+            android:gravity="right|center_vertical"
+            android:text="-"
+            android:textSize="18dp" />
+
+        <com.smk.skscalableview.ScalableTextView
+            android:id="@+id/txt_item_total"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="40dp"
+            android:layout_weight="20"
+            android:gravity="right|center_vertical"
+            android:text="-"
+            android:textSize="18dp" />
+
+        <com.smk.skscalableview.ScalableLinearLayout
+            android:id="@+id/ScalableLinearLayout1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="20"
+            android:gravity="center"
+            android:orientation="horizontal" >
+
+            <com.ignite.custom.view.CustomButton
+                android:id="@+id/btn_update"
+                android:layout_width="150dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical|center_horizontal"
+                android:layout_marginRight="5dp"
+                android:background="@drawable/bg_btn_blue_corner"
+                android:padding="5dp"
+                android:text="ေစ်းႏႈန္းျပင္မည္"
+                android:textColor="@color/white"
+                android:textSize="16dp" />
+
+            <com.ignite.custom.view.CustomButton
+                android:id="@+id/btn_delete"
+                android:layout_width="95dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/bg_btn_red_corner"
+                android:text="ဖ်က္မည္"
+                android:textColor="@color/white"
+                android:textSize="16dp"
+                android:visibility="gone" />
+
+        </com.smk.skscalableview.ScalableLinearLayout>
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/view1"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/LinearLayout1"
+        android:background="@color/dark_gray" />
+
+</RelativeLayout>

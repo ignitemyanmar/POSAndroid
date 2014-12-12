@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:skscalable="http://schemas.android.com/apk/res/com.ignite.pos"
+    android:id="@+id/RelativeLayout1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+
+    <LinearLayout
+        android:id="@+id/LinearLayout01"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:background="@color/green"
+        android:orientation="horizontal"
+        android:padding="10dp" >
+
+        <com.smk.skscalableview.ScalableTextView
+            android:id="@+id/ScalableTextView04"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginRight="2dp"
+            android:layout_weight="20"
+            android:gravity="center_vertical"
+            android:text="အမည္"
+            android:textSize="16dp" />
+
+        <com.smk.skscalableview.ScalableTextView
+            android:id="@+id/ScalableTextView06"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginRight="2dp"
+            android:layout_weight="20"
+            android:gravity="center_vertical|center_horizontal"
+            android:text="အေရအတြက္"
+            android:textSize="16dp" />
+
+        <com.smk.skscalableview.ScalableTextView
+            android:id="@+id/ScalableTextView03"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginRight="2dp"
+            android:layout_weight="20"
+            android:gravity="center_vertical|center_horizontal"
+            android:paddingLeft="40dp"
+            android:paddingRight="2dp"
+            android:text="ေစ်းႏႈန္း"
+            android:textSize="16dp" />
+
+        <com.smk.skscalableview.ScalableTextView
+            android:id="@+id/ScalableTextView08"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginRight="2dp"
+            android:layout_weight="20"
+            android:gravity="right|center_vertical"
+            android:text="ေငြပမာဏ"
+            android:textSize="16dp" />
+
+        <com.smk.skscalableview.ScalableLinearLayout
+            android:id="@+id/ScalableLinearLayout1"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="20"
+            android:gravity="center"
+            android:orientation="vertical" >
+
+            <com.ignite.custom.view.CustomButton
+                android:id="@+id/CustomButton1"
+                android:layout_width="150dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/bg_btn_blue_corner"
+                android:text="Return"
+                android:textColor="@color/white"
+                android:visibility="gone" />
+
+        </com.smk.skscalableview.ScalableLinearLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/RelativeLayout1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:id="@+id/lyChangeMode"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:orientation="vertical" >
+
+            <Button
+                android:id="@+id/btnLogin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#03536c"
+                android:text="Login"
+                android:textColor="#ffffff" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp" >
+
+            <Button
+                android:id="@+id/btnChange_mode"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="25"
+                android:background="#03536c"
+                android:text="Change Picker Mode"
+                android:textColor="#ffffff" />
+
+            <View
+                android:id="@+id/view1"
+                android:layout_width="15dp"
+                android:layout_height="match_parent" />
+
+            <Button
+                android:id="@+id/btnCategories"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="25"
+                android:background="#03536c"
+                android:text="Categories"
+                android:textColor="#ffffff" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="5dp"
+            android:background="#74ceb7"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:layout_marginTop="120dp"
+                android:background="#f2f2f2"
+                android:orientation="vertical" >
+
+                <EditText
+                    android:id="@+id/editText_scan"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_marginLeft="100dp"
+                    android:layout_marginRight="100dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/editext_border"
+                    android:ems="10"
+                    android:gravity="center"
+                    android:hint="Tab here to scan"
+                    android:paddingLeft="5dp"
+                    android:singleLine="true" >
+
+                    <requestFocus />
+                </EditText>
+
+                <Button
+                    android:id="@+id/button1"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:layout_marginLeft="100dp"
+                    android:layout_marginRight="100dp"
+                    android:layout_marginTop="10dp"
+                    android:background="#03536c"
+                    android:text="Search"
+                    android:textColor="#ffffff"
+                    android:textSize="32sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="330dp" >
+
+                <Button
+                    android:id="@+id/btnDelete_items"
+                    android:layout_width="match_parent"
+                    android:layout_height="95dp"
+                    android:layout_weight="25"
+                    android:background="#03536c"
+                    android:text="Delete Items"
+                    android:textColor="#ffffff"
+                    android:textSize="30sp" />
+
+                <View
+                    android:id="@+id/view2"
+                    android:layout_width="15dp"
+                    android:layout_height="match_parent" />
+
+                <Button
+                    android:id="@+id/btnCheckout"
+                    android:layout_width="match_parent"
+                    android:layout_height="95dp"
+                    android:layout_weight="25"
+                    android:background="#03536c"
+                    android:text="Check Out"
+                    android:textColor="#ffffff"
+                    android:textSize="30sp" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>
