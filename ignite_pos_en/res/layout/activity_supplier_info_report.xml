@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/RelativeLayout1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:id="@+id/LinearLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:background="@color/green"
+        android:padding="5dp" >
+
+        <com.smk.skscalableview.ScalableTextView
+            android:id="@+id/ScalableTextView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"
+            android:layout_weight="17"
+            android:gravity="left|center_vertical"
+            android:paddingLeft="3dp"
+            android:text="Co., Name"
+            android:textColor="@color/white"
+            android:textSize="20dp"
+            android:textStyle="bold" />
+
+        <com.smk.skscalableview.ScalableTextView
+            android:id="@+id/ScalableTextView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"
+            android:layout_weight="17"
+            android:gravity="left|center_vertical"
+            android:paddingLeft="3dp"
+            android:text="Supplier Name"
+            android:textColor="@color/white"
+            android:textSize="20dp"
+            android:textStyle="bold" />
+
+        <com.smk.skscalableview.ScalableTextView
+            android:id="@+id/ScalableTextView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"
+            android:layout_weight="17"
+            android:gravity="left|center_vertical"
+            android:text="City"
+            android:textColor="@color/white"
+            android:textSize="20dp"
+            android:textStyle="bold" />
+
+        <com.smk.skscalableview.ScalableTextView
+            android:id="@+id/ScalableTextView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"
+            android:layout_weight="17"
+            android:gravity="left|center_vertical"
+            android:text="Phone"
+            android:textColor="@color/white"
+            android:textSize="20dp"
+            android:textStyle="bold" />
+
+        <com.smk.skscalableview.ScalableTextView
+            android:id="@+id/ScalableTextView5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"
+            android:layout_weight="17"
+            android:gravity="left|center_vertical"
+            android:text="Address"
+            android:textColor="@color/white"
+            android:textSize="20dp"
+            android:textStyle="bold" />
+
+        <com.smk.skscalableview.ScalableLinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="17"
+            android:gravity="center"
+            android:orientation="horizontal" >
+
+            <Button
+                android:id="@+id/btnDelete"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left|center_vertical"
+                android:layout_marginRight="5dp"
+                android:background="@drawable/bg_btn_red"
+                android:text="Delete"
+                android:textColor="@color/white"
+                android:textSize="18dp"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/btn_update"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right|center_vertical"
+                android:background="@drawable/bg_button"
+                android:padding="5dp"
+                android:text="Update"
+                android:textColor="@color/white"
+                android:textSize="18dp"
+                android:visibility="gone" />
+
+        </com.smk.skscalableview.ScalableLinearLayout>
+
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/lvSupplierList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/LinearLayout1" >
+    </ListView>
+
+</RelativeLayout>

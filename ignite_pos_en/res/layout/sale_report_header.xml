@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:skscalable="http://schemas.android.com/apk/res/com.ignite.pos"
+    android:id="@+id/RelativeLayout1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+
+
+
+
+    <LinearLayout
+        android:id="@+id/LinearLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/bg_green_stroke"
+        android:orientation="horizontal"
+        android:padding="5dp" >
+
+        <com.smk.skscalableview.ScalableTextView
+            android:id="@+id/ScalableTextView02"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="2dp"
+            android:layout_weight="15"
+            android:gravity="left|center_vertical"
+            android:text="Voucher No."
+            android:textSize="20dp" />
+
+        <com.smk.skscalableview.ScalableTextView
+            android:id="@+id/ScalableTextView03"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginRight="2dp"
+            android:layout_weight="15"
+            android:gravity="left|center_vertical"
+            android:text="Date"
+            android:textSize="20dp" />
+
+        <com.smk.skscalableview.ScalableTextView
+            android:id="@+id/ScalableTextView01"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginRight="2dp"
+            android:layout_weight="15"
+            android:gravity="left|center_vertical"
+            android:text="Sale Person Name"
+            android:textSize="20dp" />
+
+        <com.smk.skscalableview.ScalableTextView
+            android:id="@+id/ScalableTextView06"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginRight="20dp"
+            android:layout_weight="15"
+            android:gravity="right|center_vertical"
+            android:text="Total Price"
+            android:textSize="20dp" />
+
+        <com.smk.skscalableview.ScalableLinearLayout
+            android:id="@+id/ScalableLinearLayout1"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="15"
+            android:orientation="vertical" >
+
+            <Button
+                android:id="@+id/button1"
+                android:layout_width="190dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="right|center_vertical"
+                android:background="@drawable/bg_button"
+                android:text="View Detail"
+                android:visibility="gone" />
+
+        </com.smk.skscalableview.ScalableLinearLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

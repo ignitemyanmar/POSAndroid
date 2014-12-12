@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/RelativeLayout1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <ScrollView
+        android:id="@+id/scrollView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:id="@+id/LinearLayout1"
+                android:layout_width="500dp"
+                android:layout_height="wrap_content"
+                android:background="@color/transprant_white"
+                android:orientation="vertical"
+                android:padding="25dp" >
+
+                <TextView
+                    android:id="@+id/textView1"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@color/green"
+                    android:gravity="center_vertical|center"
+                    android:text="Register Notification _ Stock Qty"
+                    android:textColor="@color/white"
+                    android:textSize="24dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_marginBottom="10dp"
+                    android:gravity="center_vertical" >
+
+                    <AutoCompleteTextView
+                        android:id="@+id/auto_item_code"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginRight="5dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/editext_border"
+                        android:ems="10"
+                        android:gravity="center"
+                        android:hint="Tap here to scan"
+                        android:inputType="text"
+                        android:singleLine="true" >
+
+                        <requestFocus />
+                    </AutoCompleteTextView>
+
+                    <Button
+                        android:id="@+id/btn_search"
+                        android:layout_width="200dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/girditem_border"
+                        android:text="Search"
+                        android:textColor="@color/white" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/txt_item_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_marginBottom="10dp"
+                    android:gravity="center"
+                    android:hint="Item Name"
+                    android:textColor="@color/black"
+                    android:textSize="18dp" />
+
+                <EditText
+                    android:id="@+id/editText_notify_qty"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/editext_border"
+                    android:ems="10"
+                    android:gravity="center"
+                    android:hint="Enter Notify Qty"
+                    android:inputType="number"
+                    android:singleLine="true" />
+
+                <Button
+                    android:id="@+id/btnSave"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:background="@drawable/bg_button"
+                    android:text="Save"
+                    android:textColor="@color/white"
+                    android:textSize="20dp" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+</RelativeLayout>

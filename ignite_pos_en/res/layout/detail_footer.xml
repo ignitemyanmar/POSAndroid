@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <LinearLayout
+        android:id="@+id/lyTotal"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_weight="40"
+        android:background="@drawable/bg_green_stroke" >
+
+        <TextView
+            android:id="@+id/TextView04"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="3"
+            android:paddingLeft="3dp"
+            android:text="Discount  : "
+            android:textSize="24dp" />
+
+        <TextView
+            android:id="@+id/txt_discount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="25"
+            android:gravity="right|center_vertical"
+            android:paddingRight="5dp"
+            android:text="0"
+            android:textSize="24dp" />
+
+        <TextView
+            android:id="@+id/TextView01"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:gravity="left|center_vertical"
+            android:paddingRight="5dp"
+            android:text="%"
+            android:textSize="24dp" />
+
+        <TextView
+            android:id="@+id/TextView02"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="25"
+            android:gravity="right|center_vertical"
+            android:paddingLeft="3dp"
+            android:text="Grand Total :   "
+            android:textSize="24dp" />
+
+        <TextView
+            android:id="@+id/txtTotal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="25"
+            android:gravity="right"
+            android:paddingRight="5dp"
+            android:text="0.00"
+            android:textSize="24dp" />
+
+        <TextView
+            android:id="@+id/txt_kyat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:gravity="right|center_vertical"
+            android:paddingRight="5dp"
+            android:text="Ks"
+            android:textSize="24dp" />
+    </LinearLayout>
+
+</RelativeLayout>
