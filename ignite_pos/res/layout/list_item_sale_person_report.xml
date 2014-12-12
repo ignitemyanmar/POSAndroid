@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:skscalable="http://schemas.android.com/apk/res/com.ignite.pos"
+    android:id="@+id/lst_item_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:id="@+id/LinearLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"
+        android:clickable="false"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="5dp" >
+
+        <com.smk.skscalableview.ScalableTextView
+            android:id="@+id/txt_vNo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="2dp"
+            android:layout_weight="15"
+            android:gravity="left|center_vertical"
+            android:text="-"
+            android:textSize="18dp" />
+
+        <com.smk.skscalableview.ScalableTextView
+            android:id="@+id/txt_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="2dp"
+            android:layout_weight="15"
+            android:gravity="left|center_vertical"
+            android:text="-"
+            android:textSize="18dp" />
+
+        <com.smk.skscalableview.ScalableTextView
+            android:id="@+id/txt_sale_person_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="2dp"
+            android:layout_weight="15"
+            android:gravity="left|center_vertical"
+            android:text="-"
+            android:textSize="18dp" />
+
+        <com.smk.skscalableview.ScalableTextView
+            android:id="@+id/txt_voucher_total"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="20dp"
+            android:layout_weight="15"
+            android:gravity="right|center_vertical"
+            android:text="-"
+            android:textSize="18dp" />
+
+        <com.smk.skscalableview.ScalableLinearLayout
+            android:id="@+id/ScalableLinearLayout1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="15"
+            android:gravity="center"
+            android:orientation="horizontal" >
+
+            <com.ignite.custom.view.CustomButton
+                android:id="@+id/btn_view_detail"
+                android:layout_width="60dp"
+                android:layout_height="match_parent"
+                android:layout_marginRight="5dp"
+                android:background="@drawable/girditem_border"
+                android:padding="5dp"
+                android:text="အေသးစိတ္"
+                android:textColor="@color/white"
+                android:textSize="14dp" />
+
+            <com.ignite.custom.view.CustomButton
+                android:id="@+id/btn_vou_update"
+                android:layout_width="60dp"
+                android:layout_height="match_parent"
+                android:layout_marginRight="5dp"
+                android:background="@drawable/bg_btn_blue_corner"
+                android:padding="5dp"
+                android:text="ျပင္ရန္"
+                android:textColor="@color/white"
+                android:textSize="14dp" />
+
+            <com.ignite.custom.view.CustomButton
+                android:id="@+id/btn_delete"
+                android:layout_width="60dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/bg_btn_red_corner"
+                android:text="ဖ်က္မည္"
+                android:textColor="@color/white"
+                android:textSize="14dp" />
+
+        </com.smk.skscalableview.ScalableLinearLayout>
+    </LinearLayout>
+
+    <View
+        android:id="@+id/view1"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/dark_gray" />
+
+</LinearLayout>

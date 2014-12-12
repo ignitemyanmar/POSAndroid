@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/RelativeLayout1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <LinearLayout
+        android:id="@+id/LinearLayout1"
+        android:layout_width="500dp"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:background="@color/transprant_white"
+        android:orientation="vertical"
+        android:padding="25dp" >
+
+        <EditText
+            android:id="@+id/editTxt_purchase_price"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/editext_border"
+            android:hint="Enter Purchase Price"
+            android:inputType="number"
+            android:paddingLeft="5dp"
+            android:singleLine="true" >
+
+            <requestFocus />
+        </EditText>
+
+        <EditText
+            android:id="@+id/editTxt_qty"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@drawable/editext_border"
+            android:gravity="center_vertical"
+            android:hint="Enter Qty"
+            android:inputType="number"
+            android:padding="5dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginBottom="10dp"
+            android:visibility="gone" >
+
+            <Button
+                android:id="@+id/btn_marginal_price"
+                android:layout_width="200dp"
+                android:layout_height="match_parent"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/bg_button"
+                android:gravity="center_vertical|center_horizontal"
+                android:text="Marginal Price"
+                android:textSize="16dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_marginal_price"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginRight="5dp"
+                android:gravity="left|center_vertical"
+                android:textSize="16dp" />
+
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:text="Ks"
+                android:textSize="16dp" />
+
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/editTxt_sale_price"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@drawable/editext_border"
+            android:hint="Enter Sale Price"
+            android:inputType="number"
+            android:paddingLeft="5dp"
+            android:singleLine="true"
+            android:visibility="gone" />
+
+    </LinearLayout>
+
+</RelativeLayout>
