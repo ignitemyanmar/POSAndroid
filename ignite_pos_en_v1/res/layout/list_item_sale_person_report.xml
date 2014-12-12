@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:skscalable="http://schemas.android.com/apk/res/com.ignite.pos"
+    android:id="@+id/lst_item_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:id="@+id/LinearLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"
+        android:clickable="false"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="5dp" >
+
+        <LinearLayout
+            android:id="@+id/LinearLayout1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <com.smk.skscalableview.ScalableTextView
+                android:id="@+id/txt_vNo"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:gravity="left|center_vertical"
+                android:text="0000001"
+                android:textSize="18dp"
+                skscalable:scale_width="6" />
+
+            <com.smk.skscalableview.ScalableTextView
+                android:id="@+id/txt_date"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:gravity="left|center_vertical"
+                android:text="2014-09-01"
+                android:textSize="18dp"
+                skscalable:scale_width="6" />
+
+            <com.smk.skscalableview.ScalableTextView
+                android:id="@+id/txtItem_name"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingRight="20dp"
+                android:text="ItemName"
+                android:textSize="18dp"
+                skscalable:scale_width="6" />
+
+            <com.smk.skscalableview.ScalableTextView
+                android:id="@+id/txtQty"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingRight="22dp"
+                android:text="1"
+                android:textSize="18dp"
+                skscalable:scale_width="6" />
+
+            <com.smk.skscalableview.ScalableTextView
+                android:id="@+id/txtUnitPrice"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:gravity="right|center_vertical"
+                android:paddingRight="25dp"
+                android:text="1000"
+                android:textSize="18dp"
+                skscalable:scale_width="6" />
+
+            <com.smk.skscalableview.ScalableTextView
+                android:id="@+id/txtTotal"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:gravity="right|center_vertical"
+                android:paddingRight="25dp"
+                android:text="1000"
+                android:textSize="18dp"
+                skscalable:scale_width="6" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <View
+        android:id="@+id/view1"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/LinearLayout1"
+        android:background="@color/dark_gray" />
+
+</RelativeLayout>

@@ -1,0 +1,56 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.ignite.pos"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="8"
+        android:targetSdkVersion="16" />
+
+    <application
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/title_activity_main" android:screenOrientation="sensorLandscape">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name="MainFragment" android:screenOrientation="sensorLandscape"></activity>
+        <activity android:name="MenuActivity" android:screenOrientation="sensorLandscape"></activity>
+        <activity android:name="LoginActivity" android:screenOrientation="sensorLandscape"></activity>
+        <activity android:name="SaleActivity" android:screenOrientation="sensorLandscape" android:windowSoftInputMode="adjustPan"></activity>
+        <activity android:name="AdminMainActivity" android:screenOrientation="sensorLandscape"></activity>
+        <activity android:name="AddBarcodeActivity" android:screenOrientation="sensorLandscape"></activity>
+        <activity android:name="AddNewCustomerActivity" android:screenOrientation="sensorLandscape"></activity>
+        <activity android:name="AddNewSalePerson" android:screenOrientation="sensorLandscape"></activity>
+        <activity android:name="AddCategoryActivity" android:screenOrientation="sensorLandscape"></activity>
+        <activity android:name="AddSubCategoryActivity" android:screenOrientation="sensorLandscape"></activity>
+        <activity android:name="AddNewBrandActivity" android:screenOrientation="sensorLandscape"></activity>
+        <activity android:name="UpdatePrice" android:screenOrientation="sensorLandscape"></activity>
+        <activity android:name="UpdateAdminAccount" android:screenOrientation="sensorLandscape"></activity>
+        <activity android:name=".UpdateCustomerInfoListActivity" android:screenOrientation="sensorLandscape"></activity>
+        <activity android:name="UpdateCustomerInfoEdit" android:screenOrientation="sensorLandscape"></activity>
+        <activity android:name="AddNewAdminAccount" android:screenOrientation="sensorLandscape"></activity>
+        <activity android:name="SaleLoginActivity" android:screenOrientation="sensorLandscape"></activity>
+        <activity android:name="SalePersonReportActivity" android:screenOrientation="sensorLandscape"></activity>
+        <activity android:name="SaleReport" android:screenOrientation="sensorLandscape"></activity>
+        <activity android:name="VoucherReportActivity" android:screenOrientation="sensorLandscape"></activity>
+        <activity android:name="BuyerReportActivity" android:screenOrientation="sensorLandscape"></activity>
+        <activity android:name="DailyReportActivity" android:screenOrientation="sensorLandscape"></activity>
+        <activity android:name="ItemListReport" android:screenOrientation="sensorLandscape"></activity>
+        <activity android:name="MonthlyReportActivity" android:screenOrientation="sensorLandscape"></activity>
+        <activity android:name="WeeklyReportActivity" android:screenOrientation="sensorLandscape"></activity>
+        <activity android:name="CreditReport" android:screenOrientation="sensorLandscape"></activity>
+        <activity android:name="UpdateCategoryListActivity" android:screenOrientation="sensorLandscape"></activity>
+        <activity android:name="UpdateCategoryActivity" android:screenOrientation="sensorLandscape"></activity>
+        <activity android:name="VoucherSlipActivity" android:screenOrientation="sensorLandscape"></activity>
+        <activity android:name="UpdateSubCategoryListActivity" android:screenOrientation="sensorLandscape"></activity>
+        <activity android:name="UpdateSubCategoryActivity" android:screenOrientation="sensorLandscape"></activity>
+        
+    </application>
+
+</manifest>

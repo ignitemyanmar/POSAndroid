@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/RelativeLayout1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:paddingBottom="5dp"
+    android:paddingLeft="5dp"
+    android:paddingRight="5dp"
+    android:paddingTop="5dp" >
+
+    <LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:gravity="center_horizontal" >
+
+        <LinearLayout
+            android:id="@+id/lyaddnew_hor"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="30dp"
+            android:background="@color/transprant_white"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:id="@+id/ly_add_new"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/textView1"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:layout_gravity="center"
+                    android:background="@color/green"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="25dp"
+                    android:text="Add New Items"
+                    android:textColor="@color/white"
+                    android:textSize="20sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="20dp" >
+
+                    <Button
+                        android:id="@+id/btnBarcode"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:background="@drawable/bg_button"
+                        android:gravity="left|center_vertical"
+                        android:paddingLeft="20dp"
+                        android:text="Add New Item"
+                        android:textColor="@color/white" />
+
+                    <Button
+                        android:id="@+id/btn_category"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:background="@drawable/bg_button"
+                        android:gravity="left|center_vertical"
+                        android:paddingLeft="20dp"
+                        android:text="Add New Category"
+                        android:textColor="@color/white" />
+
+                    <Button
+                        android:id="@+id/btn_subcategory"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:background="@drawable/bg_button"
+                        android:gravity="left|center_vertical"
+                        android:paddingLeft="20dp"
+                        android:text="Add New Sub-Category"
+                        android:textColor="@color/white" />
+
+                    <Button
+                        android:id="@+id/btn_new_brand"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_button"
+                        android:gravity="left|center_vertical"
+                        android:paddingLeft="20dp"
+                        android:text="Add New Brand"
+                        android:textColor="@color/white" />
+
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/lyupdate_hor"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="30dp"
+            android:background="@color/transprant_white"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:id="@+id/ly_update"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/TextView01"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:background="@color/green"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="25dp"
+                    android:text="Update"
+                    android:textColor="@color/white"
+                    android:textSize="20sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp" >
+
+                    <Button
+                        android:id="@+id/btn_update_category"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:background="@drawable/bg_button"
+                        android:gravity="left|center_vertical"
+                        android:paddingLeft="20dp"
+                        android:text="Update Category"
+                        android:textColor="@color/white" />
+
+                    <Button
+                        android:id="@+id/btn_update_subcategory"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:background="@drawable/bg_button"
+                        android:gravity="left|center_vertical"
+                        android:paddingLeft="20dp"
+                        android:text="Update Sub-Category"
+                        android:textColor="@color/white" />
+
+                    <Button
+                        android:id="@+id/btn_update_prices"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:background="@drawable/bg_button"
+                        android:gravity="left|center_vertical"
+                        android:paddingLeft="20dp"
+                        android:text="Update Item Prices"
+                        android:textColor="@color/white" />
+
+                    <View
+                        android:id="@+id/View01"
+                        android:layout_width="match_parent"
+                        android:layout_height="3dp"
+                        android:layout_marginBottom="10dp"
+                        android:background="@color/gray" />
+
+                    <Button
+                        android:id="@+id/btn_admin_acc"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:background="@drawable/bg_button"
+                        android:gravity="left|center_vertical"
+                        android:paddingLeft="20dp"
+                        android:text="Update Admin Account"
+                        android:textColor="@color/white" />
+
+                    <Button
+                        android:id="@+id/btn_update_cus"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_button"
+                        android:gravity="left|center_vertical"
+                        android:paddingLeft="20dp"
+                        android:text="Update Customer Info"
+                        android:textColor="@color/white" />
+                </LinearLayout>
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/lyreport_hor"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:background="@color/transprant_white"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:id="@+id/ly_report"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/TextView02"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:background="@color/green"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="25dp"
+                    android:text="Report/Add Person"
+                    android:textColor="@color/white"
+                    android:textSize="20sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp" >
+
+                    <Button
+                        android:id="@+id/btn_sales_report"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:background="@drawable/bg_button"
+                        android:gravity="left|center_vertical"
+                        android:paddingLeft="20dp"
+                        android:text="Sales Report"
+                        android:textColor="@color/white" />
+
+                    <Button
+                        android:id="@+id/btn_item_list_report"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:background="@drawable/bg_button"
+                        android:gravity="left|center_vertical"
+                        android:paddingLeft="20dp"
+                        android:text="Items List Report"
+                        android:textColor="@color/white" />
+
+                    <View
+                        android:id="@+id/view1"
+                        android:layout_width="match_parent"
+                        android:layout_height="3dp"
+                        android:layout_marginBottom="10dp"
+                        android:background="@color/gray" />
+
+                    <Button
+                        android:id="@+id/btn_add_admin_account"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:background="@drawable/bg_button"
+                        android:gravity="left|center_vertical"
+                        android:paddingLeft="20dp"
+                        android:text="Add New Admin"
+                        android:textColor="@color/white" />
+
+                    <Button
+                        android:id="@+id/btn_sale_person"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:background="@drawable/bg_button"
+                        android:gravity="left|center_vertical"
+                        android:paddingLeft="20dp"
+                        android:text="Add New Sale Person"
+                        android:textColor="@color/white" />
+
+                    <Button
+                        android:id="@+id/btn_customer_info"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:background="@drawable/bg_button"
+                        android:gravity="left|center_vertical"
+                        android:paddingLeft="20dp"
+                        android:text="Add New Customer Info"
+                        android:textColor="@color/white" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>

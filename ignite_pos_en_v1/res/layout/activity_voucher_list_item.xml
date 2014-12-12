@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:skscalable="http://schemas.android.com/apk/res/com.ignite.pos"
+    android:id="@+id/lst_item_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:id="@+id/LinearLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginBottom="7dp"
+        android:layout_marginTop="7dp"
+        android:clickable="false"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp" >
+
+        <com.smk.skscalableview.ScalableTextView
+            android:id="@+id/txtItem_name"
+            android:layout_width="150dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:gravity="left|center_vertical"
+            android:text="ItemName"
+            android:textSize="16dp"
+            skscalable:scale_width="6" />
+
+        <com.smk.skscalableview.ScalableLinearLayout
+            android:id="@+id/ScalableLinearLayout1"
+            android:layout_width="150dp"
+            android:layout_height="match_parent"
+            skscalable:scale_width="6" >
+
+            <TextView
+                android:id="@+id/btnMinus"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:background="@android:color/transparent"
+                android:gravity="left|center_vertical"
+                android:text="-"
+                android:textColor="#3291d3"
+                android:textSize="16dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txtQty"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="left|center_vertical"
+                android:gravity="left|center_vertical"
+                android:text="1"
+                android:textSize="16dp" />
+
+            <TextView
+                android:id="@+id/btnPlus"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="left|center_vertical"
+                android:background="@android:color/transparent"
+                android:gravity="left|center_vertical"
+                android:text="+"
+                android:textColor="#3291d3"
+                android:textSize="16dp"
+                android:textStyle="bold" />
+
+        </com.smk.skscalableview.ScalableLinearLayout>
+
+        <com.smk.skscalableview.ScalableTextView
+            android:id="@+id/txtUnitPrice"
+            android:layout_width="150dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:gravity="right|center_vertical"
+            android:paddingRight="70dp"
+            android:text="1000"
+            android:textSize="16dp"
+            skscalable:scale_width="6" />
+
+        <com.smk.skscalableview.ScalableTextView
+            android:id="@+id/txtTotal"
+            android:layout_width="150dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:gravity="right|center_vertical"
+            android:paddingRight="60dp"
+            android:text="1000"
+            android:textSize="16dp"
+            skscalable:scale_width="6" />
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/view1"
+        android:layout_width="wrap_content"
+        android:layout_height="1dp"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/LinearLayout1"
+        android:background="@color/gray" />
+
+</RelativeLayout>
