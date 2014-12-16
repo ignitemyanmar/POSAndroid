@@ -1,0 +1,8 @@
+<resources>
+
+    <string name="app_name">POS</string>
+    <string name="hello_world">Login</string>
+    <string name="menu_settings">Settings</string>
+    <string name="title_activity_main">POS</string>
+
+</resources>

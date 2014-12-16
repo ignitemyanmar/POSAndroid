@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <LinearLayout
+        android:id="@+id/lyTotal"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_weight="40"
+        android:background="@drawable/bg_green_stroke" >
+
+        <com.ignite.custom.view.CustomTextView
+            android:id="@+id/CustomTextView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="3"
+            android:paddingLeft="3dp"
+            android:text="ေလွ်ာ့ေစ်း  : "
+            android:textSize="24dp" />
+
+        <com.ignite.custom.view.CustomTextView
+            android:id="@+id/txt_discount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="25"
+            android:gravity="right|center_vertical"
+            android:paddingRight="5dp"
+            android:text="0"
+            android:textSize="24dp" />
+
+        <com.ignite.custom.view.CustomTextView
+            android:id="@+id/CustomTextView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:gravity="left|center_vertical"
+            android:paddingRight="5dp"
+            android:text="%"
+            android:textSize="24dp" />
+
+        <com.ignite.custom.view.CustomTextView
+            android:id="@+id/CustomTextView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="25"
+            android:gravity="right|center_vertical"
+            android:paddingLeft="3dp"
+            android:text="စုစုေပါင္း :   "
+            android:textSize="24dp" />
+
+        <com.ignite.custom.view.CustomTextView
+            android:id="@+id/txtTotal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="25"
+            android:gravity="right"
+            android:paddingRight="5dp"
+            android:text="0.00"
+            android:textSize="24dp" />
+
+        <com.ignite.custom.view.CustomTextView
+            android:id="@+id/txt_kyat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:gravity="right|center_vertical"
+            android:paddingRight="5dp"
+            android:text="က်ပ္"
+            android:textSize="24dp" />
+
+    </LinearLayout>
+
+</RelativeLayout>

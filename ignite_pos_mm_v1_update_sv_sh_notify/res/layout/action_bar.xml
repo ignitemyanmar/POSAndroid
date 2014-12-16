@@ -1,0 +1,77 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/RelativeLayout_actionbar"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/transprant_black"
+    android:gravity="center_vertical"
+    android:padding="5dp"
+    android:visibility="visible" >
+
+    <ImageView
+        android:id="@+id/icon_pos"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:padding="10dp"
+        android:src="@drawable/ic_launcher" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:gravity="right" >
+
+        <com.ignite.custom.view.CustomButton
+            android:id="@+id/btnChange_mode"
+            android:layout_width="250dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/bg_btn_darkblue"
+            android:padding="5dp"
+            android:text="ပစၥည္းမ်ားေရြး၍ အသံုးျပဳရန္"
+            android:textColor="@color/white"
+            android:textSize="20dp"
+            android:visibility="visible" />
+
+        <com.ignite.custom.view.CustomButton
+            android:id="@+id/btnCategories"
+            android:layout_width="200dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="20dp"
+            android:background="@drawable/bg_btn_darkblue"
+            android:padding="5dp"
+            android:text="ပစၥည္းအမ်ိဳးအစားမ်ား"
+            android:textColor="@color/white"
+            android:textSize="20dp"
+            android:visibility="gone" />
+
+    </LinearLayout>
+
+    <com.ignite.custom.view.CustomTextView
+        android:id="@+id/btnLogin"
+        android:layout_width="300dp"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@+id/icon_pos"
+        android:background="@color/dark_blue"
+        android:gravity="center_horizontal|center_vertical"
+        android:text="Sale Person"
+        android:textColor="@color/white"
+        android:textSize="20dp"
+        android:visibility="visible" />
+
+    <com.ignite.custom.view.CustomTextView
+        android:id="@+id/txt_panel_name"
+        android:layout_width="250dp"
+        android:layout_height="match_parent"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="47dp"
+        android:layout_toRightOf="@+id/btnLogin"
+        android:gravity="center_vertical|center_horizontal"
+        android:padding="5dp"
+        android:text="Sample Title"
+        android:textSize="18dp"
+        android:visibility="gone" />
+
+</RelativeLayout>
