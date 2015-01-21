@@ -24,13 +24,12 @@
             <AutoCompleteTextView
                 xmlns:android="http://schemas.android.com/apk/res/android"
                 android:id="@+id/autocom_item_code"
-                android:layout_width="230dp"
+                android:layout_width="197dp"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="5dp"
                 android:gravity="left|center_vertical"
-                android:hint="all [or] Item Code" >
+                android:hint="all [or] Item Name" >
 
-                <requestFocus />
             </AutoCompleteTextView>
 
         </com.smk.skscalableview.ScalableLinearLayout>
@@ -45,7 +44,7 @@
             skscalable:scale_width="4" >
 
             <com.ignite.custom.view.CustomTextView
-                android:id="@+id/CustomTextView1"
+                android:id="@+id/txt_co_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -69,7 +68,7 @@
             skscalable:scale_width="4" >
 
             <com.ignite.custom.view.CustomTextView
-                android:id="@+id/CustomTextView2"
+                android:id="@+id/txt_contact"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"

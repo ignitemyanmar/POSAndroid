@@ -26,12 +26,12 @@
             android:textSize="20dp" />
 
         <com.smk.skscalableview.ScalableTextView
-            android:id="@+id/ScalableTextView1"
+            android:id="@+id/txt_vouNo"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="20"
             android:gravity="center_vertical|center_horizontal"
-            android:text="အေရအတြက္"
+            android:text="အ ေရအတြက္"
             android:textSize="20dp" />
 
         <com.smk.skscalableview.ScalableTextView
@@ -53,7 +53,7 @@
             android:textSize="20dp" />
 
         <com.smk.skscalableview.ScalableTextView
-            android:id="@+id/ScalableTextView01"
+            android:id="@+id/txt_category"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="20"

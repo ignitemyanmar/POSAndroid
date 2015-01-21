@@ -303,14 +303,15 @@ public class AddBarcodeActivity extends SherlockActivity{
 			SKToastMessage.showMessage(getApplicationContext(), "Pls Add/Choose New Category", SKToastMessage.WARNING);
 			return false;
 		}
-		if (selectedSubCategoryId == 0) {
+		
+/*		if (selectedSubCategoryId == 0) {
 			SKToastMessage.showMessage(getApplicationContext(), "Pls Add/Choose New Sub-Category!", SKToastMessage.WARNING);
 			return false;
 		}
 		if (selectedBrandId == 0) {
 			SKToastMessage.showMessage(getApplicationContext(), "Pls Add/Choose New Brand", SKToastMessage.WARNING);
 			return false;
-		}
+		}*/
 		
 		return true;
 	}

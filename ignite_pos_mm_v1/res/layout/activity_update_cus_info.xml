@@ -27,7 +27,7 @@
                 android:padding="25dp" >
 
                 <com.ignite.custom.view.CustomTextView
-                    android:id="@+id/CustomTextView1"
+                    android:id="@+id/txt_co_title"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:layout_marginBottom="10dp"

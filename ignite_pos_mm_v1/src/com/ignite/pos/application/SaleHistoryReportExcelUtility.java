@@ -33,9 +33,13 @@ public class SaleHistoryReportExcelUtility {
   private WritableCellFormat labels;
   private String inputFile;
   private List<Object> saleHistory;
+  private WritableCellFormat headerTitle;
+  private List<String> searchInfoList;
+
   
-  public SaleHistoryReportExcelUtility(List<Object> saleHistory, String filename) {
+  public SaleHistoryReportExcelUtility(List<Object> saleHistory, String filename, List<String> searchInfoList) {
 	  this.saleHistory = saleHistory;
+	  this.searchInfoList = searchInfoList;
 	  IfExistFileDir(RESULT);
 	  inputFile = filename == null ? RESULT+getToday()+"_DailyReport_SaleHistory.xls" : RESULT+filename+".xls";
 	  IfExistPDF(inputFile);
@@ -80,28 +84,43 @@ public class SaleHistoryReportExcelUtility {
     boldUnderline = new WritableCellFormat(headerBoldUnderline);
     // Lets automatically wrap the cells
     boldUnderline.setWrap(true);
+    
+    //Create Header 
+    WritableFont header = new WritableFont(WritableFont.ARIAL, 16, WritableFont.BOLD);
+    headerTitle = new WritableCellFormat(header);
+    headerTitle.setWrap(true);
 
     CellView cv = new CellView();
     cv.setFormat(labels);
     cv.setFormat(boldUnderline);
+    cv.setFormat(headerTitle);
     cv.setAutosize(true);
     //To change here
+    
+    //Write Title 
+    addTitle(sheet, 0, 0, "Sale History Report");
+    
+    //Write Some Info
+    addLabel(sheet, 0, 2, "Sale Voucher: "+searchInfoList.get(0));
+    addLabel(sheet, 0, 3, "From Date: "+searchInfoList.get(1));
+    addLabel(sheet, 0, 4, "To Date: "+searchInfoList.get(2));
+    
     // Write a few headers
-    addCaption(sheet, 0, 0, "Sale Voucher");
-    addCaption(sheet, 1, 0, "Date");
-    addCaption(sheet, 2, 0, "Item Code");
-    addCaption(sheet, 3, 0, "Item Name");
-    addCaption(sheet, 4, 0, "Old Qty");
-    addCaption(sheet, 5, 0, "Update Qty");
-    addCaption(sheet, 6, 0, "Update Person");
-    addCaption(sheet, 7, 0, "Action");
+    addCaption(sheet, 0, 6, "Sale Voucher");
+    addCaption(sheet, 1, 6, "Date");
+    addCaption(sheet, 2, 6, "Item Code");
+    addCaption(sheet, 3, 6, "Item Name");
+    addCaption(sheet, 4, 6, "Old Qty");
+    addCaption(sheet, 5, 6, "Update Qty");
+    addCaption(sheet, 6, 6, "Update Person");
+    addCaption(sheet, 7, 6, "Action");
 
   }
 
   private void createContent(WritableSheet sheet) throws WriteException,
       RowsExceededException {
 	//To change here
-    int i = 1;
+    int i = 7;
     for(Object saleH: saleHistory){
     	
     	SaleHistory saleh = (SaleHistory) saleH; 
@@ -116,6 +135,14 @@ public class SaleHistoryReportExcelUtility {
     	addLabel(sheet, 7, i, saleh.getStatus());
     	i++;
     }
+  }
+  
+  private void addTitle(WritableSheet sheet, int column, int row, String s) 
+		  throws RowsExceededException, WriteException {
+	// TODO Auto-generated method stub
+	    Label label;
+	    label = new Label(column, row, s, headerTitle);
+	    sheet.addCell(label);
   }
 
   private void addCaption(WritableSheet sheet, int column, int row, String s)

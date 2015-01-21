@@ -43,7 +43,7 @@
         android:padding="10dp" >
 
         <com.ignite.custom.view.CustomTextView
-            android:id="@+id/CustomTextView1"
+            android:id="@+id/txt_co_title"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginBottom="5dp"
@@ -54,7 +54,7 @@
             android:textSize="24dp" />
 
         <com.ignite.custom.view.CustomEditText
-            android:id="@+id/CustomEditText1"
+            android:id="@+id/edt_discount_amount"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginBottom="5dp"

@@ -47,7 +47,7 @@
             android:layout_height="60dp"
             android:background="@drawable/editext_border"
             android:gravity="center_vertical"
-            android:hint="အေရအတြက္"
+            android:hint="အ ေရ အတြက္"
             android:inputType="number"
             android:padding="5dp" />
 
@@ -77,7 +77,7 @@
                 android:textSize="16dp" />
 
             <TextView
-                android:id="@+id/textView1"
+                android:id="@+id/txt_itemName"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"

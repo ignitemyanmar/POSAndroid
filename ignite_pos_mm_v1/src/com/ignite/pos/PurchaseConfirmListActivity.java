@@ -55,7 +55,7 @@ public class PurchaseConfirmListActivity extends SherlockActivity{
 		actionBar.setCustomView(R.layout.action_bar_update);
 		title = (TextView)actionBar.getCustomView().findViewById(R.id.txt_title);
 		//title.setText("Purchase Voucher Confirm");
-		title.setText("အ၀ယ္ေဘာင္ခ်ာအတည္ျပဳျခင္း");
+		title.setText("အ၀ယ္ ေဘာင္ ခ်ာ အတည္ျပဳျခင္း");
 		add_layout = (RelativeLayout)actionBar.getCustomView().findViewById(R.id.layout_add_new);
 		add_layout.setVisibility(View.GONE);
 		actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
@@ -78,7 +78,7 @@ public class PurchaseConfirmListActivity extends SherlockActivity{
 		
 		listVoucher = new ArrayList<Object>();
 		
-		txt_vou_no.setText("ေဘာင္ခ်ာနံပါတ္:  "+voucherNo);
+		txt_vou_no.setText("ေဘာင္ ခ်ာ နံပါတ္:  "+voucherNo);
 		txt_date.setText("ေန႔ရက္:  "+date);
 		txt_supplier.setText("လကၠားဆုိင္:  "+supplier_name);
 		

@@ -30,9 +30,12 @@ public class SaleReportExcelUtility {
   private WritableCellFormat labels;
   private String inputFile;
   private List<Object> saleVoucherList;
+  private WritableCellFormat headerTitle;
+  private List<String> searchInfoList;
   
-  public SaleReportExcelUtility(List<Object> saleVoucherList, String filename) {
+  public SaleReportExcelUtility(List<Object> saleVoucherList, String filename, List<String> searchInfoList) {
 	  this.saleVoucherList = saleVoucherList;
+	  this.searchInfoList = searchInfoList;
 	  IfExistFileDir(RESULT);
 	  inputFile = filename == null ? RESULT+getToday()+"_DailyReport_SaleVoucher.xls" : RESULT+filename+".xls";
 	  IfExistPDF(inputFile);
@@ -71,30 +74,45 @@ public class SaleReportExcelUtility {
     // Lets automatically wrap the cells
     labels.setWrap(true);
 
-    // create create a bold font with unterlines
-    WritableFont headerBoldUnderline = new WritableFont(WritableFont.ARIAL, 10, WritableFont.BOLD, false,
+    // create a bold font with unterlines
+    WritableFont headerTitleUnderline = new WritableFont(WritableFont.ARIAL, 10, WritableFont.BOLD, false,
         UnderlineStyle.SINGLE);
-    boldUnderline = new WritableCellFormat(headerBoldUnderline);
+    boldUnderline = new WritableCellFormat(headerTitleUnderline);
     // Lets automatically wrap the cells
     boldUnderline.setWrap(true);
+    
+    //Create Header 
+    WritableFont header = new WritableFont(WritableFont.ARIAL, 16, WritableFont.BOLD);
+    headerTitle = new WritableCellFormat(header);
+    headerTitle.setWrap(true);
 
     CellView cv = new CellView();
     cv.setFormat(labels);
     cv.setFormat(boldUnderline);
+    cv.setFormat(headerTitle);
     cv.setAutosize(true);
     //To change here
+    
+    //Write Title 
+    addTitle(sheet, 0, 0, "Sale Report");
+    
+    //Write Some Info
+    addLabel(sheet, 0, 2, "Sale Person: "+searchInfoList.get(0));
+    addLabel(sheet, 0, 3, "From Date: "+searchInfoList.get(1));
+    addLabel(sheet, 0, 4, "To Date: "+searchInfoList.get(2));
+    
     // Write a few headers
-    addCaption(sheet, 0, 0, "Voucher No.");
-    addCaption(sheet, 1, 0, "Date");
-    addCaption(sheet, 2, 0, "Sale Person");
-    addCaption(sheet, 3, 0, "Total Amount");
+    addCaption(sheet, 0, 6, "Voucher No.");
+    addCaption(sheet, 1, 6, "Date");
+    addCaption(sheet, 2, 6, "Sale Person");
+    addCaption(sheet, 3, 6, "Total Sale Amount");
 
   }
 
   private void createContent(WritableSheet sheet) throws WriteException,
       RowsExceededException {
 	//To change here
-    int i = 1;
+    int i = 7;
     for(Object saleV: saleVoucherList){
     	
     	SaleVouncher sv = (SaleVouncher) saleV; 
@@ -107,6 +125,14 @@ public class SaleReportExcelUtility {
     }
   }
 
+  private void addTitle(WritableSheet sheet, int column, int row, String s) 
+		  throws RowsExceededException, WriteException {
+	// TODO Auto-generated method stub
+	    Label label;
+	    label = new Label(column, row, s, headerTitle);
+	    sheet.addCell(label);
+  }
+  
   private void addCaption(WritableSheet sheet, int column, int row, String s)
       throws RowsExceededException, WriteException {
     Label label;

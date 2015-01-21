@@ -24,7 +24,7 @@
             android:layout_marginRight="2dp"
             android:layout_weight="15"
             android:gravity="left|center_vertical"
-            android:text="ေဘာင္ခ်ာနံပါတ္"
+            android:text="ေဘာင္ ခ်ာနံပါတ္"
             android:textSize="20dp" />
 
         <com.smk.skscalableview.ScalableTextView
@@ -38,13 +38,13 @@
             android:textSize="20dp" />
 
         <com.smk.skscalableview.ScalableTextView
-            android:id="@+id/ScalableTextView01"
+            android:id="@+id/txt_category"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginRight="5dp"
             android:layout_weight="15"
             android:gravity="left|center_vertical"
-            android:text="လကၠားဆုိင္အမည္"
+            android:text="လကၠားဆုိင္ အမည္"
             android:textSize="20dp" />
 
         <com.smk.skscalableview.ScalableTextView

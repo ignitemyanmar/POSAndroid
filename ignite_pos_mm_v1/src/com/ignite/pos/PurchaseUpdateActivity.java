@@ -127,8 +127,8 @@ public class PurchaseUpdateActivity  extends SherlockActivity{
 		txt_panel_name = (TextView)actionBar.getCustomView().findViewById(R.id.txt_panel_name);
 		txt_panel_name.setVisibility(View.VISIBLE);
 		//txt_panel_name.setText("Update Purchase");
-		txt_panel_name.setText("အ၀ယ္ေဘာင္ခ်ာျပင္ျခင္း");
-		discount_layout = (LinearLayout) findViewById(R.id.lyDiscount);
+		txt_panel_name.setText("အ၀ယ္ ေဘာင္ ခ်ာ ျပင္ျခင္း");
+		discount_layout = (LinearLayout) findViewById(R.id.lyDiscount2);
 		discount_layout.setVisibility(View.GONE);
 		sp_supplier_name = (Spinner)findViewById(R.id.sp_supplier_name);
 		//sp_supplier_name.setOnItemSelectedListener(suppliernameClickListener);
@@ -168,7 +168,7 @@ public class PurchaseUpdateActivity  extends SherlockActivity{
 		//deleteItem.setVisibility(View.GONE);
 		Update = (TextView)findViewById(R.id.btn_save_vou);
 		//Update.setText("Update");
-		Update.setText("ျပင္မည္");
+		Update.setText("ျပင္ မည္");
 		
 		search.setOnClickListener(clickListener);
 		plus.setOnClickListener(clickListener);
@@ -276,7 +276,12 @@ public class PurchaseUpdateActivity  extends SherlockActivity{
         AlertDialog.Builder alert = new AlertDialog.Builder(
                 PurchaseUpdateActivity.this);
     
-        alert.setTitle("Delete Item - "+selected_item_name+" ?");
+        //alert.setTitle("Delete Item - "+selected_item_name+" ?");
+		View dialogView = View.inflate(PurchaseUpdateActivity.this, R.layout.dialog_title, null);
+		TextView dialogTitle = (TextView) dialogView.findViewById(R.id.txt_dialog_title);
+		//dialogTitle.setText("Add Prices | "+item_name);
+		dialogTitle.setText("Delete Item - "+selected_item_name+" ?");
+		alert.setCustomTitle(dialogView);
         
         alert.setPositiveButton("YES", new DialogInterface.OnClickListener() {
         	
@@ -637,7 +642,7 @@ public class PurchaseUpdateActivity  extends SherlockActivity{
 						// set dialog message
 						alertDialogBuilder
 							.setCancelable(false)
-							.setPositiveButton("သိမ္းမည္", new DialogInterface.OnClickListener(){
+							.setPositiveButton("Save", new DialogInterface.OnClickListener(){
 					            public void onClick(DialogInterface dialog, int which)
 					            {
 					                //Do nothing here because we override this button later to change the close behaviour. 
@@ -645,20 +650,27 @@ public class PurchaseUpdateActivity  extends SherlockActivity{
 					                //pass a handler the button doesn't get instantiated
 					            }
 					        })
-							.setPositiveButton("သိမ္းမည္",
+							.setPositiveButton("Save",
 							  new DialogInterface.OnClickListener() {
 								
 								public void onClick(DialogInterface dialog,int id) {
 								
 							    }
 							  })
-							.setTitle("၀ယ္ေစ်းထည့္ျခင္း | "+item_obj.getItemName())
-							.setNegativeButton("ထြက္မည္",
+							.setNegativeButton("Cancel",
 							  new DialogInterface.OnClickListener() {
 							    public void onClick(DialogInterface dialog,int id) {
 							    	dialog.cancel();
 							    }
 							  });
+						
+						//.setTitle("၀ယ္ေစ်းထည့္ျခင္း | "+item_obj.getItemName())
+						
+						View dialogView = View.inflate(PurchaseUpdateActivity.this, R.layout.dialog_title, null);
+						TextView dialogTitle = (TextView) dialogView.findViewById(R.id.txt_dialog_title);
+						//dialogTitle.setText("Add Prices | "+item_name);
+						dialogTitle.setText("၀ယ္ေစ်းထည့္ျခင္း | "+item_obj.getItemName());
+						alertDialogBuilder.setCustomTitle(dialogView);
 						
 						final AlertDialog alertDialog = alertDialogBuilder.create();
 						alertDialog.show();	
@@ -877,7 +889,7 @@ public class PurchaseUpdateActivity  extends SherlockActivity{
 			// set dialog message
 			alertDialogBuilder
 				.setCancelable(false)
-				.setPositiveButton("သိမ္းမည္", new DialogInterface.OnClickListener()
+				.setPositiveButton("Save", new DialogInterface.OnClickListener()
 		        {
 		            public void onClick(DialogInterface dialog, int which)
 		            {
@@ -886,7 +898,7 @@ public class PurchaseUpdateActivity  extends SherlockActivity{
 		                //pass a handler the button doesn't get instantiated
 		            }
 		        })
-				.setNegativeButton("ထြက္မည္",
+				.setNegativeButton("Cancel",
 				  new DialogInterface.OnClickListener() {
 				    public void onClick(DialogInterface dialog,int id) {
 				    	dialog.cancel();

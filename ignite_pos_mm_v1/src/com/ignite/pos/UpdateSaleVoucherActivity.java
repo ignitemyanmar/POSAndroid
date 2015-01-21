@@ -3,6 +3,7 @@ package com.ignite.pos;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import android.app.Activity;
@@ -50,6 +51,7 @@ public class UpdateSaleVoucherActivity extends SherlockActivity{
 	private RelativeLayout add_layout;
 	private String currentDate;
 	private String AdminName;
+	private String currentDateTime;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -103,6 +105,12 @@ public class UpdateSaleVoucherActivity extends SherlockActivity{
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		currentDate = sdf.format(new Date());
 		
+		//Date & Time Format
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		Calendar cal = Calendar.getInstance();
+		currentDateTime = dateFormat.format(cal.getTime());
+		System.out.println("Current Date Time : " + dateFormat.format(cal.getTime()));
+		
 	}
 	
 	private OnClickListener clickListener = new OnClickListener() {
@@ -138,10 +146,11 @@ public class UpdateSaleVoucherActivity extends SherlockActivity{
 		Integer newGrandTotal = ( Integer.valueOf(GrandTotal) -  oldItemDisTotal) + newItemDisTotal ; 
 		
 		sale_list.add(new SaleVouncher(ItemID, ItemName, VouID, editText_qty.getText().toString(), editText_price.getText().toString()
-				, newItemTotal.toString(), newGrandTotal.toString()));
+				, newItemTotal.toString(), newGrandTotal.toString(), 1));
 		
 		//Update in Sale Table 
 		sale_control.update(sale_list);
+		//Only update Sale total
 		sale_control.updateByVouID(sale_list);
 		Log.i("", "After Update in Sale: "+sale_control.selectRecordByVouID(VouID).toString());
 		
@@ -151,7 +160,7 @@ public class UpdateSaleVoucherActivity extends SherlockActivity{
 		List<Object> shList = new ArrayList<Object>();
 		
 		shList.add(new SaleHistory(VouID, ItemID, Integer.valueOf(ItemQty)
-				, Integer.valueOf(editText_qty.getText().toString()), currentDate, AdminName, "update"));
+				, Integer.valueOf(editText_qty.getText().toString()), currentDateTime, AdminName, "update"));
 		
 		shControl.save(shList);
 		
@@ -233,13 +242,15 @@ public class UpdateSaleVoucherActivity extends SherlockActivity{
 					//Integer profitAmt =  ( profit.getSalePrice() * newQty ) - ( profit.getMarginalPrice() * newQty);
 					Integer profitAmt =  ( newSalePrice * newQty ) - ( profit.getMarginalPrice() * newQty);
 					
+					Integer profitAmount = profitAmt - profit.getDiscount();
+					
 					Log.i("", "new slae price: "+newSalePrice);
 					Log.i("", "new qty: "+newQty);
 					Log.i("", "marginal price: "+profit.getMarginalPrice());
 					Log.i("", "profit: "+profitAmt);
 					
 					updateProfitList.add(new Profit(profit.getItemId(), profit.getDate(), Integer.valueOf(profit.getMarginalPrice())
-							, newSalePrice, newQty, profitAmt, VouID));
+							, newSalePrice, newQty, profitAmount, profit.getItemName(), profit.getDiscount()));
 					
 					profit_control.updateTotalPriceRecord(updateProfitList);
 					

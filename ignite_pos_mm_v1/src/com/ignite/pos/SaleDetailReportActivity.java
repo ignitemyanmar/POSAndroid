@@ -50,7 +50,7 @@ public class SaleDetailReportActivity extends BaseSherlockActivity{
 		actionBar.setCustomView(R.layout.action_bar_update);
 		title = (TextView)actionBar.getCustomView().findViewById(R.id.txt_title);
 		//title.setText("Sale Detail Report");
-		title.setText("အေရာင္းအေသးစိတ္");
+		title.setText("အ ေရာင္း အ ေသးစိတ္");
 		add_layout = (RelativeLayout)actionBar.getCustomView().findViewById(R.id.layout_add_new);
 		add_layout.setVisibility(View.GONE);
 		actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
@@ -71,7 +71,7 @@ public class SaleDetailReportActivity extends BaseSherlockActivity{
 		txt_date.setText("Date:  "+date);
 		txt_sale_person.setText("Sale Person:  "+sale_person_name);*/
 		
-		txt_vou_no.setText("ေဘာင္ခ်ာနံပါတ္ :  "+voucherNo);
+		txt_vou_no.setText("ေဘာင္ ခ်ာ နံပါတ္ :  "+voucherNo);
 		txt_date.setText("ေန႔ရက္ :  "+date);
 		txt_sale_person.setText("ေရာင္းသူ  :  "+sale_person_name);
 		
@@ -141,7 +141,11 @@ public class SaleDetailReportActivity extends BaseSherlockActivity{
 		// TODO Auto-generated method stub
 		super.onResume();
 		getVoucherDetail();
-		txt_discount.setText(((SaleVouncher) listVoucher.get(0)).getDiscount());
-		txt_grand_total.setText(((SaleVouncher) listVoucher.get(0)).getTotal());
+		
+		SaleVouncher sv = (SaleVouncher)listVoucher.get(0);
+		
+		txt_discount.setText(sv.getDiscount());
+		Integer grandTotal = Integer.valueOf(sv.getTotal()) - Integer.valueOf(sv.getDiscount());
+		txt_grand_total.setText(grandTotal+"");
 	}
 }

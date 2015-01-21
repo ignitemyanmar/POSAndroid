@@ -44,7 +44,7 @@
             app:scale_width="5" />
 
         <com.smk.skscalableview.ScalableTextView
-            android:id="@+id/ScalableTextView01"
+            android:id="@+id/txt_category"
             android:layout_width="200dp"
             android:layout_height="match_parent"
             android:gravity="right|center_vertical"
@@ -53,7 +53,7 @@
             app:scale_width="5" />
 
         <com.smk.skscalableview.ScalableTextView
-            android:id="@+id/ScalableTextView1"
+            android:id="@+id/txt_vouNo"
             android:layout_width="200dp"
             android:layout_height="match_parent"
             android:gravity="right|center_vertical"

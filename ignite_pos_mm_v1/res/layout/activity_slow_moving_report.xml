@@ -24,12 +24,12 @@
             skscalable:scale_width="4" >
 
             <com.ignite.custom.view.CustomTextView
-                android:id="@+id/CustomTextView1"
+                android:id="@+id/txt_co_title"
                 android:layout_width="100dp"
                 android:layout_height="match_parent"
                 android:layout_marginRight="5dp"
                 android:gravity="center_vertical|center_horizontal"
-                android:text="မေရာင္းရေသး ေသာ အေရအတြက္ :"
+                android:text="မ ေရာင္းရေသး ေသာ အ ေရအတြက္ :"
                 android:textSize="14dp"
                 android:textStyle="bold" />
 
@@ -53,7 +53,7 @@
             skscalable:scale_width="4" >
 
             <com.ignite.custom.view.CustomTextView
-                android:id="@+id/CustomTextView1"
+                android:id="@+id/txt_co_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -75,7 +75,7 @@
             skscalable:scale_width="4" >
 
             <com.ignite.custom.view.CustomTextView
-                android:id="@+id/CustomTextView2"
+                android:id="@+id/txt_contact"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"

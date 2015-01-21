@@ -65,7 +65,7 @@
             android:textStyle="bold" />
 
         <com.smk.skscalableview.ScalableTextView
-            android:id="@+id/ScalableTextView01"
+            android:id="@+id/txt_category"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="5dp"

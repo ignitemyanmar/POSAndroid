@@ -131,7 +131,7 @@ public class PurchaseVoucherController extends DatabaseManager{
 				SQLiteDatabase db = getReadableDatabase();
 				Cursor cursor = db.query(TABLE_NAME, FROM, null, null, null, null, ORDER_BY);
 				
-				Log.i("","Data count :" + cursor.getCount());
+				Log.i("","Data count All Purchase:" + cursor.getCount());
 				
 				try {
 					if (cursor.moveToFirst()) {

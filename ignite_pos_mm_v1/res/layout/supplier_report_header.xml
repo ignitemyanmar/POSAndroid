@@ -53,12 +53,12 @@
             android:textSize="18dp" />
 
         <com.smk.skscalableview.ScalableTextView
-            android:id="@+id/ScalableTextView01"
+            android:id="@+id/txt_category"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="17"
             android:gravity="center_vertical|center_horizontal"
-            android:text="အေရာင္း"
+            android:text="အ ေရာင္း"
             android:textSize="18dp" />
 
         <com.smk.skscalableview.ScalableTextView

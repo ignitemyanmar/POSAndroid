@@ -24,17 +24,19 @@
             android:layout_height="match_parent"
             android:layout_gravity="center_vertical"
             android:layout_marginRight="2dp"
-            android:layout_weight="17"
+            android:layout_weight="15"
             android:gravity="left|center_vertical"
+            android:singleLine="true"
             android:text="-"
-            android:textSize="16dp" />
+            android:textSize="16dp"
+             />
 
         <com.smk.skscalableview.ScalableLinearLayout
             android:id="@+id/ScalableLinearLayout1"
-            android:layout_width="wrap_content"
+            android:layout_width="150dp"
             android:layout_height="match_parent"
             android:layout_marginRight="2dp"
-            android:layout_weight="17" >
+            android:gravity="center" >
 
             <com.ignite.custom.view.CustomTextView
                 android:id="@+id/btnMinus"
@@ -76,7 +78,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginRight="2dp"
-            android:layout_weight="17"
+            android:layout_weight="15"
             android:gravity="right|center_vertical"
             android:text="-"
             android:textSize="16dp" />
@@ -86,10 +88,20 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="center_vertical"
-            android:layout_weight="17"
+            android:layout_weight="15"
             android:gravity="right|center_vertical"
             android:text="-"
             android:textSize="16dp" />
+
+        <CheckBox
+            android:id="@+id/chb_free"
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Free"
+            android:textColor="@color/blue"
+            android:visibility="visible"
+            />
     </LinearLayout>
 
     <View

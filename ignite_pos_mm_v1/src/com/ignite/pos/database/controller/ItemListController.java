@@ -13,6 +13,7 @@ import com.ignite.pos.database.util.OnSave;
 import com.ignite.pos.database.util.OnSelect;
 import com.ignite.pos.database.util.OnUpdate;
 import com.ignite.pos.model.ItemList;
+import com.ignite.pos.model.Ledger;
 import com.ignite.pos.model.PurchaseVoucher;
 import com.ignite.pos.model.SaleVouncher;
 
@@ -209,6 +210,39 @@ public class ItemListController extends DatabaseManager{
 		}
 	};
 	
+	//Update New Sale Price by Item Name
+	public void updateSalePricebyItemName(Object obj) {
+		
+		Log.i("","New Sale Price by item name: " + obj.toString());
+		
+		SQLiteDatabase db = getWritableDatabase();
+		db.beginTransaction();
+		try {
+			//for (Object obj : objList) {
+
+				ContentValues values = new ContentValues();
+				ItemList iteml = (ItemList) obj;
+				
+				values.put(FIELD_NAME[3], iteml.getSalePrice());
+				
+				String[] VALUE = {iteml.getItemName()};
+				String WHERE = FIELD_NAME[1] + "=? ";
+				
+				db.update(TABLE_NAME, values, WHERE,VALUE);
+			//}
+			db.setTransactionSuccessful();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			db.endTransaction();
+			db.close();
+			if (complete != null) {
+				complete.onComplete();
+			}
+		}
+	
+	}
+	
 	public void updateNewStockQty(List<Object> objList) {
 		// TODO Auto-generated method stub
 		Log.i("","Update New Stock Qty:" + objList.toString());
@@ -367,7 +401,7 @@ public class ItemListController extends DatabaseManager{
 						FIELD_NAME[11],
 						FIELD_NAME[12]
 					};
-				String ORDER_BY = FIELD_NAME[0]+ " DESC";
+				String ORDER_BY = FIELD_NAME[5]+ " DESC";
 				String WHERE = FIELD_NAME[9] + " == 0 ";
 				
 				
@@ -501,12 +535,13 @@ public class ItemListController extends DatabaseManager{
 						FIELD_NAME[9],
 						FIELD_NAME[10],
 						FIELD_NAME[11],
+						
 						FIELD_NAME[12]
 						};
 				
 				String[] VALUE = { CatID , SubID };
 				String WHERE = FIELD_NAME[5] + "=? and "+FIELD_NAME[6]+"=? and "+FIELD_NAME[4]+" > 0 and "+FIELD_NAME[9]+" == 0";
-				String ORDER_BY = FIELD_NAME[1] + " ASC";
+				String ORDER_BY = FIELD_NAME[0] + " ASC";
 
 				item_list = new ArrayList<Object>();
 				SQLiteDatabase db = getReadableDatabase();
@@ -754,7 +789,7 @@ public class ItemListController extends DatabaseManager{
 				
 				String[] VALUE = { CatID , SubID };
 				String WHERE = FIELD_NAME[5] + "=? and "+FIELD_NAME[6]+"=? and "+FIELD_NAME[9]+" == 0";
-				String ORDER_BY = FIELD_NAME[1] + " ASC";
+				String ORDER_BY = FIELD_NAME[0] + " ASC";
 
 				item_list = new ArrayList<Object>();
 				SQLiteDatabase db = getReadableDatabase();
@@ -1261,7 +1296,165 @@ public class ItemListController extends DatabaseManager{
 			}
 		}
 		return item_list;
-	}	
+	}
+	
+	//Select by Category or Item Name
+	public List<Object> selectByCatItemName(String categoryId, String itemName) {
+		// TODO Auto-generated method stub
+		
+		Log.i("", "Selected Category: "+categoryId);
+		Log.i("", "Selected Item Name: "+itemName);
+		
+		try {
+			String[] FROM = {
+					FIELD_NAME[0], 
+					FIELD_NAME[1],
+					FIELD_NAME[2], 
+					FIELD_NAME[3],
+					FIELD_NAME[4],
+					FIELD_NAME[5],
+					FIELD_NAME[6],
+					FIELD_NAME[7],
+					FIELD_NAME[8],
+					FIELD_NAME[9],
+					FIELD_NAME[10],
+					FIELD_NAME[11],
+					FIELD_NAME[12]
+				};
+			
+			String[] VALUE = null;
+			String WHERE;
+			
+			if (categoryId.equals("0")) {
+				VALUE = new String[1];
+				VALUE[0] = "%"+itemName+"%";
+				WHERE = FIELD_NAME[1]+" LIKE ?";
+			}else{
+				VALUE = new String[2];
+				VALUE[0] = categoryId;
+				VALUE[1] = "%"+itemName+"%";
+				WHERE = FIELD_NAME[5]+" = ? and "+FIELD_NAME[1]+" LIKE ?";
+			}
+				
+			//String GROUP_BY = FIELD_NAME[0];
+			String ORDER_BY = FIELD_NAME[5]+ " DESC";
+			
+			item_list = new ArrayList<Object>();
+			SQLiteDatabase db = getReadableDatabase();
+			Cursor cursor = db.query(TABLE_NAME, FROM, WHERE, VALUE, null, null, ORDER_BY);
+			
+			Log.i("","Data count :" + cursor.getCount());
+			
+			try {
+				if (cursor.moveToFirst()) {
+			        do {
+			        	
+			        	ItemList itemL = new ItemList();
+		        		itemL.setItemId(cursor.getString(0));
+			        	itemL.setItemName(cursor.getString(1));
+			        	itemL.setPurchasePrice(cursor.getString(2));
+			        	itemL.setSalePrice(cursor.getString(3));
+			        	itemL.setQty(cursor.getString(4));
+			        	itemL.setCategoryId(cursor.getString(5));
+			        	itemL.setSubCategoryId(cursor.getString(6));
+			        	itemL.setBrandId(cursor.getString(7));
+			        	itemL.setMarginalPrice(cursor.getString(8));
+			        	itemL.setStatus(cursor.getInt(9));
+			        	itemL.setNotifyQty(cursor.getInt(10));
+			        	itemL.setNotifyStatus(cursor.getInt(11));
+			        	itemL.setRegisterNotify(cursor.getInt(12));
+			        	item_list.add(itemL);
+			        	
+			        } while (cursor.moveToNext());
+			    }
+			} catch (Exception e) {
+				// TODO: handle exception
+				e.printStackTrace();
+			} finally {
+				cursor.close();
+				db.close();
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		} finally {
+			if(complete != null){
+				complete.onComplete();
+			}
+		}
+		return item_list;
+	}
+	
+	//Select by Item Name
+	public List<Object> selectByItemName(String itemName) {
+		// TODO Auto-generated method stub
+		
+		Log.i("", "Selected Item Name: "+itemName);
+		
+		try {
+			String[] FROM = { 
+					FIELD_NAME[0],
+					FIELD_NAME[1],
+					FIELD_NAME[2],
+					FIELD_NAME[3],
+					FIELD_NAME[4],
+					FIELD_NAME[5],
+					FIELD_NAME[6],
+					FIELD_NAME[7],
+					FIELD_NAME[8],
+					FIELD_NAME[9],
+					FIELD_NAME[10],
+					FIELD_NAME[11],
+					FIELD_NAME[12]
+					};
+			
+			String[] VALUE = {itemName};
+			String WHERE = FIELD_NAME[1] + "=? and "+FIELD_NAME[9] +" == 0";
+			//String ORDER_BY = FIELD_NAME[0] + " ASC";
+
+			item_list = new ArrayList<Object>();
+			SQLiteDatabase db = getReadableDatabase();
+			Cursor cursor = db.query(TABLE_NAME, FROM, WHERE, VALUE, null,null, null);
+			try {
+				if (cursor.moveToFirst()) {
+					do {
+						ItemList itemL = new ItemList();
+
+							itemL.setItemId(cursor.getString(0));
+				        	itemL.setItemName(cursor.getString(1));
+				        	itemL.setPurchasePrice(cursor.getString(2));
+				        	itemL.setSalePrice(cursor.getString(3));
+				        	itemL.setQty(cursor.getString(4));
+				        	itemL.setCategoryId(cursor.getString(5));
+				        	itemL.setSubCategoryId(cursor.getString(6));
+				        	itemL.setBrandId(cursor.getString(7));
+				        	itemL.setMarginalPrice(cursor.getString(8));
+				        	itemL.setStatus(cursor.getInt(9));
+				        	itemL.setNotifyQty(cursor.getInt(10));
+				        	itemL.setNotifyStatus(cursor.getInt(11));
+				        	itemL.setRegisterNotify(cursor.getInt(12));
+						
+						item_list.add(itemL);
+					} while (cursor.moveToNext());
+				}
+			} catch (Exception e) {
+				// TODO: handle exception
+				e.printStackTrace();
+			} finally {
+				cursor.close();
+				db.close();
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		} finally {
+			if (complete != null) {
+				complete.onComplete();
+			}
+		}
+		return item_list;
+	}
+
 	
 	private OnDelete deleteRecord = new OnDelete() {
 		
@@ -1345,6 +1538,7 @@ public class ItemListController extends DatabaseManager{
 		try {
 			for (Object obj : objList) {
 				ItemList iteml = (ItemList) obj;
+				Log.i("","Hello Delete Id : "+ iteml.getItemId());
 				db.delete(TABLE_NAME, FIELD_NAME[0]+"=? ", new String[]{iteml.getItemId()});
 			}
 			db.setTransactionSuccessful();

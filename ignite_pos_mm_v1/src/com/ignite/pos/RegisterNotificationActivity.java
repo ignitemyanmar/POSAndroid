@@ -195,7 +195,7 @@ public class RegisterNotificationActivity extends SherlockActivity{
 		listItemCode = new ArrayList<Object>();
 		
 		//listItemCode.add(new ItemList("All"));
-		listItemCode.addAll(itemControl.select());
+		listItemCode = itemControl.selectRecordPurchasedItems();
 		
 		Log.i("", "Item Code List: "+listItemCode.toString());
 		

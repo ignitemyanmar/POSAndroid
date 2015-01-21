@@ -91,7 +91,7 @@
                 </EditText>
 
                 <Button
-                    android:id="@+id/button1"
+                    android:id="@+id/btn_dsicount_ok"
                     android:layout_width="match_parent"
                     android:layout_height="150dp"
                     android:layout_marginLeft="100dp"

@@ -100,7 +100,7 @@
                 android:layout_marginRight="5dp"
                 android:layout_weight="25"
                 android:gravity="center_vertical"
-                android:text="အေရအတြက္        : "
+                android:text="အ ေရအတြက္        : "
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <com.smk.skscalableview.ScalableTextView

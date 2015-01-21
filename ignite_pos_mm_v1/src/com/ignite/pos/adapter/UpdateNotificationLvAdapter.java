@@ -84,9 +84,11 @@ public class UpdateNotificationLvAdapter extends BaseAdapter{
 		pvList = new ArrayList<Object>();
 		pvList = pvController.selectbyItemID(itemObj.getItemId());
 		
-		Log.i("", "Purchase List By Item ID: "+pvList.get(0).toString());
+		//Log.i("", "Purchase List By Item ID: "+pvList.get(0).toString());
 		
-		holder.txt_supplier_name.setText(((PurchaseVoucher)pvList.get(0)).getSupplierName());
+		if (pvList != null && pvList.size() > 0) {
+			holder.txt_supplier_name.setText(((PurchaseVoucher)pvList.get(0)).getSupplierName());
+		}
 		
 		//holder.btn_update.setTag(supplier.getSupId());
 		holder.btn_update.setOnClickListener(new OnClickListener() {
@@ -115,7 +117,11 @@ public class UpdateNotificationLvAdapter extends BaseAdapter{
 				ItemListController item_control = (ItemListController)dbManager;
 				
 				List<Object> notifyL = new ArrayList<Object>();
-				notifyL.add(new ItemList(v.getTag().toString()));
+				//notifyL.add(new ItemList(v.getTag().toString()));
+				ItemList itemList = new ItemList();
+				itemList.setItemId(v.getTag().toString());
+				notifyL.add(itemList);
+				
 				
 				//Change Status (0) for Notify Status 
 				item_control.deleteNotify(notifyL);

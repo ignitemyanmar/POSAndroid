@@ -31,6 +31,8 @@ public class StockReportExcelUtility {
   private WritableCellFormat labels;
   private String inputFile;
   private List<Object> stockList;
+  private WritableCellFormat headerTitle;
+
   
   public StockReportExcelUtility(List<Object> stockList, String filename) {
 	  this.stockList = stockList;
@@ -78,36 +80,56 @@ public class StockReportExcelUtility {
     boldUnderline = new WritableCellFormat(headerBoldUnderline);
     // Lets automatically wrap the cells
     boldUnderline.setWrap(true);
+    
+    //Create Header 
+    WritableFont header = new WritableFont(WritableFont.ARIAL, 16, WritableFont.BOLD);
+    headerTitle = new WritableCellFormat(header);
+    headerTitle.setWrap(true);
 
     CellView cv = new CellView();
     cv.setFormat(labels);
     cv.setFormat(boldUnderline);
+    cv.setFormat(headerTitle);
     cv.setAutosize(true);
     //To change here
+    
+    //Write Title 
+    addTitle(sheet, 0, 0, "Stock Report");
+    
     // Write a few headers
-    addCaption(sheet, 0, 0, "Item Name");
-    addCaption(sheet, 1, 0, "Stock Qty");
-    addCaption(sheet, 2, 0, "Purchase Price");
-    addCaption(sheet, 3, 0, "Sale Price");
-    addCaption(sheet, 4, 0, "Marginal Price");
+    addCaption(sheet, 0, 2, "ItemID");
+    addCaption(sheet, 1, 2, "Item Name");
+    addCaption(sheet, 2, 2, "Stock Qty");
+    addCaption(sheet, 3, 2, "Purchase Price");
+    addCaption(sheet, 4, 2, "Sale Price");
+    addCaption(sheet, 5, 2, "Marginal Price");
 
   }
 
   private void createContent(WritableSheet sheet) throws WriteException,
       RowsExceededException {
 	//To change here
-    int i = 1;
+    int i = 3;
     for(Object stockL: stockList){
     	
     	ItemList stock = (ItemList) stockL; 
     	
-    	addLabel(sheet, 0, i, stock.getItemName());
-    	addLabel(sheet, 1, i, stock.getQty());
-    	addLabel(sheet, 2, i, stock.getPurchasePrice());
-    	addLabel(sheet, 3, i, stock.getSalePrice());
-    	addLabel(sheet, 4, i, stock.getMarginalPrice());
+    	addLabel(sheet, 0, i, stock.getItemId());
+    	addLabel(sheet, 1, i, stock.getItemName());
+    	addLabel(sheet, 2, i, stock.getQty());
+    	addLabel(sheet, 3, i, stock.getPurchasePrice());
+    	addLabel(sheet, 4, i, stock.getSalePrice());
+    	addLabel(sheet, 5, i, stock.getMarginalPrice());
     	i++;
     }
+  }
+  
+  private void addTitle(WritableSheet sheet, int column, int row, String s) 
+		  throws RowsExceededException, WriteException {
+	// TODO Auto-generated method stub
+	    Label label;
+	    label = new Label(column, row, s, headerTitle);
+	    sheet.addCell(label);
   }
 
   private void addCaption(WritableSheet sheet, int column, int row, String s)

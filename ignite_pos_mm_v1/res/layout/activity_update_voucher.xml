@@ -27,13 +27,13 @@
                 android:padding="25dp" >
 
                 <com.ignite.custom.view.CustomTextView
-                    android:id="@+id/CustomTextView1"
+                    android:id="@+id/txt_co_title"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:layout_marginBottom="20dp"
                     android:background="@color/green"
                     android:gravity="center_vertical|center"
-                    android:text="အေရာင္းေဘာင္ခ်ာျပင္ဆင္ျခင္း"
+                    android:text="အ ေရာင္း ေဘာင္ ခ်ာ ျပင္ ဆင္ျခင္း"
                     android:textColor="@color/white"
                     android:textSize="24dp" />
 
@@ -54,7 +54,7 @@
                     android:layout_marginBottom="20dp"
                     android:background="@drawable/editext_border"
                     android:gravity="center"
-                    android:hint="အေရအတြက္"
+                    android:hint="အ ေရ အတြက္"
                     android:inputType="number"
                     android:singleLine="true" />
 

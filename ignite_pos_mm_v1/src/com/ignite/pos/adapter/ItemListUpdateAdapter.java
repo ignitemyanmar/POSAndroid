@@ -62,6 +62,7 @@ public class ItemListUpdateAdapter extends BaseAdapter{
 			holder = new ViewHolder();
 			holder.txt_item_code = (TextView)v.findViewById(R.id.txt_item_code);
 			holder.txt_item_name = (TextView)v .findViewById(R.id.txt_item_name);
+			holder.txt_category = (TextView)v .findViewById(R.id.txt_category);
 			holder.btn_delete = (Button)v.findViewById(R.id.btnDelete);
 			holder.btn_update = (Button)v.findViewById(R.id.btnUpdate);
 			v.setTag(holder);
@@ -72,6 +73,9 @@ public class ItemListUpdateAdapter extends BaseAdapter{
 		
 		final ItemList itemObj = (ItemList)getItem(position);
 		holder.txt_item_name.setText(itemObj.getItemName());
+		
+		
+		holder.txt_category.setText(itemObj.getCategoryName());
 		
 		final String ItemID = itemObj.getItemId();
 		holder.txt_item_code.setText(ItemID);
@@ -119,7 +123,9 @@ public class ItemListUpdateAdapter extends BaseAdapter{
 				ItemListController ItemList_control = (ItemListController)dbManager;
 				
 				item_list = new ArrayList<Object>();
-				item_list.add(new ItemList(ItemID));
+				ItemList item = new ItemList();
+				item.setItemId(ItemID);
+				item_list.add(item);
 				
 				dbManager = new PurchaseVoucherController(aty);
 				PurchaseVoucherController purchaseVoucherController = (PurchaseVoucherController) dbManager;
@@ -128,10 +134,11 @@ public class ItemListUpdateAdapter extends BaseAdapter{
 				if(purchaseVoucherList != null && purchaseVoucherList.size() > 0){
 					ItemList_control.hideItem(item_list);
 				}else{
+					Log.i("", "Hello Delete Item : "+ item_list.toString());
 					ItemList_control.deleteItem(item_list);
 				}
 				
-				Log.i("","Delete Data from Database :" + ItemList_control.select().toString());
+				Log.i("","Hello Delete Data from Database :" + ItemList_control.select().toString());
 				
 				listItem.remove(v.getId());
 				notifyDataSetChanged();
@@ -145,7 +152,7 @@ public class ItemListUpdateAdapter extends BaseAdapter{
 	
 	static class ViewHolder
 	{
-		TextView txt_item_name, txt_item_code;
+		TextView txt_item_name, txt_item_code, txt_category;
 		Button btn_delete, btn_update;
 	}
 

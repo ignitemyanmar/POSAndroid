@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import android.app.AlertDialog;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.util.Log;
@@ -29,6 +30,7 @@ import com.ignite.pos.database.controller.ProfitController;
 import com.ignite.pos.database.util.DatabaseManager;
 import com.ignite.pos.model.ItemList;
 import com.ignite.pos.model.Profit;
+import com.ignite.pos.model.SaleVouncher;
 import com.ignite.pos.model.spSalePerson;
 import com.smk.calender.widget.SKCalender;
 import com.smk.calender.widget.SKCalender.Callbacks;
@@ -77,6 +79,7 @@ public class ProfitReportActivity extends SherlockActivity{
 		actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
 		
 		autocom_item_code = (AutoCompleteTextView)findViewById(R.id.autocom_item_code);
+		autocom_item_code.setTypeface(Typeface.createFromAsset(getAssets(),"fonts/ZawgyiOne2008.ttf"));
 		fromdate  = (Button)findViewById(R.id.btn_from_date);
 		todate = (Button)findViewById(R.id.btn_to_date);
 		search = (Button)findViewById(R.id.btnSearch);
@@ -114,37 +117,7 @@ public class ProfitReportActivity extends SherlockActivity{
 
 		public void onClick(View v) {
 			// TODO Auto-generated method stub
-			if (v == btn_print) {
-				SaveFileDialog fileDialog = new SaveFileDialog(ProfitReportActivity.this);
-		        fileDialog.setCallbackListener(new SaveFileDialog.Callback() {
-					
-					public void onCancel() {
-						// TODO Auto-generated method stub
-					}
 
-					public void onSave(String filename, boolean PDFChecked,
-							boolean ExcelChecked) {
-						// TODO Auto-generated method stub
-						if(PDFChecked){
-							//new SeatbyAgentPDFUtility(seatReports).createPdf(filename);
-						}
-						if(ExcelChecked){
-							
-							if (listProfit != null && listProfit.size() > 0) {
-								new ProfitReportExcelUtility(listProfit, filename).write();
-								SKToastMessage.showMessage(ProfitReportActivity.this, filename+".xls is saved in your Device External SD card!", SKToastMessage.SUCCESS);
-							}else {
-								alertDialog("No Data Yet");
-							}
-							
-						}
-						
-						
-					}
-				});
-		        fileDialog.show();
-		        return;
-			}
 			if (v == search)
 			{
 				if (checkFields()) {
@@ -154,7 +127,7 @@ public class ProfitReportActivity extends SherlockActivity{
 					dbManager = new ProfitController(ProfitReportActivity.this);
 					ProfitController profitController = (ProfitController) dbManager;
 					listProfit = new ArrayList<Object>();
-					listProfit = profitController.select(selectedItemCode, selectedFromDate, selectedToDate);
+					listProfit = profitController.selectByItemName(selectedItemCode, selectedFromDate, selectedToDate);
 					
 					Log.i("", "List Profit : "+listProfit.toString());
 					
@@ -263,6 +236,60 @@ public class ProfitReportActivity extends SherlockActivity{
 
 				  skCalender.show();
 			}
+			if (v == btn_print) {
+				SaveFileDialog fileDialog = new SaveFileDialog(ProfitReportActivity.this);
+		        fileDialog.setCallbackListener(new SaveFileDialog.Callback() {
+					
+					public void onCancel() {
+						// TODO Auto-generated method stub
+					}
+
+					public void onSave(String filename, boolean PDFChecked,
+							boolean ExcelChecked) {
+						// TODO Auto-generated method stub
+						if(PDFChecked){
+							//new SeatbyAgentPDFUtility(seatReports).createPdf(filename);
+						}
+						if(ExcelChecked){
+							
+							if (listProfit != null && listProfit.size() > 0) {
+								for (int j = 0; j < listProfit.size(); j++) {
+									
+									Profit profit = (Profit) listProfit.get(j);
+									
+									String profitDate = profit.getDate();
+									//Split sale date 
+									String[] parts = profitDate.split("-");
+									String year = parts[0]; 
+									String month = parts[1];
+									String day = parts[2];
+									
+									String formatedDate = day+"-"+month+"-"+year;
+									
+									((Profit)listProfit.get(j)).setDate(formatedDate);
+								}
+							}
+
+							List<String> searchInfoList = new ArrayList<String>();
+							searchInfoList.add(selectedItemCode);
+							searchInfoList.add(dmyDateFormat(selectedFromDate));
+							searchInfoList.add(dmyDateFormat(selectedToDate));
+							
+							if (listProfit != null && listProfit.size() > 0) {
+								new ProfitReportExcelUtility(listProfit, filename, searchInfoList).write();
+								SKToastMessage.showMessage(ProfitReportActivity.this, filename+".xls is saved in your Device External SD card!", SKToastMessage.SUCCESS);
+							}else {
+								alertDialog("No Data Yet");
+							}
+							
+						}
+						
+						
+					}
+				});
+		        fileDialog.show();
+		        return;
+			}
 		}
 	};
 	
@@ -283,12 +310,12 @@ public class ProfitReportActivity extends SherlockActivity{
 		for (int i = 0; i < listItemCode.size(); i++) {
 			
 			ItemList itemObj = (ItemList)listItemCode.get(i);
-			itemArray[i] = itemObj.getItemId(); 
+			itemArray[i] = itemObj.getItemName(); 
 			
 		}
 		
 		ArrayAdapter<String> adapter = 
-		        new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, itemArray);
+		        new ArrayAdapter<String>(this, R.layout.custom_autocomplete_view, itemArray);
 		autocom_item_code.setAdapter(adapter);
 		
 		// specify the minimum type of characters before drop-down list is shown
@@ -408,6 +435,18 @@ public class ProfitReportActivity extends SherlockActivity{
 		alert.setMessage(message+"!");
 		alert.show();
 		alert.setCancelable(true);
+	}
+	
+	private String dmyDateFormat(String date) {
+		// TODO Auto-generated method stub
+		String[] parts = date.split("-");
+		String year = parts[0]; 
+		String month = parts[1];
+		String day = parts[2];
+		
+		String formatedDate = day+"-"+month+"-"+year;
+		
+		return formatedDate;
 	}
 	
 }

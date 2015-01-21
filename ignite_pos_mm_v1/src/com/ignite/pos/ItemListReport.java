@@ -20,6 +20,8 @@ import com.ignite.pos.application.StockReportExcelUtility;
 import com.ignite.pos.database.controller.ItemListController;
 import com.ignite.pos.database.controller.PurchaseVoucherController;
 import com.ignite.pos.database.util.DatabaseManager;
+import com.ignite.pos.model.ItemList;
+import com.ignite.pos.model.SaleVouncher;
 import com.smk.skalertmessage.SKToastMessage;
 
 public class ItemListReport extends SherlockActivity{

@@ -22,6 +22,9 @@ public class SaleVouncher {
 	private String updateDate;
 	private Integer marginalPrice;
 	private Integer returnableQty;
+	private Integer updated;
+	private String free_checked;
+	private String old_sale_price;
 	
 	public SaleVouncher() {
 		super();
@@ -51,7 +54,7 @@ public class SaleVouncher {
 			String categoryid, String subcategoryid, String itemtotal,
 			String vdate, String total, String salePerson, String discount,
 			String qtyTotal, String totalQtyMaxi, String updatePerson,
-			String updateDate, Integer marginalPrice, Integer returnableQty) {
+			String updateDate, Integer marginalPrice, Integer returnableQty, String old_sale_price) {
 		super();
 		this.vid = vid;
 		this.cusname = cusname;
@@ -73,12 +76,13 @@ public class SaleVouncher {
 		this.updateDate = updateDate;
 		this.marginalPrice = marginalPrice;
 		this.returnableQty = returnableQty;
+		this.old_sale_price = old_sale_price;
 	}
 
 
 
 	public SaleVouncher(String vid, String itemid, String itemname, String qty,
-			String itemtotal, String total, String salePerson, String discount) {
+			String itemtotal, String total, String salePerson, String discount, Integer updated, String free_checked, String saleprice) {
 		super();
 		this.vid = vid;
 		this.itemid = itemid;
@@ -88,12 +92,15 @@ public class SaleVouncher {
 		this.total = total;
 		this.salePerson = salePerson;
 		this.discount = discount;
+		this.updated = updated;
+		this.free_checked = free_checked;
+		this.price = saleprice;
 	}
 
 
 	public SaleVouncher(String vid, String cusname, String itemid,
 			String itemname, String qty,String price,String categoryid, String subcategoryid, String itemtotal, String vdate,
-			String total, String salePerson, String discount) {
+			String total, String salePerson, String discount, String old_sale_price) {
 		super();
 		this.vid = vid;
 		this.cusname = cusname;
@@ -108,12 +115,13 @@ public class SaleVouncher {
 		this.total = total;
 		this.salePerson = salePerson;
 		this.discount = discount;
+		this.old_sale_price = old_sale_price;
 	}
 	
 	
 
 	public SaleVouncher(String itemid, String itemName, String VouID, String qty, String price,
-			String itemtotal, String total) {
+			String itemtotal, String total, Integer updated) {
 		super();
 		this.itemid = itemid;
 		this.itemname = itemName;
@@ -122,6 +130,7 @@ public class SaleVouncher {
 		this.price = price;
 		this.itemtotal = itemtotal;
 		this.total = total;
+		this.updated = updated;
 	}
 
 	public SaleVouncher(String vid,String cusname, String itemid, String itemname,
@@ -333,6 +342,42 @@ public class SaleVouncher {
 
 
 
+	public Integer getUpdated() {
+		return updated;
+	}
+
+
+
+	public void setUpdated(Integer updated) {
+		this.updated = updated;
+	}
+
+	
+
+	public String getFree_checked() {
+		return free_checked;
+	}
+
+
+
+	public void setFree_checked(String free_checked) {
+		this.free_checked = free_checked;
+	}
+
+
+
+	public String getOld_sale_price() {
+		return old_sale_price;
+	}
+
+
+
+	public void setOld_sale_price(String old_sale_price) {
+		this.old_sale_price = old_sale_price;
+	}
+
+
+
 	@Override
 	public String toString() {
 		return "SaleVouncher [vid=" + vid + ", cusname=" + cusname
@@ -345,13 +390,9 @@ public class SaleVouncher {
 				+ ", totalQtyMaxi=" + totalQtyMaxi + ", updatePerson="
 				+ updatePerson + ", updateDate=" + updateDate
 				+ ", marginalPrice=" + marginalPrice + ", returnableQty="
-				+ returnableQty + "]";
+				+ returnableQty + ", updated=" + updated + ", free_checked="
+				+ free_checked + ", old_sale_price=" + old_sale_price + "]";
 	}
-
-
-
-
-
 
 
 }

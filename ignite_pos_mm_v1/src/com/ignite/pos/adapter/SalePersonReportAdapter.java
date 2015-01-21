@@ -1,19 +1,15 @@
 package com.ignite.pos.adapter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.ignite.pos.R;
-import com.ignite.pos.R.color;
 import com.ignite.pos.SaleDetailReportActivity;
-import com.ignite.pos.database.controller.SaleVouncherController;
 import com.ignite.pos.database.util.DatabaseManager;
 import com.ignite.pos.model.SaleVouncher;
 import android.app.Activity;
 import android.content.Intent;
-import android.content.res.ColorStateList;
-import android.graphics.Color;
 import android.os.Bundle;
+import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,7 +27,8 @@ public class SalePersonReportAdapter extends BaseAdapter{
 	private DatabaseManager dbManager;
 	private List<Object> item_list;
 	private saleCallback mCallback;
-	private List<Object> sale_item_list;
+	private List<Object> sale_update_list;
+	private List<Object> sale_return_list;
 
 	public SalePersonReportAdapter(Activity aty, List<Object> listObj) {
 		super();
@@ -66,6 +63,7 @@ public class SalePersonReportAdapter extends BaseAdapter{
 			
 			holder = new ViewHolder();
 			
+			holder.txt_star = (TextView)convertView.findViewById(R.id.txt_star);
 			holder.txt_vno = (TextView) convertView.findViewById(R.id.txt_vNo);
 			holder.txt_date = (TextView)convertView.findViewById(R.id.txt_date);
 			holder.txt_sale_person = (TextView)convertView.findViewById(R.id.txt_sale_person_name);
@@ -85,32 +83,31 @@ public class SalePersonReportAdapter extends BaseAdapter{
 		holder.txt_sale_person.setText(sv.getSalePerson());
 		holder.txt_vou_total.setText(sv.getTotal());
 		
-		//Get Sale Voucher Item List 
-		//Show Color for Sale Return Voucher
-		dbManager = new SaleVouncherController(aty);
-		SaleVouncherController sv_controller = (SaleVouncherController)dbManager;
-		sale_item_list = new ArrayList<Object>();
-		sale_item_list = sv_controller.selectRecordByVouID(sv.getVid());
+		//Show Color for Sale Update Vouchers
+/*		dbManager = new SaleHistoryController(aty);
+		SaleHistoryController sh_controller = (SaleHistoryController)dbManager;
+		sale_update_list = new ArrayList<Object>();
+		sale_update_list = sh_controller.selectRecordByVouID(sv.getVid());
 		
-/*		if (sale_item_list != null && sale_item_list.size() > 0) {
-			
-			for (int i = 0; i < sale_item_list.size(); i++) {
-				SaleVouncher sVou = (SaleVouncher)sale_item_list.get(i);
+		Log.i("", "Sale Update List: "+sale_update_list.toString());*/
+		
+		Log.i("", "Updated Value: "+sv.getUpdated());
+		
+		//Show color for Update Vouchers
+		if (sv.getUpdated() != null) {
+			if (sv.getUpdated() == 1) {
 				
-				//Sale Return Color 
-				if (sVou.getReturnableQty() != 0) {
-					
-					Log.i("", "Enter Hereeeeeeeeeeeeeeee!! "+sVou.getVid());
-					
-					//holder.txt_vno.setText(sv.getVid()+"(return)");
-					//holder.txt_vno.setTextAppearance(aty, android.R.style.TextAppearance_Small);
-					//convertView.setBackgroundResource(R.color.bg_info);
-					
-					break;
-				}
+				Log.i("", "Enter here!...............");
+				convertView.setBackgroundResource(R.color.bg_warning);
+				holder.txt_vno.setText(Html.fromHtml(sv.getVid()+"(update) <font color=red> * </font>"));
+				
+			}else {
+				convertView.setBackgroundResource(R.color.white);
+				holder.txt_vno.setText(sv.getVid());
 			}
-		}*/
+		}
 
+		
 		holder.btn_view_detail.setOnClickListener(new OnClickListener() {
 			
 			public void onClick(View v) {
@@ -167,7 +164,7 @@ public class SalePersonReportAdapter extends BaseAdapter{
 
 	static class ViewHolder {
 		
-		TextView txt_vno, txt_date, txt_sale_person, txt_vou_total;
+		TextView txt_vno, txt_date, txt_sale_person, txt_vou_total, txt_star;
 		Button btn_view_detail, btn_vou_update, btn_delete;
 	}
 

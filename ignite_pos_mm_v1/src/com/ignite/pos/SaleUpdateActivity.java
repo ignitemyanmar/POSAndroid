@@ -2,6 +2,7 @@ package com.ignite.pos;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import android.annotation.SuppressLint;
@@ -30,8 +31,9 @@ import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockActivity;
 import com.ignite.pos.adapter.CategoriesListAdapter;
 import com.ignite.pos.adapter.ItemGridAdapter;
-import com.ignite.pos.adapter.ItemListAdapter;
+import com.ignite.pos.adapter.UpdateItemListAdapter;
 import com.ignite.pos.adapter.SubCategoriesListAdapter;
+import com.ignite.pos.adapter.UpdateItemListAdapter;
 import com.ignite.pos.application.DeviceUtil;
 import com.ignite.pos.database.controller.CategoryController;
 import com.ignite.pos.database.controller.ItemListController;
@@ -76,13 +78,17 @@ public class SaleUpdateActivity  extends SherlockActivity{
 	private TextView plus, minus;
 	private TextView deleteItem, Update;
 	private TextView Discount;
-	public static ItemListAdapter itemAdapter;
+	public static UpdateItemListAdapter itemAdapter;
 	public String currentDate;
 	private String AdminName;
 	private String VoucherNo;
 	List<Object> vouItemList;
-	List<Object> oldItems;
 	private TextView txt_panel_name;
+	private String currentDateTime;
+	private String currentTime;
+	private EditText edt_discount_amount;
+	private TextView txt_disc_show;
+	private Button btn_discount_ok;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -102,7 +108,7 @@ public class SaleUpdateActivity  extends SherlockActivity{
 		txt_panel_name = (TextView)actionBar.getCustomView().findViewById(R.id.txt_panel_name);
 		txt_panel_name.setVisibility(View.VISIBLE);
 		//txt_panel_name.setText("Update Sale");
-		txt_panel_name.setText("အေရာင္းေဘာင္ခ်ာျပင္ျခင္း");
+		txt_panel_name.setText("အ ေရာင္း ေဘာင္ ခ်ာ ျပင္ျခင္း");
 		
 		//Get Admin Name 
 		Log.i("", "Admin Name: "+AdminName);
@@ -134,12 +140,16 @@ public class SaleUpdateActivity  extends SherlockActivity{
 		plus = (TextView)findViewById(R.id.btnPlus);
 		minus = (TextView)findViewById(R.id.btnMinus);
 		Discount = (TextView)findViewById(R.id.txtDiscount);
+		edt_discount_amount = (EditText)findViewById(R.id.edt_discount_amount);
+		txt_disc_show = (TextView)findViewById(R.id.txt_disc_show);
+		btn_discount_ok = (Button)findViewById(R.id.btn_dsicount_ok);
 		deleteItem = (TextView)findViewById(R.id.btnDelete_items);
 		//deleteItem.setVisibility(View.GONE);
 		Update = (TextView)findViewById(R.id.btnCheckout);
 		//Update.setText("Update");
-		Update.setText("ျပင္မည္");
+		Update.setText("ျပင္ မည္");
 		
+		btn_discount_ok.setOnClickListener(clickListener);
 		search.setOnClickListener(clickListener);
 		plus.setOnClickListener(clickListener);
 		minus.setOnClickListener(clickListener);
@@ -154,20 +164,59 @@ public class SaleUpdateActivity  extends SherlockActivity{
 		vouncherno.setText(VoucherNo);
 		
 		getVoucherItems();
-		itemAdapter = new ItemListAdapter(this,Cart_Item_List);
+		
+		Log.i("", "Car Item lists + old sale price: "+Cart_Item_List.toString());
+		
+		itemAdapter = new UpdateItemListAdapter(this,Cart_Item_List);
 		itemAdapter.setCallbackListiner(callback);
 		lvitem_list.setAdapter(itemAdapter);
 		setListViewHeightBasedOnChildren(lvitem_list);		
 		
 		if (Cart_Item_List.size() > 0) {
-			Discount.setText(((SaleVouncher)Cart_Item_List.get(0)).getDiscount());
-			
+			//Discount.setText(((SaleVouncher)Cart_Item_List.get(0)).getDiscount());
+			txt_disc_show.setText(((SaleVouncher)Cart_Item_List.get(0)).getDiscount());
 			priceTotal.setText(((SaleVouncher)Cart_Item_List.get(0)).getTotal());
 		}
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		currentDate = sdf.format(new Date());
 		
+		//Date & Time Format
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		Calendar cal = Calendar.getInstance();
+		currentDateTime = dateFormat.format(cal.getTime());
+		//System.out.println("Current Date Time : " + dateFormat.format(cal.getTime()));
+		
+		SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
+		currentTime = timeFormat.format(new Date());
+		
+		getItems();
+		
+	}
+	
+	private void getItems(){
+		if(!clicked)
+		{
+			clicked = true;
+			//change_mode.setText("Change Scanner Mode");
+			change_mode.setText("Scanner ႏွင့္ အသံုးျပဳရန္");
+			categories.setVisibility(View.VISIBLE);
+			getCategories();
+			scanner_mode.setVisibility(LinearLayout.INVISIBLE);
+			picker_mode.setVisibility(LinearLayout.VISIBLE);
+			scanner_mode.setTranslationX(DeviceUtil.getInstance(SaleUpdateActivity.this).getWidth());
+			picker_mode.setTranslationX(0);
+		}
+		else{
+			clicked = false;
+			//change_mode.setText("Change Picker Mode");
+			change_mode.setText("ပစၥည္းမ်ားေရြး၍ အသံုးျပဳရန္");
+			categories.setVisibility(View.GONE);
+			scanner_mode.setVisibility(LinearLayout.VISIBLE);
+			picker_mode.setVisibility(LinearLayout.INVISIBLE);
+			scanner_mode.setTranslationX(0);
+			picker_mode.setTranslationX(DeviceUtil.getInstance(SaleUpdateActivity.this).getWidth());
+		}
 	}
 	
 	private void getVoucherItems() {
@@ -175,6 +224,19 @@ public class SaleUpdateActivity  extends SherlockActivity{
 		dbManager = new SaleVouncherController(this);
 		SaleVouncherController svControl = (SaleVouncherController)dbManager;
 		Cart_Item_List = svControl.selectRecordByVouID(VoucherNo);
+		
+		dbManager = new ItemListController(this);
+		ItemListController itemControl = (ItemListController)dbManager;
+		List<Object> itemL = new ArrayList<Object>();
+		
+		//Get old sale price from item table
+		for (int i = 0; i < Cart_Item_List.size(); i++) {
+			SaleVouncher sv = (SaleVouncher)Cart_Item_List.get(i);
+			itemL = itemControl.select(sv.getItemid());
+			
+			sv.setOld_sale_price(((ItemList)itemL.get(0)).getSalePrice());
+		}
+		
 		oldVDate = ((SaleVouncher)Cart_Item_List.get(0)).getVdate();
 		
 		Log.i("", "Item List by Sale Vou ID: "+Cart_Item_List.toString());
@@ -192,7 +254,6 @@ public class SaleUpdateActivity  extends SherlockActivity{
 			TextView txt_itemName = (TextView) lstItemView.findViewById(R.id.txtItem_name);
 			String selected_item_name = txt_itemName.getText().toString(); 		
 			removeItemFromList(position, selected_item_name);
-			
 			return true;
 		}
 		
@@ -210,7 +271,12 @@ public class SaleUpdateActivity  extends SherlockActivity{
         AlertDialog.Builder alert = new AlertDialog.Builder(
                 SaleUpdateActivity.this);
     
-        alert.setTitle("Delete Item - "+selected_item_name+" ?");
+       // alert.setTitle("Delete Item - "+selected_item_name+" ?");
+		View dialogView = View.inflate(SaleUpdateActivity.this, R.layout.dialog_title, null);
+		TextView dialogTitle = (TextView) dialogView.findViewById(R.id.txt_dialog_title);
+		//dialogTitle.setText("Add Prices | "+item_name);
+		dialogTitle.setText(selected_item_name+" ကုိဖ်က္မွာလား ?");
+		alert.setCustomTitle(dialogView);
         
         alert.setPositiveButton("YES", new DialogInterface.OnClickListener() {
         	
@@ -249,7 +315,7 @@ public class SaleUpdateActivity  extends SherlockActivity{
 							List<Object> shList = new ArrayList<Object>();
 							
 							shList.add(new SaleHistory(oldSv.getVid(), oldSv.getItemid(), Integer.valueOf(oldSv.getQty())
-									, 0, currentDate, login.getText().toString(), "delete"));
+									, 0, currentDateTime, login.getText().toString(), "delete"));
 							
 							shControl.save(shList);
 							
@@ -290,7 +356,7 @@ public class SaleUpdateActivity  extends SherlockActivity{
 							dbManager = new ProfitController(SaleUpdateActivity.this);
 							ProfitController profitControl = (ProfitController)dbManager;
 							List<Object> profitObj = new ArrayList<Object>();
-							profitObj = profitControl.selectByVidItemidDate(VoucherNo, newSv.getItemid(), newSv.getVdate());
+							profitObj = profitControl.selectByVidItemidDate(VoucherNo, newSv.getItemname(), newSv.getVdate());
 							
 							if (profitObj.size() > 0 && profitObj != null) {
 								
@@ -326,12 +392,12 @@ public class SaleUpdateActivity  extends SherlockActivity{
             	itemAdapter.notifyDataSetChanged();
             	setListViewHeightBasedOnChildren(lvitem_list);
             	
-            	Integer newGrandTotal = defaultGrandTotal() -  ( defaultGrandTotal() * Integer.valueOf(Discount.getText().toString()) / 100); 
-    			priceTotal.setText(newGrandTotal+"");
+            	//Integer newGrandTotal = defaultGrandTotal() -  ( defaultGrandTotal() * Integer.valueOf(Discount.getText().toString()) / 100); 
+    			priceTotal.setText(defaultGrandTotal()+"");
     			
     			if(Cart_Item_List.size() == 0){
-    				priceTotal.setText("0.00");
-    				Discount.setText("0");
+    				priceTotal.setText("0");
+    				//Discount.setText("0");
     			}
 			}
 		});
@@ -358,8 +424,6 @@ public class SaleUpdateActivity  extends SherlockActivity{
 		SP_buyername.setAdapter(new BuyerSpinnerAdapter(this,buyer_obj));
 		Log.i("","Buyer List:" + buyer_obj.toString());
 	}*/
-    
-    
 	
 	private OnClickListener clickListener = new OnClickListener() {
 
@@ -367,28 +431,7 @@ public class SaleUpdateActivity  extends SherlockActivity{
 			// TODO Auto-generated method stub
 			if(v == change_mode)
 			{
-				if(!clicked)
-				{
-					clicked = true;
-					//change_mode.setText("Change Scanner Mode");
-					change_mode.setText("Scanner ႏွင့္ အသံုးျပဳရန္");
-					categories.setVisibility(View.VISIBLE);
-					getCategories();
-					scanner_mode.setVisibility(LinearLayout.INVISIBLE);
-					picker_mode.setVisibility(LinearLayout.VISIBLE);
-					scanner_mode.setTranslationX(DeviceUtil.getInstance(SaleUpdateActivity.this).getWidth());
-					picker_mode.setTranslationX(0);
-				}
-				else{
-					clicked = false;
-					//change_mode.setText("Change Picker Mode");
-					change_mode.setText("ပစၥည္းမ်ားေရြး၍ အသံုးျပဳရန္");
-					categories.setVisibility(View.GONE);
-					scanner_mode.setVisibility(LinearLayout.VISIBLE);
-					picker_mode.setVisibility(LinearLayout.INVISIBLE);
-					scanner_mode.setTranslationX(0);
-					picker_mode.setTranslationX(DeviceUtil.getInstance(SaleUpdateActivity.this).getWidth());
-				}
+				getItems();
 			}
 			if(v == search)
 			{
@@ -414,15 +457,11 @@ public class SaleUpdateActivity  extends SherlockActivity{
 					
 					Integer discount_amount = ( defaultGrandTotal() * discount_percent ) / 100; 
 					Integer discounted_total = defaultGrandTotal() - discount_amount ;
-					priceTotal.setText(discounted_total+"");
+					//priceTotal.setText(discounted_total+"");
 				} else {
 					
 					//plus.setClickable(false);
-					AlertDialog.Builder alert = new AlertDialog.Builder(SaleUpdateActivity.this);
-					alert.setTitle("Warning");
-					alert.setMessage("No Item!");
-					alert.show();
-					alert.setCancelable(true);
+					warningAlertMM();
 				}
 			}
 			if(v == minus)
@@ -438,16 +477,12 @@ public class SaleUpdateActivity  extends SherlockActivity{
 						
 						Integer discount_amount = ( defaultGrandTotal() * discount_percent ) / 100; 
 						Integer discounted_total = defaultGrandTotal() - discount_amount ;
-						priceTotal.setText(discounted_total+"");
+						//priceTotal.setText(discounted_total+"");
 					}
 				} else {
 					
 					//minus.setClickable(false);
-					AlertDialog.Builder alert = new AlertDialog.Builder(SaleUpdateActivity.this);
-					alert.setTitle("Warning");
-					alert.setMessage("No Item!");
-					alert.show();
-					alert.setCancelable(true);
+					warningAlertMM();
 				}
 				
 			}
@@ -461,36 +496,62 @@ public class SaleUpdateActivity  extends SherlockActivity{
 				} else {
 					
 					//deleteItem.setClickable(false);
-					AlertDialog.Builder alert = new AlertDialog.Builder(SaleUpdateActivity.this);
-					alert.setTitle("Warning");
-					alert.setMessage("No Item!");
-					alert.show();
-					alert.setCancelable(true);
+					warningAlertMM();
 				}
 				
 			}
+			if (v == btn_discount_ok) {
+				if (edt_discount_amount.getText().length() == 0) {
+					edt_discount_amount.setError("Enter discount amount!");
+				}else {
+					
+					if (Cart_Item_List.size() > 0) {
+						
+						Integer discount_amount = Integer.valueOf(edt_discount_amount.getText().toString());
+						
+						//if (discount_amount < defaultGrandTotal()) {
+							
+							Integer discounted_total = defaultGrandTotal() - discount_amount;
+							
+							if (discounted_total <= 0) {
+								SKToastMessage.showMessage(getApplicationContext(), "Discount amount must be less than total amount!", SKToastMessage.WARNING);
+								//priceTotal.setText("0.00");
+							}else{
+								txt_disc_show.setText(edt_discount_amount.getText().toString());
+								//priceTotal.setText(discounted_total+"");
+							}
+							
+							edt_discount_amount.getText().clear();
+						//}else {
+						//	edt_discount_amount.setError("Check discount amount");
+						//}						
+						
+					} else {
+						warningAlertMM();
+					}
+				}
+			}
 			if(v == Update)
 			{
-				if (Cart_Item_List.size() != 0) {
+				if (Cart_Item_List.size() > 0) {
 					
 					//Update.setEnabled(true);
 					if (AdminName.equals("-")) {
 						SKToastMessage.showMessage(getApplicationContext(), "Please log in with Admin account first!", SKToastMessage.WARNING);
 					}else {
-						updateVoucher();
-						finish();
+						
+						if (txt_disc_show.getText() != null) {
+							updateVoucher();
+							finish();
+						}else {
+							SKToastMessage.showMessage(getApplicationContext(), "Enter discount amount [or] zero", SKToastMessage.WARNING);
+						}
 					}					
 					
 				} else {
 					
 					finish();
 					
-					/*//Update.setClickable(false);
-					AlertDialog.Builder alert = new AlertDialog.Builder(SaleUpdateActivity.this);
-					alert.setTitle("Warning");
-					alert.setMessage("No Item!");
-					alert.show();
-					alert.setCancelable(true);*/
 				}
 			}
 		}
@@ -499,7 +560,7 @@ public class SaleUpdateActivity  extends SherlockActivity{
 	
 	protected void removeAllFromList() {
 		// TODO Auto-generated method stub
-
+		
 		List<Object> oldItemObj;
 		
 	        for (int i = 0; i < Cart_Item_List.size(); i++) {
@@ -534,7 +595,7 @@ public class SaleUpdateActivity  extends SherlockActivity{
 							List<Object> shList = new ArrayList<Object>();
 							
 							shList.add(new SaleHistory(oldSv.getVid(), oldSv.getItemid(), Integer.valueOf(oldSv.getQty())
-									, 0, currentDate, login.getText().toString(), "delete"));
+									, 0, currentDateTime, login.getText().toString(), "delete"));
 							
 							shControl.save(shList);
 							
@@ -575,7 +636,7 @@ public class SaleUpdateActivity  extends SherlockActivity{
 							dbManager = new ProfitController(SaleUpdateActivity.this);
 							ProfitController profitControl = (ProfitController)dbManager;
 							List<Object> profitObj = new ArrayList<Object>();
-							profitObj = profitControl.selectByVidItemidDate(VoucherNo, newSv.getItemid(), newSv.getVdate());
+							profitObj = profitControl.selectByVidItemidDate(VoucherNo, newSv.getItemname(), newSv.getVdate());
 							
 							if (profitObj.size() > 0 && profitObj != null) {
 								
@@ -613,8 +674,9 @@ public class SaleUpdateActivity  extends SherlockActivity{
 			setListViewHeightBasedOnChildren(lvitem_list);
 			
 			if(Cart_Item_List.size() == 0){
-				priceTotal.setText("0.00");
-				Discount.setText("0");
+				priceTotal.setText("0");
+				txt_disc_show.setText("0");
+				//Discount.setText("0");
 			}
 	}
 	
@@ -647,7 +709,7 @@ public class SaleUpdateActivity  extends SherlockActivity{
 			((SaleVouncher)Cart_Item_List.get(i)).setVdate(((SaleVouncher) Cart_Item_List.get(i)).getVdate());
 			((SaleVouncher)Cart_Item_List.get(i)).setTotal(priceTotal.getText().toString());
 			((SaleVouncher)Cart_Item_List.get(i)).setSalePerson(login.getText().toString());
-			((SaleVouncher) Cart_Item_List.get(i)).setDiscount(Discount.getText().toString());
+			((SaleVouncher) Cart_Item_List.get(i)).setDiscount(txt_disc_show.getText().toString());
 			
 			//Add Sale Voucher
 			saleVouncher.add((Object) Cart_Item_List.get(i));
@@ -670,12 +732,12 @@ public class SaleUpdateActivity  extends SherlockActivity{
 				List<Object> updateObj = new ArrayList<Object>();
 				updateObj.add(new SaleVouncher(VoucherNo, sv.getItemid()
 						, sv.getItemname(), sv.getQty(), sv.getItemtotal()
-						, priceTotal.getText().toString(), login.getText().toString(), Discount.getText().toString()));
-				
+						, priceTotal.getText().toString(), login.getText().toString()
+						, txt_disc_show.getText().toString(), 1, sv.getFree_checked(), sv.getPrice()));
 				
 				dbControl.updateRecByVouIDItemID(updateObj);
 				
-				Log.i("", "Voucher after Update: "+dbControl.selectRecordByVouID(VoucherNo));
+				Log.i("", "Voucher after Update: "+dbControl.selectRecordByVouID(VoucherNo).toString());
 				
 				//Save in Sale History (Update)
 				dbManager = new SaleHistoryController(SaleUpdateActivity.this);
@@ -683,7 +745,7 @@ public class SaleUpdateActivity  extends SherlockActivity{
 				List<Object> shList = new ArrayList<Object>();
 				
 				shList.add(new SaleHistory(sv.getVid(), sv.getItemid(), Integer.valueOf(sv.getOldQty())
-						, Integer.valueOf(sv.getQty()), currentDate, login.getText().toString(), "update"));
+						, Integer.valueOf(sv.getQty()), currentDateTime, login.getText().toString(), "update"));
 				
 				shControl.save(shList);
 				
@@ -703,7 +765,7 @@ public class SaleUpdateActivity  extends SherlockActivity{
 				List<Object> shList = new ArrayList<Object>();
 				
 				shList.add(new SaleHistory(sv.getVid(), sv.getItemid(), 0
-						, Integer.valueOf(sv.getQty()), currentDate, login.getText().toString(), "add new"));
+						, Integer.valueOf(sv.getQty()), currentDateTime, login.getText().toString(), "add new"));
 				
 				shControl.save(shList);
 				
@@ -730,7 +792,7 @@ public class SaleUpdateActivity  extends SherlockActivity{
 				
 				Log.i("", "Sale Voucher: "+sv.toString());
 				
-				ledger_list = ledger_control.select(sv.getItemid(), sv.getVdate(), sv.getVdate());
+				ledger_list = ledger_control.selectByItemName(sv.getItemname(), sv.getVdate(), sv.getVdate());
 				
 				Log.i("", "Ledger List: "+ledger_list.toString());
 				
@@ -809,11 +871,11 @@ public class SaleUpdateActivity  extends SherlockActivity{
 			ProfitController profit_control = (ProfitController)dbManager;
 			profit_list = new ArrayList<Object>();
 			
-			for (int i = 0; i < Cart_Item_List.size(); i++) {
+			for (int i = 0; i < saleVouncher.size(); i++) {
 				
-				SaleVouncher sv = (SaleVouncher) Cart_Item_List.get(i);
+				SaleVouncher sv = (SaleVouncher) saleVouncher.get(i);
 				
-				profit_list = profit_control.selectByVidItemidDate(VoucherNo, sv.getItemid(), sv.getVdate());
+				profit_list = profit_control.selectByVidItemidDate(VoucherNo, sv.getItemname(), sv.getVdate());
 				
 				Log.i("", "Profit Obj: "+profit_list.toString());
 				
@@ -828,17 +890,35 @@ public class SaleUpdateActivity  extends SherlockActivity{
 							
 					Integer newQty = Integer.valueOf(sv.getQty());
 					
-					Log.i("", "New Sale Qty: "+newQty);
+					Log.i("", "New Sale Qty in profit: "+newQty);
 							
-					Integer profitAmt =  ( profit.getSalePrice() * newQty ) - ( profit.getMarginalPrice() * newQty);
+					Integer discount = Integer.valueOf(txt_disc_show.getText().toString()) / saleVouncher.size();
+					Integer profitFinal = 0;
+					Integer salePrice = 0;
+					
+					if (sv.getFree_checked() != null) {
+						if (sv.getFree_checked().equals("free")) {
 							
+							Log.i("", "Enter here1......................: "+sv.getFree_checked());
+							salePrice = 0;
+							Integer profitAmt = 0 - ( profit.getMarginalPrice() * newQty);
+							profitFinal = profitAmt - discount;
+						}
+					}else {
+						Log.i("", "Enter here2......................: "+sv.getFree_checked());
+							salePrice = Integer.valueOf(sv.getPrice());
+							Log.i("", "Enter here2 sale price: "+salePrice);
+							Integer profitAmt = ( Integer.valueOf(sv.getPrice()) * newQty ) - ( profit.getMarginalPrice() * newQty);
+							profitFinal = profitAmt - discount;
+					}
+					
 					updateProfitList.add(new Profit(profit.getItemId(), profit.getDate(), Integer.valueOf(profit.getMarginalPrice())
-								, Integer.valueOf(profit.getSalePrice())
-								, newQty, profitAmt, VoucherNo));
+								, salePrice
+								, newQty, profitFinal, profit.getVid(), profit.getItemName(), discount));
 							
 					profit_control.updateTotalPriceRecord(updateProfitList);
 							
-					Log.i("", "After Update Sale Total in Profit: "+profit_control.selectByVidItemidDate(VoucherNo, sv.getItemid(), sv.getVdate()).toString());
+					Log.i("", "After Update Sale Total in Profit: "+profit_control.selectByVidItemidDate(VoucherNo, sv.getItemname(), sv.getVdate()));
 							
 				}else {
 					//Get Item Object by ItemID
@@ -847,14 +927,29 @@ public class SaleUpdateActivity  extends SherlockActivity{
 					
 					List<Object> profitList = new ArrayList<Object>();
 					
-					Integer profitAmt = Integer.valueOf(sv.getItemtotal()) - (Integer.valueOf(itemObj.getMarginalPrice()) * Integer.valueOf(sv.getQty()));
+					Integer discount = Integer.valueOf(txt_disc_show.getText().toString()) / saleVouncher.size();
+					Integer profitFinal = 0;
+					Integer salePrice = 0;
+					
+					if (sv.getFree_checked() != null) {
+						if (sv.getFree_checked().equals("free")) {
+							
+							salePrice = 0;
+							Integer profitAmt = 0 - (Integer.valueOf(itemObj.getMarginalPrice()) * Integer.valueOf(sv.getQty()));
+							profitFinal = profitAmt - discount;
+						}
+					}else {
+							salePrice = Integer.valueOf(sv.getPrice());
+							Integer profitAmt = Integer.valueOf(sv.getItemtotal()) - (Integer.valueOf(itemObj.getMarginalPrice()) * Integer.valueOf(sv.getQty()));
+							profitFinal = profitAmt - discount;
+					}
 					
 					profitList.add(new Profit(sv.getItemid(), sv.getVdate(), Integer.valueOf(itemObj.getMarginalPrice())
-							, Integer.valueOf(sv.getPrice())
-							, Integer.valueOf(sv.getQty()), profitAmt, VoucherNo));
+							, salePrice
+							, Integer.valueOf(sv.getQty()), profitFinal, sv.getItemname(), discount));
 					
 					profit_control.save(profitList);
-					Log.i("", "Profit List after Save: "+profit_control.selectByVidItemidDate(VoucherNo, sv.getItemid(), sv.getVdate()).toString());
+					Log.i("", "Profit List after Save: "+profit_control.selectByVidItemidDate(VoucherNo, sv.getItemname(), sv.getVdate()).toString());
 				}
 			}//End Loop for Profit Update
 			
@@ -931,6 +1026,9 @@ public class SaleUpdateActivity  extends SherlockActivity{
 				if(((ItemList)list_obj.get(0)).getItemId().equals(((SaleVouncher)Cart_Item_List.get(i)).getItemid()))
 				{
 					isExist = true;
+					
+					SaleVouncher sv = (SaleVouncher)Cart_Item_List.get(i);
+					
 					Integer plusOne = Integer.valueOf(((SaleVouncher)Cart_Item_List.get(i)).getQty()) + 1 ; 
 					
 						ItemList itemList = (ItemList) list_obj.get(0);
@@ -942,32 +1040,59 @@ public class SaleUpdateActivity  extends SherlockActivity{
 							((SaleVouncher) Cart_Item_List.get(i)).setQty(plusOne.toString());
 						}
 					
-					break;
+						List<Object> cartL;
+						//Calculate Total after check free items
+						if (sv.getFree_checked() != null) {
+							if (sv.getFree_checked().equals("free")) {
+								
+								View view2 = (View) lvitem_list.getChildAt(i);
+								TextView txt_sale_price = (TextView) view2.findViewById(R.id.txtUnitPrice);										
+								
+								((SaleVouncher)Cart_Item_List.get(i)).setPrice(txt_sale_price.getText().toString());
+
+							}else {
+								((SaleVouncher)Cart_Item_List.get(i)).setPrice(itemObj.getSalePrice());
+
+							}
+						}else {
+							((SaleVouncher)Cart_Item_List.get(i)).setPrice(itemObj.getSalePrice());
+						}
+						
+						break;
 				}
-			}
-			
-			if(!isExist){
-				
-				if (((ItemList)list_obj.get(0)).getSalePrice().length() > 0) {
-					
-				}
-				cartItems.add(new SaleVouncher(vouncherno.getText().toString(), buyerName, ((ItemList) list_obj.get(0)).getItemId()
-						, ((ItemList)list_obj.get(0)).getItemName(), "1"
-						, ((ItemList)list_obj.get(0)).getSalePrice(), ((ItemList)list_obj.get(0)).getCategoryId()
-						, ((ItemList)list_obj.get(0)).getSubCategoryId(), "0", currentDate, "0", SaleLoginActivity.strname, "0"));
-				Cart_Item_List.addAll(cartItems);
-			}
+			}//For Loop of Cart Item List
 			
 			itemAdapter.notifyDataSetChanged();
 			setListViewHeightBasedOnChildren(lvitem_list);
-			//Discount.setText("0");
+			priceTotal.setText(defaultGrandTotal()+"");
 			
-			Integer newGrandTotal = defaultGrandTotal() -  ( defaultGrandTotal() * Integer.valueOf(Discount.getText().toString()) / 100); 
-			priceTotal.setText(newGrandTotal+"");
+			if(!isExist){
+				
+				String qty = ((ItemList)list_obj.get(0)).getQty();
+				
+				if (((ItemList)list_obj.get(0)).getSalePrice() != null && qty != null) {
+					
+					if (((ItemList)list_obj.get(0)).getSalePrice().length() > 0 && Integer.valueOf(qty) > 0) {
+						cartItems.add(new SaleVouncher(vouncherno.getText().toString(), buyerName, ((ItemList) list_obj.get(0)).getItemId()
+								, ((ItemList)list_obj.get(0)).getItemName(), "1"
+								, ((ItemList)list_obj.get(0)).getSalePrice(), ((ItemList)list_obj.get(0)).getCategoryId()
+								, ((ItemList)list_obj.get(0)).getSubCategoryId(), "0", currentDate, "0", SaleLoginActivity.strname, "0", ((ItemList)list_obj.get(0)).getSalePrice()));
+					}else {
+						SKToastMessage.showMessage(getApplicationContext(), "Item No.("+scan.getText().toString()+") no have Stock!", SKToastMessage.INFO);
+					}
+				}else {
+					SKToastMessage.showMessage(getApplicationContext(), "Item No.("+scan.getText().toString()+") no have Stock!", SKToastMessage.INFO);
+				}
+				
+				Cart_Item_List.addAll(cartItems);
+				
+				itemAdapter.notifyDataSetChanged();
+				setListViewHeightBasedOnChildren(lvitem_list);
+				priceTotal.setText(defaultGrandTotal()+"");
+			}
 		}else {
 			SKToastMessage.showMessage(getApplicationContext(), "Item No.("+scan.getText().toString()+") doesn't have!", SKToastMessage.INFO);
 		}
-		
 	}
 
 	private void getCategories()
@@ -982,6 +1107,15 @@ public class SaleUpdateActivity  extends SherlockActivity{
 			grid_categories.setChoiceMode(GridView.CHOICE_MODE_SINGLE);
 			setGridViewHeightBasedOnChildren(grid_categories, 2);
 			grid_categories.setOnItemClickListener(categoryClickListener);
+		}
+		
+		if (list_obj.size() == 0) {
+			
+			AlertDialog.Builder alert = new AlertDialog.Builder(SaleUpdateActivity.this);
+			alert.setTitle("Info");
+			alert.setMessage("No Category Yet!");
+			alert.show();
+			alert.setCancelable(true);
 		}
 		
 	}
@@ -1057,6 +1191,7 @@ public class SaleUpdateActivity  extends SherlockActivity{
 			}
 		}
 	};
+	
 	protected String oldVDate;
 	
 	private OnItemClickListener itemClickListener = new OnItemClickListener(){
@@ -1091,6 +1226,9 @@ public class SaleUpdateActivity  extends SherlockActivity{
 					if(itemObj.getItemId().equals(((SaleVouncher)Cart_Item_List.get(i)).getItemid())){
 						
 						isExist = true;
+						
+						SaleVouncher sv = (SaleVouncher)Cart_Item_List.get(i);
+						
 						Integer plusOne = Integer.valueOf(((SaleVouncher)Cart_Item_List.get(i)).getQty()) + 1 ; 
 
 						if (listItem.size() > 0) {
@@ -1104,38 +1242,57 @@ public class SaleUpdateActivity  extends SherlockActivity{
 							}
 						}
 						
-						break;
+						List<Object> cartL;
+						//Calculate Total after check free items
+						if (sv.getFree_checked() != null) {
+							//if (sv.getFree_checked().equals("free")) {
+								
+								View view2 = (View) lvitem_list.getChildAt(i);
+								TextView txt_sale_price = (TextView) view2.findViewById(R.id.txtUnitPrice);										
+								
+								((SaleVouncher)Cart_Item_List.get(i)).setPrice(txt_sale_price.getText().toString());
+
+							//}else {
+								//((SaleVouncher)Cart_Item_List.get(i)).setPrice(itemObj.getSalePrice());
+
+							//}
+						}else {
+							((SaleVouncher)Cart_Item_List.get(i)).setPrice(itemObj.getSalePrice());
+						}
 						
+						break;
 					}
-				}
+				}//For Loop of Cart Item List
+				
+				itemAdapter.notifyDataSetChanged();
+				setListViewHeightBasedOnChildren(lvitem_list);
+				priceTotal.setText(defaultGrandTotal()+"");
 				
 				//If no item yet
 				if(!isExist){
 						
-					if (itemObj.getSalePrice().length() > 0) {
-						
-						cartItems.add(new SaleVouncher(vouncherno.getText().toString(), buyerName
-								, itemObj.getItemId(), itemObj.getItemName(), "1", "0", itemObj.getSalePrice()
-								, itemObj.getCategoryId(), itemObj.getSubCategoryId(), "0", oldVDate
-								, "0", SaleLoginActivity.strname, "0", "0", "0", "", "", 0, 0));
+					if (itemObj != null) {
+						if (itemObj.getSalePrice().length() > 0 && itemObj.getSalePrice() != null) {
+							
+							cartItems.add(new SaleVouncher(vouncherno.getText().toString(), buyerName
+									, itemObj.getItemId(), itemObj.getItemName(), "1", "0", itemObj.getSalePrice()
+									, itemObj.getCategoryId(), itemObj.getSubCategoryId(), "0", oldVDate
+									, "0", SaleLoginActivity.strname, "0", "0", "0", "", "", 0, 0, itemObj.getSalePrice()));
+						}else {
+							SKToastMessage.showMessage(SaleUpdateActivity.this, "Sale Price not available!", SKToastMessage.WARNING);
+						}
 					}else {
-						SKToastMessage.showMessage(SaleUpdateActivity.this, "Pls input Sale Price in New Purchase Voucher", SKToastMessage.WARNING);
+						SKToastMessage.showMessage(SaleUpdateActivity.this, "Sale Price not available!", SKToastMessage.WARNING);
 					}
 					
+					Cart_Item_List.addAll(cartItems);
+					Log.i("", "Cart Item List: "+Cart_Item_List.toString());
+
+					itemAdapter.notifyDataSetChanged();
+					setListViewHeightBasedOnChildren(lvitem_list);
+					priceTotal.setText(defaultGrandTotal()+"");
 				}
-				
-				Cart_Item_List.addAll(cartItems);
-				
-				Log.i("", "Cart Item List: "+Cart_Item_List.toString());
 			}
-			
-			itemAdapter.notifyDataSetChanged();
-			setListViewHeightBasedOnChildren(lvitem_list);
-			//Discount.setText("0");
-			
-			Integer newGrandTotal = defaultGrandTotal() -  ( defaultGrandTotal() * Integer.valueOf(Discount.getText().toString()) / 100); 
-			priceTotal.setText(newGrandTotal+"");
-			
 		}
 	};
 
@@ -1157,14 +1314,14 @@ public class SaleUpdateActivity  extends SherlockActivity{
 	private Integer stock_qty; 
 	
 	//Callback for Item Qty (+) (-)
-	private ItemListAdapter.Callback callback = new  ItemListAdapter.Callback() {
+	private UpdateItemListAdapter.Callback callback = new  UpdateItemListAdapter.Callback() {
 		
 		public void onPlusClick(Integer pos, Integer price) {
 			
 			//Grand Total after plus one
-			((SaleVouncher) Cart_Item_List.get(pos)).setQty(String.valueOf(Integer.valueOf(((SaleVouncher) Cart_Item_List.get(pos)).getQty()) + 1));
-			Integer disprice = price -  ( price * Integer.valueOf(Discount.getText().toString()) / 100); 
-			Integer grandTotal = Integer.valueOf(priceTotal.getText().toString()) + disprice;
+			//((SaleVouncher) Cart_Item_List.get(pos)).setQty(String.valueOf(Integer.valueOf(((SaleVouncher) Cart_Item_List.get(pos)).getQty()) + 1));
+			//Integer disprice = price -  ( price * Integer.valueOf(Discount.getText().toString()) / 100); 
+			Integer grandTotal = Integer.valueOf(priceTotal.getText().toString()) + price;
 			
 			priceTotal.setText(grandTotal+"");
 		}
@@ -1174,10 +1331,57 @@ public class SaleUpdateActivity  extends SherlockActivity{
 			
 			//Grand Total after minus one
 			((SaleVouncher) Cart_Item_List.get(pos)).setQty(String.valueOf(Integer.valueOf(((SaleVouncher) Cart_Item_List.get(pos)).getQty()) - 1));
-			Integer disprice = price -  ( price * Integer.valueOf(Discount.getText().toString()) / 100); 
-			Integer grandTotal = Integer.valueOf(priceTotal.getText().toString()) - disprice; 
+			//Integer disprice = price -  ( price * Integer.valueOf(Discount.getText().toString()) / 100); 
+			Integer grandTotal = Integer.valueOf(priceTotal.getText().toString()) - price; 
 			
 			priceTotal.setText(grandTotal+"");
+		}
+		
+		public void onFreeClick(Integer pos, boolean isFreeChecked) {
+			// TODO Auto-generated method stub
+			
+			if (isFreeChecked = true) {
+				
+				SaleVouncher sv = (SaleVouncher)Cart_Item_List.get(pos);
+				sv.setFree_checked("free");		
+				
+				Log.i("", "On Check Free: "+sv.getFree_checked());
+				
+				Integer grandTotal = 0; 
+				
+				//Calculate Grand Total 
+				for (int j = 0; j < Cart_Item_List.size(); j++) {
+					
+					SaleVouncher sv2 = (SaleVouncher)Cart_Item_List.get(j);
+					
+							View view = (View) lvitem_list.getChildAt(j);
+							TextView txt_sale_price = (TextView) view.findViewById(R.id.txtUnitPrice);
+							TextView txt_qty = (TextView)view.findViewById(R.id.txtQty);
+							
+							Log.i("", "Sale Price (Update): "+Integer.valueOf(txt_sale_price.getText().toString()));
+							Log.i("", "Qty update: "+Integer.valueOf(txt_qty.getText().toString()));
+							
+							Integer total = Integer.valueOf(txt_sale_price.getText().toString()) * Integer.valueOf(txt_qty.getText().toString());
+							
+							Log.i("", "Total amount: "+total);
+							
+							grandTotal += total;
+							
+				}
+				
+				Log.i("", "Grant Total (Update sale): "+grandTotal);
+				
+				priceTotal.setText(grandTotal+"");
+				
+			}else{
+				SaleVouncher sv = (SaleVouncher)Cart_Item_List.get(pos);
+				sv.setFree_checked("-");
+
+				Log.i("", "Grant Total after no_check (Update sale): "+defaultGrandTotal());
+				priceTotal.setText(defaultGrandTotal()+"");
+				
+			}
+			
 		}
 
 	};
@@ -1238,6 +1442,15 @@ public class SaleUpdateActivity  extends SherlockActivity{
 		}
 		
 		return true;
+	}
+	
+	private void warningAlertMM() {
+		// TODO Auto-generated method stub
+		AlertDialog.Builder alert = new AlertDialog.Builder(SaleUpdateActivity.this);
+		alert.setTitle("Warning");
+		alert.setMessage("Please choose items!");
+		alert.show();
+		alert.setCancelable(true);
 	}
 	
 }

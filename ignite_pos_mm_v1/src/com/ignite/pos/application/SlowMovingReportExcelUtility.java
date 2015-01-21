@@ -31,9 +31,13 @@ public class SlowMovingReportExcelUtility {
   private WritableCellFormat labels;
   private String inputFile;
   private List<Object> slowMovingList;
+  private WritableCellFormat headerTitle;
+  private List<String> searchInfoList;
+
   
-  public SlowMovingReportExcelUtility(List<Object> slowMovingList, String filename) {
+  public SlowMovingReportExcelUtility(List<Object> slowMovingList, String filename, List<String> searchInfoList) {
 	  this.slowMovingList = slowMovingList;
+	  this.searchInfoList = searchInfoList;
 	  IfExistFileDir(RESULT);
 	  inputFile = filename == null ? RESULT+getToday()+"_DailyReport_SlowMoving.xls" : RESULT+filename+".xls";
 	  IfExistPDF(inputFile);
@@ -78,38 +82,63 @@ public class SlowMovingReportExcelUtility {
     boldUnderline = new WritableCellFormat(headerBoldUnderline);
     // Lets automatically wrap the cells
     boldUnderline.setWrap(true);
+    
+    //Create Header 
+    WritableFont header = new WritableFont(WritableFont.ARIAL, 16, WritableFont.BOLD);
+    headerTitle = new WritableCellFormat(header);
+    headerTitle.setWrap(true);
 
     CellView cv = new CellView();
     cv.setFormat(labels);
     cv.setFormat(boldUnderline);
+    cv.setFormat(headerTitle);
     cv.setAutosize(true);
     //To change here
+    
+    //Write Title 
+    addTitle(sheet, 0, 0, "Slow Moving Report");
+    
+    //Write Some Info
+    addLabel(sheet, 0, 2, "Unsold Qty: "+searchInfoList.get(0));
+    addLabel(sheet, 0, 3, "From Date: "+searchInfoList.get(1));
+    addLabel(sheet, 0, 4, "To Date: "+searchInfoList.get(2));
+    
     // Write a few headers
-    addCaption(sheet, 0, 0, "Item Name");
-    addCaption(sheet, 1, 0, "Stock Qty");
-    addCaption(sheet, 2, 0, "Purchase Price");
-    addCaption(sheet, 3, 0, "Sale Price");
-    addCaption(sheet, 4, 0, "Marginal Price");
+    addCaption(sheet, 0, 6, "ItemID");
+    addCaption(sheet, 1, 6, "Item Name");
+    addCaption(sheet, 2, 6, "Stock Qty");
+    addCaption(sheet, 3, 6, "Purchase Price");
+    addCaption(sheet, 4, 6, "Sale Price");
+    addCaption(sheet, 5, 6, "Marginal Price");
 
   }
 
   private void createContent(WritableSheet sheet) throws WriteException,
       RowsExceededException {
 	//To change here
-    int i = 1;
+    int i = 7;
     for(Object slowM: slowMovingList){
     	
     	ItemList slowm = (ItemList) slowM; 
     	
-    	addLabel(sheet, 0, i, slowm.getItemName());
-    	addLabel(sheet, 1, i, slowm.getQty());
-    	addLabel(sheet, 2, i, slowm.getPurchasePrice());
-    	addLabel(sheet, 3, i, slowm.getSalePrice());
-    	addLabel(sheet, 4, i, slowm.getMarginalPrice());
+    	addLabel(sheet, 0, i, slowm.getItemId());
+    	addLabel(sheet, 1, i, slowm.getItemName());
+    	addLabel(sheet, 2, i, slowm.getQty());
+    	addLabel(sheet, 3, i, slowm.getPurchasePrice());
+    	addLabel(sheet, 4, i, slowm.getSalePrice());
+    	addLabel(sheet, 5, i, slowm.getMarginalPrice());
     	i++;
     }
   }
 
+  private void addTitle(WritableSheet sheet, int column, int row, String s) 
+		  throws RowsExceededException, WriteException {
+	// TODO Auto-generated method stub
+	    Label label;
+	    label = new Label(column, row, s, headerTitle);
+	    sheet.addCell(label);
+  }
+  
   private void addCaption(WritableSheet sheet, int column, int row, String s)
       throws RowsExceededException, WriteException {
     Label label;

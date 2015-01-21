@@ -75,9 +75,11 @@ public class NotificationDetailLvAdapter extends BaseAdapter{
 			pvList = new ArrayList<Object>();
 			pvList = pvController.selectbyItemID(getItem(position).getItemId());
 			
-			Log.i("", "Purchase List By Item ID: "+pvList.get(0).toString());
+			//Log.i("", "Purchase List By Item ID: "+pvList.get(0).toString());
 			
-			holder.txt_supplier_name.setText(((PurchaseVoucher)pvList.get(0)).getSupplierName());
+			if (pvList != null && pvList.size() > 0 ) {
+				holder.txt_supplier_name.setText(((PurchaseVoucher)pvList.get(0)).getSupplierName());
+			}
 		
 		return convertView;
 	}

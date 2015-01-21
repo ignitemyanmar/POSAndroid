@@ -31,6 +31,7 @@ import com.ignite.pos.database.controller.PurchaseVoucherController;
 import com.ignite.pos.database.controller.SupplierController;
 import com.ignite.pos.database.util.DatabaseManager;
 import com.ignite.pos.model.PurchaseVoucher;
+import com.ignite.pos.model.SaleVouncher;
 import com.ignite.pos.model.Supplier;
 import com.smk.calender.widget.SKCalender;
 import com.smk.calender.widget.SKCalender.Callbacks;
@@ -131,6 +132,8 @@ public class SupplierPurchaseReportActivity extends BaseSherlockActivity{
 					listVoucher = new ArrayList<Object>();
 					listVoucher = pvController.select(selectedSupplier, selectedFromDate, selectedToDate);
 					
+					Log.i("", "Purchase Table All data: "+pvController.select().toString());
+					
 					supplierReportListViewAdapter = new SupplierReportListViewAdapter(SupplierPurchaseReportActivity.this, listVoucher, AdminName);
 					supplierReportListViewAdapter.setCallbackListiner(callback);
 					lv_purchase_report.setAdapter(supplierReportListViewAdapter);
@@ -215,8 +218,29 @@ public class SupplierPurchaseReportActivity extends BaseSherlockActivity{
 						}
 						if(ExcelChecked){
 							
+							for (int j = 0; j < listVoucher.size(); j++) {
+								
+								PurchaseVoucher pv = (PurchaseVoucher) listVoucher.get(j);
+								
+								String purchaseDate = pv.getVdate();
+								//Split sale date 
+								String[] parts = purchaseDate.split("-");
+								String year = parts[0]; 
+								String month = parts[1];
+								String day = parts[2];
+								
+								String formatedDate = day+"-"+month+"-"+year;
+								
+								((PurchaseVoucher)listVoucher.get(j)).setVdate(formatedDate);
+							}
+							
+							List<String> searchInfoList = new ArrayList<String>();
+							searchInfoList.add(selectedSupplier);
+							searchInfoList.add(dmyDateFormat(selectedFromDate));
+							searchInfoList.add(dmyDateFormat(selectedToDate));
+							
 							if (listVoucher != null && listVoucher.size() > 0) {
-								new PurchaseReportExcelUtility(listVoucher, filename).write();
+								new PurchaseReportExcelUtility(listVoucher, filename, searchInfoList).write();
 								SKToastMessage.showMessage(SupplierPurchaseReportActivity.this, filename+".xls is saved in your Device External SD card!", SKToastMessage.SUCCESS);
 							}else {
 								alertDialog("No Data Yet");
@@ -444,6 +468,18 @@ public class SupplierPurchaseReportActivity extends BaseSherlockActivity{
 		alert.setMessage(message+"!");
 		alert.show();
 		alert.setCancelable(true);
+	}
+	
+	private String dmyDateFormat(String date) {
+		// TODO Auto-generated method stub
+		String[] parts = date.split("-");
+		String year = parts[0]; 
+		String month = parts[1];
+		String day = parts[2];
+		
+		String formatedDate = day+"-"+month+"-"+year;
+		
+		return formatedDate;
 	}
 	
 	@Override

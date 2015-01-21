@@ -82,7 +82,7 @@ public class SaleReturnActivity  extends BaseSherlockActivity{
 		actionBar.setCustomView(R.layout.action_bar_update);
 		title = (TextView)actionBar.getCustomView().findViewById(R.id.txt_title);
 		//title.setText("Add New Sale Return ");
-		title.setText("ျပန္၀င္ပစၥည္း ေဘာင္ခ်ာအသစ္ထည့္ျခင္း");
+		title.setText("ျပန္၀င္ ပစၥည္း ေဘာင္ ခ်ာအသစ္ထည့္ျခင္း");
 		add_layout = (RelativeLayout)actionBar.getCustomView().findViewById(R.id.layout_add_new);
 		add_layout.setVisibility(View.GONE);
 		actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);	
@@ -399,8 +399,8 @@ public class SaleReturnActivity  extends BaseSherlockActivity{
 				SaleReturn sr = (SaleReturn)saleReturnList.get(i);
 				
 				profit_list = profit_control.selectByVidItemidDate(sr.getSaleVouId(), sr.getItemid(), sr.getSaleDate());
+				//profit_list = profit_control.select();
 				
-
 				Log.i("", "Profit List: "+profit_list.toString());
 				
 				List<Object> updateProfitList;
@@ -416,8 +416,10 @@ public class SaleReturnActivity  extends BaseSherlockActivity{
 						Integer newQty = profit.getSaleQty() - sr.getReturnQty();
 						Integer profitAmt =  ( profit.getSalePrice() * newQty ) - ( profit.getMarginalPrice() * newQty);
 						
+						Integer profitAmount = profitAmt - profit.getDiscount();
+						
 						updateProfitList.add(new Profit(profit.getItemId(), profit.getDate(), Integer.valueOf(profit.getMarginalPrice())
-								, profit.getSalePrice(), newQty, profitAmt, sr.getSaleVouId()));
+								, profit.getSalePrice(), newQty, profitAmount, sr.getItemName(), 0));
 						
 						profit_control.updateTotalPriceRecord(updateProfitList);
 						
@@ -485,7 +487,7 @@ public class SaleReturnActivity  extends BaseSherlockActivity{
 			
 		}else {
 			//SKToastMessage.showMessage(getApplicationContext(), "No Item Yet!", SKToastMessage.WARNING);
-			SKToastMessage.showMessage(getApplicationContext(), "ျပန္အမ္းေဘာင္ခ်ာတြင္ မည္သည့္ပစၥည္းမွ် မေရြးရေသးပါ", SKToastMessage.WARNING);
+			SKToastMessage.showMessage(getApplicationContext(), "No Item yet!", SKToastMessage.WARNING);
 		}
 		
 	}
@@ -514,7 +516,7 @@ public class SaleReturnActivity  extends BaseSherlockActivity{
 	public boolean checkFields() {
 		if (autoComTxt_voucher.getText().toString().length() == 0) {
 			//autoComTxt_voucher.setError("Enter Sale Voucher");
-			autoComTxt_voucher.setError("အေရာင္းေဘာင္ခ်ာနံပါတ္ ႐ိုက္ထည့္ပါ");
+			autoComTxt_voucher.setError("Enter Sale Voucher");
 			return false;
 		}
 		

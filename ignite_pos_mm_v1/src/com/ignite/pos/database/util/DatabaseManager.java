@@ -13,7 +13,7 @@ import android.util.Log;
 public abstract class DatabaseManager{
 	protected Context mContext;
 	protected SQLiteDatabase connectSQLiteDatabase = null;
-	protected String  DATABASE_FILE_PATH = Environment.getExternalStorageDirectory()+"/IgnitePOS/database";	
+	protected String  DATABASE_FILE_PATH = Environment.getExternalStorageDirectory()+"/IgnitePOS/.database";	
 	protected final String  DATABASE_NAME = "pos_db.sqlite3";
 	
 	protected OnSave save;
@@ -22,6 +22,7 @@ public abstract class DatabaseManager{
 	protected OnDelete delete;
 	
 	protected OnComplete complete;
+	
 	
 	
 	public DatabaseManager(Context ctx)

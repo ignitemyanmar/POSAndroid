@@ -15,14 +15,14 @@
         android:padding="5dp" >
 
         <com.smk.skscalableview.ScalableTextView
-            android:id="@+id/ScalableTextView1"
+            android:id="@+id/txt_vouNo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="5dp"
             android:layout_weight="17"
             android:gravity="left|center_vertical"
             android:paddingLeft="3dp"
-            android:text="ဆုိင္နာမည္"
+            android:text="ဆုိင္ နာမည္"
             android:textColor="@color/white"
             android:textSize="20dp"
             android:textStyle="bold" />
@@ -35,7 +35,7 @@
             android:layout_weight="17"
             android:gravity="left|center_vertical"
             android:paddingLeft="3dp"
-            android:text="ဆုိင္ရွင္အမည္"
+            android:text="ဆုိင္ ရွင္ အမည္"
             android:textColor="@color/white"
             android:textSize="20dp"
             android:textStyle="bold" />

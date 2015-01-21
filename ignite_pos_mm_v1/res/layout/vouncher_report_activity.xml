@@ -63,7 +63,7 @@
             layout="@layout/vouncher_report_header_activity" />
 
         <ListView
-            android:id="@+id/listView1"
+            android:id="@+id/lv_sale_slip"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"

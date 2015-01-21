@@ -8,14 +8,12 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
-
 import com.ignite.pos.database.util.DatabaseManager;
 import com.ignite.pos.database.util.OnDelete;
 import com.ignite.pos.database.util.OnSave;
 import com.ignite.pos.database.util.OnSelect;
 import com.ignite.pos.database.util.OnUpdate;
 import com.ignite.pos.model.Category;
-import com.ignite.pos.model.ItemList;
 
 public class CategoryController extends DatabaseManager{
 
@@ -184,7 +182,7 @@ public class CategoryController extends DatabaseManager{
 						FIELD_NAME[0], 
 						FIELD_NAME[1],
 					};
-				String ORDER_BY = FIELD_NAME[1]+ " ASC";
+				String ORDER_BY = FIELD_NAME[0]+ " ASC";
 				
 				category_list = new ArrayList<Object>();
 				SQLiteDatabase db = getReadableDatabase();

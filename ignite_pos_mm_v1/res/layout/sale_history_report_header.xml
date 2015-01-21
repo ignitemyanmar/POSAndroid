@@ -24,7 +24,7 @@
             android:layout_marginRight="2dp"
             android:layout_weight="13"
             android:gravity="left|center_vertical"
-            android:text="ေဘာင္ခ်ာ"
+            android:text="ေဘာင္ ခ်ာ"
             android:textSize="20dp" />
 
         <com.smk.skscalableview.ScalableTextView
@@ -38,7 +38,7 @@
             android:textSize="20dp" />
 
         <com.smk.skscalableview.ScalableTextView
-            android:id="@+id/ScalableTextView01"
+            android:id="@+id/txt_category"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginRight="2dp"
@@ -74,7 +74,7 @@
             android:layout_marginRight="2dp"
             android:layout_weight="13"
             android:gravity="center_vertical|center_horizontal"
-            android:text="ျပင္ဆင္"
+            android:text="ျပင္ ဆင္"
             android:textSize="20dp" />
 
         <com.smk.skscalableview.ScalableTextView
@@ -84,7 +84,7 @@
             android:layout_marginRight="2dp"
             android:layout_weight="13"
             android:gravity="left|center_vertical"
-            android:text="ျပင္သူ"
+            android:text="ျပင္ သူ"
             android:textSize="20dp" />
 
         <com.smk.skscalableview.ScalableTextView
@@ -94,7 +94,7 @@
             android:layout_marginRight="2dp"
             android:layout_weight="13"
             android:gravity="left|center_vertical"
-            android:text="လုပ္ေဆာင္ခ်က္"
+            android:text="လုပ္ေဆာင္ ခ်က္"
             android:textSize="20dp" />
 
     </LinearLayout>

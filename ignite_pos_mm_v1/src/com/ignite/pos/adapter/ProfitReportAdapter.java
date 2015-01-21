@@ -53,6 +53,7 @@ public class ProfitReportAdapter extends BaseAdapter{
 			holder.txt_total_sale_price = (TextView)convertView.findViewById(R.id.txt_total_sale_price);
 			holder.txt_total_purchase_price = (TextView)convertView.findViewById(R.id.txt_total_purchase_price);
 			holder.txt_profit = (TextView)convertView.findViewById(R.id.txt_profit);
+			holder.txt_total_discount_price = (TextView)convertView.findViewById(R.id.txt_total_discount_price);
 			convertView.setTag(holder);
 		
 		}else {
@@ -67,6 +68,8 @@ public class ProfitReportAdapter extends BaseAdapter{
 		
 		holder.txt_total_purchase_price.setText(profit.getPurchasePrice().toString());
 		
+		holder.txt_total_discount_price.setText(profit.getTotalDiscount()+"");
+		
 		holder.txt_profit.setText(profit.getTotalProfit().toString());
 		
 		return convertView;
@@ -74,7 +77,7 @@ public class ProfitReportAdapter extends BaseAdapter{
 	
 	static class ViewHolder {
 		
-		TextView txt_date, txt_total_sale_price, txt_total_purchase_price, txt_profit;
+		TextView txt_date, txt_total_sale_price, txt_total_purchase_price, txt_profit, txt_total_discount_price;
 	}
 
 }

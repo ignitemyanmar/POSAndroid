@@ -28,6 +28,7 @@ import com.ignite.pos.database.controller.LedgerController;
 import com.ignite.pos.database.controller.SaleVouncherController;
 import com.ignite.pos.database.util.DatabaseManager;
 import com.ignite.pos.model.ItemList;
+import com.ignite.pos.model.SaleVouncher;
 import com.smk.calender.widget.SKCalender;
 import com.smk.calender.widget.SKCalender.Callbacks;
 import com.smk.skalertmessage.SKToastMessage;
@@ -57,7 +58,7 @@ public class SlowMovingReportActivity extends SherlockActivity{
 		actionBar.setCustomView(R.layout.action_bar_report);
 		title = (TextView)actionBar.getCustomView().findViewById(R.id.txt_title);
 		//title.setText("Slow Moving Report");
-		title.setText("အေရာင္းထုိင္းမွတ္တမ္း");
+		title.setText("အ ေရာင္းထုိင္းမွတ္တမ္း");
 		btn_print = (Button) actionBar.getCustomView().findViewById(R.id.btn_print);
 		btn_print.setOnClickListener(clickListener);
 		actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
@@ -113,8 +114,14 @@ public class SlowMovingReportActivity extends SherlockActivity{
 						}
 						if(ExcelChecked){
 							
+						
+							List<String> searchInfoList = new ArrayList<String>();
+							searchInfoList.add(selectedMaxiQty+"");
+							searchInfoList.add(dmyDateFormat(selectedFromDate));
+							searchInfoList.add(dmyDateFormat(selectedToDate));
+							
 							if (itemList != null && itemList.size() > 0) {
-								new SlowMovingReportExcelUtility(itemList, filename).write();
+								new SlowMovingReportExcelUtility(itemList, filename, searchInfoList).write();
 								SKToastMessage.showMessage(SlowMovingReportActivity.this, filename+".xls is saved in your Device External SD card!", SKToastMessage.SUCCESS);
 							}else {
 								alertDialog("No Data Yet");
@@ -233,6 +240,18 @@ public class SlowMovingReportActivity extends SherlockActivity{
 		alert.setMessage(message+"!");
 		alert.show();
 		alert.setCancelable(true);
+	}
+	
+	private String dmyDateFormat(String date) {
+		// TODO Auto-generated method stub
+		String[] parts = date.split("-");
+		String year = parts[0]; 
+		String month = parts[1];
+		String day = parts[2];
+		
+		String formatedDate = day+"-"+month+"-"+year;
+		
+		return formatedDate;
 	}
 }
 

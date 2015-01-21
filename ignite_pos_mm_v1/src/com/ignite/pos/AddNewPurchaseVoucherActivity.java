@@ -54,7 +54,7 @@ public class AddNewPurchaseVoucherActivity  extends SherlockActivity{
 
 	private ActionBar actionBar;
 	private Button change_mode, categories, search;
-	private LinearLayout picker_mode, discount_layout;
+	private LinearLayout picker_mode, discount_layout, discount_show_layout;
 	private DatabaseManager dbManager;
 	private List<Object> list_obj;
 	private ListView lvitem_list;
@@ -104,7 +104,7 @@ public class AddNewPurchaseVoucherActivity  extends SherlockActivity{
 		actionBar.setCustomView(R.layout.action_bar);
 		login = (TextView)actionBar.getCustomView().findViewById(R.id.btnLogin);
 		//login.setText("Add New Purchase Voucher");
-		login.setText("အ၀ယ္ေဘာင္ခ်ာအသစ္ထည့္ျခင္း");
+		login.setText("အ၀ယ္ေဘာင္ ခ်ာအသစ္ထည့္ျခင္း");
 		login.setBackgroundResource(R.color.black);
 		change_mode = (Button)actionBar.getCustomView().findViewById(R.id.btnChange_mode);
 		change_mode.setOnClickListener(clickListener);
@@ -115,8 +115,10 @@ public class AddNewPurchaseVoucherActivity  extends SherlockActivity{
 		scanner_mode = (LinearLayout)findViewById(R.id.scanner_mode);
 		picker_mode = (LinearLayout)findViewById(R.id.picker_mode);
 		scan = (EditText)findViewById(R.id.editText_scan);
-		discount_layout = (LinearLayout) findViewById(R.id.lyDiscount);
+		discount_layout = (LinearLayout) findViewById(R.id.lyDiscount2);
 		discount_layout.setVisibility(View.GONE);
+		discount_show_layout = (LinearLayout)findViewById(R.id.lyDiscountShow);
+		discount_show_layout.setVisibility(View.VISIBLE);
 		sp_supplier_name = (Spinner)findViewById(R.id.sp_supplier_name);
 		sp_supplier_name.setOnItemSelectedListener(suppliernameClickListener);
 		search = (Button)findViewById(R.id.btnSearch);
@@ -194,7 +196,12 @@ public class AddNewPurchaseVoucherActivity  extends SherlockActivity{
         AlertDialog.Builder alert = new AlertDialog.Builder(
                 AddNewPurchaseVoucherActivity.this);
     
-        alert.setTitle("Delete Item - "+selected_item_name+" ?");
+        //alert.setTitle("Delete Item - "+selected_item_name+" ?");
+		View dialogView = View.inflate(AddNewPurchaseVoucherActivity.this, R.layout.dialog_title, null);
+		TextView dialogTitle = (TextView) dialogView.findViewById(R.id.txt_dialog_title);
+		//dialogTitle.setText("Add Prices | "+item_name);
+		dialogTitle.setText("Delete Item - "+selected_item_name+" ?");
+		alert.setCustomTitle(dialogView);
         
         alert.setPositiveButton("YES", new DialogInterface.OnClickListener() {
 			
@@ -207,7 +214,7 @@ public class AddNewPurchaseVoucherActivity  extends SherlockActivity{
             	grand_total.setText(defaultGrandTotal()+"");
             	
     			if(Cart_Item_List.size() == 0){
-    				grand_total.setText("0.00");
+    				grand_total.setText("0");
     			}
 			}
 		});
@@ -356,7 +363,7 @@ public class AddNewPurchaseVoucherActivity  extends SherlockActivity{
 					setListViewHeightBasedOnChildren(lvitem_list);
 
 	    			if(Cart_Item_List.size() == 0){
-	    				grand_total.setText("0.00");
+	    				grand_total.setText("0");
 	    			}
 				} else {
 					
@@ -438,7 +445,7 @@ public class AddNewPurchaseVoucherActivity  extends SherlockActivity{
 		
 		SKToastMessage.showMessage(getApplicationContext(), "New Purchase Voucher saved!", SKToastMessage.SUCCESS);
 		
-		grand_total.setText("0.00");
+		grand_total.setText("0");
 		itemAdapter.notifyDataSetChanged();
 		setListViewHeightBasedOnChildren(lvitem_list);
 		
@@ -493,7 +500,7 @@ public class AddNewPurchaseVoucherActivity  extends SherlockActivity{
 						// set dialog message
 						alertDialogBuilder
 							.setCancelable(false)
-							.setPositiveButton("သိမ္းမည္", new DialogInterface.OnClickListener(){
+							.setPositiveButton("Save", new DialogInterface.OnClickListener(){
 					            public void onClick(DialogInterface dialog, int which)
 					            {
 					                //Do nothing here because we override this button later to change the close behaviour. 
@@ -501,20 +508,26 @@ public class AddNewPurchaseVoucherActivity  extends SherlockActivity{
 					                //pass a handler the button doesn't get instantiated
 					            }
 					        })
-							.setPositiveButton("သိမ္းမည္",
+							.setPositiveButton("Save",
 							  new DialogInterface.OnClickListener() {
 								
 								public void onClick(DialogInterface dialog,int id) {
 								
 							    }
 							  })
-							.setTitle("၀ယ္ေစ်းထည့္ျခင္း | "+item_obj.getItemName())
-							.setNegativeButton("ထြက္မည္",
+							
+							.setNegativeButton("Cancel",
 							  new DialogInterface.OnClickListener() {
 							    public void onClick(DialogInterface dialog,int id) {
 							    	dialog.cancel();
 							    }
 							  });
+						
+						View dialogView = View.inflate(AddNewPurchaseVoucherActivity.this, R.layout.dialog_title, null);
+						TextView dialogTitle = (TextView) dialogView.findViewById(R.id.txt_dialog_title);
+						//dialogTitle.setText("Add Prices | "+item_name);
+						dialogTitle.setText("၀ယ္ေစ်းထည့္ျခင္း | "+item_obj.getItemName());
+						alertDialogBuilder.setCustomTitle(dialogView);
 						
 						final AlertDialog alertDialog = alertDialogBuilder.create();
 						alertDialog.show();	
@@ -740,7 +753,7 @@ public class AddNewPurchaseVoucherActivity  extends SherlockActivity{
 			// set dialog message
 			alertDialogBuilder
 				.setCancelable(false)
-				.setPositiveButton("သိမ္းမည္", new DialogInterface.OnClickListener()
+				.setPositiveButton("Save", new DialogInterface.OnClickListener()
 		        {
 		            public void onClick(DialogInterface dialog, int which)
 		            {
@@ -749,7 +762,7 @@ public class AddNewPurchaseVoucherActivity  extends SherlockActivity{
 		                //pass a handler the button doesn't get instantiated
 		            }
 		        })
-				.setNegativeButton("ထြက္မည္",
+				.setNegativeButton("Cancel",
 				  new DialogInterface.OnClickListener() {
 				    public void onClick(DialogInterface dialog,int id) {
 				    	dialog.cancel();

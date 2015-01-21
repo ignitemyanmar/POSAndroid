@@ -12,7 +12,7 @@
         android:orientation="horizontal" >
 
         <LinearLayout
-            android:id="@+id/LinearLayout01"
+            android:id="@+id/lyDisc"
             android:layout_width="400dp"
             android:layout_height="wrap_content"
             android:layout_marginRight="10dp"
@@ -26,7 +26,7 @@
                 android:layout_height="60dp"
                 android:layout_marginBottom="20dp"
                 android:background="@drawable/bg_button"
-                android:text="ျပန္၀င္ပစၥည္းမွတ္တမ္း"
+                android:text="ျပန္၀င္ ပစၥည္းမွတ္တမ္း"
                 android:textColor="@color/white"
                 android:textSize="20dp"
                 android:visibility="visible" />
@@ -36,7 +36,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:background="@drawable/bg_button"
-                android:text="အေရာင္းျပင္ဆင္မွတ္တမ္း"
+                android:text="အ ေရာင္း ျပင္ ဆင္ မွတ္တမ္း"
                 android:textColor="@color/white"
                 android:textSize="20dp"
                 android:visibility="visible" />
@@ -95,7 +95,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:background="@drawable/bg_button"
-                android:text="အေရာင္းထုိင္းမွတ္တမ္း"
+                android:text="အ ေရာင္းထုိင္းမွတ္တမ္း"
                 android:textColor="@color/white"
                 android:textSize="20dp"
                 android:visibility="visible" />

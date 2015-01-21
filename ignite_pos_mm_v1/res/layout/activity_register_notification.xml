@@ -24,7 +24,7 @@
                 android:padding="25dp" >
 
                 <com.ignite.custom.view.CustomTextView
-                    android:id="@+id/CustomTextView1"
+                    android:id="@+id/txt_co_title"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:layout_marginBottom="10dp"
@@ -85,11 +85,11 @@
                     android:background="@drawable/editext_border"
                     android:ems="10"
                     android:gravity="center"
-                    android:hint="အေရအတြက္"
+                    android:hint="အ ေရအတြက္"
                     android:inputType="number"
                     android:singleLine="true" />
 
-                <Button
+                <com.ignite.custom.view.CustomButton
                     android:id="@+id/btnSave"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"

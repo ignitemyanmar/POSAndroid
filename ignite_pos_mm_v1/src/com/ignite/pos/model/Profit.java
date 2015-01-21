@@ -15,18 +15,17 @@ public class Profit {
 	private Integer totalProfit;
 	private Integer purchasePrice;
 	private String vid;
+	private String itemName;
+	private Integer discount;
+	private Integer totalDiscount;
 	
 	public Profit() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	
-	
-	
-
 
 	public Profit(String itemId, String date, Integer marginalPrice,
-			Integer salePrice, Integer saleQty, Integer profit, String vid) {
+			Integer salePrice, Integer saleQty, Integer profit, String vid, String itemName, Integer discount) {
 		super();
 		this.itemId = itemId;
 		this.date = date;
@@ -35,15 +34,13 @@ public class Profit {
 		this.saleQty = saleQty;
 		this.profit = profit;
 		this.vid = vid;
+		this.itemName = itemName;
+		this.discount = discount;
 	}
-
-
-
-
 
 	public Profit(Integer profitId, String itemId, String date,
 			Integer marginalPrice, Integer salePrice, Integer saleQty,
-			Integer profit) {
+			Integer profit, String itemName, Integer discount) {
 		super();
 		this.profitId = profitId;
 		this.itemId = itemId;
@@ -52,22 +49,26 @@ public class Profit {
 		this.salePrice = salePrice;
 		this.saleQty = saleQty;
 		this.profit = profit;
+		this.itemName = itemName;
+		this.discount = discount;
 	}
 	
 	
 	
 	public Profit(String itemId, String date, Integer totalSalePrice,
-			Integer totalProfit, Integer purchasePrice) {
+			Integer totalProfit, Integer purchasePrice, String itemName, Integer discount) {
 		super();
 		this.itemId = itemId;
 		this.date = date;
 		this.totalSalePrice = totalSalePrice;
 		this.totalProfit = totalProfit;
 		this.purchasePrice = purchasePrice;
+		this.itemName = itemName;
+		this.discount = discount;
 	}
 
 	public Profit(String itemId, String date, Integer marginalPrice,
-			Integer salePrice, Integer saleQty, Integer profit) {
+			Integer salePrice, Integer saleQty, Integer profit, String itemName, Integer discount) {
 		super();
 		this.itemId = itemId;
 		this.date = date;
@@ -75,6 +76,8 @@ public class Profit {
 		this.salePrice = salePrice;
 		this.saleQty = saleQty;
 		this.profit = profit;
+		this.itemName = itemName;
+		this.discount = discount;
 	}
 
 	public Integer getProfitId() {
@@ -171,6 +174,32 @@ public class Profit {
 		this.vid = vid;
 	}
 
+	
+
+	public String getItemName() {
+		return itemName;
+	}
+
+	public void setItemName(String itemName) {
+		this.itemName = itemName;
+	}
+
+	public Integer getDiscount() {
+		return discount;
+	}
+
+	public void setDiscount(Integer discount) {
+		this.discount = discount;
+	}
+
+	
+	public Integer getTotalDiscount() {
+		return totalDiscount;
+	}
+
+	public void setTotalDiscount(Integer totalDiscount) {
+		this.totalDiscount = totalDiscount;
+	}
 
 	@Override
 	public String toString() {
@@ -181,7 +210,9 @@ public class Profit {
 				+ ", totalmarginalPrice=" + totalmarginalPrice
 				+ ", totalSaleQty=" + totalSaleQty + ", totalProfit="
 				+ totalProfit + ", purchasePrice=" + purchasePrice + ", vid="
-				+ vid + "]";
+				+ vid + ", itemName=" + itemName + ", discount=" + discount
+				+ ", totalDiscount=" + totalDiscount + "]";
 	}
-	
+
+
 }

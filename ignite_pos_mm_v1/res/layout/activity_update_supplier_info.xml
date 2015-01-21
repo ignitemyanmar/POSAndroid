@@ -27,13 +27,13 @@
                 android:padding="25dp" >
 
                 <com.ignite.custom.view.CustomTextView
-                    android:id="@+id/CustomTextView1"
+                    android:id="@+id/txt_co_title"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:layout_marginBottom="10dp"
                     android:background="@color/green"
                     android:gravity="center_vertical|center"
-                    android:text="လကၠားဆုိင္လိပ္စာျပင္ရန္"
+                    android:text="လကၠားဆုိင္ လိပ္စာ ျပင္ ရန္"
                     android:textColor="@color/white"
                     android:textSize="24dp" />
 

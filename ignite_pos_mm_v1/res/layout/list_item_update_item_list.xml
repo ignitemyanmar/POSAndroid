@@ -16,7 +16,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
-            android:layout_weight="30"
+            android:layout_weight="25"
             android:gravity="left|center_vertical"
             android:text="-"
             android:textColor="@color/black"
@@ -26,16 +26,26 @@
             android:id="@+id/txt_item_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="30"
+            android:layout_weight="25"
             android:gravity="left|center_vertical"
             android:text="-"
+            android:textColor="@color/black"
+            android:textSize="18dp" />
+
+        <com.smk.skscalableview.ScalableTextView
+            android:id="@+id/txt_category"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="25"
+            android:gravity="left|center_vertical"
+            android:text="Category"
             android:textColor="@color/black"
             android:textSize="18dp" />
 
         <com.smk.skscalableview.ScalableLinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_weight="30"
+            android:layout_weight="25"
             android:gravity="center"
             android:orientation="horizontal" >
 
@@ -55,7 +65,7 @@
                 android:layout_width="130dp"
                 android:layout_height="match_parent"
                 android:background="@drawable/bg_button"
-                android:text="ျပင္မည္"
+                android:text="ျပင္ မည္"
                 android:textColor="@color/white"
                 android:textSize="20dp" />
 

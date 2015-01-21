@@ -83,6 +83,7 @@ public class SupplierReportListViewAdapter extends BaseAdapter{
 			holder.txt_supplier = (TextView)convertView.findViewById(R.id.txt_supplier_name);
 			holder.txt_vou_total = (TextView)convertView.findViewById(R.id.txt_voucher_total);
 			holder.btn_view_detail = (Button)convertView.findViewById(R.id.btn_view_detail);
+			//holder.btn_view_detail.setVisibility(View.GONE);
 			holder.btn_vou_update = (Button)convertView.findViewById(R.id.btn_vou_update);
 			holder.btn_delete = (Button)convertView.findViewById(R.id.btn_delete);
 			holder.btn_confirm = (Button)convertView.findViewById(R.id.btn_confirm);

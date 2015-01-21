@@ -15,7 +15,7 @@
         android:background="@color/green" >
 
         <com.smk.skscalableview.ScalableTextView
-            android:id="@+id/ScalableTextView1"
+            android:id="@+id/txt_vouNo"
             android:layout_width="500dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"

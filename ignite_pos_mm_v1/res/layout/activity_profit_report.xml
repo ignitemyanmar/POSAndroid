@@ -46,7 +46,7 @@
             app:scale_width="4" >
 
             <com.ignite.custom.view.CustomTextView
-                android:id="@+id/CustomTextView1"
+                android:id="@+id/txt_co_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -69,7 +69,7 @@
             app:scale_width="4" >
 
             <com.ignite.custom.view.CustomTextView
-                android:id="@+id/CustomTextView2"
+                android:id="@+id/txt_contact"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"

@@ -88,7 +88,7 @@
                 android:layout_marginRight="5dp"
                 android:background="@drawable/girditem_border"
                 android:padding="5dp"
-                android:text="အေသး စိတ္"
+                android:text="အ ေသး စိတ္"
                 android:textColor="@color/white"
                 android:textSize="14dp" />
 
@@ -99,7 +99,7 @@
                 android:layout_marginRight="5dp"
                 android:background="@drawable/bg_btn_blue_corner"
                 android:padding="5dp"
-                android:text="ျပင္ရန္"
+                android:text="ျပင္ ရန္"
                 android:textColor="@color/white"
                 android:textSize="14dp" />
 

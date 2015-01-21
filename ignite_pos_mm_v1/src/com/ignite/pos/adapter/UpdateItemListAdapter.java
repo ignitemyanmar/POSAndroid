@@ -2,10 +2,9 @@ package com.ignite.pos.adapter;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import jxl.biff.IntegerHelper;
-
 import com.ignite.pos.R;
+import com.ignite.pos.SaleUpdateActivity;
+import com.ignite.pos.adapter.ItemListAdapter.ViewHolder;
 import com.ignite.pos.database.controller.ItemListController;
 import com.ignite.pos.model.ItemList;
 import com.ignite.pos.model.SaleVouncher;
@@ -20,7 +19,7 @@ import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
-public class ItemListAdapter extends BaseAdapter{
+public class UpdateItemListAdapter extends BaseAdapter{
 	private List<Object> listObj;
 	private LayoutInflater mInflater;
 	private Activity aty;
@@ -28,7 +27,7 @@ public class ItemListAdapter extends BaseAdapter{
 	private ItemListController dbManager;
 	private List<Object> listItems;
 
-	public ItemListAdapter(Activity aty, List<Object> cart_Item_List) {
+	public UpdateItemListAdapter(Activity aty, List<Object> cart_Item_List) {
 		super();
 		// TODO Auto-generated constructor stub
 		this.aty = aty;
@@ -79,11 +78,11 @@ public class ItemListAdapter extends BaseAdapter{
 			holder.item_name.setText(sv.getItemname());
 			holder.qty.setText(sv.getQty());
 			holder.price.setText(sv.getPrice()+"");
+			holder.price.setTag(0);
 			
 			Integer totalAmount = Integer.valueOf(holder.qty.getText().toString()) * Integer.valueOf(holder.price.getText().toString());
 			holder.total.setText(totalAmount+"");
 			holder.total.setTag(position);
-			
 			
 			holder.chk_free.setTag(holder);
 			holder.chk_free.setOnClickListener(new OnClickListener() {
@@ -129,8 +128,9 @@ public class ItemListAdapter extends BaseAdapter{
 				public void onClick(View v) {
 					// TODO Auto-generated method stub
 					ViewHolder viewHolder = (ViewHolder) v.getTag();
+					int pos = (Integer) viewHolder.total.getTag();
 					int qty = Integer.valueOf( viewHolder.qty.getText().toString()) + 1;
-					
+					int updateQty = (Integer) viewHolder.price.getTag() + 1;
 					//Get Stock Qty
 					String ItemID = sv.getItemid();
 					
@@ -144,11 +144,12 @@ public class ItemListAdapter extends BaseAdapter{
 					if (listItems.size() > 0) {
 						ItemList itemList = (ItemList) listItems.get(0);
 						Integer stock_qty = Integer.valueOf(itemList.getQty());
-						
-						if (qty > stock_qty) {
+
+						if (updateQty > stock_qty) {
 							//SKToastMessage.showMessage(aty, "Not Enough Stock!", SKToastMessage.WARNING);
 							SKToastMessage.showMessage(aty, "လက္က်န္ပစၥည္းမရွိေတာ့ပါ!", SKToastMessage.WARNING);
 						}else {
+							viewHolder.price.setTag(updateQty);
 							viewHolder.qty.setText(String.valueOf(qty));
 							price = Integer.parseInt(viewHolder.price.getText().toString());
 							Integer total = price * qty;
@@ -172,12 +173,13 @@ public class ItemListAdapter extends BaseAdapter{
 					// TODO Auto-generated method stub
 					ViewHolder viewHolder = (ViewHolder) v.getTag();
 					int qty = Integer.valueOf( viewHolder.qty.getText().toString()) - 1;
+					int updateQty = (Integer) viewHolder.price.getTag() - 1;
 					if (qty > 0) {
 						viewHolder.qty.setText(String.valueOf(qty));
 						Integer price = Integer.parseInt(viewHolder.price.getText().toString());
 						Integer total = price * qty;
 						viewHolder.total.setText(total+"");
-						
+						viewHolder.price.setTag(updateQty);
 						if(mCallback != null){
 							mCallback.onMinusClick(position, price);
 						}
@@ -197,7 +199,6 @@ public class ItemListAdapter extends BaseAdapter{
 		public void onPlusClick(Integer pos,Integer price);
 		public void onMinusClick(Integer pos,Integer price);
 		public void onFreeClick(Integer pos, boolean isFreeChecked);
-		
 	}
 	
 	 static class ViewHolder

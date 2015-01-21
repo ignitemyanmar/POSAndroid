@@ -8,6 +8,7 @@ public class ItemList {
 	private String marginalPrice;
 	private String qty;
 	private String categoryId;
+	private String categoryName;
 	private String subCategoryId;
 	private String brandId;
 	private Integer status;
@@ -21,11 +22,10 @@ public class ItemList {
 		// TODO Auto-generated constructor stub
 	}
 
-	public ItemList(String itemId) {
+	public ItemList(String itemName) {
 		super();
-		this.itemId = itemId;
+		this.itemName = itemName;
 	}
-	
 
 	public ItemList(String itemId, String itemName, String purchasePrice,
 			String salePrice, String marginalPrice, String qty,
@@ -72,7 +72,6 @@ public class ItemList {
 		this.itemName = itemName;
 		this.salePrice = salePrice;
 	}
-
 	
 	public ItemList(String itemId, String itemName, String purchasePrice,
 			String salePrice, String marginalPrice, String qty,
@@ -121,6 +120,15 @@ public class ItemList {
 
 	public void setCategoryId(String categoryId) {
 		this.categoryId = categoryId;
+	}
+	
+
+	public String getCategoryName() {
+		return categoryName;
+	}
+
+	public void setCategoryName(String categoryName) {
+		this.categoryName = categoryName;
 	}
 
 	public String getSubCategoryId() {

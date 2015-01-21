@@ -348,6 +348,88 @@ public class LedgerController extends DatabaseManager{
 
 	};
 	
+	//Select By Item Name
+	public List<Object> selectByItemName(String itemName, String fromDate, String toDate) {
+		// TODO Auto-generated method stub
+		
+		Log.i("", "Selected Item Name: "+itemName);
+		Log.i("", "Selected From Date: "+fromDate);
+		Log.i("", "Selected To Date: "+toDate);
+		
+		try {
+			String[] FROM = {
+					FIELD_NAME[0], 
+					FIELD_NAME[1],
+					FIELD_NAME[2], 
+					FIELD_NAME[3],
+					FIELD_NAME[4],
+					FIELD_NAME[5],
+					FIELD_NAME[6],
+					FIELD_NAME[7],
+					FIELD_NAME[8]
+				};
+			
+			String[] VALUE;
+			String WHERE;
+			
+			if (itemName.toLowerCase().equals("all")) {
+				VALUE = new String[2];
+				VALUE[0] = fromDate;
+				VALUE[1] = toDate;
+				WHERE = FIELD_NAME[3]+" >= ? and "+FIELD_NAME[3]+" <= ?";
+			}else{
+				VALUE = new String[3];
+				VALUE[0] = fromDate;
+				VALUE[1] = toDate;
+				VALUE[2] = itemName;
+				WHERE = FIELD_NAME[3]+" >= ? and "+FIELD_NAME[3]+" <= ? and "+FIELD_NAME[2]+" = ?";
+			}
+				
+			//String GROUP_BY = FIELD_NAME[0];
+			String ORDER_BY = FIELD_NAME[2]+ " ASC";
+			
+			ledger_list = new ArrayList<Object>();
+			SQLiteDatabase db = getReadableDatabase();
+			Cursor cursor = db.query(TABLE_NAME, FROM, WHERE, VALUE, null, null, ORDER_BY);
+			
+			Log.i("","Data count :" + cursor.getCount());
+			
+			try {
+				if (cursor.moveToFirst()) {
+			        do {
+			        	Ledger ledger = new Ledger();
+			        	
+			        	ledger.setLedgerId(cursor.getInt(0));
+			        	ledger.setItemId(cursor.getString(1));
+			        	ledger.setItemName(cursor.getString(2));
+			        	ledger.setDate(cursor.getString(3));
+			        	ledger.setOldStockQty(cursor.getInt(4));
+			        	ledger.setPurchaseQty(cursor.getInt(5));
+			        	ledger.setSaleQty(cursor.getInt(6));
+			        	ledger.setNewStockQty(cursor.getInt(7));
+			        	ledger.setReturnQty(cursor.getInt(8));
+			        					        		        	
+			        	ledger_list.add(ledger);
+			        } while (cursor.moveToNext());
+			    }
+			} catch (Exception e) {
+				// TODO: handle exception
+				e.printStackTrace();
+			} finally {
+				cursor.close();
+				db.close();
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		} finally {
+			if(complete != null){
+				complete.onComplete();
+			}
+		}
+		return ledger_list;
+	}
+	
 	private OnUpdate updateRecord = new OnUpdate() {
 		
 		public void updateRecord(List<Object> objList) {

@@ -5,48 +5,141 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-
+
+    <LinearLayout
+        android:id="@+id/lyheader"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="1dp"
+        android:layout_weight="25"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="5dp" >
+
+        <com.smk.skscalableview.ScalableLinearLayout
+            android:layout_width="250dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="30"
+            android:gravity="center_vertical"
+            android:orientation="vertical" >
+
+            <com.ignite.custom.view.CustomTextView
+                android:id="@+id/txt_co_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="ပစၥည္းအမ်ိဳးအစား : " />
+
+            <Spinner
+                android:id="@+id/spCategory"
+                style="@android:style/Theme.DeviceDefault"
+                android:layout_width="230dp"
+                android:layout_height="48dp"
+                android:background="@drawable/bg_button"
+                android:drawSelectorOnTop="true" />
+        </com.smk.skscalableview.ScalableLinearLayout>
+
+        <com.smk.skscalableview.ScalableLinearLayout
+            android:layout_width="250dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="30"
+            android:gravity="center_vertical"
+            android:orientation="vertical" >
+
+            <com.ignite.custom.view.CustomTextView
+                android:id="@+id/txt_disc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="ပစၥည္းအမည္ : " />
+
+            <com.ignite.custom.view.CustomEditText
+                android:id="@+id/etxt_item_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10" >
+
+                <requestFocus />
+            </com.ignite.custom.view.CustomEditText>
+
+        </com.smk.skscalableview.ScalableLinearLayout>
+
+        <com.smk.skscalableview.ScalableLinearLayout
+            android:layout_width="250dp"
+            android:layout_height="match_parent"
+            android:layout_weight="30"
+            android:gravity="center_vertical"
+            android:orientation="vertical" >
+
+            <com.ignite.custom.view.CustomButton
+                android:id="@+id/btnSearch"
+                android:layout_width="240dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:background="@drawable/bg_btn_darkblue"
+                android:text="ရွာမည္"
+                android:textColor="@color/white" />
+
+        </com.smk.skscalableview.ScalableLinearLayout>
+    </LinearLayout>
+
     <LinearLayout
         android:id="@+id/LinearLayout1"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
+        android:layout_below="@+id/lyheader"
         android:background="@color/green"
         android:padding="10dp" >
-
+
         <com.smk.skscalableview.ScalableTextView
-            android:id="@+id/ScalableTextView01"
+            android:id="@+id/txt_category"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="30"
+            android:layout_weight="25"
             android:gravity="left|center_vertical"
             android:text="ကုတ္နံပါတ္"
             android:textColor="@color/white"
             android:textSize="20dp"
             android:textStyle="bold" />
-
+
         <com.smk.skscalableview.ScalableTextView
-            android:id="@+id/ScalableTextView1"
+            android:id="@+id/txt_vouNo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginRight="20dp"
-            android:layout_weight="30"
+            android:layout_weight="25"
             android:gravity="left|center_vertical"
             android:text="ပစၥည္းအမည္"
             android:textColor="@color/white"
             android:textSize="20dp"
             android:textStyle="bold" />
-
+
+        <com.smk.skscalableview.ScalableTextView
+            android:id="@+id/txt_total_discount_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="20dp"
+            android:layout_weight="25"
+            android:gravity="left|center_vertical"
+            android:text="ပစၥည္းအမ်ိဳးအစား"
+            android:textColor="@color/white"
+            android:textSize="20dp"
+            android:textStyle="bold" />
+
         <com.smk.skscalableview.ScalableLinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_weight="30"
+            android:layout_weight="25"
             android:gravity="center"
             android:orientation="horizontal"
             android:visibility="visible" >
-
+
             <com.ignite.custom.view.CustomButton
                 android:id="@+id/btnDelete"
                 android:layout_width="100dp"
@@ -57,7 +150,7 @@
                 android:textColor="@color/white"
                 android:textSize="20dp"
                 android:visibility="gone" />
-
+
             <com.ignite.custom.view.CustomButton
                 android:id="@+id/btnUpdate"
                 android:layout_width="100dp"
@@ -67,9 +160,7 @@
                 android:textColor="@color/white"
                 android:textSize="20dp"
                 android:visibility="gone" />
-
         </com.smk.skscalableview.ScalableLinearLayout>
-
     </LinearLayout>
 
 </RelativeLayout>

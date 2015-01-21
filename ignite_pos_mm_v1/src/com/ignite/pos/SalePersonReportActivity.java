@@ -2,6 +2,7 @@ package com.ignite.pos;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import android.app.Activity;
@@ -14,12 +15,9 @@ import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup.LayoutParams;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
@@ -28,9 +26,6 @@ import com.actionbarsherlock.app.ActionBar;
 import com.ignite.pos.adapter.SalePersonReportAdapter;
 import com.ignite.pos.adapter.SalePersonReportAdapter.saleCallback;
 import com.ignite.pos.adapter.SalepersonSpinnerAdapter;
-import com.ignite.pos.adapter.SupplierReportListViewAdapter;
-import com.ignite.pos.adapter.SupplierReportListViewAdapter.Callback;
-import com.ignite.pos.application.LedgerReportExcelUtility;
 import com.ignite.pos.application.SaleReportExcelUtility;
 import com.ignite.pos.database.controller.ItemListController;
 import com.ignite.pos.database.controller.LedgerController;
@@ -41,7 +36,6 @@ import com.ignite.pos.database.controller.spSalePersonController;
 import com.ignite.pos.database.util.DatabaseManager;
 import com.ignite.pos.model.ItemList;
 import com.ignite.pos.model.Ledger;
-import com.ignite.pos.model.PurchaseVoucher;
 import com.ignite.pos.model.SaleHistory;
 import com.ignite.pos.model.SaleVouncher;
 import com.ignite.pos.model.spSalePerson;
@@ -69,6 +63,7 @@ public class SalePersonReportActivity extends BaseSherlockActivity{
 	private String AdminName;
 	private RelativeLayout add_layout;
 	private Button btn_print;
+	private String currentDateTime;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -83,7 +78,7 @@ public class SalePersonReportActivity extends BaseSherlockActivity{
 		actionBar.setCustomView(R.layout.action_bar_update);
 		title = (TextView)actionBar.getCustomView().findViewById(R.id.txt_title);
 		//title.setText("Sale Report");
-		title.setText("အေရာင္းမွတ္တမ္း");
+		title.setText("အ ေရာင္းမွတ္တမ္း");
 		add_layout = (RelativeLayout)actionBar.getCustomView().findViewById(R.id.layout_add_new);
 		add_layout.setVisibility(View.GONE);
 		actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
@@ -107,6 +102,12 @@ public class SalePersonReportActivity extends BaseSherlockActivity{
 		//Limit Default Dates
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		currentDate = sdf.format(new Date());
+		
+		//Date & Time Format
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		Calendar cal = Calendar.getInstance();
+		currentDateTime = dateFormat.format(cal.getTime());
+		System.out.println("Current Date Time : " + dateFormat.format(cal.getTime()));
 		
 		//Split current date 
 		String[] parts = currentDate.split("-");
@@ -229,9 +230,29 @@ public class SalePersonReportActivity extends BaseSherlockActivity{
 						}
 						if(ExcelChecked){
 							
+							for (int j = 0; j < listVoucher.size(); j++) {
+								
+								SaleVouncher sv = (SaleVouncher) listVoucher.get(j);
+								
+								String saleDate = sv.getVdate();
+								//Split sale date 
+								String[] parts = saleDate.split("-");
+								String year = parts[0]; 
+								String month = parts[1];
+								String day = parts[2];
+								
+								String formatedDate = day+"-"+month+"-"+year;
+								
+								((SaleVouncher)listVoucher.get(j)).setVdate(formatedDate);
+							}
+							
+							List<String> searchInfoList = new ArrayList<String>();
+							searchInfoList.add(selectedSaleperson);
+							searchInfoList.add(dmyDateFormat(selectedFromDate));
+							searchInfoList.add(dmyDateFormat(selectedToDate));
 							
 							if (listVoucher != null && listVoucher.size() > 0) {
-								new SaleReportExcelUtility(listVoucher, filename).write();
+								new SaleReportExcelUtility(listVoucher, filename, searchInfoList).write();
 								SKToastMessage.showMessage(SalePersonReportActivity.this, filename+".xls is saved in your Device External SD card!", SKToastMessage.SUCCESS);
 							}else {
 								alertDialog("No Data Yet");
@@ -430,7 +451,7 @@ public class SalePersonReportActivity extends BaseSherlockActivity{
 					for (int i = 0; i < itemList.size(); i++) {
 						SaleVouncher saleVou = (SaleVouncher) itemList.get(i);
 						
-						profitObj = profitControl.selectByVidItemidDate(saleVou.getVid(), saleVou.getItemid(), saleVou.getVdate());
+						profitObj = profitControl.selectByVidItemidDate(saleVou.getVid(), saleVou.getItemname(), saleVou.getVdate());
 						
 						if (profitObj.size() > 0 && profitObj != null) {
 							
@@ -473,18 +494,20 @@ public class SalePersonReportActivity extends BaseSherlockActivity{
 					SaleHistoryController shControl = (SaleHistoryController)dbManager;
 					List<Object> shList = new ArrayList<Object>();
 					
+					SaleVouncher salev = null;
+					
 					for (int i = 0; i < itemList.size(); i++) {
 						
-						SaleVouncher salev = (SaleVouncher)itemList.get(i);
+						salev = (SaleVouncher)itemList.get(i);
 						
 						shList.add(new SaleHistory(salev.getVid(), salev.getItemid(), Integer.valueOf(salev.getOldQty())
-								, 0, currentDate, AdminName, "delete"));
+								, 0, currentDateTime, AdminName, "delete"));
 						
-						shControl.save(shList);
-						
-						Log.i("", "After save in Sale History (Delete Voucher): "+shControl.selectRecordByVouID(salev.getVid()));
-
 					}//End Loop Sale History 
+					
+					shControl.save(shList);
+					Log.i("", "After save in Sale History (Delete Voucher): "+shControl.selectRecordByVouID(salev.getVid()));
+					
 				}//End If (Item list by Voucher ID)
 				
 				//Delete in Sale Table
@@ -538,6 +561,17 @@ public class SalePersonReportActivity extends BaseSherlockActivity{
 		alert.setCancelable(true);
 	}
 	
+	private String dmyDateFormat(String date) {
+		// TODO Auto-generated method stub
+		String[] parts = date.split("-");
+		String year = parts[0]; 
+		String month = parts[1];
+		String day = parts[2];
+		
+		String formatedDate = day+"-"+month+"-"+year;
+		
+		return formatedDate;
+	}
 	
 	@Override
 	protected void onResume() {

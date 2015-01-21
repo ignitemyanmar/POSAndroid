@@ -140,10 +140,6 @@ public class SaleHistory {
 				+ ", itemName=" + itemName + "]";
 	}
 
-
-
-
-
 	
 	
 }

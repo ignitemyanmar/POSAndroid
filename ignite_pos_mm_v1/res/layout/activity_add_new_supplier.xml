@@ -25,13 +25,13 @@
                 android:padding="20dp" >
 
                 <com.ignite.custom.view.CustomTextView
-                    android:id="@+id/CustomTextView1"
+                    android:id="@+id/txt_co_title"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:layout_marginBottom="10dp"
                     android:background="@color/green"
                     android:gravity="center_vertical|center"
-                    android:text="လကၠားဆုိင္အသစ္ထည့္ရန္"
+                    android:text="လကၠားဆုိင္ အသစ္ထည့္ရန္"
                     android:textColor="@color/white"
                     android:textSize="24dp" />
 
@@ -42,7 +42,7 @@
                     android:layout_marginBottom="10dp"
                     android:background="@drawable/editext_border"
                     android:gravity="center"
-                    android:hint="လကၠားဆုိင္နာမည္"
+                    android:hint="လကၠားဆုိင္ နာမည္"
                     android:inputType="textCapWords|textPersonName"
                     android:paddingLeft="5dp"
                     android:singleLine="true" />
@@ -55,7 +55,7 @@
                     android:background="@drawable/editext_border"
                     android:ems="10"
                     android:gravity="center"
-                    android:hint="ဆုိင္ရွင္အမည္"
+                    android:hint="ဆုိင္ရွင္ အမည္"
                     android:inputType="textCapWords|textPersonName"
                     android:paddingLeft="5dp"
                     android:singleLine="true" />

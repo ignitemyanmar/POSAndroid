@@ -24,7 +24,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="2dp"
-            android:layout_weight="25"
+            android:layout_weight="20"
             android:gravity="left|center_vertical"
             android:text="-"
             android:textSize="18dp" />
@@ -34,7 +34,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="50dp"
-            android:layout_weight="25"
+            android:layout_weight="20"
             android:gravity="right|center_vertical"
             android:text="-"
             android:textSize="18dp" />
@@ -44,7 +44,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="2dp"
-            android:layout_weight="25"
+            android:layout_weight="20"
+            android:gravity="right|center_vertical"
+            android:text="-"
+            android:textSize="18dp" />
+
+        <com.smk.skscalableview.ScalableTextView
+            android:id="@+id/txt_total_discount_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="2dp"
+            android:layout_weight="20"
             android:gravity="right|center_vertical"
             android:text="-"
             android:textSize="18dp" />
@@ -54,7 +64,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="10dp"
-            android:layout_weight="25"
+            android:layout_weight="20"
             android:gravity="right|center_vertical"
             android:text="-"
             android:textSize="18dp" />

@@ -3,6 +3,7 @@ package com.ignite.pos;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -17,9 +18,12 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.actionbarsherlock.app.SherlockActivity;
+import com.ignite.pos.adapter.LedgerReportListViewAdapter;
 import com.ignite.pos.database.controller.ItemListController;
+import com.ignite.pos.database.controller.LedgerController;
 import com.ignite.pos.database.util.DatabaseManager;
 import com.ignite.pos.model.ItemList;
+import com.ignite.pos.model.Ledger;
 import com.smk.skalertmessage.SKToastMessage;
 
 public class UpdateSalePrice extends SherlockActivity{
@@ -72,7 +76,7 @@ public class UpdateSalePrice extends SherlockActivity{
 				{
 					if (checkFields()) {
 						
-						if (!isSame) {
+/*						if (!isSame) {
 							SKToastMessage.showMessage(UpdateSalePrice.this, "Wrong Item ID!", SKToastMessage.ERROR);
 							item_name.setText(null);
 							item_price.setText(null);
@@ -80,7 +84,9 @@ public class UpdateSalePrice extends SherlockActivity{
 							auto_item_code.requestFocus();
 						}else {
 							updateData();
-						}
+						}*/
+						
+						updateData();
 					}
 					
 				}
@@ -120,11 +126,13 @@ public class UpdateSalePrice extends SherlockActivity{
 		dbManager = new ItemListController(this);
 		ItemListController item_list_control = (ItemListController)dbManager;
 		itemList = new ArrayList<Object>();
-		itemList.add(new ItemList(auto_item_code.getText().toString(), item_name.getText().toString(), newprice.getText().toString()));
+	//	itemList.add(new ItemList(auto_item_code.getText().toString(), item_name.getText().toString(), newprice.getText().toString()));
+		itemList.add(new ItemList("0", auto_item_code.getText().toString(), "0", newprice.getText().toString(), "0", "0", 0));
 		Object itemL = (Object)itemList.get(0);
-		item_list_control.update(itemL);
+		//item_list_control.update(itemL);
+		item_list_control.updateSalePricebyItemName(itemL);
 		
-		Log.i("","After update New Sale Price :" +item_list_control.select(auto_item_code.getText().toString()));
+		//Log.i("","After update New Sale Price :" +item_list_control.select(auto_item_code.getText().toString()));
 		
 		clearText();
 		
@@ -137,9 +145,18 @@ public class UpdateSalePrice extends SherlockActivity{
 		dbManager = new ItemListController(this);
 		ItemListController item_list_control = (ItemListController)dbManager;
 		itemList = new ArrayList<Object>();
-		itemList = item_list_control.select();
+		itemList = item_list_control.selectByItemName(ItemID);
 		
-		if (itemList.size() > 0) {
+		Log.i("", "Itemlist by item Name: "+itemList.toString());
+		
+		if(itemList != null && itemList.size() > 0)
+		{
+			ItemList item_list = (ItemList)itemList.get(0);
+			item_name.setText(item_list.getItemId());
+			item_price.setText(item_list.getSalePrice());
+		}
+		
+/*		if (itemList.size() > 0) {
 			
 			isSame = false;
 			
@@ -152,7 +169,8 @@ public class UpdateSalePrice extends SherlockActivity{
 					isSame = true;
 					
 					itemList = new ArrayList<Object>();
-					itemList = item_list_control.select(ItemID.toString());
+					//itemList = item_list_control.select(ItemID.toString());
+					itemList = item_list_control.selectByItemName(itemName);
 					
 					if(itemList != null && itemList.size() > 0)
 					{
@@ -171,7 +189,8 @@ public class UpdateSalePrice extends SherlockActivity{
 				item_price.setText(null);
 				auto_item_code.requestFocus();
 			}
-		}
+		}*/
+		
 		
 	}
 	
@@ -193,11 +212,14 @@ public class UpdateSalePrice extends SherlockActivity{
 			
 			ItemList itemObj = (ItemList)listItemCode.get(i);
 			
-			itemArray[i] = itemObj.getItemId();  
+			itemArray[i] = itemObj.getItemName();  
+			
+			Log.i("", "Item Name Array: "+itemArray[i]);
 		}
+
 		
 		ArrayAdapter<String> adapter = 
-		        new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, itemArray);
+		        new ArrayAdapter<String>(this, R.layout.custom_autocomplete_view, itemArray);
 		auto_item_code.setAdapter(adapter);
 		
 		// specify the minimum type of characters before drop-down list is shown

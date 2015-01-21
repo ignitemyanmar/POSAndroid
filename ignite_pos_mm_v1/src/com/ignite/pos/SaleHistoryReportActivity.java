@@ -50,6 +50,8 @@ public class SaleHistoryReportActivity extends BaseSherlockActivity{
 	private Button btn_print;
 	private List<Object> listSaleHistory;
 	private List<Object> listItem;
+	private Date sfromDate;
+	private Date stoDate;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +63,7 @@ public class SaleHistoryReportActivity extends BaseSherlockActivity{
 		actionBar.setCustomView(R.layout.action_bar_report);
 		title = (TextView)actionBar.getCustomView().findViewById(R.id.txt_title);
 		//title.setText("Sale History Report");
-		title.setText("အေရာင္းျပင္ဆင္မွတ္တမ္း");
+		title.setText("အ ေရာင္း ျပင္ ဆင္ မွတ္တမ္း");
 		btn_print = (Button) actionBar.getCustomView().findViewById(R.id.btn_print);
 		btn_print.setOnClickListener(clickListener);
 		actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
@@ -89,8 +91,24 @@ public class SaleHistoryReportActivity extends BaseSherlockActivity{
 		
 		fromdate.setText(defaultFromDate);
 		selectedFromDate = fromdate.getText().toString();
+		
+/*        SimpleDateFormat dateTime = new SimpleDateFormat("yyyy/mm/dd HH:MM:SS");
+        sfromDate = null;
+        try {
+        	sfromDate = dateTime.parse(selectedFromDate);
+        }catch(Exception ex){
+            ex.printStackTrace();
+        }*/
+		
 		todate.setText(currentDate);
 		selectedToDate = todate.getText().toString();
+		
+/*		stoDate = null;
+        try {
+        	stoDate = dateTime.parse(selectedToDate);
+        }catch(Exception ex){
+            ex.printStackTrace();
+        }*/
 		
 		//Return Voucher No. AutoComplete
 		getSaleVoucherList();
@@ -130,34 +148,7 @@ public class SaleHistoryReportActivity extends BaseSherlockActivity{
 		
 		public void onClick(View v) {
 			// TODO Auto-generated method stub
-			if (v == btn_print) {
-				SaveFileDialog fileDialog = new SaveFileDialog(SaleHistoryReportActivity.this);
-		        fileDialog.setCallbackListener(new SaveFileDialog.Callback() {
-					
-					public void onCancel() {
-						// TODO Auto-generated method stub
-					}
 
-					public void onSave(String filename, boolean PDFChecked,
-							boolean ExcelChecked) {
-						// TODO Auto-generated method stub
-						if(PDFChecked){
-							//new SeatbyAgentPDFUtility(seatReports).createPdf(filename);
-						}
-						if(ExcelChecked){
-							
-							if (listSaleHistory != null && listSaleHistory.size() > 0) {
-								new SaleHistoryReportExcelUtility(listSaleHistory, filename).write();
-								SKToastMessage.showMessage(SaleHistoryReportActivity.this, filename+".xls is saved in your Device External SD card!", SKToastMessage.SUCCESS);
-							}else {
-								alertDialog("No Data Yet");
-							}
-						}
-					}
-				});
-		        fileDialog.show();
-		        return;
-			}
 			if (v == search)
 			{
 				/*if (selectedSaleVou.equals("All") && fromdate.getText().toString().equals("From Date") && todate.getText().toString().equals("To Date")) {
@@ -172,6 +163,9 @@ public class SaleHistoryReportActivity extends BaseSherlockActivity{
 					SaleHistoryController shController = (SaleHistoryController) dbManager;
 					listVoucher = new ArrayList<Object>();
 					listVoucher = shController.selectByVouIdDate(selectedSaleVou, selectedFromDate, selectedToDate);
+					
+					Log.i("", "Sale Voucher by Date: "+listVoucher.toString());
+					Log.i("", "Sale Voucher all: "+shController.select().toString());
 					
 					listSaleHistory = new ArrayList<Object>();
 					
@@ -196,12 +190,15 @@ public class SaleHistoryReportActivity extends BaseSherlockActivity{
 							ItemList iL = (ItemList)listItem.get(0);
 							((SaleHistory)listSaleHistory.get(i)).setItemName(iL.getItemName());
 						}
+						
 					}
+					
+					Log.i("", "History voucher to adapter: "+listSaleHistory.toString());
 					
 					saleHistoryReportAdapter = new SaleHistoryReportAdapter(SaleHistoryReportActivity.this, listSaleHistory);
 					lv_sale_history_report.setAdapter(saleHistoryReportAdapter);
 					
-					if (listVoucher.size() == 0) {
+					if (listVoucher.size() == 0 || listVoucher == null) {
 						
 						AlertDialog.Builder alert = new AlertDialog.Builder(SaleHistoryReportActivity.this);
 						alert.setTitle("Info");
@@ -262,6 +259,57 @@ public class SaleHistoryReportActivity extends BaseSherlockActivity{
 
 				  skCalender.show();
 			}
+			if (v == btn_print) {
+				SaveFileDialog fileDialog = new SaveFileDialog(SaleHistoryReportActivity.this);
+		        fileDialog.setCallbackListener(new SaveFileDialog.Callback() {
+					
+					public void onCancel() {
+						// TODO Auto-generated method stub
+					}
+
+					public void onSave(String filename, boolean PDFChecked,
+							boolean ExcelChecked) {
+						// TODO Auto-generated method stub
+						if(PDFChecked){
+							//new SeatbyAgentPDFUtility(seatReports).createPdf(filename);
+						}
+						if(ExcelChecked){
+							
+							if (listSaleHistory != null && listSaleHistory.size() > 0) {
+								for (int j = 0; j < listSaleHistory.size(); j++) {
+									
+									SaleHistory sh = (SaleHistory) listSaleHistory.get(j);
+									
+									String saleUpdateDate = sh.getUpdateDate();
+									//Split sale date 
+									String[] parts = saleUpdateDate.split("-");
+									String year = parts[0]; 
+									String month = parts[1];
+									String day = parts[2];
+									
+									String formatedDate = day+"-"+month+"-"+year;
+									
+									((SaleHistory)listSaleHistory.get(j)).setUpdateDate(formatedDate);
+								}
+							}
+
+							List<String> searchInfoList = new ArrayList<String>();
+							searchInfoList.add(selectedSaleVou);
+							searchInfoList.add(dmyDateFormat(selectedFromDate));
+							searchInfoList.add(dmyDateFormat(selectedToDate));
+							
+							if (listSaleHistory != null && listSaleHistory.size() > 0) {
+								new SaleHistoryReportExcelUtility(listSaleHistory, filename, searchInfoList).write();
+								SKToastMessage.showMessage(SaleHistoryReportActivity.this, filename+".xls is saved in your Device External SD card!", SKToastMessage.SUCCESS);
+							}else {
+								alertDialog("No Data Yet");
+							}
+						}
+					}
+				});
+		        fileDialog.show();
+		        return;
+			}
 		}
 	};
 	
@@ -293,6 +341,18 @@ public class SaleHistoryReportActivity extends BaseSherlockActivity{
 		alert.setMessage(message+"!");
 		alert.show();
 		alert.setCancelable(true);
+	}
+	
+	private String dmyDateFormat(String date) {
+		// TODO Auto-generated method stub
+		String[] parts = date.split("-");
+		String year = parts[0]; 
+		String month = parts[1];
+		String day = parts[2];
+		
+		String formatedDate = day+"-"+month+"-"+year;
+		
+		return formatedDate;
 	}
 	
 }

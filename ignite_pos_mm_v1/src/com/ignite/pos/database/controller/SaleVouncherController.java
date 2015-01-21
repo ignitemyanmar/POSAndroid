@@ -22,7 +22,7 @@ public class SaleVouncherController extends DatabaseManager{
 	private List<Object> sale_vouncher;
 	
 	private static final String TABLE_NAME = "tbl_sale";
-	private static final String[] FIELD_NAME = {"vid","cusname","itemid","itemname","qty","price","itemtotal","vdate","total","salePerson","updatePerson","discount","updateDate","marginalPrice","returnableQty"};
+	private static final String[] FIELD_NAME = {"vid","cusname","itemid","itemname","qty","price","itemtotal","vdate","total","salePerson","updatePerson","discount","updateDate","marginalPrice","returnableQty","updated","freeStatus"};
 	
 	public SaleVouncherController(Context ctx) {
 		super(ctx);
@@ -52,7 +52,9 @@ public class SaleVouncherController extends DatabaseManager{
 		    		FIELD_NAME[11] + " TEXT NULL," +
 		    		FIELD_NAME[12] + " TEXT NULL," +
 		    		FIELD_NAME[13] + " Integer NULL," +
-		    		FIELD_NAME[14] + " INTEGER DEFAULT 0)" 
+		    		FIELD_NAME[14] + " INTEGER DEFAULT 0," +
+		    		FIELD_NAME[15] + " INTEGER DEFAULT 0," +
+		    		FIELD_NAME[16] + " TEXT NULL)"
 		       		);
 	}
 	
@@ -89,6 +91,8 @@ public class SaleVouncherController extends DatabaseManager{
 					values.put(FIELD_NAME[12], sv.getUpdateDate());
 					values.put(FIELD_NAME[13], sv.getMarginalPrice());
 					values.put(FIELD_NAME[14], sv.getReturnableQty());
+					values.put(FIELD_NAME[15], sv.getReturnableQty());
+					values.put(FIELD_NAME[16], sv.getFree_checked());	
 
 					db.insert(TABLE_NAME, null, values);
 				}
@@ -125,7 +129,9 @@ public class SaleVouncherController extends DatabaseManager{
 						FIELD_NAME[11],
 						FIELD_NAME[12],
 						FIELD_NAME[13],
-						FIELD_NAME[14]
+						FIELD_NAME[14],
+						FIELD_NAME[15],
+						FIELD_NAME[16]
 					};
 				String ORDER_BY = FIELD_NAME[0]+ " ASC";
 				
@@ -153,6 +159,8 @@ public class SaleVouncherController extends DatabaseManager{
 				        	sv.setUpdateDate(cursor.getString(12));
 				        	sv.setMarginalPrice(cursor.getInt(13));
 				        	sv.setReturnableQty(cursor.getInt(14));
+				        	sv.setUpdated(cursor.getInt(15));
+				        	sv.setFree_checked(cursor.getString(16));
 				        		        	
 				        	sale_vouncher.add(sv);
 				        } while (cursor.moveToNext());
@@ -194,7 +202,9 @@ public class SaleVouncherController extends DatabaseManager{
 						FIELD_NAME[11],
 						FIELD_NAME[12],
 						FIELD_NAME[13],
-						FIELD_NAME[14]
+						FIELD_NAME[14],
+						FIELD_NAME[15],
+						FIELD_NAME[16]
 						};
 				
 				String[] VALUE = { VouncherID };
@@ -225,6 +235,8 @@ public class SaleVouncherController extends DatabaseManager{
 				        	sv.setUpdateDate(cursor.getString(12));
 				        	sv.setMarginalPrice(cursor.getInt(13));
 				        	sv.setReturnableQty(cursor.getInt(14));
+				        	sv.setUpdated(cursor.getInt(15));
+				        	sv.setFree_checked(cursor.getString(16));
 
 							sale_vouncher.add(sv);
 						} while (cursor.moveToNext());
@@ -270,7 +282,9 @@ public class SaleVouncherController extends DatabaseManager{
 						FIELD_NAME[11],
 						FIELD_NAME[12],
 						FIELD_NAME[13],
-						FIELD_NAME[14]
+						FIELD_NAME[14],
+						FIELD_NAME[15],
+						FIELD_NAME[16]
 					};
 				
 				String[] VALUE;
@@ -317,6 +331,8 @@ public class SaleVouncherController extends DatabaseManager{
 				        	sv.setUpdateDate(cursor.getString(12));
 				        	sv.setMarginalPrice(cursor.getInt(13));
 				        	sv.setReturnableQty(cursor.getInt(14));
+				        	sv.setUpdated(cursor.getInt(15));
+				        	sv.setFree_checked(cursor.getString(16));
 				        		        	
 				        	sale_vouncher.add(sv);
 				        } while (cursor.moveToNext());
@@ -361,7 +377,9 @@ public class SaleVouncherController extends DatabaseManager{
 						FIELD_NAME[11],
 						FIELD_NAME[12],
 						FIELD_NAME[13],
-						FIELD_NAME[14]
+						FIELD_NAME[14],
+						FIELD_NAME[15],
+						FIELD_NAME[16]
 					};
 				
 				String[] VALUE;
@@ -398,6 +416,8 @@ public class SaleVouncherController extends DatabaseManager{
 				        	sv.setUpdateDate(cursor.getString(12));
 				        	sv.setMarginalPrice(cursor.getInt(13));
 				        	sv.setReturnableQty(cursor.getInt(14));
+				        	sv.setUpdated(cursor.getInt(15));
+				        	sv.setFree_checked(cursor.getString(16));
 				        		        	
 				        	sale_vouncher.add(sv);
 				        } while (cursor.moveToNext());
@@ -442,7 +462,9 @@ public class SaleVouncherController extends DatabaseManager{
 						FIELD_NAME[11],
 						FIELD_NAME[12],
 						FIELD_NAME[13],
-						FIELD_NAME[14]
+						FIELD_NAME[14],
+						FIELD_NAME[15],
+						FIELD_NAME[16]
 					};
 				
 				String[] VALUE;
@@ -483,6 +505,8 @@ public class SaleVouncherController extends DatabaseManager{
 				        	sv.setUpdateDate(cursor.getString(12));
 				        	sv.setMarginalPrice(cursor.getInt(13));
 				        	sv.setReturnableQty(cursor.getInt(14));
+				        	sv.setUpdated(cursor.getInt(15));
+				        	sv.setFree_checked(cursor.getString(16));
 				        		        	
 				        	sale_vouncher.add(sv);
 				        } while (cursor.moveToNext());
@@ -630,7 +654,9 @@ public class SaleVouncherController extends DatabaseManager{
 						FIELD_NAME[11],
 						FIELD_NAME[12],
 						FIELD_NAME[13],
-						FIELD_NAME[14]
+						FIELD_NAME[14],
+						FIELD_NAME[15],
+						FIELD_NAME[16]
 						};
 				
 				String[] VALUE = { VoucherID };
@@ -664,6 +690,8 @@ public class SaleVouncherController extends DatabaseManager{
 				        	sv.setUpdateDate(cursor.getString(12));
 				        	sv.setMarginalPrice(cursor.getInt(13));
 				        	sv.setReturnableQty(cursor.getInt(14));
+				        	sv.setUpdated(cursor.getInt(15));
+				        	sv.setFree_checked(cursor.getString(16));
 
 				        	sale_vouncher.add(sv);
 						} while (cursor.moveToNext());
@@ -791,7 +819,9 @@ public class SaleVouncherController extends DatabaseManager{
 					FIELD_NAME[11],
 					FIELD_NAME[12],
 					FIELD_NAME[13],
-					FIELD_NAME[14]
+					FIELD_NAME[14],
+					FIELD_NAME[15],
+					FIELD_NAME[16]
 				};
 			
 			String[] VALUE = { itemCode };
@@ -823,6 +853,8 @@ public class SaleVouncherController extends DatabaseManager{
 			        	sv.setUpdateDate(cursor.getString(12));
 			        	sv.setMarginalPrice(cursor.getInt(13));
 			        	sv.setReturnableQty(cursor.getInt(14));
+			        	sv.setUpdated(cursor.getInt(15));
+			        	sv.setFree_checked(cursor.getString(16));
 
 			        	sale_vouncher.add(sv);
 			        } while (cursor.moveToNext());
@@ -868,6 +900,7 @@ public class SaleVouncherController extends DatabaseManager{
 					values.put(FIELD_NAME[5], salev.getPrice());
 					values.put(FIELD_NAME[6], salev.getItemtotal());
 					values.put(FIELD_NAME[8], salev.getTotal());
+					values.put(FIELD_NAME[15], salev.getUpdated());
 					
 					String[] VALUE = {salev.getVid(), salev.getItemid()};
 					String WHERE = FIELD_NAME[0] + " =? and "+FIELD_NAME[2]+" = ?";
@@ -907,10 +940,14 @@ public class SaleVouncherController extends DatabaseManager{
 				SaleVouncher salev = (SaleVouncher) obj;
 				
 				values.put(FIELD_NAME[4], salev.getQty());
+				values.put(FIELD_NAME[5], salev.getPrice());
 				values.put(FIELD_NAME[6], salev.getItemtotal());
 				values.put(FIELD_NAME[8], salev.getTotal());
 				values.put(FIELD_NAME[9], salev.getSalePerson());
 				values.put(FIELD_NAME[11], salev.getDiscount());
+				values.put(FIELD_NAME[15], salev.getUpdated());
+				values.put(FIELD_NAME[16], salev.getFree_checked());
+				
 				
 				String[] VALUE = {salev.getVid(), salev.getItemid()};
 				String WHERE = FIELD_NAME[0] + " =? and "+FIELD_NAME[2]+" = ?";

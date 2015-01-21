@@ -1,7 +1,11 @@
 package com.ignite.pos.database.controller;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+
+import jxl.write.DateTime;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -37,8 +41,9 @@ public class SaleHistoryController extends DatabaseManager{
 		    		FIELD_NAME[1] + " TEXT NULL," + 
 		    		FIELD_NAME[2] + " Integer NULL," +
 		    		FIELD_NAME[3] + " Integer NULL," +
-		    		FIELD_NAME[4] + " TEXT NULL," +
+		    		FIELD_NAME[4] + " DATETIME NULL," +
 		    		FIELD_NAME[5] + " TEXT NULL," +
+		    		//FIELD_NAME[6] + " TEXT NULL," +
 		    		FIELD_NAME[6] + " TEXT NULL)" 
 		       		);
 	}
@@ -68,6 +73,7 @@ public class SaleHistoryController extends DatabaseManager{
 					values.put(FIELD_NAME[4], sh.getUpdateDate());
 					values.put(FIELD_NAME[5], sh.getUpdatePerson());
 					values.put(FIELD_NAME[6], sh.getStatus());
+					//values.put(FIELD_NAME[7], sh.getUpdateTime());
 
 					db.insert(TABLE_NAME, null, values);
 				}
@@ -647,31 +653,34 @@ public class SaleHistoryController extends DatabaseManager{
 					FIELD_NAME[3],
 					FIELD_NAME[4],
 					FIELD_NAME[5],
-					FIELD_NAME[6]
+					FIELD_NAME[6],
 				};
 			
 			String[] VALUE;
-			String WHERE;
-			String HAVING;
+			String WHERE = null;
 			
 			if (voucherID.toLowerCase().equals("all")) {
 				VALUE = new String[2];
 				VALUE[0] = fromDate;
 				VALUE[1] = toDate;
 				WHERE = FIELD_NAME[4]+" >= ? and "+FIELD_NAME[4]+" <= ?";
+				WHERE = "DATE(updateDate) >= DATE('"+fromDate+"') and DATE(updateDate) <= DATE('"+toDate+"')";
+				//WHERE = "DATE(updateDate) == DATE('2014-12-16 14:34:49')";
+
 			}else{
 				VALUE = new String[3];
 				VALUE[0] = fromDate;
 				VALUE[1] = toDate;
 				VALUE[2] = voucherID;
-				WHERE = FIELD_NAME[4]+" >= ? and "+FIELD_NAME[4]+" <= ? and "+FIELD_NAME[0]+" = ?";
+				//WHERE = FIELD_NAME[4]+" >= ? and "+FIELD_NAME[4]+" <= ? and "+FIELD_NAME[0]+" = ?";
+				WHERE = "DATE(updateDate) >= DATE('"+fromDate+"') and DATE(updateDate) <= DATE('"+toDate+"') and vid == '"+voucherID+"'";
 			}
 				
 			String ORDER_BY = FIELD_NAME[0]+ " ASC";
 			
 			sale_history_list = new ArrayList<Object>();
 			SQLiteDatabase db = getReadableDatabase();
-			Cursor cursor = db.query(TABLE_NAME, FROM, WHERE, VALUE, null, null, ORDER_BY);
+			Cursor cursor = db.query(TABLE_NAME, FROM, WHERE, null, null, null, ORDER_BY);
 			
 			Log.i("","Data count of sale history :" + cursor.getCount());
 			
@@ -708,7 +717,6 @@ public class SaleHistoryController extends DatabaseManager{
 		}
 		return sale_history_list;
 	}	
-	
 	
 	/*To Select Last ID for AutoID*/
 	public List<SaleHistory> getLastVoucherID() {

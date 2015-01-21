@@ -74,7 +74,7 @@ public class SaleReturnReportActivity extends SherlockActivity{
 		actionBar.setCustomView(R.layout.action_bar_report);
 		title = (TextView)actionBar.getCustomView().findViewById(R.id.txt_title);
 		//title.setText("Sale Return Report");
-		title.setText("ျပန္၀င္ပစၥည္းမွတ္တမ္း");
+		title.setText("ျပန္၀င္ ပစၥည္းမွတ္တမ္း");
 		btn_print = (Button) actionBar.getCustomView().findViewById(R.id.btn_print);
 		btn_print.setOnClickListener(clickListener);
 		actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
@@ -144,39 +144,7 @@ public class SaleReturnReportActivity extends SherlockActivity{
 		
 		public void onClick(View v) {
 			// TODO Auto-generated method stub
-			if (v == btn_print) {
-				SaveFileDialog fileDialog = new SaveFileDialog(SaleReturnReportActivity.this);
-		        fileDialog.setCallbackListener(new SaveFileDialog.Callback() {
-					
-
-
-					public void onCancel() {
-						// TODO Auto-generated method stub
-					}
-
-					public void onSave(String filename, boolean PDFChecked,
-							boolean ExcelChecked) {
-						// TODO Auto-generated method stub
-						if(PDFChecked){
-							//new SeatbyAgentPDFUtility(seatReports).createPdf(filename);
-						}
-						if(ExcelChecked){
-							
-							if (listVoucher != null && listVoucher.size() > 0) {
-								new SaleReturnReportExcelUtility(listVoucher, filename).write();
-								SKToastMessage.showMessage(SaleReturnReportActivity.this, filename+".xls is saved in your Device External SD card!", SKToastMessage.SUCCESS);
-							}else {
-								alertDialog("No Data Yet");
-							}
-							
-						}
-						
-						
-					}
-				});
-		        fileDialog.show();
-		        return;
-			}
+			
 			if (v == search)
 			{
 				/*if (selectedReturnVou.equals("All") && fromdate.getText().toString().equals("From Date") && todate.getText().toString().equals("To Date")) {
@@ -275,6 +243,62 @@ public class SaleReturnReportActivity extends SherlockActivity{
 
 				  skCalender.show();
 			}
+			if (v == btn_print) {
+				SaveFileDialog fileDialog = new SaveFileDialog(SaleReturnReportActivity.this);
+		        fileDialog.setCallbackListener(new SaveFileDialog.Callback() {
+					
+
+
+					public void onCancel() {
+						// TODO Auto-generated method stub
+					}
+
+					public void onSave(String filename, boolean PDFChecked,
+							boolean ExcelChecked) {
+						// TODO Auto-generated method stub
+						if(PDFChecked){
+							//new SeatbyAgentPDFUtility(seatReports).createPdf(filename);
+						}
+						if(ExcelChecked){
+							
+							if (listVoucher != null && listVoucher.size() > 0) {
+								for (int j = 0; j < listVoucher.size(); j++) {
+									
+									SaleReturn sr = (SaleReturn) listVoucher.get(j);
+									
+									String saleReturnDate = sr.getReturnDate();
+									//Split sale date 
+									String[] parts = saleReturnDate.split("-");
+									String year = parts[0]; 
+									String month = parts[1];
+									String day = parts[2];
+									
+									String formatedDate = day+"-"+month+"-"+year;
+									
+									((SaleReturn)listVoucher.get(j)).setReturnDate(formatedDate);
+								}
+							}
+
+							List<String> searchInfoList = new ArrayList<String>();
+							searchInfoList.add(selectedReturnVou);
+							searchInfoList.add(dmyDateFormat(selectedFromDate));
+							searchInfoList.add(dmyDateFormat(selectedToDate));
+							
+							if (listVoucher != null && listVoucher.size() > 0) {
+								new SaleReturnReportExcelUtility(listVoucher, filename, searchInfoList).write();
+								SKToastMessage.showMessage(SaleReturnReportActivity.this, filename+".xls is saved in your Device External SD card!", SKToastMessage.SUCCESS);
+							}else {
+								alertDialog("No Data Yet");
+							}
+							
+						}
+						
+						
+					}
+				});
+		        fileDialog.show();
+		        return;
+			}
 		}
 	};
 	
@@ -318,6 +342,18 @@ public class SaleReturnReportActivity extends SherlockActivity{
 		alert.setMessage(message+"!");
 		alert.show();
 		alert.setCancelable(true);
+	}
+	
+	private String dmyDateFormat(String date) {
+		// TODO Auto-generated method stub
+		String[] parts = date.split("-");
+		String year = parts[0]; 
+		String month = parts[1];
+		String day = parts[2];
+		
+		String formatedDate = day+"-"+month+"-"+year;
+		
+		return formatedDate;
 	}
 	
 }

@@ -2,6 +2,8 @@ package com.ignite.pos.adapter;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import com.ignite.pos.AddNewPurchaseVoucherActivity;
 import com.ignite.pos.R;
 import com.ignite.pos.database.controller.ItemListController;
 import com.ignite.pos.database.util.DatabaseManager;
@@ -193,9 +195,14 @@ public class SaleVoucherAdapter extends BaseAdapter{
 			});
 
 	        //alert.setTitle("Return Item - "+selected_item_name);
-	        alert.setTitle("ျပန္၀င္မည့္ပစၥည္းအမည္ - "+selected_item_name);
+	        //alert.setTitle("ျပန္၀င္မည့္ပစၥည္းအမည္ - "+selected_item_name);
+			View dialogView = View.inflate(aty, R.layout.dialog_title, null);
+			TextView dialogTitle = (TextView) dialogView.findViewById(R.id.txt_dialog_title);
+			//dialogTitle.setText("Add Prices | "+item_name);
+			dialogTitle.setText("ျပန္၀င္ မည့္ပစၥည္းအမည္ - "+selected_item_name);
+			alert.setCustomTitle(dialogView);
 	        
-	        alert.setPositiveButton("သိမ္းမည္", new DialogInterface.OnClickListener() {
+	        alert.setPositiveButton("Save", new DialogInterface.OnClickListener() {
 				
 				public void onClick(DialogInterface dialog, int which) {
 					
@@ -236,7 +243,7 @@ public class SaleVoucherAdapter extends BaseAdapter{
 				}
 			});
 	        
-	        alert.setNegativeButton("ထြက္မည္", new DialogInterface.OnClickListener() {
+	        alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
 				
 				public void onClick(DialogInterface dialog, int which) {
 					// TODO Auto-generated method stub

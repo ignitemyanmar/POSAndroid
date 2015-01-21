@@ -2,6 +2,7 @@ package com.ignite.pos.database.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -17,13 +18,14 @@ import com.ignite.pos.model.Profit;
 import com.ignite.pos.model.PurchaseVoucher;
 import com.ignite.pos.model.SaleVouncher;
 
+@SuppressLint("DefaultLocale")
 public class ProfitController extends DatabaseManager{
 
 	private Profit profit;
 	private List<Object> profit_list;
 	
 	private static final String TABLE_NAME = "tbl_profit";
-	private static final String[] FIELD_NAME = {"profitId","itemId","date","marginalPrice","salePrice","saleQty","profit","vid"};
+	private static final String[] FIELD_NAME = {"profitId","itemId","date","marginalPrice","salePrice","saleQty","profit","vid","itemName","discount"};
 	
 	public ProfitController(Context ctx) {
 		super(ctx);
@@ -45,7 +47,9 @@ public class ProfitController extends DatabaseManager{
 		    		FIELD_NAME[4] + " TEXT NULL," +
 		    		FIELD_NAME[5] + " TEXT NULL," +
 		    		FIELD_NAME[6] + " TEXT NULL," +
-		    		FIELD_NAME[7] + " TEXT NULL)" 
+		    		FIELD_NAME[7] + " TEXT NULL," +
+		    		FIELD_NAME[8] + " TEXT NULL," +
+		    		FIELD_NAME[9] + " INTEGER DEFAULT 0)" 
 		       		);
 	}
 	
@@ -57,6 +61,8 @@ public class ProfitController extends DatabaseManager{
 
 		public void saveRecord(List<Object> objList) {
 			// TODO Auto-generated method stub
+			Log.i("", "Profit List to save: "+objList.toString());
+			
 			SQLiteDatabase db = getWritableDatabase();
 			db.beginTransaction();
 			try {
@@ -72,6 +78,8 @@ public class ProfitController extends DatabaseManager{
 					values.put(FIELD_NAME[5], profit.getSaleQty());
 					values.put(FIELD_NAME[6], profit.getProfit());
 					values.put(FIELD_NAME[7], profit.getVid());
+					values.put(FIELD_NAME[8], profit.getItemName());
+					values.put(FIELD_NAME[9], profit.getDiscount());
 
 					db.insert(TABLE_NAME, null, values);
 				}
@@ -103,6 +111,8 @@ public class ProfitController extends DatabaseManager{
 						FIELD_NAME[5],
 						FIELD_NAME[6],
 						FIELD_NAME[7],
+						FIELD_NAME[8],
+						FIELD_NAME[9]
 					};
 				
 				String ORDER_BY = FIELD_NAME[0]+ " ASC";
@@ -125,6 +135,8 @@ public class ProfitController extends DatabaseManager{
 				        	profit.setSaleQty(cursor.getInt(5));
 				        	profit.setProfit(cursor.getInt(6));
 				        	profit.setVid(cursor.getString(7));
+				        	profit.setItemName(cursor.getString(8));
+				        	profit.setDiscount(cursor.getInt(9));
 				        					        		        	
 				        	profit_list.add(profit);
 				        } while (cursor.moveToNext());
@@ -178,7 +190,9 @@ public class ProfitController extends DatabaseManager{
 						"SUM(saleQty) AS saleQtytotal",
 						"SUM(profit) AS profittotal",
 						"SUM(marginalPrice * saleQty) AS purchasePrice",
-						FIELD_NAME[7]
+						FIELD_NAME[7],
+						FIELD_NAME[8],
+						FIELD_NAME[9]
 					};
 				
 				String[] VALUE;
@@ -215,6 +229,8 @@ public class ProfitController extends DatabaseManager{
 				        	profit.setTotalProfit(cursor.getInt(10));
 				        	profit.setPurchasePrice(cursor.getInt(11));
 				        	profit.setVid(cursor.getString(12));
+				        	profit.setItemName(cursor.getString(13));
+				        	profit.setDiscount(cursor.getInt(14));
 				        	
 				        	profit_list.add(profit);
 				        } while (cursor.moveToNext());
@@ -259,7 +275,10 @@ public class ProfitController extends DatabaseManager{
 						"SUM(saleQty) AS saleQtytotal",
 						"SUM(profit) AS profittotal",
 						"SUM(marginalPrice * saleQty) AS purchasePrice",
-						FIELD_NAME[7]
+						FIELD_NAME[7],
+						FIELD_NAME[8],
+						FIELD_NAME[9]
+						
 					};
 				
 				String[] VALUE;
@@ -305,6 +324,8 @@ public class ProfitController extends DatabaseManager{
 				        	profit.setTotalProfit(cursor.getInt(10));
 				        	profit.setPurchasePrice(cursor.getInt(11));
 				        	profit.setVid(cursor.getString(12));
+				        	profit.setItemName(cursor.getString(13));
+				        	profit.setDiscount(cursor.getInt(14));
 				        	
 				        	profit_list.add(profit);
 				        } while (cursor.moveToNext());
@@ -383,12 +404,12 @@ public class ProfitController extends DatabaseManager{
 
 	};
 	
-	public List<Object> selectByVidItemidDate(String Vid, String ItemID, String Date) {
+	public List<Object> selectByItemName(String itemName, String fromDate, String toDate) {
 		// TODO Auto-generated method stub
 		
-		Log.i("", "Selected Voucher No: "+Vid);
-		Log.i("", "Selected Item ID: "+ItemID);
-		Log.i("", "Selected Date: "+Date);
+		Log.i("", "Selected Item Name: "+itemName);
+		Log.i("", "Selected From Date: "+fromDate);
+		Log.i("", "Selected To Date: "+toDate);
 		
 		try {
 			String[] FROM = {
@@ -399,22 +420,40 @@ public class ProfitController extends DatabaseManager{
 					FIELD_NAME[4],
 					FIELD_NAME[5],
 					FIELD_NAME[6],
-					FIELD_NAME[7]
+					"SUM(marginalPrice) AS marginalPricetotal",
+					"SUM(salePrice * saleQty) AS salePricetotal",
+					"SUM(saleQty) AS saleQtytotal",
+					"SUM(profit) AS profittotal",
+					"SUM(marginalPrice * saleQty) AS purchasePrice",
+					FIELD_NAME[7], 
+					FIELD_NAME[8],
+					FIELD_NAME[9],
+					"SUM(discount) AS discountTotal"
+					
 				};
 			
 			String[] VALUE;
 			String WHERE;
 			
-			VALUE = new String[3];
-			VALUE[0] = Vid;
-			VALUE[1] = ItemID;
-			VALUE[2] = Date;
+			if (itemName.toLowerCase().equals("all")) {
+				VALUE = new String[2];
+				VALUE[0] = fromDate;
+				VALUE[1] = toDate;
+				WHERE = FIELD_NAME[2]+" >= ? and "+FIELD_NAME[2]+" <= ?";
+			}else{
+				VALUE = new String[3];
+				VALUE[0] = fromDate;
+				VALUE[1] = toDate;
+				VALUE[2] = itemName;
+				WHERE = FIELD_NAME[2]+" >= ? and "+FIELD_NAME[2]+" <= ? and "+FIELD_NAME[8]+" = ?";
+			}
 			
-			WHERE = FIELD_NAME[7]+" = ? and "+FIELD_NAME[1]+" = ? and "+FIELD_NAME[2]+" = ?";
+			String GROUP_BY = FIELD_NAME[2];
+			String ORDER_BY = FIELD_NAME[2]+ " ASC";
 			
 			profit_list = new ArrayList<Object>();
 			SQLiteDatabase db = getReadableDatabase();
-			Cursor cursor = db.query(TABLE_NAME, FROM, WHERE, VALUE, null, null, null);
+			Cursor cursor = db.query(TABLE_NAME, FROM, WHERE, VALUE, GROUP_BY, null, ORDER_BY);
 			
 			Log.i("","Data count :" + cursor.getCount());
 			
@@ -430,7 +469,89 @@ public class ProfitController extends DatabaseManager{
 			        	profit.setSalePrice(cursor.getInt(4));
 			        	profit.setSaleQty(cursor.getInt(5));
 			        	profit.setProfit(cursor.getInt(6));
+			        	profit.setTotalmarginalPrice(cursor.getInt(7));
+			        	profit.setTotalSalePrice(cursor.getInt(8));
+			        	profit.setTotalSaleQty(cursor.getInt(9));
+			        	profit.setTotalProfit(cursor.getInt(10));
+			        	profit.setPurchasePrice(cursor.getInt(11));
+			        	profit.setVid(cursor.getString(12));
+			        	profit.setItemName(cursor.getString(13));
+			        	profit.setDiscount(cursor.getInt(14));
+			        	profit.setTotalDiscount(cursor.getInt(15));
+			        	
+			        	profit_list.add(profit);
+			        } while (cursor.moveToNext());
+			    }
+			} catch (Exception e) {
+				// TODO: handle exception
+				e.printStackTrace();
+			} finally {
+				cursor.close();
+				db.close();
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		} finally {
+			if(complete != null){
+				complete.onComplete();
+			}
+		}
+		return profit_list;
+	}
+	
+	public List<Object> selectByVidItemidDate(String Vid, String ItemName, String Date) {
+		// TODO Auto-generated method stub
+		
+		Log.i("", "Selected Voucher No: "+Vid);
+		Log.i("", "Selected Item ID: "+ItemName);
+		Log.i("", "Selected Date: "+Date);
+		
+		try {
+			String[] FROM = {
+					FIELD_NAME[0], 
+					FIELD_NAME[1],
+					FIELD_NAME[2], 
+					FIELD_NAME[3],
+					FIELD_NAME[4],
+					FIELD_NAME[5],
+					FIELD_NAME[6],
+					FIELD_NAME[7],
+					FIELD_NAME[8],
+					FIELD_NAME[9]
+				};
+			
+			String[] VALUE;
+			String WHERE;
+			
+			VALUE = new String[3];
+			VALUE[0] = Vid;
+			VALUE[1] = ItemName;
+			VALUE[2] = Date;
+			
+			WHERE = FIELD_NAME[7]+" = ? and "+FIELD_NAME[8]+" = ? and "+FIELD_NAME[2]+" = ?";
+			
+			profit_list = new ArrayList<Object>();
+			SQLiteDatabase db = getReadableDatabase();
+			Cursor cursor = db.query(TABLE_NAME, FROM, WHERE, VALUE, null, null, null);
+			
+			Log.i("","Data count in profit:" + cursor.getCount());
+			
+			try {
+				if (cursor.moveToFirst()) {
+			        do {
+			        	Profit profit = new Profit();
+			        	
+			        	profit.setProfitId(cursor.getInt(0));
+			        	profit.setItemId(cursor.getString(1));
+			        	profit.setDate(cursor.getString(2));
+			        	profit.setMarginalPrice(cursor.getInt(3));
+			        	profit.setSalePrice(cursor.getInt(4));
+			        	profit.setSaleQty(cursor.getInt(5));
+			        	profit.setProfit(cursor.getInt(6));
 			        	profit.setVid(cursor.getString(7));
+			        	profit.setItemName(cursor.getString(8));
+			        	profit.setDiscount(cursor.getInt(9));
 			        	
 			        	profit_list.add(profit);
 			        } while (cursor.moveToNext());
@@ -521,9 +642,10 @@ public class ProfitController extends DatabaseManager{
 					values.put(FIELD_NAME[5], profit.getSaleQty());
 					values.put(FIELD_NAME[6], profit.getProfit());
 					values.put(FIELD_NAME[4], profit.getSalePrice());
+					values.put(FIELD_NAME[9], profit.getDiscount());
 
-					String[] VALUE = {profit.getItemId(), profit.getDate(), profit.getVid()};
-					String WHERE = FIELD_NAME[1] + " =? and "+FIELD_NAME[2]+" = ? and "+FIELD_NAME[7]+" = ?";
+					String[] VALUE = {profit.getItemName(), profit.getDate(), profit.getVid()};
+					String WHERE = FIELD_NAME[8] + " =? and "+FIELD_NAME[2]+" = ? and "+FIELD_NAME[7]+" = ?";
 					
 					db.update(TABLE_NAME, values, WHERE,VALUE);
 				}
@@ -584,8 +706,8 @@ public class ProfitController extends DatabaseManager{
 					
 				Profit profitObj = (Profit) obj;
 				
-				String WHERE = FIELD_NAME[1]+" = ? and "+FIELD_NAME[2]+" = ? and "+FIELD_NAME[7]+" = ?";
-				String[] VALUE = {profitObj.getItemId(), profitObj.getDate(), profitObj.getVid()};
+				String WHERE = FIELD_NAME[8]+" = ? and "+FIELD_NAME[2]+" = ? and "+FIELD_NAME[7]+" = ?";
+				String[] VALUE = {profitObj.getItemName(), profitObj.getDate(), profitObj.getVid()};
 				//db.delete(TABLE_NAME, FIELD_NAME[0]+" = ?", new String[]{String.valueOf(itemObj.getItemid())});
 				db.delete(TABLE_NAME, WHERE, VALUE);
 			}

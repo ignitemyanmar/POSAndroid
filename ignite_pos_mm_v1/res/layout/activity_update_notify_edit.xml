@@ -28,13 +28,13 @@
                 android:padding="25dp" >
 
                 <com.ignite.custom.view.CustomTextView
-                    android:id="@+id/CustomTextView1"
+                    android:id="@+id/txt_co_title"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:layout_marginBottom="10dp"
                     android:background="@color/green"
                     android:gravity="center_vertical|center"
-                    android:text="လက္က်န္သတိေပးျပင္ဆင္ျခင္း"
+                    android:text="လက္က်န္သတိေပးျပင္ ဆင္ျခင္း"
                     android:textColor="@color/white"
                     android:textSize="24dp" />
 
@@ -63,7 +63,7 @@
                     android:layout_marginBottom="10dp"
                     android:background="@drawable/editext_border"
                     android:gravity="center"
-                    android:hint="လက္က်န္သတိေပးအေရအတြက္"
+                    android:hint="လက္က်န္သတိေပးအ ေရအတြက္"
                     android:inputType="number"
                     android:singleLine="true"
                     android:textSize="18dp" />

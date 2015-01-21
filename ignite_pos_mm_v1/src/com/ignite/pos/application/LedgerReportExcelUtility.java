@@ -7,7 +7,6 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
-import com.ignite.pos.model.ItemList;
 import com.ignite.pos.model.Ledger;
 
 import jxl.CellView;
@@ -33,9 +32,13 @@ public class LedgerReportExcelUtility {
   private WritableCellFormat labels;
   private String inputFile;
   private List<Object> ledgerList;
+  private WritableCellFormat headerTitle;
+  private List<String> searchInfoList;
+
   
-  public LedgerReportExcelUtility(List<Object> ledgerList, String filename) {
+  public LedgerReportExcelUtility(List<Object> ledgerList, String filename, List<String> searchInfoList) {
 	  this.ledgerList = ledgerList;
+	  this.searchInfoList = searchInfoList;
 	  IfExistFileDir(RESULT);
 	  inputFile = filename == null ? RESULT+getToday()+"_DailyReport_Stock.xls" : RESULT+filename+".xls";
 	  IfExistPDF(inputFile);
@@ -80,40 +83,65 @@ public class LedgerReportExcelUtility {
     boldUnderline = new WritableCellFormat(headerBoldUnderline);
     // Lets automatically wrap the cells
     boldUnderline.setWrap(true);
+    
+    //Create Header 
+    WritableFont header = new WritableFont(WritableFont.ARIAL, 16, WritableFont.BOLD);
+    headerTitle = new WritableCellFormat(header);
+    headerTitle.setWrap(true);
 
     CellView cv = new CellView();
     cv.setFormat(labels);
     cv.setFormat(boldUnderline);
+    cv.setFormat(headerTitle);
     cv.setAutosize(true);
     //To change here
+    
+    //Write Title 
+    addTitle(sheet, 0, 0, "Ledger Report");
+    
+    //Write Some Info
+    addLabel(sheet, 0, 2, "Item Name: "+searchInfoList.get(0));
+    addLabel(sheet, 0, 3, "From Date: "+searchInfoList.get(1));
+    addLabel(sheet, 0, 4, "To Date: "+searchInfoList.get(2));
+    
     // Write a few headers
-    addCaption(sheet, 0, 0, "Item Name");
-    addCaption(sheet, 1, 0, "Date");
-    addCaption(sheet, 2, 0, "Old Stock Qty");
-    addCaption(sheet, 3, 0, "Purchase Qty");
-    addCaption(sheet, 4, 0, "Sale Qty");
-    addCaption(sheet, 5, 0, "Return Qty");
-    addCaption(sheet, 6, 0, "New Stock Qty");
+    addCaption(sheet, 0, 6, "ItemID");
+    addCaption(sheet, 1, 6, "Item Name");
+    addCaption(sheet, 2, 6, "Date");
+    addCaption(sheet, 3, 6, "Old Stock Qty");
+    addCaption(sheet, 4, 6, "Purchase Qty");
+    addCaption(sheet, 5, 6, "Sale Qty");
+    addCaption(sheet, 6, 6, "Return Qty");
+    addCaption(sheet, 7, 6, "New Stock Qty");
 
   }
 
   private void createContent(WritableSheet sheet) throws WriteException,
       RowsExceededException {
 	//To change here
-    int i = 1;
+    int i = 7;
     for(Object ledgerL: ledgerList){
     	
     	Ledger ledger = (Ledger) ledgerL; 
     	
-    	addLabel(sheet, 0, i, ledger.getItemName());
-    	addLabel(sheet, 1, i, ledger.getDate());
-    	addLabel(sheet, 2, i, ledger.getOldStockQty()+"");
-    	addLabel(sheet, 3, i, ledger.getPurchaseQty()+"");
-    	addLabel(sheet, 4, i, ledger.getSaleQty()+"");
-    	addLabel(sheet, 5, i, ledger.getReturnQty()+"");
-    	addLabel(sheet, 6, i, ledger.getNewStockQty()+"");
+    	addLabel(sheet, 0, i, ledger.getItemId());
+    	addLabel(sheet, 1, i, ledger.getItemName());
+    	addLabel(sheet, 2, i, ledger.getDate());
+    	addLabel(sheet, 3, i, ledger.getOldStockQty()+"");
+    	addLabel(sheet, 4, i, ledger.getPurchaseQty()+"");
+    	addLabel(sheet, 5, i, ledger.getSaleQty()+"");
+    	addLabel(sheet, 6, i, ledger.getReturnQty()+"");
+    	addLabel(sheet, 7, i, ledger.getNewStockQty()+"");
     	i++;
     }
+  }
+  
+  private void addTitle(WritableSheet sheet, int column, int row, String s) 
+		  throws RowsExceededException, WriteException {
+	// TODO Auto-generated method stub
+	    Label label;
+	    label = new Label(column, row, s, headerTitle);
+	    sheet.addCell(label);
   }
 
   private void addCaption(WritableSheet sheet, int column, int row, String s)

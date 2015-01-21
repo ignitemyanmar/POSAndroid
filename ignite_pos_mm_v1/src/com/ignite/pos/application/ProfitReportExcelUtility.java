@@ -33,9 +33,13 @@ public class ProfitReportExcelUtility {
   private WritableCellFormat labels;
   private String inputFile;
   private List<Object> profitList;
+  private WritableCellFormat headerTitle;
+  private List<String> searchInfoList;
+
   
-  public ProfitReportExcelUtility(List<Object> profitList, String filename) {
+  public ProfitReportExcelUtility(List<Object> profitList, String filename, List<String> searchInfoList) {
 	  this.profitList = profitList;
+	  this.searchInfoList = searchInfoList;
 	  IfExistFileDir(RESULT);
 	  inputFile = filename == null ? RESULT+getToday()+"_DailyReport_Profit.xls" : RESULT+filename+".xls";
 	  IfExistPDF(inputFile);
@@ -80,24 +84,44 @@ public class ProfitReportExcelUtility {
     boldUnderline = new WritableCellFormat(headerBoldUnderline);
     // Lets automatically wrap the cells
     boldUnderline.setWrap(true);
+    
+    //Create Header 
+    WritableFont header = new WritableFont(WritableFont.ARIAL, 16, WritableFont.BOLD);
+    headerTitle = new WritableCellFormat(header);
+    headerTitle.setWrap(true);
 
     CellView cv = new CellView();
     cv.setFormat(labels);
     cv.setFormat(boldUnderline);
+    cv.setFormat(headerTitle);
     cv.setAutosize(true);
     //To change here
+    
+    //Write Title 
+    addTitle(sheet, 0, 0, "Profit Report");
+    
+    //Write Some Info
+    addLabel(sheet, 0, 2, "Item Name: "+searchInfoList.get(0));
+    if (searchInfoList.get(0).toLowerCase().equals("all")) {
+    	addLabel(sheet, 0, 3, "Item ID: -");
+	}else {
+		addLabel(sheet, 0, 3, "Item ID: "+((Profit)profitList.get(0)).getItemId());
+	}
+    addLabel(sheet, 0, 4, "From Date: "+searchInfoList.get(1));
+    addLabel(sheet, 0, 5, "To Date: "+searchInfoList.get(2));
+    
     // Write a few headers
-    addCaption(sheet, 0, 0, "Date");
-    addCaption(sheet, 1, 0, "Sale Price Total");
-    addCaption(sheet, 2, 0, "Purchase Price Total");
-    addCaption(sheet, 3, 0, "Profit Total");
+    addCaption(sheet, 0, 7, "Date");
+    addCaption(sheet, 1, 7, "Sale Price Total");
+    addCaption(sheet, 2, 7, "Purchase Price Total");
+    addCaption(sheet, 3, 7, "Profit Total");
 
   }
 
   private void createContent(WritableSheet sheet) throws WriteException,
       RowsExceededException {
 	//To change here
-    int i = 1;
+    int i = 8;
     for(Object profitL: profitList){
     	
     	Profit profit = (Profit) profitL; 
@@ -108,6 +132,14 @@ public class ProfitReportExcelUtility {
     	addLabel(sheet, 3, i, profit.getTotalProfit()+"");
     	i++;
     }
+  }
+  
+  private void addTitle(WritableSheet sheet, int column, int row, String s) 
+		  throws RowsExceededException, WriteException {
+	// TODO Auto-generated method stub
+	    Label label;
+	    label = new Label(column, row, s, headerTitle);
+	    sheet.addCell(label);
   }
 
   private void addCaption(WritableSheet sheet, int column, int row, String s)

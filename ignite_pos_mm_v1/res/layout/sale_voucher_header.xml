@@ -7,7 +7,7 @@
     android:orientation="vertical" >
 
     <LinearLayout
-        android:id="@+id/LinearLayout01"
+        android:id="@+id/lyDisc"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_alignParentLeft="true"
@@ -15,25 +15,24 @@
         android:background="@color/green"
         android:orientation="horizontal"
         android:padding="10dp" >
-
+
         <com.smk.skscalableview.ScalableTextView
             android:id="@+id/ScalableTextView04"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginRight="2dp"
-            android:layout_weight="17"
+            android:layout_weight="15"
             android:gravity="center_vertical"
             android:text="ပစၥည္းအမည္"
             android:textSize="18dp" />
 
         <com.smk.skscalableview.ScalableTextView
             android:id="@+id/ScalableTextView06"
-            android:layout_width="wrap_content"
+            android:layout_width="150dp"
             android:layout_height="match_parent"
             android:layout_marginRight="2dp"
-            android:layout_weight="17"
             android:gravity="center_vertical|center_horizontal"
-            android:text="အေရအတြက္"
+            android:text="အ ေရ အတြက္"
             android:textSize="18dp" />
 
         <com.smk.skscalableview.ScalableTextView
@@ -41,7 +40,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginRight="2dp"
-            android:layout_weight="17"
+            android:layout_weight="15"
             android:gravity="right|center_vertical"
             android:text="ေစ်းႏႈန္း"
             android:textSize="18dp" />
@@ -50,10 +49,19 @@
             android:id="@+id/ScalableTextView08"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_weight="17"
+            android:layout_weight="15"
             android:gravity="right|center_vertical"
             android:text="ေငြပမာဏ"
             android:textSize="18dp" />
+        
+        <CheckBox
+            android:id="@+id/chb_free"
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Free"
+            android:textColor="@color/blue"
+            android:visibility="gone" />
 
     </LinearLayout>
 

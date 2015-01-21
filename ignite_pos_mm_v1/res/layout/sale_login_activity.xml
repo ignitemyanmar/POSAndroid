@@ -24,13 +24,13 @@
                 android:padding="25dp" >
 
                 <com.ignite.custom.view.CustomTextView
-                    android:id="@+id/CustomTextView1"
+                    android:id="@+id/txt_co_title"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:layout_marginBottom="10dp"
                     android:background="@color/green"
                     android:gravity="center_vertical|center"
-                    android:text="အေရာင္းပိုင္းသုိ႔ ၀င္ရန္"
+                    android:text="အ ေရာင္း ပိုင္းသုိ႔ ၀င္ ရန္"
                     android:textColor="#ffffff"
                     android:textSize="24dp" />
 
@@ -60,7 +60,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:background="@drawable/bg_button"
-                    android:text="၀င္မည္"
+                    android:text="၀င္ မည္"
                     android:textColor="#ffffff"
                     android:textSize="20dp" />
 

@@ -31,9 +31,12 @@ public class PurchaseReportExcelUtility {
   private WritableCellFormat labels;
   private String inputFile;
   private List<Object> purchaseVoucherList;
+  private WritableCellFormat headerTitle;
+  private List<String> searchInfoList;
   
-  public PurchaseReportExcelUtility(List<Object> purchaseVoucherList, String filename) {
+  public PurchaseReportExcelUtility(List<Object> purchaseVoucherList, String filename, List<String> searchInfoList) {
 	  this.purchaseVoucherList = purchaseVoucherList;
+	  this.searchInfoList = searchInfoList;
 	  IfExistFileDir(RESULT);
 	  inputFile = filename == null ? RESULT+getToday()+"_DailyReport_SaleVoucher.xls" : RESULT+filename+".xls";
 	  IfExistPDF(inputFile);
@@ -78,24 +81,47 @@ public class PurchaseReportExcelUtility {
     boldUnderline = new WritableCellFormat(headerBoldUnderline);
     // Lets automatically wrap the cells
     boldUnderline.setWrap(true);
+    
+    //Create Header 
+    WritableFont header = new WritableFont(WritableFont.ARIAL, 16, WritableFont.BOLD);
+    headerTitle = new WritableCellFormat(header);
+    headerTitle.setWrap(true);
 
     CellView cv = new CellView();
     cv.setFormat(labels);
     cv.setFormat(boldUnderline);
+    cv.setFormat(headerTitle);
     cv.setAutosize(true);
     //To change here
+    
+    //Write Title 
+    addTitle(sheet, 0, 0, "Purchase Report");
+    
+    //Write Some Info
+    addLabel(sheet, 0, 2, "Supplier Name: "+searchInfoList.get(0));
+    addLabel(sheet, 0, 3, "From Date: "+searchInfoList.get(1));
+    addLabel(sheet, 0, 4, "To Date: "+searchInfoList.get(2));
+    
     // Write a few headers
-    addCaption(sheet, 0, 0, "Voucher No.");
-    addCaption(sheet, 1, 0, "Date");
-    addCaption(sheet, 2, 0, "Supplier Name");
-    addCaption(sheet, 3, 0, "Total Amount");
+    addCaption(sheet, 0, 6, "Voucher No.");
+    addCaption(sheet, 1, 6, "Date");
+    addCaption(sheet, 2, 6, "Supplier Name");
+    addCaption(sheet, 3, 6, "Total Purchase Amount");
 
   }
 
-  private void createContent(WritableSheet sheet) throws WriteException,
+  private void addTitle(WritableSheet sheet, int column, int row, String s) 
+		  throws RowsExceededException, WriteException {
+	// TODO Auto-generated method stub
+	    Label label;
+	    label = new Label(column, row, s, headerTitle);
+	    sheet.addCell(label);
+  }
+
+private void createContent(WritableSheet sheet) throws WriteException,
       RowsExceededException {
 	//To change here
-    int i = 1;
+    int i = 7;
     for(Object purchaseV: purchaseVoucherList){
     	
     	PurchaseVoucher pv = (PurchaseVoucher) purchaseV; 

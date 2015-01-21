@@ -106,7 +106,7 @@
         android:orientation="vertical" >
 
         <LinearLayout
-            android:id="@+id/LinearLayout01"
+            android:id="@+id/lyDisc"
             android:layout_width="match_parent"
             android:layout_height="70dp"
             android:gravity="center_vertical"
@@ -119,17 +119,17 @@
                 android:gravity="center_vertical" >
 
                 <com.ignite.custom.view.CustomTextView
-                    android:id="@+id/CustomTextView1"
+                    android:id="@+id/txt_co_title"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="left|center_vertical"
-                    android:text="ျပန္အမ္းေဘာင္ခ်ာ :"
+                    android:text="ျပန္အမ္းေဘာင္ ခ်ာ :"
                     android:textSize="16dp"
                     android:textStyle="bold" />
 
                 <com.ignite.custom.view.CustomTextView
-                    android:id="@+id/CustomTextView2"
+                    android:id="@+id/txt_contact"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="left|center_vertical"

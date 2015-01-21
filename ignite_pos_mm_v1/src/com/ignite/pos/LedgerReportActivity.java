@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import android.app.AlertDialog;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.util.Log;
@@ -27,6 +28,7 @@ import com.ignite.pos.database.controller.LedgerController;
 import com.ignite.pos.database.util.DatabaseManager;
 import com.ignite.pos.model.ItemList;
 import com.ignite.pos.model.Ledger;
+import com.ignite.pos.model.SaleVouncher;
 import com.smk.calender.widget.SKCalender;
 import com.smk.calender.widget.SKCalender.Callbacks;
 import com.smk.skalertmessage.SKToastMessage;
@@ -64,6 +66,7 @@ public class LedgerReportActivity extends SherlockActivity{
 		actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
 		
 		autocom_item_code = (AutoCompleteTextView)findViewById(R.id.autocom_item_code);
+		autocom_item_code.setTypeface(Typeface.createFromAsset(getAssets(),"fonts/ZawgyiOne2008.ttf"));
 		fromdate  = (Button)findViewById(R.id.btnFromDate);
 		todate = (Button)findViewById(R.id.btnToDate);
 		search = (Button)findViewById(R.id.btnSearch);
@@ -101,36 +104,7 @@ public class LedgerReportActivity extends SherlockActivity{
 
 		public void onClick(View v) {
 			// TODO Auto-generated method stub
-			if (v == btn_print) {
-				SaveFileDialog fileDialog = new SaveFileDialog(LedgerReportActivity.this);
-		        fileDialog.setCallbackListener(new SaveFileDialog.Callback() {
-					
-					public void onCancel() {
-						// TODO Auto-generated method stub
-					}
 
-					public void onSave(String filename, boolean PDFChecked,
-							boolean ExcelChecked) {
-						// TODO Auto-generated method stub
-						if(PDFChecked){
-							//new SeatbyAgentPDFUtility(seatReports).createPdf(filename);
-						}
-						if(ExcelChecked){
-							
-							if (listLedger != null && listLedger.size() > 0) {
-								new LedgerReportExcelUtility(listLedger, filename).write();
-								SKToastMessage.showMessage(LedgerReportActivity.this, filename+".xls is saved in your Device External SD card!", SKToastMessage.SUCCESS);
-							}else {
-								alertDialog("No Data Yet");
-							}
-						}
-						
-						
-					}
-				});
-		        fileDialog.show();
-		        return;
-			}
 			if (v == search)
 			{
 				if (checkFields()) {
@@ -141,7 +115,7 @@ public class LedgerReportActivity extends SherlockActivity{
 					dbManager = new LedgerController(LedgerReportActivity.this);
 					LedgerController ledgerControl = (LedgerController)dbManager;
 					ledgerList = new ArrayList<Object>();
-					ledgerList = ledgerControl.select(selectedItemCode, selectedFromDate, selectedToDate);
+					ledgerList = ledgerControl.selectByItemName(selectedItemCode, selectedFromDate, selectedToDate);
 					
 					Log.i("", "Ledger list: "+ledgerList.toString());
 					
@@ -221,6 +195,57 @@ public class LedgerReportActivity extends SherlockActivity{
 
 				  skCalender.show();
 			}
+			if (v == btn_print) {
+				SaveFileDialog fileDialog = new SaveFileDialog(LedgerReportActivity.this);
+		        fileDialog.setCallbackListener(new SaveFileDialog.Callback() {
+					
+					public void onCancel() {
+						// TODO Auto-generated method stub
+					}
+
+					public void onSave(String filename, boolean PDFChecked,
+							boolean ExcelChecked) {
+						// TODO Auto-generated method stub
+						if(PDFChecked){
+							//new SeatbyAgentPDFUtility(seatReports).createPdf(filename);
+						}
+						if(ExcelChecked){
+							
+							if (listLedger != null && listLedger.size() > 0) {
+								for (int j = 0; j < listLedger.size(); j++) {
+									
+									Ledger ledger = (Ledger) listLedger.get(j);
+									
+									String ledgerDate = ledger.getDate();
+									//Split sale date 
+									String[] parts = ledgerDate.split("-");
+									String year = parts[0]; 
+									String month = parts[1];
+									String day = parts[2];
+									
+									String formatedDate = day+"-"+month+"-"+year;
+									
+									((Ledger)listLedger.get(j)).setDate(formatedDate);
+								}
+							}
+							
+							List<String> searchInfoList = new ArrayList<String>();
+							searchInfoList.add(selectedItemCode);
+							searchInfoList.add(dmyDateFormat(selectedFromDate));
+							searchInfoList.add(dmyDateFormat(selectedToDate));
+							
+							if (listLedger != null && listLedger.size() > 0) {
+								new LedgerReportExcelUtility(listLedger, filename, searchInfoList).write();
+								SKToastMessage.showMessage(LedgerReportActivity.this, filename+".xls is saved in your Device External SD card!", SKToastMessage.SUCCESS);
+							}else {
+								alertDialog("No Data Yet");
+							}
+						}
+					}
+				});
+		        fileDialog.show();
+		        return;
+			}
 		}
 	};
 	
@@ -242,11 +267,14 @@ public class LedgerReportActivity extends SherlockActivity{
 			
 			ItemList itemObj = (ItemList)listItemCode.get(i);
 			
-			itemArray[i] = itemObj.getItemId();  
+			itemArray[i] = itemObj.getItemName();  
+			
+			Log.i("", "Item Name Array: "+itemArray[i]);
 		}
+
 		
 		ArrayAdapter<String> adapter = 
-		        new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, itemArray);
+		        new ArrayAdapter<String>(this, R.layout.custom_autocomplete_view, itemArray);
 		autocom_item_code.setAdapter(adapter);
 		
 		// specify the minimum type of characters before drop-down list is shown
@@ -270,6 +298,18 @@ public class LedgerReportActivity extends SherlockActivity{
 		alert.setMessage(message+"!");
 		alert.show();
 		alert.setCancelable(true);
+	}
+	
+	private String dmyDateFormat(String date) {
+		// TODO Auto-generated method stub
+		String[] parts = date.split("-");
+		String year = parts[0]; 
+		String month = parts[1];
+		String day = parts[2];
+		
+		String formatedDate = day+"-"+month+"-"+year;
+		
+		return formatedDate;
 	}
 }
 

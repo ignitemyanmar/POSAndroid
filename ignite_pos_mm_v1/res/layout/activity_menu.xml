@@ -30,7 +30,7 @@
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:background="@drawable/bg_button"
-            android:text="အေရာင္း"
+            android:text="အ ေရာင္း"
             android:textColor="@color/white"
             android:textSize="20dp" />
 
