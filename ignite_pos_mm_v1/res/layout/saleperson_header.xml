@@ -44,7 +44,7 @@
             app:scale_width="6" />
 
         <com.smk.skscalableview.ScalableTextView
-            android:id="@+id/ScalableTextView02"
+            android:id="@+id/txt_sale_voucher_no"
             android:layout_width="150dp"
             android:layout_height="match_parent"
             android:gravity="center"

@@ -50,7 +50,7 @@
                         android:background="@drawable/editext_border"
                         android:ems="10"
                         android:gravity="center"
-                        android:hint="ကုတ္နံပါတ္႐ိုက္ထည့္ပါ"
+                        android:hint="ပစၥည္း အမည္ ထည့္ပါ"
                         android:inputType="text"
                         android:singleLine="true" >
 

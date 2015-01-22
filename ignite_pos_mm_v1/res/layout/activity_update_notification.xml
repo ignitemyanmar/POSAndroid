@@ -53,7 +53,7 @@
             android:textStyle="bold" />
 
         <com.smk.skscalableview.ScalableTextView
-            android:id="@+id/ScalableTextView02"
+            android:id="@+id/txt_sale_voucher_no"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="5dp"

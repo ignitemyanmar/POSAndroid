@@ -12,8 +12,8 @@
         android:layout_height="70dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_marginBottom="5dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginBottom="2dp"
+        android:layout_marginTop="2dp"
         android:clickable="false"
         android:gravity="center_vertical"
         android:orientation="horizontal"
@@ -24,7 +24,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="2dp"
-            android:layout_weight="20"
+            android:layout_weight="17"
             android:gravity="left|center_vertical"
             android:text="-"
             android:textSize="18dp" />
@@ -33,8 +33,8 @@
             android:id="@+id/txt_total_sale_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="50dp"
-            android:layout_weight="20"
+            android:layout_marginRight="5dp"
+            android:layout_weight="17"
             android:gravity="right|center_vertical"
             android:text="-"
             android:textSize="18dp" />
@@ -44,7 +44,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="2dp"
-            android:layout_weight="20"
+            android:layout_weight="17"
             android:gravity="right|center_vertical"
             android:text="-"
             android:textSize="18dp" />
@@ -54,7 +54,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="2dp"
-            android:layout_weight="20"
+            android:layout_weight="17"
             android:gravity="right|center_vertical"
             android:text="-"
             android:textSize="18dp" />
@@ -64,10 +64,30 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="10dp"
-            android:layout_weight="20"
+            android:layout_weight="17"
             android:gravity="right|center_vertical"
             android:text="-"
             android:textSize="18dp" />
+
+        <com.smk.skscalableview.ScalableLinearLayout
+            android:id="@+id/layout_detail"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="17"
+            android:gravity="center"
+            android:orientation="horizontal" >
+
+            <com.ignite.custom.view.CustomButton
+                android:id="@+id/btn_view_detail"
+                android:layout_width="120dp"
+                android:layout_height="match_parent"
+                android:layout_marginRight="5dp"
+                android:background="@drawable/girditem_border"
+                android:padding="5dp"
+                android:text="အ ေသးစိတ္"
+                android:textColor="@color/white"
+                android:textSize="16dp" />
+        </com.smk.skscalableview.ScalableLinearLayout>
 
     </LinearLayout>
 

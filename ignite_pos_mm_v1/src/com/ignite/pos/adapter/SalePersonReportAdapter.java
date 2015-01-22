@@ -81,7 +81,9 @@ public class SalePersonReportAdapter extends BaseAdapter{
 		holder.txt_vno.setText(sv.getVid());
 		holder.txt_date.setText(sv.getVdate());
 		holder.txt_sale_person.setText(sv.getSalePerson());
-		holder.txt_vou_total.setText(sv.getTotal());
+		
+		Integer voucher_total = Integer.valueOf(sv.getTotal()) - Integer.valueOf(sv.getDiscount());
+		holder.txt_vou_total.setText(voucher_total+"");
 		
 		//Show Color for Sale Update Vouchers
 /*		dbManager = new SaleHistoryController(aty);

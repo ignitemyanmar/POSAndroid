@@ -892,29 +892,26 @@ public class SaleUpdateActivity  extends SherlockActivity{
 					
 					Log.i("", "New Sale Qty in profit: "+newQty);
 							
-					Integer discount = Integer.valueOf(txt_disc_show.getText().toString()) / saleVouncher.size();
+				//	Integer discount = Integer.valueOf(txt_disc_show.getText().toString()) / saleVouncher.size();
 					Integer profitFinal = 0;
 					Integer salePrice = 0;
 					
 					if (sv.getFree_checked() != null) {
-						if (sv.getFree_checked().equals("free")) {
+						//if (sv.getFree_checked().equals("free")) {
 							
-							Log.i("", "Enter here1......................: "+sv.getFree_checked());
 							salePrice = 0;
-							Integer profitAmt = 0 - ( profit.getMarginalPrice() * newQty);
-							profitFinal = profitAmt - discount;
-						}
+							profitFinal = 0 - ( profit.getMarginalPrice() * newQty);
+							//profitFinal = profitAmt - discount;
+						//}
 					}else {
-						Log.i("", "Enter here2......................: "+sv.getFree_checked());
 							salePrice = Integer.valueOf(sv.getPrice());
-							Log.i("", "Enter here2 sale price: "+salePrice);
-							Integer profitAmt = ( Integer.valueOf(sv.getPrice()) * newQty ) - ( profit.getMarginalPrice() * newQty);
-							profitFinal = profitAmt - discount;
+							profitFinal = ( Integer.valueOf(sv.getPrice()) * newQty ) - ( profit.getMarginalPrice() * newQty);
+							//profitFinal = profitAmt - discount;
 					}
 					
 					updateProfitList.add(new Profit(profit.getItemId(), profit.getDate(), Integer.valueOf(profit.getMarginalPrice())
 								, salePrice
-								, newQty, profitFinal, profit.getVid(), profit.getItemName(), discount));
+								, newQty, profitFinal, profit.getVid(), profit.getItemName(), Integer.valueOf(txt_disc_show.getText().toString())));
 							
 					profit_control.updateTotalPriceRecord(updateProfitList);
 							
@@ -927,7 +924,7 @@ public class SaleUpdateActivity  extends SherlockActivity{
 					
 					List<Object> profitList = new ArrayList<Object>();
 					
-					Integer discount = Integer.valueOf(txt_disc_show.getText().toString()) / saleVouncher.size();
+					//Integer discount = Integer.valueOf(txt_disc_show.getText().toString()) / saleVouncher.size();
 					Integer profitFinal = 0;
 					Integer salePrice = 0;
 					
@@ -935,18 +932,18 @@ public class SaleUpdateActivity  extends SherlockActivity{
 						if (sv.getFree_checked().equals("free")) {
 							
 							salePrice = 0;
-							Integer profitAmt = 0 - (Integer.valueOf(itemObj.getMarginalPrice()) * Integer.valueOf(sv.getQty()));
-							profitFinal = profitAmt - discount;
+							profitFinal = 0 - (Integer.valueOf(itemObj.getMarginalPrice()) * Integer.valueOf(sv.getQty()));
+							//profitFinal = profitAmt - discount;
 						}
 					}else {
 							salePrice = Integer.valueOf(sv.getPrice());
-							Integer profitAmt = Integer.valueOf(sv.getItemtotal()) - (Integer.valueOf(itemObj.getMarginalPrice()) * Integer.valueOf(sv.getQty()));
-							profitFinal = profitAmt - discount;
+							profitFinal = Integer.valueOf(sv.getItemtotal()) - (Integer.valueOf(itemObj.getMarginalPrice()) * Integer.valueOf(sv.getQty()));
+							//profitFinal = profitAmt - discount;
 					}
 					
 					profitList.add(new Profit(sv.getItemid(), sv.getVdate(), Integer.valueOf(itemObj.getMarginalPrice())
 							, salePrice
-							, Integer.valueOf(sv.getQty()), profitFinal, sv.getItemname(), discount));
+							, Integer.valueOf(sv.getQty()), profitFinal, sv.getVid(), sv.getItemname(), Integer.valueOf(txt_disc_show.getText().toString())));
 					
 					profit_control.save(profitList);
 					Log.i("", "Profit List after Save: "+profit_control.selectByVidItemidDate(VoucherNo, sv.getItemname(), sv.getVdate()).toString());

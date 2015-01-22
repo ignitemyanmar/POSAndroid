@@ -101,6 +101,8 @@
             android:text="Free"
             android:textColor="@color/blue"
             android:visibility="visible"
+            android:focusable="false"
+            android:clickable="false"
             />
     </LinearLayout>
 

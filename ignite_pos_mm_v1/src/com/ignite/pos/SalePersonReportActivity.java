@@ -334,8 +334,10 @@ public class SalePersonReportActivity extends BaseSherlockActivity{
 			Integer grandTotal = 0; 
 			
 			for (int i = 0; i < listVoucher.size(); i++) {
-				Integer total = Integer.valueOf(((SaleVouncher) listVoucher.get(i)).getTotal());
-				grandTotal += total;
+				SaleVouncher sv = (SaleVouncher)listVoucher.get(i);
+				
+				Integer voucher_total = Integer.valueOf(sv.getTotal()) - Integer.valueOf(sv.getDiscount());
+				grandTotal += voucher_total;
 			}
 			
 			txt_grand_total.setText(grandTotal+"");

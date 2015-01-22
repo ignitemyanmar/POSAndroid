@@ -62,6 +62,8 @@ public class ProfitReportActivity extends SherlockActivity{
 	private LinearLayout lyheader;
 	private List<Object> listItemCode;
 	private Button btn_print;
+	private List<Object> listDiscount;
+	private LinearLayout layout_detail;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -88,6 +90,7 @@ public class ProfitReportActivity extends SherlockActivity{
 		txt_item_name = (TextView) findViewById(R.id.txt_item_name);
 		lv_profit_report = (ListView) findViewById(R.id.lv_profit_report);
 		txt_grand_total = (TextView) findViewById(R.id.txtTotal);
+		layout_detail = (LinearLayout)findViewById(R.id.layout_detail);
 		
 		fromdate.setOnClickListener(clickListener);
 		todate.setOnClickListener(clickListener);
@@ -112,8 +115,6 @@ public class ProfitReportActivity extends SherlockActivity{
 	}
 	
 	private OnClickListener clickListener = new OnClickListener() {
-		
-		
 
 		public void onClick(View v) {
 			// TODO Auto-generated method stub
@@ -129,6 +130,30 @@ public class ProfitReportActivity extends SherlockActivity{
 					listProfit = new ArrayList<Object>();
 					listProfit = profitController.selectByItemName(selectedItemCode, selectedFromDate, selectedToDate);
 					
+					//Get Discount Total for each day
+					listDiscount = new ArrayList<Object>();
+					
+					for (int i = 0; i < listProfit.size(); i++) {
+						
+						Profit profit = (Profit)listProfit.get(i);
+						
+						listDiscount = profitController.selectByDate(profit.getDate());
+						
+						Integer discountTotal = 0;
+						
+						for (int j = 0; j < listDiscount.size(); j++) {
+							
+							Profit p = (Profit)listDiscount.get(j);
+							discountTotal += p.getDiscount();
+							
+							Log.i("", "1 day - Each Voucher's Discount: "+p.getDiscount());
+						}
+						
+						Log.i("", "1 day Discount Total: "+discountTotal);
+						
+						profit.setTotalDiscount(discountTotal);
+					}//End each day's discount total
+					
 					Log.i("", "List Profit : "+listProfit.toString());
 					
 					if (listProfit.size() > 0 && listProfit != null) {
@@ -136,12 +161,13 @@ public class ProfitReportActivity extends SherlockActivity{
 						if (selectedItemCode.toLowerCase().equals("all")) {
 							
 							lyheader.setVisibility(View.GONE);
+							layout_detail.setVisibility(View.VISIBLE);
 							
-							profitReportListViewAdapter = new ProfitReportAdapter(ProfitReportActivity.this, listProfit);
+							profitReportListViewAdapter = new ProfitReportAdapter(ProfitReportActivity.this, listProfit, selectedItemCode);
 							lv_profit_report.setAdapter(profitReportListViewAdapter);
 							
 						}else {
-
+								
 								Profit profit = (Profit)listProfit.get(0);
 								
 								//Get Item Information 
@@ -151,13 +177,14 @@ public class ProfitReportActivity extends SherlockActivity{
 								itemInfo = control.select(profit.getItemId());
 								
 								lyheader.setVisibility(View.VISIBLE);
+								layout_detail.setVisibility(View.GONE);
 								
 								if (itemInfo.size() > 0 && itemInfo != null) {
 									
 									txt_item_code.setText(((ItemList)itemInfo.get(0)).getItemId());
 									txt_item_name.setText(((ItemList)itemInfo.get(0)).getItemName());
 									
-									profitReportListViewAdapter = new ProfitReportAdapter(ProfitReportActivity.this, listProfit);
+									profitReportListViewAdapter = new ProfitReportAdapter(ProfitReportActivity.this, listProfit, selectedItemCode);
 									lv_profit_report.setAdapter(profitReportListViewAdapter);
 									
 								}else {
@@ -165,7 +192,7 @@ public class ProfitReportActivity extends SherlockActivity{
 								}
 						}
 						
-						GrandTotal();
+						GrandTotal(selectedItemCode);
 						
 				}else {
 					
@@ -281,10 +308,7 @@ public class ProfitReportActivity extends SherlockActivity{
 							}else {
 								alertDialog("No Data Yet");
 							}
-							
 						}
-						
-						
 					}
 				});
 		        fileDialog.show();
@@ -323,100 +347,22 @@ public class ProfitReportActivity extends SherlockActivity{
 		
 	}	
 	
-	private OnItemSelectedListener weeklyClickListener = new OnItemSelectedListener() {
-
-		public void onItemSelected(AdapterView<?> parent, View v, int position,
-				long id) {
-			// TODO Auto-generated method stub
-			selectedWeek = weeklyList.get(position); 
-		}
-
-		public void onNothingSelected(AdapterView<?> arg0) {
-			// TODO Auto-generated method stub
-			
-		}
-	};
-	
-	private OnItemSelectedListener monthlyClickListener = new OnItemSelectedListener() {
-
-		public void onItemSelected(AdapterView<?> parent, View v, int position,
-				long id) {
-			// TODO Auto-generated method stub
-			selectedMonth = monthlyList.get(position); 
-		}
-
-		public void onNothingSelected(AdapterView<?> arg0) {
-			// TODO Auto-generated method stub
-			
-		}
-	};
-	
-	private void getWeekly()
-	{
-		weeklyList = new ArrayList<String>();
-		weeklyList.add("Weekly");
-		weeklyList.add("1st Week");
-		weeklyList.add("2nd Week");
-		weeklyList.add("3rd Week");
-		weeklyList.add("4th Week");
-		
-		//spn_weekly.setAdapter(new StringSpinnerAdapter(this, weeklyList));
-	}
-	
-	private void getMonthly()
-	{
-		monthlyList = new ArrayList<String>();
-		monthlyList.add("Monthly");
-		monthlyList.add("Jan");
-		monthlyList.add("Feb");
-		monthlyList.add("Mar");
-		monthlyList.add("Apr");
-		monthlyList.add("May");
-		monthlyList.add("Jun");
-		monthlyList.add("Jul");
-		monthlyList.add("Aug");
-		monthlyList.add("Sept");
-		monthlyList.add("Oct");
-		monthlyList.add("Nov");
-		monthlyList.add("Dec");
-		
-		//spn_monthly.setAdapter(new StringSpinnerAdapter(this, monthlyList));
-	}
-
-	private void getProfit() {
-		// TODO Auto-generated method stub
-		/*dbManager = new SaleVouncherController(ProfitReportActivity.this);
-		SaleVouncherController svController = (SaleVouncherController) dbManager;
-		listVoucher = new ArrayList<Object>();
-		listVoucher = svController.selectAllGroupBy();
-		spReportListViewAdapter = new SalePersonReportAdapter(SalePersonReportActivity.this, listVoucher);
-		lv_sale_report.setAdapter(spReportListViewAdapter);
-		
-		if (listVoucher.size() == 0) {
-			
-			AlertDialog.Builder alert = new AlertDialog.Builder(SalePersonReportActivity.this);
-			alert.setTitle("Info");
-			alert.setMessage("No Item - Not Yet!");
-			alert.show();
-			alert.setCancelable(true);
-			
-			txt_grand_total.setText("0.00");
-		}
-		*/
-		//svController.delete();
-	}
-	
-	private void GrandTotal()
+	private void GrandTotal(String selectedItemCode)
 	{		
 			Integer grandTotal = 0; 
-			
+
 			for (int i = 0; i < listProfit.size(); i++) {
-				Integer total = Integer.valueOf(((Profit) listProfit.get(i)).getTotalProfit());
-				grandTotal += total;
+				Profit profit = (Profit)listProfit.get(i);
+				
+				if (selectedItemCode.toLowerCase().equals("all")) {
+					Integer profitFinal = profit.getTotalProfit() - profit.getTotalDiscount();
+					grandTotal += profitFinal;
+				}else {
+					grandTotal += profit.getTotalProfit();
+				}
 			}
 			
 			txt_grand_total.setText(grandTotal+"");
-			
 	}
 	
 	public boolean checkFields() {

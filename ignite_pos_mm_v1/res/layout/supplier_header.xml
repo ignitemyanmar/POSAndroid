@@ -17,7 +17,7 @@
         android:padding="5dp" >
 
         <com.smk.skscalableview.ScalableTextView
-            android:id="@+id/ScalableTextView02"
+            android:id="@+id/txt_sale_voucher_no"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginLeft="5dp"
@@ -48,7 +48,7 @@
             android:textSize="20dp" />
 
         <com.smk.skscalableview.ScalableTextView
-            android:id="@+id/ScalableTextView06"
+            android:id="@+id/txt_marginal_price_total"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginRight="5dp"

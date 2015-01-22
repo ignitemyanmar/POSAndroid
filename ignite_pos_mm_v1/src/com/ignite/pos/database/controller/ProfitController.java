@@ -429,7 +429,7 @@ public class ProfitController extends DatabaseManager{
 					FIELD_NAME[8],
 					FIELD_NAME[9],
 					"SUM(discount) AS discountTotal"
-					
+					//"(SELECT SUM(discount) FROM tbl_profit GROUP BY vid) AS discountTotal"
 				};
 			
 			String[] VALUE;
@@ -574,6 +574,80 @@ public class ProfitController extends DatabaseManager{
 		return profit_list;
 	}
 	
+	
+	public List<Object> selectByDate(String Date) {
+		// TODO Auto-generated method stub
+		
+		Log.i("", "Selected Date: "+Date);
+		
+		try {
+			String[] FROM = {
+					FIELD_NAME[0], 
+					FIELD_NAME[1],
+					FIELD_NAME[2], 
+					FIELD_NAME[3],
+					FIELD_NAME[4],
+					FIELD_NAME[5],
+					FIELD_NAME[6],
+					FIELD_NAME[7],
+					FIELD_NAME[8],
+					FIELD_NAME[9],
+					"SUM(salePrice * saleQty) AS salePricetotal",
+					"SUM(profit) AS profittotal",
+					"SUM(marginalPrice * saleQty) AS purchasePrice",
+				};
+			
+			String WHERE;
+			
+			String[] VALUE = {Date};
+			WHERE = FIELD_NAME[2]+" = ?";
+			String GROUP_BY = FIELD_NAME[7];
+			
+			profit_list = new ArrayList<Object>();
+			SQLiteDatabase db = getReadableDatabase();
+			Cursor cursor = db.query(TABLE_NAME, FROM, WHERE, VALUE, GROUP_BY, null, null);
+			
+			Log.i("","Data count in profit by Date:" + cursor.getCount());
+			
+			try {
+				if (cursor.moveToFirst()) {
+			        do {
+			        	Profit profit = new Profit();
+			        	
+			        	profit.setProfitId(cursor.getInt(0));
+			        	profit.setItemId(cursor.getString(1));
+			        	profit.setDate(cursor.getString(2));
+			        	profit.setMarginalPrice(cursor.getInt(3));
+			        	profit.setSalePrice(cursor.getInt(4));
+			        	profit.setSaleQty(cursor.getInt(5));
+			        	profit.setProfit(cursor.getInt(6));
+			        	profit.setVid(cursor.getString(7));
+			        	profit.setItemName(cursor.getString(8));
+			        	profit.setDiscount(cursor.getInt(9));
+			        	profit.setTotalSalePrice(cursor.getInt(10));
+			        	profit.setTotalProfit(cursor.getInt(11));
+			        	profit.setPurchasePrice(cursor.getInt(12));
+			        	
+			        	profit_list.add(profit);
+			        } while (cursor.moveToNext());
+			    }
+			} catch (Exception e) {
+				// TODO: handle exception
+				e.printStackTrace();
+			} finally {
+				cursor.close();
+				db.close();
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		} finally {
+			if(complete != null){
+				complete.onComplete();
+			}
+		}
+		return profit_list;
+	}
 	
 	private OnUpdate updateRecord = new OnUpdate() {
 		

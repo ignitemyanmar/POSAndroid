@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.app.AlertDialog;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -50,6 +51,7 @@ public class UpdateSalePrice extends SherlockActivity{
 		scrollView.setScrollbarFadingEnabled(false);
 		
 		auto_item_code = (AutoCompleteTextView)findViewById(R.id.auto_item_code);
+		auto_item_code.setTypeface(Typeface.createFromAsset(getAssets(),"fonts/ZawgyiOne2008.ttf"));
 		//auto_item_code.addTextChangedListener(watcher);
 		
 		btn_search = (Button)findViewById(R.id.btn_search);
@@ -93,7 +95,7 @@ public class UpdateSalePrice extends SherlockActivity{
 				if(v == btn_search)
 				{
 					if (auto_item_code.getText().toString().length() == 0) {
-						auto_item_code.setError("Enter item code");
+						auto_item_code.setError("Enter item name");
 					}else {
 						itemID = auto_item_code.getText().toString();
 						getData(itemID);
