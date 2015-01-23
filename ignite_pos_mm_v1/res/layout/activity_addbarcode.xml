@@ -114,7 +114,7 @@
                     android:layout_height="50dp"
                     android:layout_marginBottom="10dp"
                     android:gravity="center_vertical"
-                    android:visibility="gone" >
+                    android:visibility="visible" >
 
                     <Spinner
                         android:id="@+id/spn_subcategory"
@@ -124,7 +124,7 @@
                         android:layout_weight="1"
                         android:background="@drawable/editext_border"
                         android:gravity="center"
-                        android:visibility="gone" />
+                        android:visibility="visible" />
 
                     <com.ignite.custom.view.CustomButton
                         android:id="@+id/btn_new_subcategory"
@@ -136,7 +136,7 @@
                         android:text="ပစၥည္းခြဲ အသစ္ထည့္ရန္"
                         android:textColor="@color/white"
                         android:textSize="14dp"
-                        android:visibility="gone" />
+                        android:visibility="visible" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -144,7 +144,7 @@
                     android:layout_height="50dp"
                     android:layout_marginBottom="10dp"
                     android:gravity="center_vertical"
-                    android:visibility="gone" >
+                    android:visibility="visible" >
 
                     <Spinner
                         android:id="@+id/spn_brand"
@@ -154,7 +154,7 @@
                         android:layout_weight="1"
                         android:background="@drawable/editext_border"
                         android:gravity="center"
-                        android:visibility="gone" />
+                        android:visibility="visible" />
 
                     <com.ignite.custom.view.CustomButton
                         android:id="@+id/btn_new_brand"
@@ -166,7 +166,7 @@
                         android:text="တံဆိပ္အသစ္ထည့္ရန္"
                         android:textColor="@color/white"
                         android:textSize="14dp"
-                        android:visibility="gone" />
+                        android:visibility="visible" />
                 </LinearLayout>
 
                 <com.ignite.custom.view.CustomButton
