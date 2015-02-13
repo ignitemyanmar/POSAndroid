@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:skscalable="http://schemas.android.com/apk/res/com.ignite.pos"
+    android:id="@+id/lst_item_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:id="@+id/LinearLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginBottom="7dp"
+        android:layout_marginTop="7dp"
+        android:clickable="false"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp" >
+
+        <com.smk.skscalableview.ScalableTextView
+            android:id="@+id/txtItem_name"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="2dp"
+            android:layout_weight="17"
+            android:gravity="left|center_vertical"
+            android:text="-"
+            android:textSize="16dp" />
+
+        <com.smk.skscalableview.ScalableLinearLayout
+            android:id="@+id/ScalableLinearLayout1"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginRight="2dp"
+            android:layout_weight="17" >
+
+            <TextView
+                android:id="@+id/btnMinus"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:background="@android:color/transparent"
+                android:gravity="left|center_vertical"
+                android:text="-"
+                android:textColor="#3291d3"
+                android:textSize="16dp"
+                android:textStyle="bold"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/txtQty"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical|center_horizontal"
+                android:gravity="center_vertical|center_horizontal"
+                android:text="-"
+                android:textSize="16dp" />
+
+            <TextView
+                android:id="@+id/btnPlus"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="left|center_vertical"
+                android:background="@android:color/transparent"
+                android:gravity="left|center_vertical"
+                android:text="+"
+                android:textColor="#3291d3"
+                android:textSize="16dp"
+                android:textStyle="bold"
+                android:visibility="gone" />
+        </com.smk.skscalableview.ScalableLinearLayout>
+
+        <com.smk.skscalableview.ScalableTextView
+            android:id="@+id/txtUnitPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginRight="2dp"
+            android:layout_weight="17"
+            android:gravity="right|center_vertical"
+            android:text="-"
+            android:textSize="16dp" />
+
+        <com.smk.skscalableview.ScalableTextView
+            android:id="@+id/txtTotal"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="17"
+            android:gravity="right|center_vertical"
+            android:text="-"
+            android:textSize="16dp" />
+    </LinearLayout>
+
+    <View
+        android:id="@+id/view1"
+        android:layout_width="wrap_content"
+        android:layout_height="1dp"
+        android:background="@color/gray" />
+
+</LinearLayout>

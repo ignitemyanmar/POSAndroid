@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res/com.ignite.pos"
+    android:id="@+id/lst_item_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center_horizontal"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:background="@drawable/bg_btn_green_corner"
+        android:orientation="vertical"
+        android:padding="10dp" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:padding="5dp" >
+
+            <com.smk.skscalableview.ScalableTextView
+                android:id="@+id/ScalableTextView10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dp"
+                android:layout_weight="25"
+                android:gravity="center_vertical"
+                android:text="ပစၥည္းအမည္         : "
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <com.smk.skscalableview.ScalableTextView
+                android:id="@+id/txt_item_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dp"
+                android:layout_weight="20"
+                android:gravity="center_vertical"
+                android:paddingLeft="5dp"
+                android:text="-"
+                android:textColor="@color/white"
+                android:textSize="16dp" />
+
+            <com.smk.skscalableview.ScalableTextView
+                android:id="@+id/ScalableTextView11"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dp"
+                android:layout_weight="25"
+                android:gravity="center_vertical"
+                android:text="ကုတ္နံပါတ္           : "
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <com.smk.skscalableview.ScalableTextView
+                android:id="@+id/txt_item_code"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="20"
+                android:gravity="center_vertical"
+                android:text="-"
+                android:textColor="@color/white"
+                android:textSize="16dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:padding="5dp" >
+
+            <com.smk.skscalableview.ScalableTextView
+                android:id="@+id/ScalableTextView03"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dp"
+                android:layout_weight="25"
+                android:gravity="center_vertical"
+                android:text="၀ယ္ေစ်း                 : "
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <com.smk.skscalableview.ScalableTextView
+                android:id="@+id/txt_purchase_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dp"
+                android:layout_weight="20"
+                android:gravity="center_vertical"
+                android:paddingLeft="5dp"
+                android:text="0"
+                android:textColor="@color/white"
+                android:textSize="16dp" />
+
+            <com.smk.skscalableview.ScalableTextView
+                android:id="@+id/ScalableTextView04"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dp"
+                android:layout_weight="25"
+                android:gravity="center_vertical"
+                android:text="အ ေရအတြက္        : "
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <com.smk.skscalableview.ScalableTextView
+                android:id="@+id/txt_qty"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="20"
+                android:gravity="center_vertical"
+                android:text="0"
+                android:textColor="@color/white"
+                android:textSize="16dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:padding="5dp" >
+
+            <com.smk.skscalableview.ScalableTextView
+                android:id="@+id/txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dp"
+                android:layout_weight="25"
+                android:gravity="center_vertical"
+                android:text="မာဂ်င္ေစ်း             : "
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <com.smk.skscalableview.ScalableTextView
+                android:id="@+id/txt_marginal_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dp"
+                android:layout_weight="20"
+                android:gravity="center_vertical"
+                android:paddingLeft="5dp"
+                android:text="-"
+                android:textColor="@color/white"
+                android:textSize="16dp" />
+
+            <com.smk.skscalableview.ScalableTextView
+                android:id="@+id/ScalableTextView08"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dp"
+                android:layout_weight="25"
+                android:gravity="center_vertical"
+                android:text="ေရာင္းေစ်း           : "
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <com.smk.skscalableview.ScalableLinearLayout
+                android:id="@+id/ScalableLinearLayout1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="20"
+                android:orientation="vertical" >
+
+                <com.ignite.custom.view.CustomEditText
+                    android:id="@+id/editTxt_sale_price"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/editext_border"
+                    android:ems="10"
+                    android:gravity="left|center_vertical"
+                    android:hint="ေရာင္းေစ်း႐ုိက္ထည့္ပါ"
+                    android:inputType="number"
+                    android:padding="5dp"
+                    android:textSize="18dp" >
+
+                    <requestFocus />
+                </com.ignite.custom.view.CustomEditText>
+            </com.smk.skscalableview.ScalableLinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <View
+        android:id="@+id/view1"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray" />
+
+</LinearLayout>

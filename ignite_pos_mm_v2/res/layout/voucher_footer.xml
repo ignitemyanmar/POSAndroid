@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/RelativeLayout1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:id="@+id/LinearLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:background="@color/blue"
+        android:orientation="horizontal"
+        android:padding="5dp"
+        android:gravity="center" >
+
+        <LinearLayout
+            android:id="@+id/lyDiscount2"
+            android:layout_width="wrap_content"
+            android:layout_height="80dp"
+            android:layout_marginRight="10dp"
+            android:layout_weight="25"
+            android:background="@color/green"
+            android:padding="10dp"
+            >
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="left"
+                android:orientation="vertical"
+                android:layout_weight="15" >
+
+                <com.ignite.custom.view.CustomTextView
+                    android:id="@+id/txt_dis_amount"
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp"
+                    android:layout_marginBottom="0dp"
+                    android:gravity="top"
+                    android:text="ေလွ်ာ့ေစ်း :"
+                    android:textSize="14dp"
+                    android:visibility="visible" />
+
+                <com.ignite.custom.view.CustomEditText
+                    android:id="@+id/edt_discount_amount"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:gravity="bottom"
+                    android:hint="Discount Amount"
+                    android:inputType="number"
+                    android:textSize="16dp" >
+                    <requestFocus />
+
+                </com.ignite.custom.view.CustomEditText>
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btn_dsicount_ok"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@drawable/bg_gray_corner"
+                android:text="OK"
+                android:layout_weight="10" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/lyDiscount"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="10dp"
+            android:layout_weight="25"
+            android:background="@color/green"
+            android:padding="5dp"
+            android:visibility="gone" >
+
+            <com.ignite.custom.view.CustomTextView
+                android:id="@+id/txt_co_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="3"
+                android:text="ေလွ်ာ့ေစ်း :"
+                android:textSize="20dp" />
+
+            <com.ignite.custom.view.CustomTextView
+                android:id="@+id/btnMinus"
+                android:layout_width="20dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="5"
+                android:clickable="false"
+                android:gravity="center"
+                android:text="-"
+                android:textColor="@color/blue"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:visibility="visible" />
+
+            <com.ignite.custom.view.CustomTextView
+                android:id="@+id/txtDiscount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="5"
+                android:gravity="center"
+                android:text="0"
+                android:textSize="20dp" />
+
+            <com.ignite.custom.view.CustomTextView
+                android:id="@+id/txt_contact"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:gravity="center"
+                android:text="%"
+                android:textSize="20dp" />
+
+            <com.ignite.custom.view.CustomTextView
+                android:id="@+id/btnPlus"
+                android:layout_width="20dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="5"
+                android:gravity="center"
+                android:text="+"
+                android:textColor="@color/blue"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:visibility="visible" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/lyTotal"
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="40"
+            android:background="@color/green"
+            android:paddingLeft="5dp" 
+            android:paddingRight="5dp" 
+            android:orientation="vertical"
+             >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="50"
+                android:orientation="horizontal" >
+
+                <com.ignite.custom.view.CustomTextView
+                    android:id="@+id/txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="50"
+                    android:paddingLeft="3dp"
+                    android:text="စုစုေပါင္း   :"
+                    android:textSize="16dp" />
+
+                <com.ignite.custom.view.CustomTextView
+                    android:id="@+id/txt_grand_total"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="50"
+                    android:gravity="right"
+                    android:text="0"
+                    android:textSize="20dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/lyDiscountShow"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="50"
+                android:orientation="horizontal"
+                >
+
+                <com.ignite.custom.view.CustomTextView
+                    android:id="@+id/CustomTextView02"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="50"
+                    android:paddingLeft="3dp"
+                    android:text="ေလွ်ာ့ေစ်း :"
+                    android:textSize="16dp" />
+
+                <com.ignite.custom.view.CustomTextView
+                    android:id="@+id/txt_disc_show"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="50"
+                    android:gravity="right"
+                    android:text="0"
+                    android:textSize="20dp" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>

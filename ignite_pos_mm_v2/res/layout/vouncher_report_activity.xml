@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res/com.ignite.pos"
+    android:id="@+id/RelativeLayout1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="5dp" >
+
+    <LinearLayout
+        android:id="@+id/lyheader"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="5dp"
+        android:orientation="horizontal" >
+
+        <com.smk.skscalableview.ScalableLinearLayout
+            android:layout_width="500dp"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            app:scale_width="2" >
+
+            <Button
+                android:id="@+id/btnSelectDate"
+                android:layout_width="230dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:background="#3291d3"
+                android:text="Select Date" />
+        </com.smk.skscalableview.ScalableLinearLayout>
+
+        <com.smk.skscalableview.ScalableLinearLayout
+            android:layout_width="500dp"
+            android:layout_height="match_parent"
+            android:clickable="true"
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            app:scale_width="2" >
+
+            <Button
+                android:id="@+id/btnSearch"
+                android:layout_width="240dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:background="#03536c"
+                android:clickable="false"
+                android:enabled="false"
+                android:text="Search" />
+
+        </com.smk.skscalableview.ScalableLinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/lyheader"
+        android:orientation="vertical" >
+
+        <include
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            layout="@layout/vouncher_report_header_activity" />
+
+        <ListView
+            android:id="@+id/lv_sale_slip"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_weight="3" >
+
+        </ListView>
+
+        <include
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            layout="@layout/saleperson_footer" />
+
+    </LinearLayout>
+
+</RelativeLayout>

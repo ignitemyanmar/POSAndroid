@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res/com.ignite.pos"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"
+        android:padding="5dp" >
+
+        <com.smk.skscalableview.ScalableTextView
+            android:id="@+id/txt_sale_person_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"
+            android:layout_weight="50"
+            android:gravity="center_vertical|center_horizontal"
+            android:text="-"
+            android:textColor="@color/black"
+            android:textSize="18dp" />
+
+        <com.smk.skscalableview.ScalableLinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="right|center_vertical"
+            android:layout_weight="50"
+            android:gravity="right|center_vertical"
+            android:orientation="horizontal" >
+
+            <com.ignite.custom.view.CustomButton
+                android:id="@+id/btn_delete"
+                android:layout_width="130dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/bg_btn_red"
+                android:gravity="center_vertical|center_horizontal"
+                android:text="ဖ်က္မည္"
+                android:textColor="@color/white"
+                android:textSize="20dp"
+                android:visibility="visible" />
+
+            <com.ignite.custom.view.CustomButton
+                android:id="@+id/btn_update"
+                android:layout_width="130dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="50dp"
+                android:background="@drawable/bg_button"
+                android:padding="5dp"
+                android:text="ျပင္ မည္"
+                android:textColor="@color/white"
+                android:textSize="20dp" />
+
+        </com.smk.skscalableview.ScalableLinearLayout>
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/view1"
+        android:layout_width="wrap_content"
+        android:layout_height="1dp"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/linearLayout1"
+        android:background="@color/dark_gray" />
+
+</RelativeLayout>

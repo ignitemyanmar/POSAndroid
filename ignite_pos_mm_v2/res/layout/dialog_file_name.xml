@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="5dp"
+    android:orientation="vertical"
+    android:padding="5dp" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical" >
+
+        <EditText
+            android:id="@+id/txt_file_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:ems="10"
+            android:hint="File အမည္႐ုိက္ထည့္ပါ" >
+
+        </EditText>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <CheckBox
+                android:id="@+id/chk_pdf"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="PDF File ျဖင့္ ထုတ္ ရန္"
+                android:visibility="gone" />
+
+            <CheckBox
+                android:id="@+id/chk_excel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Excel File ျဖင့္ ထုတ္ ရန္" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <com.ignite.custom.view.CustomButton
+                android:id="@+id/btn_cancel"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_margin="5dp"
+                android:layout_weight="50"
+                android:background="@drawable/girditem_border"
+                android:text="ထြက္မည္"
+                android:textColor="@color/white" />
+
+            <com.ignite.custom.view.CustomButton
+                android:id="@+id/btn_save"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_margin="5dp"
+                android:layout_weight="50"
+                android:background="@drawable/bg_btn_blue_corner"
+                android:text="သိမ္းမည္"
+                android:textColor="@color/white" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

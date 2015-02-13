@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/RelativeLayout1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+
+    <ScrollView
+        android:id="@+id/scrollView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true" >
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:id="@+id/LinearLayout1"
+                android:layout_width="500dp"
+                android:layout_height="wrap_content"
+                android:background="@color/transprant_white"
+                android:orientation="vertical"
+                android:padding="25dp" >
+
+                <com.ignite.custom.view.CustomTextView
+                    android:id="@+id/txt_co_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@color/green"
+                    android:gravity="center_vertical|center"
+                    android:text="၀ယ္သူ လိပ္စာ ျပင္ရန္"
+                    android:textColor="@color/white"
+                    android:textSize="24dp" />
+
+                <com.ignite.custom.view.CustomEditText
+                    android:id="@+id/edt_buyer_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/editext_border"
+                    android:gravity="center"
+                    android:hint="၀ယ္သူ အမည္"
+                    android:inputType="textCapWords|textPersonName"
+                    android:singleLine="true" />
+
+                <com.ignite.custom.view.CustomEditText
+                    android:id="@+id/editText_city"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/editext_border"
+                    android:ems="10"
+                    android:gravity="center"
+                    android:hint="ျမိဳ႕ အမည္"
+                    android:inputType="text"
+                    android:singleLine="true" />
+
+                <com.ignite.custom.view.CustomEditText
+                    android:id="@+id/editText_phone"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/editext_border"
+                    android:ems="10"
+                    android:gravity="center"
+                    android:hint="ဖုန္းနံပါတ္"
+                    android:inputType="phone"
+                    android:singleLine="true" />
+
+
+
+                <com.ignite.custom.view.CustomEditText
+                    android:id="@+id/editText_addr"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/editext_border"
+                    android:ems="10"
+                    android:gravity="center"
+                    android:hint="လိပ္စာ"
+                    android:inputType="textPostalAddress"
+                    android:singleLine="true" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" >
+
+
+
+                    <com.ignite.custom.view.CustomButton
+                        android:id="@+id/btnCancel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="60dp"
+                        android:layout_marginRight="20dp"
+                        android:layout_weight="25"
+                        android:background="@drawable/bg_button"
+                        android:text="ထြက္မည္"
+                        android:textColor="@color/white"
+                        android:textSize="20dp" />
+
+
+                    <com.ignite.custom.view.CustomButton
+                        android:id="@+id/btnSave"
+                        android:layout_width="wrap_content"
+                        android:layout_height="60dp"
+                        android:layout_weight="25"
+                        android:background="@drawable/bg_button"
+                        android:text="သိမ္းမည္"
+                        android:textColor="@color/white"
+                        android:textSize="20dp" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+</RelativeLayout>
