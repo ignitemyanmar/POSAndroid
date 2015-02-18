@@ -19,7 +19,29 @@
             android:background="@color/transprant_white"
             android:orientation="vertical"
             android:padding="20dp" >
-
+
+            <com.ignite.custom.view.CustomButton
+                android:id="@+id/btn_credit_buyer_report"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/bg_button"
+                android:text="အေႂကြးစာရင္း မွတ္တမ္း (၀ယ္သူ)"
+                android:textColor="@color/white"
+                android:textSize="20dp"
+                android:visibility="visible" />
+
+            <com.ignite.custom.view.CustomButton
+                android:id="@+id/btn_credit_supplier_report"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/bg_button"
+                android:text="အေၾကြးစာရင္းမွတ္တမ္း (လကၠား)"
+                android:textColor="@color/white"
+                android:textSize="20dp"
+                android:visibility="gone" />
+
             <com.ignite.custom.view.CustomButton
                 android:id="@+id/btn_sale_return_report"
                 android:layout_width="match_parent"
@@ -30,7 +52,7 @@
                 android:textColor="@color/white"
                 android:textSize="20dp"
                 android:visibility="visible" />
-
+
             <com.ignite.custom.view.CustomButton
                 android:id="@+id/btn_sale_history_report"
                 android:layout_width="match_parent"
@@ -40,7 +62,6 @@
                 android:textColor="@color/white"
                 android:textSize="20dp"
                 android:visibility="visible" />
-
         </LinearLayout>
 
         <View

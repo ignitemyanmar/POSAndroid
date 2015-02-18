@@ -313,7 +313,7 @@
                             android:gravity="center_vertical|right" >
 
                             <com.smk.skscalableview.ScalableTextView
-                                android:id="@+id/ScalableTextView03"
+                                android:id="@+id/txt_credit_total"
                                 android:layout_width="wrap_content"
                                 android:layout_height="60dp"
                                 android:layout_marginRight="2dp"

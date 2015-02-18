@@ -28,7 +28,7 @@
             android:textSize="20dp" />
 
         <com.smk.skscalableview.ScalableTextView
-            android:id="@+id/ScalableTextView03"
+            android:id="@+id/txt_credit_total"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginRight="2dp"
@@ -88,7 +88,7 @@
             android:textSize="20dp" />
 
         <com.smk.skscalableview.ScalableTextView
-            android:id="@+id/ScalableTextView07"
+            android:id="@+id/txt_credit_left_total"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginRight="2dp"

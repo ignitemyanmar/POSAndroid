@@ -55,6 +55,8 @@ public class VoucherSlipActivity extends SherlockActivity{
 	private List<SaleVouncher> saleVoucherList;
 	private Button btn_done;
 	private Button btn_print;
+	private TextView txt_paid_amount;
+	private TextView txt_credit_left_amount;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -142,20 +144,15 @@ public class VoucherSlipActivity extends SherlockActivity{
 		txt_voucher_no.setText(saleVoucherList.get(0).getVid());
 		txt_date.setText(saleVoucherList.get(0).getVdate());
 		txt_sale_person.setText(saleVoucherList.get(0).getSalePerson());
-		//txt_buyer.setText(saleVoucherList.get(0).getCusname());
+		txt_buyer.setText(saleVoucherList.get(0).getCusname());
 		
 		//Footer View
 		invoiceFooter = LayoutInflater.from(this).inflate(R.layout.activity_sale_slip_footer, null, false);
 		txt_grand_total = (TextView) invoiceFooter.findViewById(R.id.txt_grand_total);
 		txt_discount = (TextView) invoiceFooter.findViewById(R.id.txt_discount);
 		txt_net_amount = (TextView) invoiceFooter.findViewById(R.id.txt_net_amount);
-		
-/*		Integer grandTotal = 0; 
-		
-		for (int i = 0; i < saleVoucherList.size(); i++) {
-			
-			grandTotal += Integer.valueOf(saleVoucherList.get(i).getItemtotal());
-		}*/
+		txt_paid_amount = (TextView)invoiceFooter.findViewById(R.id.txt_paid_amount);
+		txt_credit_left_amount = (TextView)invoiceFooter.findViewById(R.id.txt_credit_left_amount);
 		
 		txt_grand_total.setText(saleVoucherList.get(0).getTotal());
 		//txt_discount.setText(String.valueOf((grandTotal * Integer.valueOf(saleVoucherList.get(0).getDiscount())) / 100)+"");
@@ -166,6 +163,10 @@ public class VoucherSlipActivity extends SherlockActivity{
 			Integer discount = 0;
 			Integer net_amt = Integer.valueOf(saleVoucherList.get(0).getTotal()) - discount;
 			txt_net_amount.setText(net_amt+"");
+			txt_paid_amount.setText("");
+			//Integer credit_left_amount = net_amt - txt_paid_amount
+			
+			//txt_credit_left_amount
 		}else {
 			
 			Integer net_amt = Integer.valueOf(saleVoucherList.get(0).getTotal()) - Integer.valueOf(saleVoucherList.get(0).getDiscount());

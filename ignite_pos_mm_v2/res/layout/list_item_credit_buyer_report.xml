@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/lst_item_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:id="@+id/LinearLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:orientation="horizontal"
+        android:padding="5dp" >
+
+        <com.smk.skscalableview.ScalableTextView
+            android:id="@+id/txt_buyer_name"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginRight="5dp"
+            android:layout_weight="17"
+            android:gravity="left|center_vertical"
+            android:text="-"
+            android:textSize="18dp" />
+
+        <com.smk.skscalableview.ScalableTextView
+            android:id="@+id/txt_credit_date"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginRight="5dp"
+            android:layout_weight="17"
+            android:gravity="left|center_vertical"
+            android:text="-"
+            android:textSize="18dp" />
+
+        <com.smk.skscalableview.ScalableTextView
+            android:id="@+id/txt_voucher_no"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginRight="5dp"
+            android:layout_weight="17"
+            android:gravity="center_vertical|left"
+            android:text="-"
+            android:textSize="18dp" />
+
+        <com.smk.skscalableview.ScalableTextView
+            android:id="@+id/txt_credit_total"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginRight="5dp"
+            android:layout_weight="17"
+            android:gravity="center_vertical|right"
+            android:text="0"
+            android:textSize="18dp" />
+
+        <com.smk.skscalableview.ScalableTextView
+            android:id="@+id/txt_credit_paid_amount"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginRight="5dp"
+            android:layout_weight="17"
+            android:gravity="center_vertical|right"
+            android:text="0"
+            android:textSize="18dp" />
+
+        <com.smk.skscalableview.ScalableTextView
+            android:id="@+id/txt_credit_left_amount"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="17"
+            android:gravity="center_vertical|right"
+            android:text="0"
+            android:textSize="18dp" />
+    </LinearLayout>
+
+    <View
+        android:id="@+id/view1"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray" />
+
+</RelativeLayout>

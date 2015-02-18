@@ -93,7 +93,7 @@
                     android:gravity="center_vertical|right" >
 
                     <com.smk.skscalableview.ScalableTextView
-                        android:id="@+id/txt_netAmount"
+                        android:id="@+id/txt"
                         android:layout_width="wrap_content"
                         android:layout_height="60dp"
                         android:layout_marginRight="2dp"
@@ -112,6 +112,34 @@
                         android:text="0.00"
                         android:textSize="18dp" />
                 </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical|right" >
+
+                    <com.smk.skscalableview.ScalableTextView
+                        android:id="@+id/txt_paid_amount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="60dp"
+                        android:layout_marginRight="2dp"
+                        android:gravity="left|center_vertical"
+                        android:text="ေပးေခ်ေငြ  - 0000 က်ပ္"
+                        android:textSize="16dp"
+                        android:layout_weight="50" 
+                        android:visibility="gone"/>
+
+                    <com.smk.skscalableview.ScalableTextView
+                        android:id="@+id/txt_credit_left_amount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="60dp"
+                        android:layout_weight="50"
+                        android:gravity="right|center_vertical"
+                        android:text="ေပးရန္က်န္ေငြ - 00000 က်ပ္"
+                        android:textSize="18dp"
+                        android:visibility="gone"/>
+                </LinearLayout>
+
             </LinearLayout>
 
             <LinearLayout

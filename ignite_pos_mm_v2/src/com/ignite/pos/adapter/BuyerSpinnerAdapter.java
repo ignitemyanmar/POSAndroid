@@ -4,11 +4,7 @@ import java.util.List;
 
 import com.ignite.pos.R;
 import com.ignite.pos.model.Buyer;
-import com.ignite.pos.model.Category;
-
-import android.R.color;
 import android.app.Activity;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,9 +48,7 @@ public class BuyerSpinnerAdapter extends BaseAdapter {
 		
         txtTitle = (TextView) convertView.findViewById(R.id.txtTitle);
         Buyer buyer = (Buyer)buyerList.get(position);
-        
-        //txtTitle.setText(buyer.getCusName());
-        
+        txtTitle.setText(buyer.getBuyerName());
         txtTitle.setSingleLine(true);
         
 		return convertView;
@@ -63,18 +57,18 @@ public class BuyerSpinnerAdapter extends BaseAdapter {
 	@Override
 	public View getDropDownView(int position, View convertView, ViewGroup parent) {
 		// TODO Auto-generated method stub
-		/*if (convertView == null) {
+		if (convertView == null) {
         	LayoutInflater mInflater = (LayoutInflater)
                     aty.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
             convertView = mInflater.inflate(R.layout.spiner_sub_item_list, null);
         }
-        txtTitle = (TextView) convertView.findViewById(R.id.txtTitle);        
-        Buyer b = (Buyer)buyerList.get(position);
-        txtTitle.setText(b.getCusName());
-        txtTitle.setTextColor(Color.WHITE);
-		return convertView;*/
+		txtTitle = (TextView) convertView.findViewById(R.id.txtTitle);
+        Buyer buyer = (Buyer)buyerList.get(position);
+        txtTitle.setText(buyer.getBuyerName());
+        
+		return convertView;
 		
-		return getView(position, convertView, parent);
+		//return getView(position, convertView, parent);
 	}
 
 }

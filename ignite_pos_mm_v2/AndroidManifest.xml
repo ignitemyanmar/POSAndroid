@@ -92,6 +92,7 @@
         <activity android:name="BuyerAddUpdateDeleteActivity" android:screenOrientation="sensorLandscape" android:windowSoftInputMode="adjustPan"></activity>
         <activity android:name="AddNewBuyerActivity" android:screenOrientation="sensorLandscape" android:windowSoftInputMode="adjustPan"></activity>
         <activity android:name="UpdateBuyerInfoEdit" android:screenOrientation="sensorLandscape" android:windowSoftInputMode="adjustPan"></activity>
+        <activity android:name="CreditBuyerReportActivity" android:screenOrientation="sensorLandscape" android:windowSoftInputMode="adjustPan"></activity>
         
     </application>
 

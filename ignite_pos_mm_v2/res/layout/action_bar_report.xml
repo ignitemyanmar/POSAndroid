@@ -20,11 +20,9 @@
         android:scaleType="centerInside"
         android:src="@drawable/ic_launcher" />
 
-
-
     <com.ignite.custom.view.CustomTextView
         android:id="@+id/txt_title"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="false"
         android:layout_centerVertical="true"
@@ -32,16 +30,6 @@
         android:text="Title"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textSize="18dp" />
-
-
-
-
-
-
-
-
-
-
 
     <View
         android:id="@+id/view1"

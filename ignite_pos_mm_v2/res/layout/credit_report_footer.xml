@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:skscalable="http://schemas.android.com/apk/res/com.ignite.pos"
+    android:id="@+id/RelativeLayout1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:padding="10dp"
+        android:background="@drawable/bg_green_stroke" >
+
+        <com.smk.skscalableview.ScalableTextView
+            android:id="@+id/ScalableTextView01"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginRight="5dp"
+            android:layout_weight="17"
+            android:gravity="right|center_vertical"
+            android:text="0"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/black"
+            android:visibility="invisible" />
+
+        <com.smk.skscalableview.ScalableTextView
+            android:id="@+id/ScalableTextView02"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="17"
+            android:gravity="right|center_vertical"
+            android:text="0"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/black"
+            android:visibility="invisible" />
+
+        <com.smk.skscalableview.ScalableTextView
+            android:id="@+id/scabletextview1"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginRight="5dp"
+            android:layout_weight="17"
+            android:gravity="right|center_vertical"
+            android:singleLine="true"
+            android:text="စုစုေပါင္း"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/black" />
+
+        <com.smk.skscalableview.ScalableTextView
+            android:id="@+id/txt_credit_total"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginRight="5dp"
+            android:layout_weight="17"
+            android:gravity="right|center_vertical"
+            android:text="0"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/black" />
+
+        <com.smk.skscalableview.ScalableTextView
+            android:id="@+id/txt_credit_paid_total"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginRight="5dp"
+            android:layout_weight="17"
+            android:gravity="right|center_vertical"
+            android:text="0"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/black" />
+
+        <com.smk.skscalableview.ScalableTextView
+            android:id="@+id/txt_credit_left_total"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="17"
+            android:gravity="right|center_vertical"
+            android:text="0"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/black" />
+    </LinearLayout>
+
+</RelativeLayout>

@@ -12,6 +12,15 @@ public class Buyer {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+	
+	
+
+	public Buyer(String buyerName) {
+		super();
+		this.buyerName = buyerName;
+	}
+
+
 
 	public Buyer(Integer buyerId, String buyerName, String buyerCity,
 			String buyerPhone, String buyerAddress) {

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:skscalable="http://schemas.android.com/apk/res/com.ignite.pos"
+    android:id="@+id/RelativeLayout1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:id="@+id/LinearLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/bg_green_stroke"
+        android:orientation="horizontal"
+        android:padding="5dp" >
+
+        <com.smk.skscalableview.ScalableTextView
+            android:id="@+id/ScalableTextView05"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginRight="5dp"
+            android:layout_weight="17"
+            android:gravity="left|center_vertical"
+            android:text="၀ယ္သူအမည္"
+            android:textSize="18dp" />
+
+        <com.smk.skscalableview.ScalableTextView
+            android:id="@+id/ScalableTextView04"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginRight="5dp"
+            android:layout_weight="17"
+            android:gravity="left|center_vertical"
+            android:text="ေန႔ရက္"
+            android:textSize="18dp" />
+
+        <com.smk.skscalableview.ScalableTextView
+            android:id="@+id/voucher_title"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginRight="5dp"
+            android:layout_weight="17"
+            android:gravity="center_vertical|left"
+            android:text="ေဘာင္ခ်ာနံပါတ္"
+            android:textSize="18dp" />
+
+        <com.smk.skscalableview.ScalableTextView
+            android:id="@+id/aaaaaa"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginRight="5dp"
+            android:layout_weight="17"
+            android:gravity="center_vertical|right"
+            android:text="အေႂကြးယူေငြ"
+            android:textSize="18dp" />
+
+        <com.smk.skscalableview.ScalableTextView
+            android:id="@+id/bbbbbbb"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginRight="5dp"
+            android:layout_weight="17"
+            android:gravity="center_vertical|right"
+            android:text="ေပးေခ်ၿပီးေငြ"
+            android:textSize="18dp" />
+
+        <com.smk.skscalableview.ScalableTextView
+            android:id="@+id/cccccc"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="17"
+            android:gravity="center_vertical|right"
+            android:text="ေပးရန္က်န္ေငြ"
+            android:textSize="18dp" />
+
+    </LinearLayout>
+
+</RelativeLayout>

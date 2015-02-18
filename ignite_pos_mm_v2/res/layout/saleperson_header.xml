@@ -35,7 +35,7 @@
             app:scale_width="6" />
 
         <com.smk.skscalableview.ScalableTextView
-            android:id="@+id/ScalableTextView03"
+            android:id="@+id/txt_credit_total"
             android:layout_width="150dp"
             android:layout_height="match_parent"
             android:gravity="center"
