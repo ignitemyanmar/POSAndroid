@@ -130,7 +130,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/gray"
-                android:gravity="center_horizontal"
                 android:orientation="vertical"
                 android:padding="10dp"
                 android:visibility="invisible"
@@ -140,8 +139,8 @@
                     android:id="@+id/txt_total_credit_left_amt"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:text="Left Amount : "
+                    android:layout_margin="20dp"
+                    android:text="Buyer&apos;s Credit Left Total Amount : 0 Ks"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textSize="20dp"
                     android:textStyle="bold" />
@@ -153,11 +152,10 @@
                     android:layout_margin="10dp"
                     android:background="@drawable/border_black2"
                     android:ems="10"
-                    android:hint="Enter Pay Amount"
+                    android:hint="ေပးေခ်သည့္ ေငြပမာဏ ကုိထည့္ပါ"
                     android:inputType="number"
                     android:padding="10dp" >
-
-                    <requestFocus />
+                    <requestFocus />
 
                 </com.ignite.custom.view.CustomEditText>
 
@@ -241,24 +239,24 @@
                     android:layout_height="50dp"
                     android:layout_marginRight="10dp"
                     android:background="@drawable/bg_btn_darkblue"
+                    android:clickable="true"
                     android:gravity="center"
-                    android:text="Back"
+                    android:text="&lt;&lt; ေနာက္ သုိ႔"
                     android:textColor="@color/white"
                     android:textSize="20dp"
-                    android:visibility="gone"
-                    android:clickable="true" />
+                    android:visibility="gone" />
 
                 <com.ignite.custom.view.CustomTextView
                     android:id="@+id/btn_done"
                     android:layout_width="170dp"
                     android:layout_height="50dp"
                     android:background="@drawable/bg_btn_darkblue"
+                    android:clickable="true"
                     android:gravity="center"
-                    android:text="Done"
+                    android:text="ေငြရွင္းမည္"
                     android:textColor="@color/white"
                     android:textSize="20dp"
-                    android:visibility="gone"
-                    android:clickable="true" />
+                    android:visibility="gone" />
 
                 <com.ignite.custom.view.CustomTextView
                     android:id="@+id/btnDelete_items"
@@ -278,10 +276,11 @@
                     android:layout_height="50dp"
                     android:background="@drawable/bg_btn_darkblue"
                     android:gravity="center"
-                    android:text="ေငြရွင္းမည္"
+                    android:text=">> Credit သုိ႔"
                     android:textColor="@color/white"
                     android:textSize="20dp"
                     android:visibility="visible" />
+
             </LinearLayout>
 
         </RelativeLayout>

@@ -158,20 +158,26 @@ public class VoucherSlipActivity extends SherlockActivity{
 		//txt_discount.setText(String.valueOf((grandTotal * Integer.valueOf(saleVoucherList.get(0).getDiscount())) / 100)+"");
 		txt_discount.setText(saleVoucherList.get(0).getDiscount());
 		
+		Integer net_amt;
+		
 		if (saleVoucherList.get(0).getDiscount() == null) {
 			
 			Integer discount = 0;
-			Integer net_amt = Integer.valueOf(saleVoucherList.get(0).getTotal()) - discount;
+			net_amt = Integer.valueOf(saleVoucherList.get(0).getTotal()) - discount;
 			txt_net_amount.setText(net_amt+"");
-			txt_paid_amount.setText("");
-			//Integer credit_left_amount = net_amt - txt_paid_amount
 			
-			//txt_credit_left_amount
 		}else {
 			
-			Integer net_amt = Integer.valueOf(saleVoucherList.get(0).getTotal()) - Integer.valueOf(saleVoucherList.get(0).getDiscount());
+			net_amt = Integer.valueOf(saleVoucherList.get(0).getTotal()) - Integer.valueOf(saleVoucherList.get(0).getDiscount());
 			txt_net_amount.setText(net_amt+"");
-		}		
+		}	
+		
+		txt_paid_amount.setText("ေပးေခ်ေငြ  - "+SaleActivity.creditPaidAmount+" က်ပ္");
+		
+		//Get credit left amount
+		Integer credit_left_amount = net_amt - Integer.valueOf(SaleActivity.creditPaidAmount);
+		
+		txt_credit_left_amount.setText("ေပးရန္က်န္ေငြ  - "+credit_left_amount+" က်ပ္");
 		
 		lv_voucher = (ListView) findViewById(R.id.lv_slip_container);
 		lv_voucher.addHeaderView(invoiceHeader);

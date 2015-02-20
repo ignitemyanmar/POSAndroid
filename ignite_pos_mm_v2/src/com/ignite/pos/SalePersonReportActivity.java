@@ -348,9 +348,13 @@ public class SalePersonReportActivity extends BaseSherlockActivity{
 		
 		public void onUpdateClick(Integer pos) {
 			// TODO Auto-generated method stub
-			Log.i("", "Update Listener: "); 
+			Log.i("", "Update Listener: ");
+			Log.i("", "Voucher to Update000000000000: "+listVoucher.toString());
+			
 			
 			SaleVouncher sv = (SaleVouncher) listVoucher.get(pos);
+			
+			Log.i("", "Buyer Name 000000000000: "+sv.getCusname());
 			
 			if (AdminName.equals("-")) {
 				SKToastMessage.showMessage(SalePersonReportActivity.this, "Please log in with Admin account first!", SKToastMessage.WARNING);
@@ -361,6 +365,7 @@ public class SalePersonReportActivity extends BaseSherlockActivity{
 				
 				Bundle bundle = new Bundle();
 				bundle.putString("VoucherNo", sv.getVid());
+				bundle.putString("BuyerName", sv.getCusname());
 				
 				next.putExtras(bundle);
 				SalePersonReportActivity.this.startActivity(next);

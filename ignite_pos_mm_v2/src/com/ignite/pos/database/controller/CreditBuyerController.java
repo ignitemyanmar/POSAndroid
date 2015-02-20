@@ -321,7 +321,7 @@ public class CreditBuyerController extends DatabaseManager{
 				}
 					
 				//String GROUP_BY = FIELD_NAME[0];
-				String ORDER_BY = FIELD_NAME[0]+ " ASC";
+				String ORDER_BY = FIELD_NAME[2]+ " ASC";
 				
 				credit_list = new ArrayList<Object>();
 				SQLiteDatabase db = getReadableDatabase();
@@ -332,7 +332,8 @@ public class CreditBuyerController extends DatabaseManager{
 				try {
 					if (cursor.moveToFirst()) {
 				        do {
-				        	credit = new Credit();
+				        	credit = new Credit
+				        			();
 				        	credit.setCredit_id(cursor.getInt(0));
 				        	credit.setBuyer_id(cursor.getInt(1));
 				        	credit.setSalevoucher_id(cursor.getString(2));
@@ -404,6 +405,134 @@ public class CreditBuyerController extends DatabaseManager{
 		}
 
 	};
+	
+	//Get Data By Voucher ID (Group By Voucher ID)
+	public List<Object> selectByVoucherID(String voucherID) {
+		
+		Log.i("", "Selected Voucher ID: "+voucherID);
+		
+		try {
+			String[] FROM = {
+					FIELD_NAME[0], 
+					FIELD_NAME[1],
+					FIELD_NAME[2], 
+					FIELD_NAME[3],
+					FIELD_NAME[4],
+					FIELD_NAME[5],
+					FIELD_NAME[6],
+					FIELD_NAME[7]
+				};
+			
+			String[] VALUE = {voucherID};
+			String WHERE = FIELD_NAME[2] + "=? ";
+			String GROUP_BY = FIELD_NAME[2];
+			
+			credit_list = new ArrayList<Object>();
+			SQLiteDatabase db = getReadableDatabase();
+			Cursor cursor = db.query(TABLE_NAME, FROM, WHERE, VALUE, GROUP_BY, null, null);
+			
+			Log.i("","Count Credit list by Voucher ID: " + cursor.getCount());
+			
+			try {
+				if (cursor.moveToFirst()) {
+			        do {
+			        	credit = new Credit();
+			        	credit.setCredit_id(cursor.getInt(0));
+			        	credit.setBuyer_id(cursor.getInt(1));
+			        	credit.setSalevoucher_id(cursor.getString(2));
+			        	credit.setDate(cursor.getString(3));
+			        	credit.setCreditTotal(cursor.getInt(4));
+			        	credit.setCreditPaidAmount(cursor.getInt(5));
+			        	credit.setCreditLeftAmount(cursor.getInt(6));
+			        	credit.setBuyer_name(cursor.getString(7));
+			        					        		        	
+			        	credit_list.add(credit);
+			        } while (cursor.moveToNext());
+			    }
+			} catch (Exception e) {
+				// TODO: handle exception
+				e.printStackTrace();
+			} finally {
+				cursor.close();
+				db.close();
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		} finally {
+			if(complete != null){
+				complete.onComplete();
+			}
+		}
+		
+		Log.i("", "DB return List: "+credit_list.toString());
+		return credit_list;
+		
+	}
+	
+	//Get Data By Buyer ID (Group By Vouchers)
+		public List<Object> selectGroupByVoucher(String BuyerID) {
+			
+			Log.i("", "Selected Voucher ID: "+BuyerID);
+			
+			try {
+				String[] FROM = {
+						FIELD_NAME[0], 
+						FIELD_NAME[1],
+						FIELD_NAME[2], 
+						FIELD_NAME[3],
+						FIELD_NAME[4],
+						FIELD_NAME[5],
+						FIELD_NAME[6],
+						FIELD_NAME[7]
+					};
+				
+				String[] VALUE = {BuyerID};
+				String WHERE = FIELD_NAME[1] + "=? ";
+				String GROUP_BY = FIELD_NAME[2];
+				
+				credit_list = new ArrayList<Object>();
+				SQLiteDatabase db = getReadableDatabase();
+				Cursor cursor = db.query(TABLE_NAME, FROM, WHERE, VALUE, GROUP_BY, null, null);
+				
+				Log.i("","Count Credit list by Buyer ID (groupby voucher): " + cursor.getCount());
+				
+				try {
+					if (cursor.moveToFirst()) {
+				        do {
+				        	credit = new Credit();
+				        	credit.setCredit_id(cursor.getInt(0));
+				        	credit.setBuyer_id(cursor.getInt(1));
+				        	credit.setSalevoucher_id(cursor.getString(2));
+				        	credit.setDate(cursor.getString(3));
+				        	credit.setCreditTotal(cursor.getInt(4));
+				        	credit.setCreditPaidAmount(cursor.getInt(5));
+				        	credit.setCreditLeftAmount(cursor.getInt(6));
+				        	credit.setBuyer_name(cursor.getString(7));
+				        					        		        	
+				        	credit_list.add(credit);
+				        } while (cursor.moveToNext());
+				    }
+				} catch (Exception e) {
+					// TODO: handle exception
+					e.printStackTrace();
+				} finally {
+					cursor.close();
+					db.close();
+				}
+			} catch (Exception e) {
+				// TODO: handle exception
+				e.printStackTrace();
+			} finally {
+				if(complete != null){
+					complete.onComplete();
+				}
+			}
+			
+			Log.i("", "DB return List: "+credit_list.toString());
+			return credit_list;
+			
+		}
 
 	private OnUpdate updateRecord = new OnUpdate() {
 		

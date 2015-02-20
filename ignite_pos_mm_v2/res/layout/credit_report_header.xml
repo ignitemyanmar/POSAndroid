@@ -17,13 +17,13 @@
         android:padding="5dp" >
 
         <com.smk.skscalableview.ScalableTextView
-            android:id="@+id/ScalableTextView05"
+            android:id="@+id/voucher_title"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginRight="5dp"
             android:layout_weight="17"
-            android:gravity="left|center_vertical"
-            android:text="၀ယ္သူအမည္"
+            android:gravity="center_vertical|left"
+            android:text="ေဘာင္ခ်ာနံပါတ္"
             android:textSize="18dp" />
 
         <com.smk.skscalableview.ScalableTextView
@@ -37,13 +37,13 @@
             android:textSize="18dp" />
 
         <com.smk.skscalableview.ScalableTextView
-            android:id="@+id/voucher_title"
+            android:id="@+id/ScalableTextView05"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginRight="5dp"
             android:layout_weight="17"
-            android:gravity="center_vertical|left"
-            android:text="ေဘာင္ခ်ာနံပါတ္"
+            android:gravity="left|center_vertical"
+            android:text="၀ယ္သူအမည္"
             android:textSize="18dp" />
 
         <com.smk.skscalableview.ScalableTextView

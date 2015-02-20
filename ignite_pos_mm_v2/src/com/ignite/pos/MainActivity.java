@@ -1,8 +1,6 @@
 package com.ignite.pos;
 
 import com.actionbarsherlock.app.SherlockActivity;
-import com.ignite.pos.database.util.DatabaseManager;
-
 import android.content.Intent;
 import android.os.Bundle;
 

@@ -15,32 +15,32 @@
         android:padding="5dp" >
 
         <com.smk.skscalableview.ScalableTextView
+            android:id="@+id/txt_vou_num"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginRight="5dp"
+            android:layout_weight="17"
+            android:gravity="center_vertical|left"
+            android:text="-"
+            android:textSize="18dp" />
+
+        <com.smk.skscalableview.ScalableTextView
+            android:id="@+id/txt_date"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginRight="5dp"
+            android:layout_weight="17"
+            android:gravity="left|center_vertical"
+            android:text="-"
+            android:textSize="18dp" />
+
+        <com.smk.skscalableview.ScalableTextView
             android:id="@+id/txt_buyer_name"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginRight="5dp"
             android:layout_weight="17"
             android:gravity="left|center_vertical"
-            android:text="-"
-            android:textSize="18dp" />
-
-        <com.smk.skscalableview.ScalableTextView
-            android:id="@+id/txt_credit_date"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginRight="5dp"
-            android:layout_weight="17"
-            android:gravity="left|center_vertical"
-            android:text="-"
-            android:textSize="18dp" />
-
-        <com.smk.skscalableview.ScalableTextView
-            android:id="@+id/txt_voucher_no"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginRight="5dp"
-            android:layout_weight="17"
-            android:gravity="center_vertical|left"
             android:text="-"
             android:textSize="18dp" />
 

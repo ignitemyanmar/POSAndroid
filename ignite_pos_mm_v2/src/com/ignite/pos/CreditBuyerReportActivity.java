@@ -27,6 +27,7 @@ import com.ignite.pos.model.Credit;
 import com.smk.calender.widget.SKCalender;
 import com.smk.calender.widget.SKCalender.Callbacks;
 
+
 public class CreditBuyerReportActivity extends SherlockActivity{
 	private AutoCompleteTextView autocom_buyer_name;
 	private Button fromdate, todate, search;
@@ -269,6 +270,8 @@ public class CreditBuyerReportActivity extends SherlockActivity{
 	
 	private void grandTotal() {
 		// TODO Auto-generated method stub
+		String voucherNo = "";
+			
 		Integer credit_total = 0;
 		Integer credit_paid_total = 0;
 		Integer credit_left_total = 0;
@@ -276,10 +279,16 @@ public class CreditBuyerReportActivity extends SherlockActivity{
 		for (int i = 0; i < creditBuyerList.size(); i++) {
 			Credit credit = (Credit)creditBuyerList.get(i);
 			
-			credit_total += credit.getCreditTotal();
-			credit_paid_total += credit.getCreditPaidAmount();
-			credit_left_total += credit.getCreditLeftAmount();
+			if (!credit.getSalevoucher_id().equals(voucherNo)) {
+				voucherNo = credit.getSalevoucher_id();
+				credit_total += credit.getCreditTotal();
+				credit_paid_total += credit.getCreditPaidAmount();
+			}else {
+				credit_paid_total += credit.getCreditPaidAmount();
+			}
 		}
+		
+		credit_left_total = credit_total - credit_paid_total; 
 		
 		txt_credit_total.setText(credit_total+"");
 		txt_credit_paid_total.setText(credit_paid_total+"");

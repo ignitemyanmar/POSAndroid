@@ -101,7 +101,8 @@ public class SaleActivity  extends SherlockActivity{
 	private TextView txt_total_credit_left_amt;
 	private EditText edt_credit_pay_amt;
 	private Integer buyerID;
-	private String creditPaidAmount;
+	public static String creditPaidAmount;
+	private List<Object> creditList;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -161,8 +162,6 @@ public class SaleActivity  extends SherlockActivity{
 		btn_back.setOnClickListener(clickListener);
 		btn_done.setOnClickListener(clickListener);
 		grid_categories = (GridView)findViewById(R.id.gvCategories);
-		
-				
 		lvitem_list.setOnItemLongClickListener(itemLongClickListener);
 		getBuyer();
 		
@@ -192,6 +191,8 @@ public class SaleActivity  extends SherlockActivity{
 			buyer = (Buyer)buyer_obj.get(position);
 			buyerName = buyer.getBuyerName();
 			buyerID = buyer.getBuyerId();
+			
+			getBuyerCreditLeftTotal();
 		}
 
 		public void onNothingSelected(AdapterView<?> arg0) {
@@ -199,7 +200,6 @@ public class SaleActivity  extends SherlockActivity{
 			
 		}
 	};
-	
 	
 	private OnItemLongClickListener itemLongClickListener = new OnItemLongClickListener() {
 
@@ -306,6 +306,7 @@ public class SaleActivity  extends SherlockActivity{
 		}else {
 			buyer_obj.add(new Buyer("other", "", "", ""));
 			SP_buyername.setAdapter(new BuyerSpinnerAdapter(this,buyer_obj));
+			SKToastMessage.showMessage(SaleActivity.this, "You need to add buyer names ... ", SKToastMessage.WARNING);
 		}
 		
 		
@@ -485,37 +486,7 @@ public class SaleActivity  extends SherlockActivity{
 						change_mode.setEnabled(false);
 						categories.setEnabled(false);
 						
-						if (buyerID != null) {
-							//Get Credit List by Buyer ID
-							dbManager = new CreditBuyerController(SaleActivity.this);
-							CreditBuyerController creditControl = (CreditBuyerController)dbManager;
-							List<Object> creditList = new ArrayList<Object>();
-							creditList = creditControl.select(buyerID.toString());
-							
-							Log.i("", "Credit List by buyer id: "+creditControl.select().toString());
-							
-							if (creditList != null && creditList.size() > 0) {
-								
-								Integer creditTotal = 0;
-								Integer creditPaidTotal = 0;
-								
-								for (int i = 0; i < creditList.size(); i++) {
-									
-									Credit credit = (Credit)creditList.get(i);
-									
-									creditTotal += credit.getCreditTotal();
-									creditPaidTotal += credit.getCreditPaidAmount();
-								}
-								
-								Integer creditLeftTotal = creditTotal - creditPaidTotal;
-								txt_total_credit_left_amt.setText("Buyer's Credit Left Total Amount : "+creditLeftTotal+" Ks");
-							}else {
-								txt_total_credit_left_amt.setText("Buyer's Credit Left Total Amount : 0 Ks");
-							}
-						}else {
-							Log.i("", "buyer id: null");
-							txt_total_credit_left_amt.setText("Buyer's Credit Left Total Amount : 0 Ks");
-						}
+						getBuyerCreditLeftTotal();
 						
 					}else {
 						SKToastMessage.showMessage(getApplicationContext(), "Enter discount amount [or] zero", SKToastMessage.WARNING);
@@ -540,40 +511,84 @@ public class SaleActivity  extends SherlockActivity{
 				
 				Integer voucherTotal = Integer.valueOf(priceTotal.getText().toString()) - Integer.valueOf(txt_disc_show.getText().toString());
 				
-				if (edt_credit_pay_amt.getText().toString().length() == 0) {
-					edt_credit_pay_amt.setError("Enter Pay amount");
-				}
-				else if(Integer.valueOf(edt_credit_pay_amt.getText().toString()) <= voucherTotal)
-				   {
+				//Check the pay amount (Not to over the voucher total)
+				if (checkPayAmountFields()) {
 					creditPaidAmount = edt_credit_pay_amt.getText().toString();
-					saveCredit();
-					saveVouncher();
 					
-					//Go to Voucher Slip							
-					startActivity(new Intent(getApplicationContext(), 
-							VoucherSlipActivity.class).putExtra("saleVoucher", new Gson().toJson(bundleListObjet)));
-						
-					edt_credit_pay_amt.getText().clear();
-					
-					deleteItem.setVisibility(View.VISIBLE);
-					CheckOut.setVisibility(View.VISIBLE);
-					picker_mode.setVisibility(View.VISIBLE);
-					scanner_mode.setVisibility(View.VISIBLE);
-					change_mode.setEnabled(true);
-					categories.setEnabled(true);
-					
-					btn_back.setVisibility(View.GONE);
-					btn_done.setVisibility(View.GONE);
-					credit_mode.setVisibility(View.INVISIBLE);
-					
-					getCategories();
-				}else {
-					edt_credit_pay_amt.setError("Over the Voucher Amount");
+					if ((voucherTotal - Integer.valueOf(creditPaidAmount)) > 0) {
+						if (buyerName.equals("other")) {
+							SKToastMessage.showMessage(SaleActivity.this, "Choose Buyer Name to allow Credit!", SKToastMessage.WARNING);
+						}else {
+							saveAndShowSlip();
+						}
+					}else {
+						saveAndShowSlip();
+					}
 				}
 			}
 		}
-	};
 
+	};
+	
+	/**
+	 *  Get Buyer's Credit Left Total Amount
+	 */
+	private void getBuyerCreditLeftTotal() {
+		// TODO Auto-generated method stub
+		if (buyerID != null) {
+			//Get Credit List by Buyer ID
+			dbManager = new CreditBuyerController(SaleActivity.this);
+			CreditBuyerController creditControl = (CreditBuyerController)dbManager;
+			creditList = new ArrayList<Object>();
+			creditList = creditControl.selectGroupByVoucher(buyerID.toString());
+			
+			Log.i("", "Credit List by buyer id (groupby voucher id): "+creditControl.select().toString());
+			
+			if (creditList != null && creditList.size() > 0) {
+				
+				Integer creditLeftTotal = 0;
+				
+				for (int i = 0; i < creditList.size(); i++) {
+					Credit credit = (Credit)creditList.get(i);
+					creditLeftTotal += credit.getCreditLeftAmount();
+				}
+				
+				txt_total_credit_left_amt.setText("** "+buyerName+" ၏ ေႂကြးက်န္ စုစုေပါင္း  :    "+creditLeftTotal+" က်ပ္");
+			}else {
+				txt_total_credit_left_amt.setText("** "+buyerName+" ၏ ေႂကြးက်န္ စုစုေပါင္း  :    0 က်ပ္");
+			}
+		}else {
+			Log.i("", "buyer id: null");
+			txt_total_credit_left_amt.setText("** ၀ယ္ သူ ၏ ေႂကြးက်န္ စုစုေပါင္း :    0 က်ပ္");
+		}
+	}
+	
+	//Save Credit & Sale Voucher - Show Voucher slip 
+	private void saveAndShowSlip() {
+		// TODO Auto-generated method stub
+		saveCredit();
+		saveVouncher();
+		
+		//Go to Voucher Slip							
+		startActivity(new Intent(getApplicationContext(), 
+				VoucherSlipActivity.class).putExtra("saleVoucher", new Gson().toJson(bundleListObjet)));
+		
+		edt_credit_pay_amt.getText().clear();
+		
+		deleteItem.setVisibility(View.VISIBLE);
+		CheckOut.setVisibility(View.VISIBLE);
+		picker_mode.setVisibility(View.VISIBLE);
+		scanner_mode.setVisibility(View.VISIBLE);
+		change_mode.setEnabled(true);
+		categories.setEnabled(true);
+		
+		btn_back.setVisibility(View.GONE);
+		btn_done.setVisibility(View.GONE);
+		credit_mode.setVisibility(View.INVISIBLE);
+		
+		getCategories();
+	}
+	
 	private BundleListObjet bundleListObjet;
 	private List<Object> listItems;
 	private Integer stock_balance_qty;
@@ -1261,6 +1276,20 @@ public class SaleActivity  extends SherlockActivity{
 		if (scan.getText().toString().length() == 0) {
 			//scan.setError("Tab here to scan");
 			scan.setError("Tap here to scan");
+			return false;
+		}
+		
+		return true;
+	}
+	
+	public boolean checkPayAmountFields() {
+		if (edt_credit_pay_amt.getText().toString().length() == 0) {
+			edt_credit_pay_amt.setError("Enter Pay amount");
+			return false;
+		}
+		Integer voucherTotal = Integer.valueOf(priceTotal.getText().toString()) - Integer.valueOf(txt_disc_show.getText().toString());
+		if (Integer.valueOf(edt_credit_pay_amt.getText().toString()) > voucherTotal) {
+			edt_credit_pay_amt.setError("Over the Voucher Amount");
 			return false;
 		}
 		

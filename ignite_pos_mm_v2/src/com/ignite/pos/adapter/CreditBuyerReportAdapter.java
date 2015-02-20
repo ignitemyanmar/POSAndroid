@@ -52,8 +52,8 @@ public class CreditBuyerReportAdapter extends BaseAdapter{
 			holder = new ViewHolder();
 			
 			holder.txt_buyer_name = (TextView) convertView.findViewById(R.id.txt_buyer_name);
-			holder.txt_date = (TextView)convertView.findViewById(R.id.txt_credit_date);
-			holder.txt_vou_no = (TextView) convertView.findViewById(R.id.txt_voucher_no);
+			holder.txt_vou_no = (TextView) convertView.findViewById(R.id.txt_vou_num);
+			holder.txt_date = (TextView)convertView.findViewById(R.id.txt_date);
 			holder.txt_credit_total = (TextView)convertView.findViewById(R.id.txt_credit_total);
 			holder.txt_credit_paid_amount = (TextView)convertView.findViewById(R.id.txt_credit_paid_amount);
 			holder.txt_credit_left_amount = (TextView)convertView.findViewById(R.id.txt_credit_left_amount);
@@ -62,9 +62,11 @@ public class CreditBuyerReportAdapter extends BaseAdapter{
 			holder = (ViewHolder) convertView.getTag();
 		}
 		
+		Log.i("", "Temp List: "+tempList.toString());
+		
 		holder.txt_buyer_name.setText(getItem(position).getBuyer_name());
-		holder.txt_date.setText(getItem(position).getDate());
 		holder.txt_vou_no.setText(getItem(position).getSalevoucher_id());
+		holder.txt_date.setText(getItem(position).getDate());
 		holder.txt_credit_total.setText(getItem(position).getCreditTotal()+"");
 		holder.txt_credit_paid_amount.setText(getItem(position).getCreditPaidAmount()+"");
 		holder.txt_credit_left_amount.setText(getItem(position).getCreditLeftAmount()+"");

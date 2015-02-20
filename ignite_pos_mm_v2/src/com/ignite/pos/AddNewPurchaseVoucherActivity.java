@@ -59,6 +59,7 @@ public class AddNewPurchaseVoucherActivity  extends SherlockActivity{
 	private List<Object> list_obj;
 	private ListView lvitem_list;
 	private String ItemID;
+	
 	private List<PurchaseVoucher> Cart_Item_List;
 	private GridView grid_categories;
 	private List<Object> sub_category_Listobj;

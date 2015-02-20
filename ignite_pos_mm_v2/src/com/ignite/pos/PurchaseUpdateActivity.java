@@ -224,11 +224,14 @@ public class PurchaseUpdateActivity  extends SherlockActivity{
 		
 		sp_supplier_name.setAdapter(new SupplierSpinnerAdapter(this,supplier_list));
 		sp_supplier_name.setOnItemSelectedListener(suppliernameClickListener);
+		
+		//Put the old supplier name at the first of Spinner
 		int i = 0;
 		for(Object obj: supplier_list){
 			Supplier supplier = (Supplier) obj;
 			if(supplier.getSupCoName().equals(SupplierName)){
-				sp_supplier_name.setSelection(i);
+				sp_supplier_name.setSelection(i); //Set the current selected item
+				break;
 			}
 			i++;
 		}
