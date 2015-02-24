@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:background="@color/black2"
+            android:paddingBottom="10dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingTop="30dp" >
+
+            <com.smk.skscalableview.ScalableTextView
+                android:id="@+id/txt_item_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dp"
+                android:layout_weight="20"
+                android:gravity="left"
+                android:text="ပစၥည္းအမည္"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/white" />
+
+            <com.smk.skscalableview.ScalableTextView
+                android:id="@+id/txt_foreign_currency"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dp"
+                android:layout_weight="20"
+                android:gravity="right"
+                android:singleLine="true"
+                android:text="ယြမ္ေစ်းႏႈန္း"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/white" />
+
+            <com.smk.skscalableview.ScalableTextView
+                android:id="@+id/txt_transport_cost"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dp"
+                android:layout_weight="20"
+                android:gravity="right"
+                android:text="သယ္ယူစရိတ္"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/white" />
+
+            <com.smk.skscalableview.ScalableTextView
+                android:id="@+id/txt_other_cost"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dp"
+                android:layout_weight="20"
+                android:gravity="right"
+                android:text="အေထြေထြ စရိတ္"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/white" />
+
+            <com.smk.skscalableview.ScalableTextView
+                android:id="@+id/txt_kyat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="20"
+                android:gravity="right"
+                android:text="က်ပ္ေငြ"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/white" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+             >
+
+            <View
+                android:id="@+id/view1"
+                android:layout_width="6dp"
+                android:layout_height="match_parent"
+                android:background="@color/black2" />
+
+            <ListView
+                android:id="@+id/lv_changekyat"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1" >
+            </ListView>
+
+            <View
+                android:id="@+id/View01"
+                android:layout_width="6dp"
+                android:layout_height="match_parent"
+                android:background="@color/black2" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

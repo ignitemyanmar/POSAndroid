@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="0dp"
+    android:orientation="vertical"
+    android:padding="5dp" >
+
+    <ScrollView
+        android:id="@+id/scrollView1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/border_black2"
+                android:orientation="vertical"
+                android:padding="10dp" >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" >
+
+                    <com.ignite.purchasecostcalculator.custom.view.CustomTextView
+                        android:id="@+id/CustomTextView03"
+                        android:layout_width="120dp"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical|left"
+                        android:text="Item Name : "
+                        android:textSize="16dp"
+                        android:textStyle="bold" />
+
+                    <com.ignite.purchasecostcalculator.custom.view.CustomEditText
+                        android:id="@+id/edt_item_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:layout_weight="1"
+                        android:ems="10"
+                        android:hint="ပစၥည္းအမည္ ထည့္ပါ"
+                        android:inputType="text|textCapWords" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" >
+
+                    <com.ignite.purchasecostcalculator.custom.view.CustomTextView
+                        android:id="@+id/CustomTextView02"
+                        android:layout_width="120dp"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical|left"
+                        android:text="Purchase Price : "
+                        android:textSize="16dp"
+                        android:textStyle="bold" />
+
+                    <com.ignite.purchasecostcalculator.custom.view.CustomEditText
+                        android:id="@+id/edt_purchase_price"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:layout_weight="1"
+                        android:ems="10"
+                        android:hint="၀ယ္ေစ်း ထည့္ပါ"
+                        android:inputType="numberDecimal" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" >
+
+                    <com.ignite.purchasecostcalculator.custom.view.CustomTextView
+                        android:id="@+id/CustomTextView01"
+                        android:layout_width="120dp"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical|left"
+                        android:text="Transport Cost : "
+                        android:textSize="16dp"
+                        android:textStyle="bold" />
+
+                    <com.ignite.purchasecostcalculator.custom.view.CustomEditText
+                        android:id="@+id/edt_transport_cost"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:layout_weight="1"
+                        android:ems="10"
+                        android:hint="သယ္ယူစရိတ္ ထည့္ပါ"
+                        android:inputType="numberDecimal" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" >
+
+                    <com.ignite.purchasecostcalculator.custom.view.CustomTextView
+                        android:id="@+id/CustomTextView1"
+                        android:layout_width="120dp"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical|left"
+                        android:text="Other Cost : "
+                        android:textSize="16dp"
+                        android:textStyle="bold" />
+
+                    <com.ignite.purchasecostcalculator.custom.view.CustomEditText
+                        android:id="@+id/edt_other_cost"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:layout_weight="1"
+                        android:ems="10"
+                        android:hint="အေထြေထြ ကုန္က်စရိတ္ ထည့္ပါ"
+                        android:inputType="numberDecimal" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" >
+
+                    <com.ignite.purchasecostcalculator.custom.view.CustomButton
+                        android:id="@+id/btn_cancel"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="10dp"
+                        android:layout_weight="50"
+                        android:background="@drawable/btn_black_gray_corner"
+                        android:text="Cancel"
+                        android:textColor="@color/white" />
+
+                    <com.ignite.purchasecostcalculator.custom.view.CustomButton
+                        android:id="@+id/btn_save"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="50"
+                        android:background="@drawable/btn_black_corner"
+                        android:text="Save"
+                        android:textColor="@color/white" />
+                </LinearLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

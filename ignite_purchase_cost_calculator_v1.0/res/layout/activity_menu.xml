@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black_light"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:background="@color/white"
+        android:gravity="center"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/border_black_corner"
+            android:gravity="center"
+            android:orientation="vertical" >
+
+            <com.ignite.purchasecostcalculator.custom.view.CustomTextView
+                android:id="@+id/txt_foreign_currency"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:drawableTop="@drawable/yuan_white"
+                android:gravity="center"
+                android:padding="5dp"
+                android:text="China"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/white" />
+
+            <View
+                android:id="@+id/view1"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/white" />
+
+            <com.ignite.purchasecostcalculator.custom.view.CustomTextView
+                android:id="@+id/txt_thai"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:drawableTop="@drawable/baht_white"
+                android:gravity="center"
+                android:padding="5dp"
+                android:text="Thai"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/white" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

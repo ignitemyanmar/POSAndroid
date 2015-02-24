@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="0dp"
+    android:orientation="vertical"
+    android:padding="5dp" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/border_black2"
+        android:orientation="vertical"
+        android:padding="10dp" >
+
+        <com.ignite.purchasecostcalculator.custom.view.CustomTextView
+            android:id="@+id/txt_current_rate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Old Rate : 0.00"
+            android:textSize="16dp"
+            android:textStyle="bold" />
+
+        <View
+            android:id="@+id/view1"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/gray" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <com.ignite.purchasecostcalculator.custom.view.CustomTextView
+                android:id="@+id/CustomTextView1"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="New Rate :"
+                android:textSize="16dp"
+                android:textStyle="bold" />
+
+            <com.ignite.purchasecostcalculator.custom.view.CustomEditText
+                android:id="@+id/edt_other_cost"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:layout_weight="1"
+                android:ems="10"
+                android:hint="1 ယြမ္ ၏ ျမန္မာေငြ ကုိထည့္ပါ"
+                android:inputType="numberDecimal" >
+
+                <requestFocus />
+            </com.ignite.purchasecostcalculator.custom.view.CustomEditText>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <com.ignite.purchasecostcalculator.custom.view.CustomButton
+                android:id="@+id/btn_cancel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:layout_weight="50"
+                android:background="@drawable/btn_black_gray_corner"
+                android:text="Cancel"
+                android:textColor="@color/white" />
+
+            <com.ignite.purchasecostcalculator.custom.view.CustomButton
+                android:id="@+id/btn_update"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="50"
+                android:background="@drawable/btn_black_corner"
+                android:text="Update"
+                android:textColor="@color/white" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>
