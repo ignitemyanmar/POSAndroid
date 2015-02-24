@@ -102,7 +102,7 @@ public class ThaiToKyatDetailActivity extends BaseActivity{
 			baht_rate = 0.00;
 		}
 		
-		txt_foreign_currency.setText("ဘတ္ေစ်းႏႈန္း("+String.format("%.5f", baht_rate)+")");
+		txt_foreign_currency.setText("ဘတ္ေစ်းႏႈန္း("+String.format("%.5f", thaiExRate)+")");
 	}
 	
 	/**
@@ -138,8 +138,8 @@ public class ThaiToKyatDetailActivity extends BaseActivity{
 				
 				AddNewExchangeRateDialog exchangeRateDialog = new AddNewExchangeRateDialog(ThaiToKyatDetailActivity.this);
 				exchangeRateDialog.setTitle("Add New (Thai) Exchange Rate");
-				exchangeRateDialog.edt_new_rate.setHint("1 ဘတ္ ၏ ျမန္မာေငြ ကုိထည့္ပါ");
-				exchangeRateDialog.txt_current_rate.setText("Old Rate: "+thaiExRate+"Ks ("+String.format("%.5f", baht_rate)+")");
+				exchangeRateDialog.edt_new_rate.setHint("1 က်ပ္ ၏ ဘတ္ေစ်း ကုိ ထည့္ပါ");
+				exchangeRateDialog.txt_current_rate.setText("Old Rate: "+String.format("%.5f", thaiExRate));
 				exchangeRateDialog.setCallbackListener(new AddNewExchangeRateDialog.Callback() {
 					
 					public void onCancel() {

@@ -60,7 +60,13 @@ public class AddNewItemDialog extends Dialog {
 						String itemName = edt_item_name.getText().toString();						
 						Double purchasePrice = Double.valueOf(edt_purchase_price.getText().toString());
 						Double transportCost = Double.valueOf(edt_transport_cost.getText().toString());
-						Double otherCost = Double.valueOf(edt_other_cost.getText().toString());
+						Double otherCost;
+						if (edt_other_cost.getText().toString().equals("")) {
+							String others = "0";
+							otherCost = Double.valueOf(others);
+						}else {
+							otherCost = Double.valueOf(edt_other_cost.getText().toString());
+						}
 						
 						mCallback.onSave(itemName, purchasePrice, transportCost, otherCost);
 						dismiss();
@@ -89,10 +95,7 @@ public class AddNewItemDialog extends Dialog {
 			edt_transport_cost.setError("Enter Transport Cost");
 			return false;
 		}
-		if (edt_other_cost.getText().toString().length() == 0) {
-			edt_other_cost.setError("Enter Other Costs");
-			return false;
-		}
+		
 		return true;
 	}
 

@@ -34,7 +34,7 @@ public class MainActivity extends BaseActivity {
 					// do nothing
 				} finally {
 					finish();
-					startActivity(new Intent(getApplicationContext(), MenuActivity.class));
+					startActivity(new Intent(getApplicationContext(), ActivateActivity.class));
 					
 					/*//Check Activated or not
 					String str_activated = "activated";

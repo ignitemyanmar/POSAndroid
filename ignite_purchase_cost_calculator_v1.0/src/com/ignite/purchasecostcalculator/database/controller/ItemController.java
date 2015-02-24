@@ -165,7 +165,7 @@ public class ItemController extends DatabaseManager{
 				
 				String[] VALUE = {currencyType};
 				String WHERE = FIELD_NAME[5] + "=?";
-				String ORDER_BY = FIELD_NAME[0] + " ASC";
+				String ORDER_BY = FIELD_NAME[1] + " ASC";
 
 				itemList = new ArrayList<Object>();
 				SQLiteDatabase db = getReadableDatabase();

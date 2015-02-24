@@ -29,14 +29,6 @@ public class MenuActivity extends BaseActivity{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_menu);
 		
-		//Check activated or not 
-		SharedPreferences pref = getSharedPreferences("User", Activity.MODE_PRIVATE);
-		boolean activated = pref.getBoolean("activated", false);
-		
-		if (activated == true) {
-			SKToastMessage.showMessage(getApplicationContext(), "You have already activated ^_^", SKToastMessage.SUCCESS);
-		}
-		
 		txt_china = (TextView)findViewById(R.id.txt_foreign_currency);
 		txt_thai = (TextView)findViewById(R.id.txt_thai);
 		

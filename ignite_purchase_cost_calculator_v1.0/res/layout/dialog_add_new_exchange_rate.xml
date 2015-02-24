@@ -48,7 +48,7 @@
                 android:layout_margin="20dp"
                 android:layout_weight="1"
                 android:ems="10"
-                android:hint="1 ယြမ္ ၏ ျမန္မာေငြ ကုိထည့္ပါ"
+                android:hint="1 က်ပ္ ၏ ယြမ္ေစ်း ကုိ ထည့္ပါ"
                 android:inputType="numberDecimal" >
 
                 <requestFocus />

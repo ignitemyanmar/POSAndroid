@@ -73,14 +73,14 @@ public class DetailLvAdapter extends BaseAdapter{
 		if (getItem(position).getCurrencyType().equals("china")) {
 			//Change China Yuan to Myanmar Kyat
 			if (ChinaToKyatDetailActivity.chinaExRate != null) {
-				Double mmKyat = getItem(position).getPurchasePrice() * ChinaToKyatDetailActivity.chinaExRate;
+				Double mmKyat = getItem(position).getPurchasePrice() / ChinaToKyatDetailActivity.chinaExRate;
 				Double totalKyat = mmKyat + getItem(position).getTransportCost() + getItem(position).getOtherCost();
 				holder.txt_kyat.setText(String.format("%.0f", totalKyat));
 			}
 		} else if (getItem(position).getCurrencyType().equals("thai")) {
 			//Change Thai Baht to Myanmar Kyat
 			if (ThaiToKyatDetailActivity.thaiExRate != null) {
-				Double mmKyat = getItem(position).getPurchasePrice() * ThaiToKyatDetailActivity.thaiExRate;
+				Double mmKyat = getItem(position).getPurchasePrice() / ThaiToKyatDetailActivity.thaiExRate;
 				Double totalKyat = mmKyat + getItem(position).getTransportCost() + getItem(position).getOtherCost();
 				holder.txt_kyat.setText(String.format("%.0f", totalKyat));
 			}

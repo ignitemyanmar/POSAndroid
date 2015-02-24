@@ -88,7 +88,7 @@ public class ChinaToKyatDetailActivity extends BaseActivity{
 		if (exchangeRate.size() > 0 && exchangeRate != null) {
 			chinaExRate = ((ExchangeRate)exchangeRate.get(0)).getExchangeRateChina();
 			
-			//1 kyat = yuan ? 
+			//Yuan Rate
 			if (chinaExRate > 0) {
 				yuan_rate = 1 / chinaExRate; 
 			}else {
@@ -99,7 +99,7 @@ public class ChinaToKyatDetailActivity extends BaseActivity{
 			yuan_rate = 0.00;
 		}
 		
-		txt_foreign_currency.setText("ယြမ္ေစ်းႏႈန္း("+String.format("%.5f", yuan_rate)+")");
+		txt_foreign_currency.setText("ယြမ္ေစ်းႏႈန္း("+String.format("%.5f", chinaExRate)+")");
 	}
 	
 	/**

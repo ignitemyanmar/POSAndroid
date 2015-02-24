@@ -25,7 +25,7 @@ public class AddNewExchangeRateDialog extends Dialog {
 		setContentView(R.layout.dialog_add_new_exchange_rate);
 		
 		txt_current_rate = (TextView)findViewById(R.id.txt_current_rate);
-		txt_current_rate.setText("Old Rate: "+ChinaToKyatDetailActivity.chinaExRate+"Ks ("+String.format("%.5f", ChinaToKyatDetailActivity.yuan_rate)+")");
+		txt_current_rate.setText("Old Rate:   "+String.format("%.5f", ChinaToKyatDetailActivity.chinaExRate));
 		edt_new_rate = (EditText)findViewById(R.id.edt_other_cost);
 		btn_cancel = (Button)findViewById(R.id.btn_cancel);
 		btn_rate_update = (Button)findViewById(R.id.btn_update);
@@ -71,6 +71,10 @@ public class AddNewExchangeRateDialog extends Dialog {
 		// TODO Auto-generated method stub
 		if (edt_new_rate.getText().toString().length() == 0) {
 			edt_new_rate.setError("Enter New Exchange Rate");
+			return false;
+		}
+		if (Double.valueOf(edt_new_rate.getText().toString()) == 0) {
+			edt_new_rate.setError("Check Exchange Rate");
 			return false;
 		}
 		return true;
