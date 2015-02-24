@@ -19,6 +19,7 @@ import android.widget.TextView;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockActivity;
 import com.ignite.pos.adapter.CreditBuyerReportAdapter;
+import com.ignite.pos.application.CreditBuyerReportExcelUtility;
 import com.ignite.pos.database.controller.BuyerController;
 import com.ignite.pos.database.controller.CreditBuyerController;
 import com.ignite.pos.database.util.DatabaseManager;
@@ -26,6 +27,7 @@ import com.ignite.pos.model.Buyer;
 import com.ignite.pos.model.Credit;
 import com.smk.calender.widget.SKCalender;
 import com.smk.calender.widget.SKCalender.Callbacks;
+import com.smk.skalertmessage.SKToastMessage;
 
 public class CreditBuyerReportActivity extends SherlockActivity{
 	private AutoCompleteTextView autocom_buyer_name;
@@ -185,7 +187,7 @@ public class CreditBuyerReportActivity extends SherlockActivity{
 				  skCalender.show();
 			}
 			if (v == btn_print) {
-			/*	SaveFileDialog fileDialog = new SaveFileDialog(CreditBuyerReportActivity.this);
+				SaveFileDialog fileDialog = new SaveFileDialog(CreditBuyerReportActivity.this);
 		        fileDialog.setCallbackListener(new SaveFileDialog.Callback() {
 					
 					public void onCancel() {
@@ -200,21 +202,21 @@ public class CreditBuyerReportActivity extends SherlockActivity{
 						}
 						if(ExcelChecked){
 							
-							if (listCredit != null && listCredit.size() > 0) {
-								for (int j = 0; j < listCredit.size(); j++) {
+							if (creditBuyerList != null && creditBuyerList.size() > 0) {
+								for (int j = 0; j < creditBuyerList.size(); j++) {
 									
-									Ledger ledger = (Ledger) listCredit.get(j);
+									Credit credit = (Credit) creditBuyerList.get(j);
 									
-									String ledgerDate = ledger.getDate();
+									String creditDate = credit.getDate();
 									//Split sale date 
-									String[] parts = ledgerDate.split("-");
+									String[] parts = creditDate.split("-");
 									String year = parts[0]; 
 									String month = parts[1];
 									String day = parts[2];
 									
 									String formatedDate = day+"-"+month+"-"+year;
 									
-									((Ledger)listCredit.get(j)).setDate(formatedDate);
+									((Credit)creditBuyerList.get(j)).setDate(formatedDate);
 								}
 							}
 							
@@ -223,9 +225,9 @@ public class CreditBuyerReportActivity extends SherlockActivity{
 							searchInfoList.add(dmyDateFormat(selectedFromDate));
 							searchInfoList.add(dmyDateFormat(selectedToDate));
 							
-							if (listCredit != null && listCredit.size() > 0) {
-								new LedgerReportExcelUtility(listCredit, filename, searchInfoList).write();
-								SKToastMessage.showMessage(LedgerReportActivity.this, filename+".xls is saved in your Device External SD card!", SKToastMessage.SUCCESS);
+							if (creditBuyerList != null && creditBuyerList.size() > 0) {
+								new CreditBuyerReportExcelUtility(creditBuyerList, filename, searchInfoList).write();
+								SKToastMessage.showMessage(CreditBuyerReportActivity.this, filename+".xls is saved in your Device External SD card!", SKToastMessage.SUCCESS);
 							}else {
 								alertDialog("No Data Yet");
 							}
@@ -233,7 +235,7 @@ public class CreditBuyerReportActivity extends SherlockActivity{
 					}
 				});
 		        fileDialog.show();
-		        return;*/
+		        return;
 			}
 		}
 	};

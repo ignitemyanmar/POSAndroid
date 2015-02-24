@@ -20,6 +20,8 @@ import android.widget.TextView;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockActivity;
 import com.ignite.pos.adapter.CreditSupplierReportAdapter;
+import com.ignite.pos.application.CreditBuyerReportExcelUtility;
+import com.ignite.pos.application.CreditSupplierReportExcelUtility;
 import com.ignite.pos.database.controller.CreditSupplierController;
 import com.ignite.pos.database.controller.SupplierController;
 import com.ignite.pos.database.util.DatabaseManager;
@@ -29,6 +31,7 @@ import com.ignite.pos.model.CreditSupplier;
 import com.ignite.pos.model.Supplier;
 import com.smk.calender.widget.SKCalender;
 import com.smk.calender.widget.SKCalender.Callbacks;
+import com.smk.skalertmessage.SKToastMessage;
 
 @SuppressLint("SimpleDateFormat") public class CreditSupplierReportActivity extends SherlockActivity{
 	private Button fromdate, todate, search;
@@ -181,7 +184,7 @@ import com.smk.calender.widget.SKCalender.Callbacks;
 				  skCalender.show();
 			}
 			if (v == btn_print) {
-			/*	SaveFileDialog fileDialog = new SaveFileDialog(CreditBuyerReportActivity.this);
+				SaveFileDialog fileDialog = new SaveFileDialog(CreditSupplierReportActivity.this);
 		        fileDialog.setCallbackListener(new SaveFileDialog.Callback() {
 					
 					public void onCancel() {
@@ -196,21 +199,21 @@ import com.smk.calender.widget.SKCalender.Callbacks;
 						}
 						if(ExcelChecked){
 							
-							if (listCredit != null && listCredit.size() > 0) {
-								for (int j = 0; j < listCredit.size(); j++) {
+							if (creditsupplierList != null && creditsupplierList.size() > 0) {
+								for (int j = 0; j < creditsupplierList.size(); j++) {
 									
-									Ledger ledger = (Ledger) listCredit.get(j);
+									CreditSupplier credit = (CreditSupplier) creditsupplierList.get(j);
 									
-									String ledgerDate = ledger.getDate();
+									String creditDate = credit.getDate();
 									//Split sale date 
-									String[] parts = ledgerDate.split("-");
+									String[] parts = creditDate.split("-");
 									String year = parts[0]; 
 									String month = parts[1];
 									String day = parts[2];
 									
 									String formatedDate = day+"-"+month+"-"+year;
 									
-									((Ledger)listCredit.get(j)).setDate(formatedDate);
+									((CreditSupplier)creditsupplierList.get(j)).setDate(formatedDate);
 								}
 							}
 							
@@ -219,9 +222,9 @@ import com.smk.calender.widget.SKCalender.Callbacks;
 							searchInfoList.add(dmyDateFormat(selectedFromDate));
 							searchInfoList.add(dmyDateFormat(selectedToDate));
 							
-							if (listCredit != null && listCredit.size() > 0) {
-								new LedgerReportExcelUtility(listCredit, filename, searchInfoList).write();
-								SKToastMessage.showMessage(LedgerReportActivity.this, filename+".xls is saved in your Device External SD card!", SKToastMessage.SUCCESS);
+							if (creditsupplierList != null && creditsupplierList.size() > 0) {
+								new CreditSupplierReportExcelUtility(creditsupplierList, filename, searchInfoList).write();
+								SKToastMessage.showMessage(CreditSupplierReportActivity.this, filename+".xls is saved in your Device External SD card!", SKToastMessage.SUCCESS);
 							}else {
 								alertDialog("No Data Yet");
 							}
@@ -229,7 +232,7 @@ import com.smk.calender.widget.SKCalender.Callbacks;
 					}
 				});
 		        fileDialog.show();
-		        return;*/
+		        return;
 			}
 		}
 	};
