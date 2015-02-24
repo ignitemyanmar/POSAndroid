@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -18,60 +19,57 @@ import android.widget.ListView;
 import android.widget.TextView;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockActivity;
-import com.ignite.pos.adapter.CreditBuyerReportAdapter;
-import com.ignite.pos.database.controller.BuyerController;
-import com.ignite.pos.database.controller.CreditBuyerController;
+import com.ignite.pos.adapter.CreditSupplierReportAdapter;
+import com.ignite.pos.database.controller.CreditSupplierController;
+import com.ignite.pos.database.controller.SupplierController;
 import com.ignite.pos.database.util.DatabaseManager;
 import com.ignite.pos.model.Buyer;
 import com.ignite.pos.model.Credit;
+import com.ignite.pos.model.CreditSupplier;
+import com.ignite.pos.model.Supplier;
 import com.smk.calender.widget.SKCalender;
 import com.smk.calender.widget.SKCalender.Callbacks;
 
-public class CreditBuyerReportActivity extends SherlockActivity{
-	private AutoCompleteTextView autocom_buyer_name;
+@SuppressLint("SimpleDateFormat") public class CreditSupplierReportActivity extends SherlockActivity{
 	private Button fromdate, todate, search;
-	private String selectedBuyerName;
+	private String selectedSupplierName;
 	private String selectedFromDate;
 	private String selectedToDate;
 	private DatabaseManager dbManager;
-	private ListView lv_credit_buyer_report;
-	private CreditBuyerReportAdapter creditAdapter;
-	private List<Object> buyerList;
-	private List<Object> creditBuyerList;
+	private CreditSupplierReportAdapter creditAdapter;
+	private List<Object> supplierList;
+	private List<Object> creditsupplierList;
 	private ActionBar actionBar;
 	private TextView title;
 	private String currentDate;
 	private View btn_print;
-	private List<Object> listCredit;
 	private TextView txt_credit_total;
 	private TextView txt_credit_paid_total;
 	private TextView txt_credit_left_total;
-	private TextView buyer_title;
+	private AutoCompleteTextView autocom_supplier_name;
+	private ListView lv_credit_supplier_report;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_credit_buyer_report);
+		setContentView(R.layout.activity_credit_supplier_report);
 		
 		actionBar = getSupportActionBar();						
 		actionBar.setCustomView(R.layout.action_bar_report);
 		title = (TextView)actionBar.getCustomView().findViewById(R.id.txt_title);
 		//title.setText("Ledger Report");
-		title.setText("အေႂကြးစာရင္း မွတ္တမ္း (၀ယ္သူ ထံမွ ရရန္ အေႂကြး)");
+		title.setText("အေႂကြးစာရင္း မွတ္တမ္း (လကၠားဆုိင္ သုိ႔ ေပးရန္ အေႂကြး)");
 		btn_print = (Button) actionBar.getCustomView().findViewById(R.id.btn_print);
 		btn_print.setOnClickListener(clickListener);
 		actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
 		
-		buyer_title = (TextView)findViewById(R.id.buyer_title);
-		buyer_title.setText("၀ယ္သူ အမည္");
-		
-		autocom_buyer_name = (AutoCompleteTextView)findViewById(R.id.autocom_buyer_name);
-		autocom_buyer_name.setTypeface(Typeface.createFromAsset(getAssets(),"fonts/ZawgyiOne2008.ttf"));
+		autocom_supplier_name = (AutoCompleteTextView)findViewById(R.id.autocom_supplier_name);
+		autocom_supplier_name.setTypeface(Typeface.createFromAsset(getAssets(),"fonts/ZawgyiOne2008.ttf"));
 		fromdate  = (Button)findViewById(R.id.btnFromDate);
 		todate = (Button)findViewById(R.id.btnToDate);
 		search = (Button)findViewById(R.id.btnSearch);
-		lv_credit_buyer_report = (ListView) findViewById(R.id.lv_credit_buyer_report);
+		lv_credit_supplier_report = (ListView) findViewById(R.id.lv_credit_supplier_report);
 		txt_credit_total = (TextView)findViewById(R.id.txt_credit_total);
 		txt_credit_paid_total = (TextView)findViewById(R.id.txt_credit_paid_total);
 		txt_credit_left_total = (TextView)findViewById(R.id.txt_credit_left_total);
@@ -80,8 +78,8 @@ public class CreditBuyerReportActivity extends SherlockActivity{
 		todate.setOnClickListener(clickListener);
 		search.setOnClickListener(clickListener);
 		
-		//Buyer Name AutoComplete
-		getBuyerName();
+		//Supplier Name AutoComplete
+		getSupplierName();
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		currentDate = sdf.format(new Date());
@@ -109,36 +107,34 @@ public class CreditBuyerReportActivity extends SherlockActivity{
 			{
 				if (checkFields()) {
 					
-					selectedBuyerName = autocom_buyer_name.getText().toString();
+					selectedSupplierName = autocom_supplier_name.getText().toString();
 					
-					//Get Data from Credit-Buyer Table
-					dbManager = new CreditBuyerController(CreditBuyerReportActivity.this);
-					CreditBuyerController creditControl = (CreditBuyerController)dbManager;
-					creditBuyerList = new ArrayList<Object>();
-					creditBuyerList = creditControl.select(selectedBuyerName, selectedFromDate, selectedToDate);
-					//creditBuyerList = creditControl.select();
+					//Get Data from Credit-Supplier Table
+					dbManager = new CreditSupplierController(CreditSupplierReportActivity.this);
+					CreditSupplierController creditControl = (CreditSupplierController)dbManager;
+					creditsupplierList = new ArrayList<Object>();
+					creditsupplierList = creditControl.select(selectedSupplierName, selectedFromDate, selectedToDate);
+					//creditsupplierList = creditControl.select();
 					
-					Log.i("", "Credit Buyer list: "+creditBuyerList.toString());
+					Log.i("", "Credit Supplier list: "+creditsupplierList.toString());
 					
-					if (creditBuyerList != null && creditBuyerList.size() > 0) {
-						creditAdapter = new CreditBuyerReportAdapter(CreditBuyerReportActivity.this, creditBuyerList);
-						lv_credit_buyer_report.setAdapter(creditAdapter);
+					if (creditsupplierList != null && creditsupplierList.size() > 0) {
+						creditAdapter = new CreditSupplierReportAdapter(CreditSupplierReportActivity.this, creditsupplierList);
+						lv_credit_supplier_report.setAdapter(creditAdapter);
 						
 						grandTotal();
 					}else {
 						alertDialog("No Info");
-						lv_credit_buyer_report.setAdapter(null);
+						lv_credit_supplier_report.setAdapter(null);
 						txt_credit_total.setText("0");
 						txt_credit_paid_total.setText("0");
 						txt_credit_left_total.setText("0");
 					}
-					
-					
 				}
 			}
 			if(v == fromdate)
 			{
-				final SKCalender skCalender = new SKCalender(CreditBuyerReportActivity.this);
+				final SKCalender skCalender = new SKCalender(CreditSupplierReportActivity.this);
 
 				  skCalender.setCallbacks(new Callbacks() {
 
@@ -163,7 +159,7 @@ public class CreditBuyerReportActivity extends SherlockActivity{
 			}
 			if( v == todate)
 			{
-				final SKCalender skCalender = new SKCalender(CreditBuyerReportActivity.this);
+				final SKCalender skCalender = new SKCalender(CreditSupplierReportActivity.this);
 
 				  skCalender.setCallbacks(new Callbacks() {
 
@@ -219,7 +215,7 @@ public class CreditBuyerReportActivity extends SherlockActivity{
 							}
 							
 							List<String> searchInfoList = new ArrayList<String>();
-							searchInfoList.add(selectedBuyerName);
+							searchInfoList.add(selectedSupplierName);
 							searchInfoList.add(dmyDateFormat(selectedFromDate));
 							searchInfoList.add(dmyDateFormat(selectedToDate));
 							
@@ -238,36 +234,35 @@ public class CreditBuyerReportActivity extends SherlockActivity{
 		}
 	};
 	
-	private void getBuyerName()
+	private void getSupplierName()
 	{
-		dbManager = new BuyerController(this);
-		BuyerController buyerControl = (BuyerController)dbManager;
-		buyerList = new ArrayList<Object>();
+		dbManager = new SupplierController(this);
+		SupplierController supplierControl = (SupplierController)dbManager;
+		supplierList = new ArrayList<Object>();
 		
-		buyerList.add(new Buyer("All"));
-		buyerList.addAll(buyerControl.select());
+		supplierList.add(new Supplier("All"));
+		supplierList.addAll(supplierControl.select());
 		
-		Log.i("", "Buyer Name List: "+buyerList.toString());
+		Log.i("", "Supplier Name List: "+supplierList.toString());
 		
 		//Change List<Object> to String Array
-		String[] buyerArray = new String[buyerList.size()];
+		String[] supplierArray = new String[supplierList.size()];
 		
-		for (int i = 0; i < buyerList.size(); i++) {
+		for (int i = 0; i < supplierList.size(); i++) {
 			
-			Buyer buyerObj = (Buyer)buyerList.get(i);
+			Supplier supplierObj = (Supplier)supplierList.get(i);
 			
-			buyerArray[i] = buyerObj.getBuyerName();  
+			supplierArray[i] = supplierObj.getSupCoName();  
 			
-			Log.i("", "Buyer Name Array: "+buyerArray[i]);
+			Log.i("", "Supplier Name Array: "+supplierArray[i]);
 		}
-
 		
 		ArrayAdapter<String> adapter = 
-		        new ArrayAdapter<String>(this, R.layout.custom_autocomplete_view, buyerArray);
-		autocom_buyer_name.setAdapter(adapter);
+		        new ArrayAdapter<String>(this, R.layout.custom_autocomplete_view, supplierArray);
+		autocom_supplier_name.setAdapter(adapter);
 		
 		// specify the minimum type of characters before drop-down list is shown
-		autocom_buyer_name.setThreshold(1);
+		autocom_supplier_name.setThreshold(1);
 		
 	}
 	
@@ -279,11 +274,11 @@ public class CreditBuyerReportActivity extends SherlockActivity{
 		Integer credit_paid_total = 0;
 		Integer credit_left_total = 0;
 		
-		for (int i = 0; i < creditBuyerList.size(); i++) {
-			Credit credit = (Credit)creditBuyerList.get(i);
+		for (int i = 0; i < creditsupplierList.size(); i++) {
+			CreditSupplier credit = (CreditSupplier)creditsupplierList.get(i);
 			
-			if (!credit.getSalevoucher_id().equals(voucherNo)) {
-				voucherNo = credit.getSalevoucher_id();
+			if (!credit.getPurchaseVoucherID().equals(voucherNo)) {
+				voucherNo = credit.getPurchaseVoucherID();
 				credit_total += credit.getCreditTotal();
 				credit_paid_total += credit.getCreditPaidAmount();
 			}else {
@@ -299,8 +294,8 @@ public class CreditBuyerReportActivity extends SherlockActivity{
 	}
 	
 	public boolean checkFields() {
-		if (autocom_buyer_name.getText().toString().length() == 0) {
-			autocom_buyer_name.setError("Enter Buyer Name");
+		if (autocom_supplier_name.getText().toString().length() == 0) {
+			autocom_supplier_name.setError("Enter Supplier Name");
 			return false;
 		}
 		
@@ -309,7 +304,7 @@ public class CreditBuyerReportActivity extends SherlockActivity{
 	
 	private void alertDialog(String message) {
 		// TODO Auto-generated method stub
-		AlertDialog.Builder alert = new AlertDialog.Builder(CreditBuyerReportActivity.this);
+		AlertDialog.Builder alert = new AlertDialog.Builder(CreditSupplierReportActivity.this);
 		alert.setTitle("Info");
 		alert.setMessage(message+"!");
 		alert.show();

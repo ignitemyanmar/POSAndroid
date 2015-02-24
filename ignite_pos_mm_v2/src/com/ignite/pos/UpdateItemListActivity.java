@@ -53,6 +53,8 @@ public class UpdateItemListActivity extends SherlockActivity{
 	private String selectedItemName = "";
 	private String selectedCategoryID;
 	
+	
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -66,14 +68,9 @@ public class UpdateItemListActivity extends SherlockActivity{
 		title.setText("ပစၥည္းအမည္ ျပင္ျခင္း");
 		add_layout = (RelativeLayout)actionBar.getCustomView().findViewById(R.id.layout_add_new);
 		add_layout.setVisibility(View.GONE);
-		actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-		
-		selectData();
-		getCategory();
-		
+		actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);					
 	}
 
-	
 	CategoryController category_control;
 	
 	private void selectData()
@@ -101,7 +98,7 @@ public class UpdateItemListActivity extends SherlockActivity{
 		
 		//Get Category List from Category Table
 		dbManager = new CategoryController(this);
-		category_control = (CategoryController) dbManager ;
+		category_control = (CategoryController) dbManager;
 		category_list_obj = new ArrayList<Object>();
 		
 		for (int i = 0; i < item_list_obj.size(); i++) {
@@ -229,6 +226,8 @@ public class UpdateItemListActivity extends SherlockActivity{
 	@Override
 	protected void onResume() {
 		// TODO Auto-generated method stub
+		selectData();
+		getCategory();
 		super.onResume();
 		
 	}

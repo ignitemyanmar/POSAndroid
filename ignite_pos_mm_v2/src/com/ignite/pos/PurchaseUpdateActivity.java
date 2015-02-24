@@ -1,6 +1,8 @@
 package com.ignite.pos;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -28,7 +30,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import com.actionbarsherlock.app.ActionBar;
@@ -36,22 +37,21 @@ import com.actionbarsherlock.app.SherlockActivity;
 import com.ignite.pos.adapter.CategoriesListAdapter;
 import com.ignite.pos.adapter.ItemGridAdapter;
 import com.ignite.pos.adapter.PurchaseUpdateItemListAdapter;
-import com.ignite.pos.adapter.StringSpinnerAdapter;
 import com.ignite.pos.adapter.SubCategoriesListAdapter;
 import com.ignite.pos.adapter.SupplierSpinnerAdapter;
 import com.ignite.pos.application.DeviceUtil;
 import com.ignite.pos.database.controller.CategoryController;
+import com.ignite.pos.database.controller.CreditSupplierController;
 import com.ignite.pos.database.controller.ItemListController;
-import com.ignite.pos.database.controller.LedgerController;
-import com.ignite.pos.database.controller.ProfitController;
 import com.ignite.pos.database.controller.PurchaseVoucherController;
 import com.ignite.pos.database.controller.SubCategoryController;
 import com.ignite.pos.database.controller.SupplierController;
 import com.ignite.pos.database.util.DatabaseManager;
+import com.ignite.pos.model.Buyer;
 import com.ignite.pos.model.Category;
+import com.ignite.pos.model.Credit;
+import com.ignite.pos.model.CreditSupplier;
 import com.ignite.pos.model.ItemList;
-import com.ignite.pos.model.Ledger;
-import com.ignite.pos.model.Profit;
 import com.ignite.pos.model.PurchaseVoucher;
 import com.ignite.pos.model.SubCategory;
 import com.ignite.pos.model.Supplier;
@@ -96,6 +96,7 @@ public class PurchaseUpdateActivity  extends SherlockActivity{
 	private String supplierName;
 	private String SupplierName;
 	private List<String> SupName;
+	private List<Object> creditList;
 	
 	//variables of Prompt of Add Prices
 	EditText editTxt_purchase_price;
@@ -108,6 +109,13 @@ public class PurchaseUpdateActivity  extends SherlockActivity{
 	String marginal_price;
 	String purchaseQty;
 	String item_name;
+	private TextView btn_back;
+	private TextView btn_done;
+	private LinearLayout credit_mode;
+	private TextView txt_total_credit_left_amt;
+	private EditText edt_credit_pay_amt;
+	protected Integer supplierID;
+	private int ConfirmStatus;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -127,12 +135,20 @@ public class PurchaseUpdateActivity  extends SherlockActivity{
 		txt_panel_name = (TextView)actionBar.getCustomView().findViewById(R.id.txt_panel_name);
 		txt_panel_name.setVisibility(View.VISIBLE);
 		//txt_panel_name.setText("Update Purchase");
-		txt_panel_name.setText("အ၀ယ္ ေဘာင္ ခ်ာ ျပင္ျခင္း");
+		
 		discount_layout = (LinearLayout) findViewById(R.id.lyDiscount2);
 		discount_layout.setVisibility(View.GONE);
 		sp_supplier_name = (Spinner)findViewById(R.id.sp_supplier_name);
 		//sp_supplier_name.setOnItemSelectedListener(suppliernameClickListener);
+		vouncherno = (TextView)findViewById(R.id.txt_purchase_vou_no);
 		
+		//Get Voucher No
+		Bundle bundle = getIntent().getExtras();
+		VoucherNo = bundle.getString("VoucherNo");
+		SupplierName = bundle.getString("SupplierName");
+		ConfirmStatus = bundle.getInt("ConfirmStatus");
+		vouncherno.setText(VoucherNo);
+				
 		//Get Admin Name 
 		Log.i("", "Admin Name: "+AdminName);
 		
@@ -155,7 +171,6 @@ public class PurchaseUpdateActivity  extends SherlockActivity{
 		scan = (EditText)findViewById(R.id.editText_scan);
 		search = (Button)findViewById(R.id.btnSearch);
 		
-		vouncherno = (TextView)findViewById(R.id.txt_purchase_vou_no);
 		Cart_Item_List = new ArrayList<Object>();
 		
 		lvitem_list = (ListView)findViewById(R.id.lv_vou_item_list);
@@ -168,21 +183,46 @@ public class PurchaseUpdateActivity  extends SherlockActivity{
 		//deleteItem.setVisibility(View.GONE);
 		Update = (TextView)findViewById(R.id.btn_save_vou);
 		//Update.setText("Update");
-		Update.setText("ျပင္ မည္");
+		
+		//Credit Mode
+		btn_back = (TextView)findViewById(R.id.btn_back);
+		btn_done = (TextView)findViewById(R.id.btn_done);
+		btn_done.setText("ျပင္ မည္");
+		credit_mode =  (LinearLayout)findViewById(R.id.credit_mode);
+		txt_total_credit_left_amt = (TextView)findViewById(R.id.txt_total_credit_left_amt);
+		edt_credit_pay_amt = (EditText)findViewById(R.id.edt_credit_pay_amt);
 		
 		search.setOnClickListener(clickListener);
 		plus.setOnClickListener(clickListener);
 		minus.setOnClickListener(clickListener);
 		deleteItem.setOnClickListener(clickListener);
 		Update.setOnClickListener(clickListener);
+		btn_back.setOnClickListener(clickListener);
+		btn_done.setOnClickListener(clickListener);
 		grid_categories = (GridView)findViewById(R.id.gvCategories);
-		lvitem_list.setOnItemLongClickListener(itemLongClickListener);
 		
-		//Get Voucher No
-		Bundle bundle = getIntent().getExtras();
-		VoucherNo = bundle.getString("VoucherNo");
-		SupplierName = bundle.getString("SupplierName");
-		vouncherno.setText(VoucherNo);
+		if (ConfirmStatus == 0) {
+			lvitem_list.setOnItemLongClickListener(itemLongClickListener);
+		}
+		
+		if (ConfirmStatus == 1) {
+				btn_back.setVisibility(View.GONE);
+				btn_done.setVisibility(View.VISIBLE);
+				credit_mode.setVisibility(View.VISIBLE);
+				
+				deleteItem.setVisibility(View.GONE);
+				Update.setVisibility(View.GONE);
+				picker_mode.setVisibility(View.INVISIBLE);
+				scanner_mode.setVisibility(View.INVISIBLE);
+				change_mode.setEnabled(false);
+				categories.setEnabled(false);
+				
+				txt_panel_name.setText("အေႂကြး ျပင္ဆင္ျခင္း");
+				getVoucherCreditLeftAmount();
+		}else {
+			txt_panel_name.setText("အ၀ယ္ ေဘာင္ ခ်ာ ျပင္ျခင္း");
+			getItems();
+		}
 		
 		getVoucherItems();
 		getSupplier();
@@ -198,6 +238,10 @@ public class PurchaseUpdateActivity  extends SherlockActivity{
 			grandTotal.setText(((PurchaseVoucher)Cart_Item_List.get(0)).getGrandtotal());
 		}
 		
+		//Get Current Date
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		currentDate = sdf.format(new Date());
+		
 	}
 	
 	private OnItemSelectedListener suppliernameClickListener = new OnItemSelectedListener() {
@@ -207,6 +251,9 @@ public class PurchaseUpdateActivity  extends SherlockActivity{
 			// TODO Auto-generated method stub
 			supplier = (Supplier)supplier_list.get(position);
 			selectedSupplierName = supplier.getSupCoName();
+			supplierID = supplier.getSupId();
+			
+			getVoucherCreditLeftAmount();
 		}
 
 		public void onNothingSelected(AdapterView<?> arg0) {
@@ -266,6 +313,7 @@ public class PurchaseUpdateActivity  extends SherlockActivity{
 		}
 		
 	};
+	protected String creditPaidAmount;
 	
 	/**
 	 * method to remove list item
@@ -344,38 +392,44 @@ public class PurchaseUpdateActivity  extends SherlockActivity{
         alert.setCancelable(true);
       
     }
+    
+	private void getItems(){
+		if(!clicked)
+		{
+			clicked = true;
+			//change_mode.setText("Change Scanner Mode");
+			change_mode.setText("Scanner ႏွင့္ အသံုးျပဳရန္");
+			categories.setVisibility(View.VISIBLE);
+			getCategories();
+			scanner_mode.setVisibility(LinearLayout.INVISIBLE);
+			picker_mode.setVisibility(LinearLayout.VISIBLE);
+			scanner_mode.setTranslationX(DeviceUtil.getInstance(PurchaseUpdateActivity.this).getWidth());
+			picker_mode.setTranslationX(0);
+		}
+		else{
+			clicked = false;
+			//change_mode.setText("Change Picker Mode");
+			change_mode.setText("ပစၥည္းမ်ားေရြး၍ အသံုးျပဳရန္");
+			categories.setVisibility(View.GONE);
+			scanner_mode.setVisibility(LinearLayout.VISIBLE);
+			picker_mode.setVisibility(LinearLayout.INVISIBLE);
+			scanner_mode.setTranslationX(0);
+			picker_mode.setTranslationX(DeviceUtil.getInstance(PurchaseUpdateActivity.this).getWidth());
+		}
+	}
 
+	
 	private OnClickListener clickListener = new OnClickListener() {
-
+		
 		public void onClick(View v) {
 			// TODO Auto-generated method stub
 			if(v == change_mode)
 			{
-				if(!clicked)
-				{
-					clicked = true;
-					//change_mode.setText("Change Scanner Mode");
-					change_mode.setText("Scanner ႏွင့္ အသံုးျပဳရန္");
-					categories.setVisibility(View.VISIBLE);
-					getCategories();
-					scanner_mode.setVisibility(LinearLayout.INVISIBLE);
-					picker_mode.setVisibility(LinearLayout.VISIBLE);
-					scanner_mode.setTranslationX(DeviceUtil.getInstance(PurchaseUpdateActivity.this).getWidth());
-					picker_mode.setTranslationX(0);
-				}
-				else{
-					clicked = false;
-					//change_mode.setText("Change Picker Mode");
-					change_mode.setText("ပစၥည္းမ်ားေရြး၍ အသံုးျပဳရန္");
-					categories.setVisibility(View.GONE);
-					scanner_mode.setVisibility(LinearLayout.VISIBLE);
-					picker_mode.setVisibility(LinearLayout.INVISIBLE);
-					scanner_mode.setTranslationX(0);
-					picker_mode.setTranslationX(DeviceUtil.getInstance(PurchaseUpdateActivity.this).getWidth());
-				}
+				getItems();
 			}
 			if(v == search)
 			{
+				
 				if (checkFields()) {
 					getScannerItem();
 					scan.setText("");
@@ -453,32 +507,147 @@ public class PurchaseUpdateActivity  extends SherlockActivity{
 			}
 			if(v == Update)
 			{
-				if (Cart_Item_List.size() > 0) {
+				if (Cart_Item_List != null && Cart_Item_List.size() > 0) {
 					
-					//Update.setEnabled(true);
+					btn_back.setVisibility(View.VISIBLE);
+					btn_done.setVisibility(View.VISIBLE);
+					credit_mode.setVisibility(View.VISIBLE);
 					
-					if (AdminName.equals("-")) {
-						SKToastMessage.showMessage(getApplicationContext(), "Please log in with Admin account first!", SKToastMessage.WARNING);
-						startActivity(new Intent(PurchaseUpdateActivity.this, LoginActivity.class));
-					}else {
-						updateVoucher();
-						finish();
-					}
+					deleteItem.setVisibility(View.GONE);
+					Update.setVisibility(View.GONE);
+					picker_mode.setVisibility(View.INVISIBLE);
+					scanner_mode.setVisibility(View.INVISIBLE);
+					change_mode.setEnabled(false);
+					categories.setEnabled(false);
 					
-				} else {
-					
+					getVoucherCreditLeftAmount();
+				
+				}else {
 					finish();
-					
-					/*//Update.setClickable(false);
-					AlertDialog.Builder alert = new AlertDialog.Builder(PurchaseUpdateActivity.this);
-					alert.setTitle("Warning");
-					alert.setMessage("No Item!");
-					alert.show();
-					alert.setCancelable(true);*/
+				}
+			}
+			if (v == btn_back) {
+				deleteItem.setVisibility(View.VISIBLE);
+				Update.setVisibility(View.VISIBLE);
+				picker_mode.setVisibility(View.VISIBLE);
+				scanner_mode.setVisibility(View.VISIBLE);
+				change_mode.setEnabled(true);
+				categories.setEnabled(true);
+				
+				btn_back.setVisibility(View.GONE);
+				btn_done.setVisibility(View.GONE);
+				credit_mode.setVisibility(View.INVISIBLE);
+			}
+			if (v == btn_done) {
+				
+				//Check the pay amount (Not to over the purchase voucher total)
+				if (checkPayAmountFields()) {
+					creditPaidAmount = edt_credit_pay_amt.getText().toString();
+					//Check Supplier Name
+					if (sp_supplier_name.getCount() == 0) {
+						SKToastMessage.showMessage(getApplicationContext(), "Choose Supplier Name", SKToastMessage.WARNING);
+					}else {
+						updateCreditAndVoucher();
+					}
 				}
 			}
 		}
 	};
+	
+	/**
+	 * Update Credit & Purchase Voucher
+	 */
+	private void updateCreditAndVoucher() {
+		// TODO Auto-generated method stub
+		updateCredit();
+		updateVoucher();
+		finish();
+		
+		edt_credit_pay_amt.getText().clear();
+		
+		deleteItem.setVisibility(View.VISIBLE);
+		Update.setVisibility(View.VISIBLE);
+		picker_mode.setVisibility(View.VISIBLE);
+		scanner_mode.setVisibility(View.VISIBLE);
+		change_mode.setEnabled(true);
+		categories.setEnabled(true);
+		
+		btn_back.setVisibility(View.GONE);
+		btn_done.setVisibility(View.GONE);
+		credit_mode.setVisibility(View.INVISIBLE);
+		
+		getCategories();
+	}
+	
+	/**
+	 *  Update Credit Transaction 
+	 */
+	private void updateCredit() {
+		// TODO Auto-generated method stub
+		dbManager = new CreditSupplierController(this);
+		CreditSupplierController creditControl = (CreditSupplierController)dbManager;
+		List<Object> credits = new ArrayList<Object>();
+		
+		if (creditList != null && creditList.size() > 0) {
+			Integer toPay = ((CreditSupplier)creditList.get(0)).getCreditLeftAmount();
+			Integer creditLeftAmount = toPay - Integer.valueOf(creditPaidAmount);
+			
+			if (creditLeftAmount >= 0) {
+				
+				credits.add(new CreditSupplier(supplierID, ((Supplier)sp_supplier_name.getSelectedItem()).getSupCoName(), vouncherno.getText().toString()
+						, currentDate, toPay, Integer.valueOf(creditPaidAmount), creditLeftAmount));
+				
+				creditControl.save(credits);	
+			}
+			
+			Log.i("", "Supplier Credit List: "+creditControl.select().toString());
+		}
+
+	}
+	
+	/**
+	 *  Get Supplier's Credit Left Amount by Voucher
+	 */
+	private void getVoucherCreditLeftAmount() {
+		// TODO Auto-generated method stub
+		String vou_no = vouncherno.getText().toString(); 
+		
+		if (supplierID != null) {
+			//Get Credit List by Supplier ID
+			dbManager = new CreditSupplierController(PurchaseUpdateActivity.this);
+			CreditSupplierController creditControl = (CreditSupplierController)dbManager;
+			creditList = new ArrayList<Object>();
+			creditList = creditControl.selectByVoucherID(vou_no);
+			
+			Log.i("", "Credit List by voucher No: "+creditControl.select().toString());
+			
+			String supName = "";
+			
+			if (creditList != null && creditList.size() > 0) {								
+				
+				CreditSupplier credit = (CreditSupplier)creditList.get(0);
+				
+				supName = ((Supplier)sp_supplier_name.getSelectedItem()).getSupCoName();
+				
+				Log.i("", "Supplier Name: "+supName);
+				
+				if (supName != null) {
+					if (credit.getSupplierName().equals(supName)) {
+						txt_total_credit_left_amt.setText("** ေဘာင္ ခ်ာနံပါတ္  "+vou_no+" တြင္  "+supName+" သုိ႔ ေပးရန္ ေႂကြးက်န္ေငြ :    "+credit.getCreditLeftAmount()+" က်ပ္");
+					}else {
+						txt_total_credit_left_amt.setText("** ေဘာင္ ခ်ာနံပါတ္  "+vou_no+" တြင္  "+supName+" သုိ႔ ေပးရန္ ေႂကြးက်န္ေငြ :    0 က်ပ္");
+					}
+				}else {
+					txt_total_credit_left_amt.setText("** ေဘာင္ ခ်ာနံပါတ္  "+vou_no+" လကၠားဆုိင္ သုိ႔ ေပးရန္ ေႂကြးက်န္ေငြ     0 က်ပ္");
+				}
+			}else {
+				txt_total_credit_left_amt.setText("** ေဘာင္ ခ်ာနံပါတ္  "+vou_no+" တြင္  "+selectedSupplierName+" သုိ႔ ေပးရန္ ေႂကြးက်န္ေငြ :    0 က်ပ္");
+			}
+		}else {
+			txt_total_credit_left_amt.setText("** ေဘာင္ ခ်ာနံပါတ္  "+vou_no+" လကၠားဆုိင္ သုိ႔ ေပးရန္ ေႂကြးက်န္ေငြ     0 က်ပ္");
+		}
+	}
+	
 	protected List<Object> item_list_obj;
 	private String selectedSupplierName;
 	
@@ -1162,7 +1331,30 @@ public class PurchaseUpdateActivity  extends SherlockActivity{
 		}
 		
 		return true;
-	}	
+	}
+	
+	public boolean checkPayAmountFields() {
+		if (edt_credit_pay_amt.getText().toString().length() == 0) {
+			edt_credit_pay_amt.setError("Enter Paid Amount");
+			return false;
+		}
+		if (Integer.valueOf(edt_credit_pay_amt.getText().toString()) > Integer.valueOf(grandTotal.getText().toString())) {
+			edt_credit_pay_amt.setError("Over the Voucher Amount");
+			return false;
+		}
+		
+		return true;
+	}
+	
+	private void warningAlert() {
+		// TODO Auto-generated method stub
+		AlertDialog.Builder alert = new AlertDialog.Builder(PurchaseUpdateActivity.this);
+		alert.setTitle("Warning");
+		alert.setMessage("Please choose items!");
+		alert.show();
+		alert.setCancelable(true);
+	}
+	
 	
 }
 

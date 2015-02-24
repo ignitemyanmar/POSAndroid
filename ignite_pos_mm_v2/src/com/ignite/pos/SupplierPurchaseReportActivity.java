@@ -27,6 +27,7 @@ import com.ignite.pos.adapter.SupplierReportListViewAdapter.Callback;
 import com.ignite.pos.adapter.SupplierSpinnerAdapter;
 import com.ignite.pos.application.PurchaseReportExcelUtility;
 import com.ignite.pos.application.SaleReportExcelUtility;
+import com.ignite.pos.database.controller.CreditSupplierController;
 import com.ignite.pos.database.controller.PurchaseVoucherController;
 import com.ignite.pos.database.controller.SupplierController;
 import com.ignite.pos.database.util.DatabaseManager;
@@ -272,6 +273,7 @@ public class SupplierPurchaseReportActivity extends BaseSherlockActivity{
 				Bundle bundle = new Bundle();
 				bundle.putString("VoucherNo", pv.getVid());
 				bundle.putString("SupplierName", pv.getSupplierName());
+				bundle.putInt("ConfirmStatus", pv.getStatus());
 				
 				next.putExtras(bundle);
 				SupplierPurchaseReportActivity.this.startActivity(next);
@@ -356,6 +358,12 @@ public class SupplierPurchaseReportActivity extends BaseSherlockActivity{
 				supplierReportListViewAdapter.notifyDataSetChanged();
 		
 				SKToastMessage.showMessage(SupplierPurchaseReportActivity.this, pv.getVid()+" Deleted!", SKToastMessage.SUCCESS);
+				
+				//Delete Credit Record to Supplier
+				dbManager = new CreditSupplierController(SupplierPurchaseReportActivity.this);
+				CreditSupplierController credit_control = (CreditSupplierController)dbManager;
+				credit_control.delete(pv.getVid());
+				
             	
 			}
 		});

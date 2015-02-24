@@ -7,6 +7,7 @@ import java.util.List;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -30,6 +31,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockActivity;
+import com.google.gson.Gson;
 import com.ignite.pos.adapter.CategoriesListAdapter;
 import com.ignite.pos.adapter.ItemGridAdapter;
 import com.ignite.pos.adapter.PurchaseItemListAdapter;
@@ -37,12 +39,16 @@ import com.ignite.pos.adapter.SubCategoriesListAdapter;
 import com.ignite.pos.adapter.SupplierSpinnerAdapter;
 import com.ignite.pos.application.DeviceUtil;
 import com.ignite.pos.database.controller.CategoryController;
+import com.ignite.pos.database.controller.CreditBuyerController;
+import com.ignite.pos.database.controller.CreditSupplierController;
 import com.ignite.pos.database.controller.ItemListController;
 import com.ignite.pos.database.controller.PurchaseVoucherController;
 import com.ignite.pos.database.controller.SubCategoryController;
 import com.ignite.pos.database.controller.SupplierController;
 import com.ignite.pos.database.util.DatabaseManager;
 import com.ignite.pos.model.Category;
+import com.ignite.pos.model.Credit;
+import com.ignite.pos.model.CreditSupplier;
 import com.ignite.pos.model.ItemList;
 import com.ignite.pos.model.PurchaseVoucher;
 import com.ignite.pos.model.SubCategory;
@@ -94,6 +100,15 @@ public class AddNewPurchaseVoucherActivity  extends SherlockActivity{
 	String marginal_price;
 	String purchaseQty;
 	String item_name;
+	private TextView btn_back;
+	private TextView btn_done;
+	private LinearLayout credit_mode;
+	private TextView txt_total_credit_left_amt;
+	private EditText edt_credit_pay_amt;
+	protected Integer supplierID;
+	public static String creditPaidAmount;
+	
+	private List<Object> creditList;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -132,11 +147,20 @@ public class AddNewPurchaseVoucherActivity  extends SherlockActivity{
 		deleteItem = (TextView)findViewById(R.id.btnDelete_items);
 		Save = (TextView)findViewById(R.id.btn_save_vou);
 		
+		//Credit Mode
+		btn_back = (TextView)findViewById(R.id.btn_back);
+		btn_done = (TextView)findViewById(R.id.btn_done);
+		credit_mode =  (LinearLayout)findViewById(R.id.credit_mode);
+		txt_total_credit_left_amt = (TextView)findViewById(R.id.txt_total_credit_left_amt);
+		edt_credit_pay_amt = (EditText)findViewById(R.id.edt_credit_pay_amt);
+				
 		search.setOnClickListener(clickListener);
 		plus.setOnClickListener(clickListener);
 		minus.setOnClickListener(clickListener);
 		deleteItem.setOnClickListener(clickListener);
 		Save.setOnClickListener(clickListener);
+		btn_back.setOnClickListener(clickListener);
+		btn_done.setOnClickListener(clickListener);
 		grid_categories = (GridView)findViewById(R.id.gvCategories);
 		lvitem_list.setOnItemLongClickListener(itemLongClickListener);
 		getSupplier();
@@ -163,6 +187,9 @@ public class AddNewPurchaseVoucherActivity  extends SherlockActivity{
 			// TODO Auto-generated method stub
 			supplier = (Supplier)supplier_list.get(position);
 			supplierName = supplier.getSupCoName();
+			supplierID = supplier.getSupId();
+			
+			getCreditLeftTotaltoSupplier();
 		}
 
 		public void onNothingSelected(AdapterView<?> arg0) {
@@ -287,6 +314,8 @@ public class AddNewPurchaseVoucherActivity  extends SherlockActivity{
 
 		
 
+		
+
 		public void onClick(View v) {
 			// TODO Auto-generated method stub
 			if(v == change_mode)
@@ -379,29 +408,137 @@ public class AddNewPurchaseVoucherActivity  extends SherlockActivity{
 			}
 			if(v == Save)
 			{
-				if (Cart_Item_List.size() != 0) {
+				if (Cart_Item_List != null && Cart_Item_List.size() > 0) {
 					
-					//Save.setEnabled(true);
+						btn_back.setVisibility(View.VISIBLE);
+						btn_done.setVisibility(View.VISIBLE);
+						credit_mode.setVisibility(View.VISIBLE);
+						
+						deleteItem.setVisibility(View.GONE);
+						Save.setVisibility(View.GONE);
+						picker_mode.setVisibility(View.INVISIBLE);
+						scanner_mode.setVisibility(View.INVISIBLE);
+						change_mode.setEnabled(false);
+						categories.setEnabled(false);
+						
+						getCreditLeftTotaltoSupplier();
+					
+				}else {
+					warningAlert();
+				}
+			}
+			if (v == btn_back) {
+				deleteItem.setVisibility(View.VISIBLE);
+				Save.setVisibility(View.VISIBLE);
+				picker_mode.setVisibility(View.VISIBLE);
+				scanner_mode.setVisibility(View.VISIBLE);
+				change_mode.setEnabled(true);
+				categories.setEnabled(true);
+				
+				btn_back.setVisibility(View.GONE);
+				btn_done.setVisibility(View.GONE);
+				credit_mode.setVisibility(View.INVISIBLE);
+			}
+			if (v == btn_done) {
+				
+				//Check the pay amount (Not to over the purchase voucher total)
+				if (checkPayAmountFields()) {
+					creditPaidAmount = edt_credit_pay_amt.getText().toString();
+					//Check Supplier Name
 					if (sp_supplier_name.getCount() == 0) {
 						SKToastMessage.showMessage(getApplicationContext(), "Choose Supplier Name", SKToastMessage.WARNING);
 					}else {
-						saveVouncher();
+						saveAndchangeView();
 					}
-				} else {
-					
-					//Save.setClickable(false);
-					AlertDialog.Builder alert = new AlertDialog.Builder(AddNewPurchaseVoucherActivity.this);
-					alert.setTitle("Warning");
-					alert.setMessage("No Item!");
-					alert.show();
-					alert.setCancelable(true);
 				}
 			}
 		}
 	};
+	
+	/**
+	 *  Get Credit Left Total Amount to Supplier 
+	 */
+	private void getCreditLeftTotaltoSupplier() {
+		// TODO Auto-generated method stub
+		if (supplierID != null) {
+			//Get Credit List by Supplier ID
+			dbManager = new CreditSupplierController(AddNewPurchaseVoucherActivity.this);
+			CreditSupplierController creditControl = (CreditSupplierController)dbManager;
+			creditList = new ArrayList<Object>();
+			creditList = creditControl.selectGroupByVoucher(supplierID.toString());
+			
+			Log.i("", "Credit List by supplier id (groupby voucher id): "+creditControl.select().toString());
+			
+			if (creditList != null && creditList.size() > 0) {
+				
+				Integer creditLeftTotal = 0;
+				
+				for (int i = 0; i < creditList.size(); i++) {
+					CreditSupplier credit = (CreditSupplier)creditList.get(i);
+					creditLeftTotal += credit.getCreditLeftAmount();
+				}
+				
+				txt_total_credit_left_amt.setText("** "+supplierName+" သုိ႔ ေပးရန္ ေႂကြးက်န္ စုစုေပါင္း :    "+creditLeftTotal+" က်ပ္");
+			}else {
+				txt_total_credit_left_amt.setText("** "+supplierName+" သုိ႔ ေပးရန္ ေႂကြးက်န္ စုစုေပါင္း  :    0 က်ပ္");
+			}
+		}else {
+			Log.i("", "buyer id: null");
+			txt_total_credit_left_amt.setText("** လကၠားဆုိင္ သုိ႔ ေပးရန္ ေႂကြးက်န္ စုစုေပါင္း  :    0 က်ပ္");
+		}
+	}
+	
+	/**
+	 * Save Credit & Purchase Voucher
+	 */
+	private void saveAndchangeView() {
+		// TODO Auto-generated method stub
+		saveCredit();
+		saveVouncher();
+		
+		edt_credit_pay_amt.getText().clear();
+		
+		deleteItem.setVisibility(View.VISIBLE);
+		Save.setVisibility(View.VISIBLE);
+		picker_mode.setVisibility(View.VISIBLE);
+		scanner_mode.setVisibility(View.VISIBLE);
+		change_mode.setEnabled(true);
+		categories.setEnabled(true);
+		
+		btn_back.setVisibility(View.GONE);
+		btn_done.setVisibility(View.GONE);
+		credit_mode.setVisibility(View.INVISIBLE);
+		
+		getCategories();
+	}
+	
+	/**
+	 *  Save Credit Transaction 
+	 */
+	private void saveCredit() {
+		// TODO Auto-generated method stub
+		dbManager = new CreditSupplierController(this);
+		CreditSupplierController creditControl = (CreditSupplierController)dbManager;
+		List<Object> creditList = new ArrayList<Object>();
+		
+		Integer voucherTotal = Integer.valueOf(grand_total.getText().toString());
+		
+		Integer creditLeftAmount = voucherTotal - Integer.valueOf(creditPaidAmount);
+		
+		if (creditLeftAmount > 0) {
+			creditList.add(new CreditSupplier(supplierID, supplierName, voucher_no.getText().toString()
+					, currentDate, voucherTotal, Integer.valueOf(creditPaidAmount), creditLeftAmount));
+			creditControl.save(creditList);	
+		}
+		
+		Log.i("", "Save success: "+creditControl.select().toString());
+	}
+	
 	protected List<Object> item_list_obj;
 	
-	
+	/**
+	 *  Save Purchase Voucher
+	 */
 	private void saveVouncher()
 	{
 		List<Object> purchaseVoucher = new ArrayList<Object>();
@@ -449,7 +586,6 @@ public class AddNewPurchaseVoucherActivity  extends SherlockActivity{
 		grand_total.setText("0");
 		itemAdapter.notifyDataSetChanged();
 		setListViewHeightBasedOnChildren(lvitem_list);
-		
 	}
 	
 	/*
@@ -496,7 +632,7 @@ public class AddNewPurchaseVoucherActivity  extends SherlockActivity{
 						});
 						tv_marginal_price = (TextView) promptsView.findViewById(R.id.tv_marginal_price);
 						editTxt_qty = (EditText) promptsView.findViewById(R.id.editTxt_qty);
-					//	editTxt_qty.addTextChangedListener(watcher);
+						//	editTxt_qty.addTextChangedListener(watcher);
 						
 						// set dialog message
 						alertDialogBuilder
@@ -595,7 +731,6 @@ public class AddNewPurchaseVoucherActivity  extends SherlockActivity{
 					              if(wantToCloseDialog){
 					            	  alertDialog.dismiss();
 					              }
-					              
 							}
 						});
 			
@@ -603,7 +738,6 @@ public class AddNewPurchaseVoucherActivity  extends SherlockActivity{
 			SKToastMessage.showMessage(getApplicationContext(), "Item No.("+scan.getText().toString()+") doesn't have!", SKToastMessage.INFO);
 		}
 	}
-	
 
 	private void getCategories()
 	{
@@ -1027,6 +1161,28 @@ public class AddNewPurchaseVoucherActivity  extends SherlockActivity{
 		}
 		
 		return true;
+	}
+	
+	public boolean checkPayAmountFields() {
+		if (edt_credit_pay_amt.getText().toString().length() == 0) {
+			edt_credit_pay_amt.setError("Enter Paid Amount");
+			return false;
+		}
+		if (Integer.valueOf(edt_credit_pay_amt.getText().toString()) > Integer.valueOf(grand_total.getText().toString())) {
+			edt_credit_pay_amt.setError("Over the Voucher Amount");
+			return false;
+		}
+		
+		return true;
+	}
+	
+	private void warningAlert() {
+		// TODO Auto-generated method stub
+		AlertDialog.Builder alert = new AlertDialog.Builder(AddNewPurchaseVoucherActivity.this);
+		alert.setTitle("Warning");
+		alert.setMessage("Please choose items!");
+		alert.show();
+		alert.setCancelable(true);
 	}
 	
 }

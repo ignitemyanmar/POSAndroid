@@ -14,6 +14,15 @@ public class Supplier {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+	
+	
+
+	public Supplier(String supCoName) {
+		super();
+		this.supCoName = supCoName;
+	}
+
+
 
 	public Supplier(Integer supId, String supCoName, String supName,
 			String supCity, String supPh, String supAddr) {

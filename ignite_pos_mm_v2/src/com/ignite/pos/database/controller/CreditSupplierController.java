@@ -12,21 +12,21 @@ import com.ignite.pos.database.util.OnDelete;
 import com.ignite.pos.database.util.OnSave;
 import com.ignite.pos.database.util.OnSelect;
 import com.ignite.pos.database.util.OnUpdate;
-import com.ignite.pos.model.Credit;
+import com.ignite.pos.model.CreditSupplier;
 import com.ignite.pos.model.Profit;
 import com.ignite.pos.model.PurchaseVoucher;
 import com.ignite.pos.model.SaleVouncher;
 import com.ignite.pos.model.Supplier;
 
-public class CreditBuyerController extends DatabaseManager{
+public class CreditSupplierController extends DatabaseManager{
 
-	private Credit credit;
-	private List<Object> credit_list;
+	private CreditSupplier creditSupplier;
+	private List<Object> creditSupplier_list;
 	
-	private static final String TABLE_NAME = "tbl_credit";
-	private static final String[] FIELD_NAME = {"credit_id", "buyer_id","salevoucher_id","date","creditTotal","creditPaidAmount","creditLeftAmount","buyer_name"};
+	private static final String TABLE_NAME = "tbl_credit_supplier";
+	private static final String[] FIELD_NAME = {"creditID", "supplierID", "purchaseVoucherID","date","creditTotal","creditPaidAmount","creditLeftAmount", "supplierName"};
 	
-	public CreditBuyerController(Context ctx) {
+	public CreditSupplierController(Context ctx) {
 		super(ctx);
 		// TODO Auto-generated constructor stub
 		setOnSave(saveRecord);
@@ -59,7 +59,7 @@ public class CreditBuyerController extends DatabaseManager{
 		public void saveRecord(List<Object> objList) {
 			// TODO Auto-generated method stub
 			
-			Log.i("", "Credit ObjList to save: "+objList);
+			Log.i("", "CreditSupplier ObjList to save: "+objList);
 			
 			SQLiteDatabase db = getWritableDatabase();
 			db.beginTransaction();
@@ -68,15 +68,15 @@ public class CreditBuyerController extends DatabaseManager{
 				for (Object obj : objList) {
 
 					ContentValues values = new ContentValues();
-					Credit credit = (Credit) obj;
-					//values.put(FIELD_NAME[0], credit.get());
-					values.put(FIELD_NAME[1], credit.getBuyer_id());
-					values.put(FIELD_NAME[2], credit.getSalevoucher_id());
-					values.put(FIELD_NAME[3], credit.getDate());
-					values.put(FIELD_NAME[4], credit.getCreditTotal());
-					values.put(FIELD_NAME[5], credit.getCreditPaidAmount());
-					values.put(FIELD_NAME[6], credit.getCreditLeftAmount());
-					values.put(FIELD_NAME[7], credit.getBuyer_name());
+					CreditSupplier creditSupplier = (CreditSupplier) obj;
+					//values.put(FIELD_NAME[0], CreditSupplier.get());
+					values.put(FIELD_NAME[1], creditSupplier.getSupplierID());
+					values.put(FIELD_NAME[2], creditSupplier.getPurchaseVoucherID());
+					values.put(FIELD_NAME[3], creditSupplier.getDate());
+					values.put(FIELD_NAME[4], creditSupplier.getCreditTotal());
+					values.put(FIELD_NAME[5], creditSupplier.getCreditPaidAmount());
+					values.put(FIELD_NAME[6], creditSupplier.getCreditLeftAmount());
+					values.put(FIELD_NAME[7], creditSupplier.getSupplierName());
 
 					db.insert(TABLE_NAME, null, values);
 				}
@@ -110,28 +110,28 @@ public class CreditBuyerController extends DatabaseManager{
 						FIELD_NAME[7]
 					}; 
 				
-				String ORDER_BY = FIELD_NAME[0]+ " ASC";
+				String ORDER_BY = FIELD_NAME[2]+ " ASC";
 				
-				credit_list = new ArrayList<Object>();
+				creditSupplier_list = new ArrayList<Object>();
 				SQLiteDatabase db = getReadableDatabase();
 				Cursor cursor = db.query(TABLE_NAME, FROM, null, null, null, null, ORDER_BY);
 				
-				Log.i("TAG", "-----> Cursor Count of Credit:" + cursor.getCount());
+				Log.i("TAG", "-----> Cursor Count of CreditSupplier:" + cursor.getCount());
 				
 				try {
 					if (cursor.moveToFirst()) {
 				        do {
-				        	credit = new Credit();
-				        	credit.setCredit_id(cursor.getInt(0));
-				        	credit.setBuyer_id(cursor.getInt(1));
-				        	credit.setSalevoucher_id(cursor.getString(2));
-				        	credit.setDate(cursor.getString(3));
-				        	credit.setCreditTotal(cursor.getInt(4));
-				        	credit.setCreditPaidAmount(cursor.getInt(5));
-				        	credit.setCreditLeftAmount(cursor.getInt(6));
-				        	credit.setBuyer_name(cursor.getString(7));
+				        	creditSupplier = new CreditSupplier();
+				        	creditSupplier.setCreditID(cursor.getInt(0));
+				        	creditSupplier.setSupplierID(cursor.getInt(1));
+				        	creditSupplier.setPurchaseVoucherID(cursor.getString(2));
+				        	creditSupplier.setDate(cursor.getString(3));
+				        	creditSupplier.setCreditTotal(cursor.getInt(4));
+				        	creditSupplier.setCreditPaidAmount(cursor.getInt(5));
+				        	creditSupplier.setCreditLeftAmount(cursor.getInt(6));
+				        	creditSupplier.setSupplierName(cursor.getString(7));
 				        					        		        	
-				        	credit_list.add(credit);
+				        	creditSupplier_list.add(creditSupplier);
 				        } while (cursor.moveToNext());
 				    }
 				} catch (Exception e) {
@@ -149,12 +149,12 @@ public class CreditBuyerController extends DatabaseManager{
 					complete.onComplete();
 				}
 			}
-			return credit_list;
+			return creditSupplier_list;
 		}
 
-		public List<Object> selectRecord(String buyerID) {
+		public List<Object> selectRecord(String supplierID) {
 			
-			Log.i("", "Selected Buyer ID: "+buyerID);
+			Log.i("", "Selected supplierID: "+supplierID);
 			
 			try {
 				String[] FROM = {
@@ -168,29 +168,29 @@ public class CreditBuyerController extends DatabaseManager{
 						FIELD_NAME[7]
 					};
 				
-				String[] VALUE = {buyerID};
+				String[] VALUE = {supplierID};
 				String WHERE = FIELD_NAME[1] + "=? ";
 				
-				credit_list = new ArrayList<Object>();
+				creditSupplier_list = new ArrayList<Object>();
 				SQLiteDatabase db = getReadableDatabase();
 				Cursor cursor = db.query(TABLE_NAME, FROM, WHERE, VALUE, null, null, null);
 				
-				Log.i("","Count Credit list by Buyer iD: " + cursor.getCount());
+				Log.i("","Count Credit list by Supplier iD: " + cursor.getCount());
 				
 				try {
 					if (cursor.moveToFirst()) {
 				        do {
-				        	credit = new Credit();
-				        	credit.setCredit_id(cursor.getInt(0));
-				        	credit.setBuyer_id(cursor.getInt(1));
-				        	credit.setSalevoucher_id(cursor.getString(2));
-				        	credit.setDate(cursor.getString(3));
-				        	credit.setCreditTotal(cursor.getInt(4));
-				        	credit.setCreditPaidAmount(cursor.getInt(5));
-				        	credit.setCreditLeftAmount(cursor.getInt(6));
-				        	credit.setBuyer_name(cursor.getString(7));
+				        	creditSupplier = new CreditSupplier();
+				        	creditSupplier.setCreditID(cursor.getInt(0));
+				        	creditSupplier.setSupplierID(cursor.getInt(1));
+				        	creditSupplier.setPurchaseVoucherID(cursor.getString(2));
+				        	creditSupplier.setDate(cursor.getString(3));
+				        	creditSupplier.setCreditTotal(cursor.getInt(4));
+				        	creditSupplier.setCreditPaidAmount(cursor.getInt(5));
+				        	creditSupplier.setCreditLeftAmount(cursor.getInt(6));
+				        	creditSupplier.setSupplierName(cursor.getString(7));
 				        					        		        	
-				        	credit_list.add(credit);
+				        	creditSupplier_list.add(creditSupplier);
 				        } while (cursor.moveToNext());
 				    }
 				} catch (Exception e) {
@@ -209,8 +209,7 @@ public class CreditBuyerController extends DatabaseManager{
 				}
 			}
 			
-			Log.i("", "DB return List: "+credit_list.toString());
-			return credit_list;
+			return creditSupplier_list;
 			
 		}
 
@@ -241,28 +240,28 @@ public class CreditBuyerController extends DatabaseManager{
 					VALUE[1] = itemCode;
 					WHERE = FIELD_NAME[3]+" = ? and "+FIELD_NAME[1]+" = ?";
 				
-				credit_list = new ArrayList<Object>();
+				CreditSupplier_list = new ArrayList<Object>();
 				SQLiteDatabase db = getReadableDatabase();
 				Cursor cursor = db.query(TABLE_NAME, FROM, WHERE, VALUE, null, null, null);
 				
-				Log.i("","Data count of Credit :" + cursor.getCount());
+				Log.i("","Data count of CreditSupplier :" + cursor.getCount());
 				
 				try {
 					if (cursor.moveToFirst()) {
 				        do {
-				        	Credit Credit = new Credit();
+				        	CreditSupplier CreditSupplier = new CreditSupplier();
 				        	
-				        	Credit.setCreditId(cursor.getInt(0));
-				        	Credit.setItemId(cursor.getString(1));
-				        	Credit.setItemName(cursor.getString(2));
-				        	Credit.setDate(cursor.getString(3));
-				        	Credit.setOldStockQty(cursor.getInt(4));
-				        	Credit.setPurchaseQty(cursor.getInt(5));
-				        	Credit.setSaleQty(cursor.getInt(6));
-				        	Credit.setNewStockQty(cursor.getInt(7));
-				        	Credit.setReturnQty(cursor.getInt(8));
+				        	CreditSupplier.setCreditSupplierId(cursor.getInt(0));
+				        	CreditSupplier.setItemId(cursor.getString(1));
+				        	CreditSupplier.setItemName(cursor.getString(2));
+				        	CreditSupplier.setDate(cursor.getString(3));
+				        	CreditSupplier.setOldStockQty(cursor.getInt(4));
+				        	CreditSupplier.setPurchaseQty(cursor.getInt(5));
+				        	CreditSupplier.setSaleQty(cursor.getInt(6));
+				        	CreditSupplier.setNewStockQty(cursor.getInt(7));
+				        	CreditSupplier.setReturnQty(cursor.getInt(8));
 				        					        		        	
-				        	credit_list.add(Credit);
+				        	CreditSupplier_list.add(CreditSupplier);
 				        } while (cursor.moveToNext());
 				    }
 				} catch (Exception e) {
@@ -280,15 +279,15 @@ public class CreditBuyerController extends DatabaseManager{
 					complete.onComplete();
 				}
 			}
-			return credit_list;*/
+			return CreditSupplier_list;*/
 			
 			return null;
 		}
 
-		public List<Object> selectRecord(String buyerName, String fromDate, String toDate) {
+		public List<Object> selectRecord(String supplierName, String fromDate, String toDate) {
 			// TODO Auto-generated method stub
 			
-			Log.i("", "Selected Buyer Name: "+buyerName);
+			Log.i("", "Selected supplier Name: "+supplierName);
 			Log.i("", "Selected From Date: "+fromDate);
 			Log.i("", "Selected To Date: "+toDate);
 			
@@ -307,7 +306,7 @@ public class CreditBuyerController extends DatabaseManager{
 				String[] VALUE;
 				String WHERE;
 				
-				if (buyerName.toLowerCase().equals("all")) {
+				if (supplierName.toLowerCase().equals("all")) {
 					VALUE = new String[2];
 					VALUE[0] = fromDate;
 					VALUE[1] = toDate;
@@ -316,34 +315,33 @@ public class CreditBuyerController extends DatabaseManager{
 					VALUE = new String[3];
 					VALUE[0] = fromDate;
 					VALUE[1] = toDate;
-					VALUE[2] = buyerName;
+					VALUE[2] = supplierName;
 					WHERE = FIELD_NAME[3]+" >= ? and "+FIELD_NAME[3]+" <= ? and "+FIELD_NAME[7]+" = ? COLLATE NOCASE"; //COLLATE NOCASE (case insensative)
 				}
 					
 				//String GROUP_BY = FIELD_NAME[0];
 				String ORDER_BY = FIELD_NAME[2]+ " ASC";
 				
-				credit_list = new ArrayList<Object>();
+				creditSupplier_list = new ArrayList<Object>();
 				SQLiteDatabase db = getReadableDatabase();
 				Cursor cursor = db.query(TABLE_NAME, FROM, WHERE, VALUE, null, null, ORDER_BY);
 				
-				Log.i("","Count Credit list by Buyer iD + date: " + cursor.getCount());
+				Log.i("","Count Credit list by Supplier iD + date: " + cursor.getCount());
 				
 				try {
 					if (cursor.moveToFirst()) {
 				        do {
-				        	credit = new Credit
-				        			();
-				        	credit.setCredit_id(cursor.getInt(0));
-				        	credit.setBuyer_id(cursor.getInt(1));
-				        	credit.setSalevoucher_id(cursor.getString(2));
-				        	credit.setDate(cursor.getString(3));
-				        	credit.setCreditTotal(cursor.getInt(4));
-				        	credit.setCreditPaidAmount(cursor.getInt(5));
-				        	credit.setCreditLeftAmount(cursor.getInt(6));
-				        	credit.setBuyer_name(cursor.getString(7));
+				        	creditSupplier = new CreditSupplier();
+				        	creditSupplier.setCreditID(cursor.getInt(0));
+				        	creditSupplier.setSupplierID(cursor.getInt(1));
+				        	creditSupplier.setPurchaseVoucherID(cursor.getString(2));
+				        	creditSupplier.setDate(cursor.getString(3));
+				        	creditSupplier.setCreditTotal(cursor.getInt(4));
+				        	creditSupplier.setCreditPaidAmount(cursor.getInt(5));
+				        	creditSupplier.setCreditLeftAmount(cursor.getInt(6));
+				        	creditSupplier.setSupplierName(cursor.getString(7));
 				        					        		        	
-				        	credit_list.add(credit);
+				        	creditSupplier_list.add(creditSupplier);
 				        } while (cursor.moveToNext());
 				    }
 				} catch (Exception e) {
@@ -361,7 +359,7 @@ public class CreditBuyerController extends DatabaseManager{
 					complete.onComplete();
 				}
 			}
-			return credit_list;
+			return creditSupplier_list;
 		}
 
 		public List<Object> selectPurchaseVoubyItemID(String arg0) {
@@ -403,7 +401,6 @@ public class CreditBuyerController extends DatabaseManager{
 			// TODO Auto-generated method stub
 			return null;
 		}
-
 	};
 	
 	//Get Data By Voucher ID (Group By Voucher ID)
@@ -427,7 +424,7 @@ public class CreditBuyerController extends DatabaseManager{
 			String WHERE = FIELD_NAME[2] + "=? ";
 			String GROUP_BY = FIELD_NAME[2];
 			
-			credit_list = new ArrayList<Object>();
+			creditSupplier_list = new ArrayList<Object>();
 			SQLiteDatabase db = getReadableDatabase();
 			Cursor cursor = db.query(TABLE_NAME, FROM, WHERE, VALUE, GROUP_BY, null, null);
 			
@@ -436,17 +433,17 @@ public class CreditBuyerController extends DatabaseManager{
 			try {
 				if (cursor.moveToFirst()) {
 			        do {
-			        	credit = new Credit();
-			        	credit.setCredit_id(cursor.getInt(0));
-			        	credit.setBuyer_id(cursor.getInt(1));
-			        	credit.setSalevoucher_id(cursor.getString(2));
-			        	credit.setDate(cursor.getString(3));
-			        	credit.setCreditTotal(cursor.getInt(4));
-			        	credit.setCreditPaidAmount(cursor.getInt(5));
-			        	credit.setCreditLeftAmount(cursor.getInt(6));
-			        	credit.setBuyer_name(cursor.getString(7));
+			        	creditSupplier = new CreditSupplier();
+			        	creditSupplier.setCreditID(cursor.getInt(0));
+			        	creditSupplier.setSupplierID(cursor.getInt(1));
+			        	creditSupplier.setPurchaseVoucherID(cursor.getString(2));
+			        	creditSupplier.setDate(cursor.getString(3));
+			        	creditSupplier.setCreditTotal(cursor.getInt(4));
+			        	creditSupplier.setCreditPaidAmount(cursor.getInt(5));
+			        	creditSupplier.setCreditLeftAmount(cursor.getInt(6));
+			        	creditSupplier.setSupplierName(cursor.getString(7));
 			        					        		        	
-			        	credit_list.add(credit);
+			        	creditSupplier_list.add(creditSupplier);
 			        } while (cursor.moveToNext());
 			    }
 			} catch (Exception e) {
@@ -465,15 +462,14 @@ public class CreditBuyerController extends DatabaseManager{
 			}
 		}
 		
-		Log.i("", "DB return List: "+credit_list.toString());
-		return credit_list;
+		return creditSupplier_list;
 		
 	}
 	
-	//Get Data By Buyer ID (Group By Vouchers)
-		public List<Object> selectGroupByVoucher(String BuyerID) {
+	//Get Data By Supplier ID (Group By Vouchers)
+		public List<Object> selectGroupByVoucher(String supplierID) {
 			
-			Log.i("", "Selected Voucher ID: "+BuyerID);
+			Log.i("", "Selected Supplier ID: "+supplierID);
 			
 			try {
 				String[] FROM = {
@@ -487,30 +483,30 @@ public class CreditBuyerController extends DatabaseManager{
 						FIELD_NAME[7]
 					};
 				
-				String[] VALUE = {BuyerID};
+				String[] VALUE = {supplierID};
 				String WHERE = FIELD_NAME[1] + "=? ";
 				String GROUP_BY = FIELD_NAME[2];
 				
-				credit_list = new ArrayList<Object>();
+				creditSupplier_list = new ArrayList<Object>();
 				SQLiteDatabase db = getReadableDatabase();
 				Cursor cursor = db.query(TABLE_NAME, FROM, WHERE, VALUE, GROUP_BY, null, null);
 				
-				Log.i("","Count Credit list by Buyer ID (groupby voucher): " + cursor.getCount());
+				Log.i("","Count Credit list by Supplier ID (groupby voucher): " + cursor.getCount());
 				
 				try {
 					if (cursor.moveToFirst()) {
 				        do {
-				        	credit = new Credit();
-				        	credit.setCredit_id(cursor.getInt(0));
-				        	credit.setBuyer_id(cursor.getInt(1));
-				        	credit.setSalevoucher_id(cursor.getString(2));
-				        	credit.setDate(cursor.getString(3));
-				        	credit.setCreditTotal(cursor.getInt(4));
-				        	credit.setCreditPaidAmount(cursor.getInt(5));
-				        	credit.setCreditLeftAmount(cursor.getInt(6));
-				        	credit.setBuyer_name(cursor.getString(7));
+				        	creditSupplier = new CreditSupplier();
+				        	creditSupplier.setCreditID(cursor.getInt(0));
+				        	creditSupplier.setSupplierID(cursor.getInt(1));
+				        	creditSupplier.setPurchaseVoucherID(cursor.getString(2));
+				        	creditSupplier.setDate(cursor.getString(3));
+				        	creditSupplier.setCreditTotal(cursor.getInt(4));
+				        	creditSupplier.setCreditPaidAmount(cursor.getInt(5));
+				        	creditSupplier.setCreditLeftAmount(cursor.getInt(6));
+				        	creditSupplier.setSupplierName(cursor.getString(7));
 				        					        		        	
-				        	credit_list.add(credit);
+				        	creditSupplier_list.add(creditSupplier);
 				        } while (cursor.moveToNext());
 				    }
 				} catch (Exception e) {
@@ -529,8 +525,7 @@ public class CreditBuyerController extends DatabaseManager{
 				}
 			}
 			
-			Log.i("", "DB return List: "+credit_list.toString());
-			return credit_list;
+			return creditSupplier_list;
 			
 		}
 
@@ -538,7 +533,7 @@ public class CreditBuyerController extends DatabaseManager{
 		
 		public void updateRecord(List<Object> objList) {
 			// TODO Auto-generated method stub
-			Log.i("","Credit list to update:" + objList.toString());
+			Log.i("","Credit Supplier list to update:" + objList.toString());
 			
 			SQLiteDatabase db = getWritableDatabase();
 			db.beginTransaction();
@@ -546,13 +541,13 @@ public class CreditBuyerController extends DatabaseManager{
 				for (Object obj : objList) {
 
 					ContentValues values = new ContentValues();
-					Credit credit = (Credit) obj;
+					CreditSupplier credit = (CreditSupplier) obj;
 					values.put(FIELD_NAME[3], credit.getCreditTotal());
 					values.put(FIELD_NAME[4], credit.getCreditPaidAmount());
 					values.put(FIELD_NAME[5], credit.getCreditLeftAmount());
 
-					String[] VALUE = {credit.getBuyer_id().toString(),credit.getDate()};
-					String WHERE = FIELD_NAME[0] + "=? and "+FIELD_NAME[2] +" = ?";
+					String[] VALUE = {credit.getSupplierID().toString(),credit.getDate()};
+					String WHERE = FIELD_NAME[1] + "=? and "+FIELD_NAME[3] +" = ?";
 					
 					db.update(TABLE_NAME, values, WHERE,VALUE);
 				}
@@ -584,18 +579,18 @@ public class CreditBuyerController extends DatabaseManager{
 				for (Object obj : objList) {
 
 					ContentValues values = new ContentValues();
-					Credit Credit = (Credit) obj;
-					//values.put(FIELD_NAME[0], Credit.getCreditId());
-					values.put(FIELD_NAME[1], Credit.getItemId());
-					values.put(FIELD_NAME[2], Credit.getItemName());
-					values.put(FIELD_NAME[3], Credit.getDate());
-					values.put(FIELD_NAME[4], Credit.getOldStockQty());
-					values.put(FIELD_NAME[5], Credit.getPurchaseQty());
-					values.put(FIELD_NAME[6], Credit.getSaleQty());
-					values.put(FIELD_NAME[7], Credit.getNewStockQty());
-					values.put(FIELD_NAME[8], Credit.getReturnQty());
+					CreditSupplier CreditSupplier = (CreditSupplier) obj;
+					//values.put(FIELD_NAME[0], CreditSupplier.getCreditSupplierId());
+					values.put(FIELD_NAME[1], CreditSupplier.getItemId());
+					values.put(FIELD_NAME[2], CreditSupplier.getItemName());
+					values.put(FIELD_NAME[3], CreditSupplier.getDate());
+					values.put(FIELD_NAME[4], CreditSupplier.getOldStockQty());
+					values.put(FIELD_NAME[5], CreditSupplier.getPurchaseQty());
+					values.put(FIELD_NAME[6], CreditSupplier.getSaleQty());
+					values.put(FIELD_NAME[7], CreditSupplier.getNewStockQty());
+					values.put(FIELD_NAME[8], CreditSupplier.getReturnQty());
 
-					String[] VALUE = {Credit.getItemId(), Credit.getDate()};
+					String[] VALUE = {CreditSupplier.getItemId(), CreditSupplier.getDate()};
 					String WHERE = FIELD_NAME[1] + "=? and "+FIELD_NAME[3]+"=?";
 					
 					db.update(TABLE_NAME, values, WHERE,VALUE);
@@ -635,7 +630,6 @@ public class CreditBuyerController extends DatabaseManager{
 			return;*/
 		}
 
-		
 		public boolean deleteRecord(String voucherID) {
 			SQLiteDatabase db = getWritableDatabase();
 	        db.delete(TABLE_NAME, FIELD_NAME[2]+"=? ", new String[]{voucherID});
@@ -664,3 +658,4 @@ public class CreditBuyerController extends DatabaseManager{
 
 }
 	
+

@@ -27,6 +27,8 @@ import com.ignite.pos.adapter.SalePersonReportAdapter;
 import com.ignite.pos.adapter.SalePersonReportAdapter.saleCallback;
 import com.ignite.pos.adapter.SalepersonSpinnerAdapter;
 import com.ignite.pos.application.SaleReportExcelUtility;
+import com.ignite.pos.database.controller.CreditBuyerController;
+import com.ignite.pos.database.controller.CreditSupplierController;
 import com.ignite.pos.database.controller.ItemListController;
 import com.ignite.pos.database.controller.LedgerController;
 import com.ignite.pos.database.controller.ProfitController;
@@ -529,6 +531,10 @@ public class SalePersonReportActivity extends BaseSherlockActivity{
 				
 				SKToastMessage.showMessage(SalePersonReportActivity.this, sv.getVid()+" Deleted!", SKToastMessage.SUCCESS);
             	
+				//Delete Credit Record of Buyer
+				dbManager = new CreditBuyerController(SalePersonReportActivity.this);
+				CreditBuyerController credit_control = (CreditBuyerController)dbManager;
+				credit_control.delete(sv.getVid());
 			}
 		});
         

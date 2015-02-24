@@ -16,6 +16,7 @@ public class OtherReportsActivity extends SherlockActivity{
 	private Button btn_ledger, btn_profit, btn_slow_moving, btn_stock_report, btn_sale_return_report, btn_sale_history_report;
 	private ActionBar actionBar;
 	private TextView title;
+	
 	private RelativeLayout layout_add_new;
 	private Button btn_credit_buyer_report;
 	private Button btn_credit_supplier_report;
@@ -62,6 +63,9 @@ public class OtherReportsActivity extends SherlockActivity{
 
 		public void onClick(View v) {
 			// TODO Auto-generated method stub
+			if (v == btn_credit_supplier_report) {
+				startActivity(new Intent(OtherReportsActivity.this, CreditSupplierReportActivity.class));
+			}
 			if (v == btn_credit_buyer_report) {
 				startActivity(new Intent(OtherReportsActivity.this, CreditBuyerReportActivity.class));
 			}

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:skscalable="http://schemas.android.com/apk/res/com.ignite.pos"
-    android:id="@+id/RelativeLayout1"
+    android:id="@+id/lst_item_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
@@ -12,69 +11,73 @@
         android:layout_height="50dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:background="@drawable/bg_green_stroke"
         android:orientation="horizontal"
         android:padding="5dp" >
 
         <com.smk.skscalableview.ScalableTextView
-            android:id="@+id/voucher_title"
+            android:id="@+id/txt_vou_num"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginRight="5dp"
             android:layout_weight="17"
             android:gravity="center_vertical|left"
-            android:text="ေဘာင္ခ်ာနံပါတ္"
+            android:text="-"
             android:textSize="18dp" />
 
         <com.smk.skscalableview.ScalableTextView
-            android:id="@+id/ScalableTextView04"
+            android:id="@+id/txt_date"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginRight="5dp"
             android:layout_weight="17"
             android:gravity="left|center_vertical"
-            android:text="ေန႔ရက္"
+            android:text="-"
             android:textSize="18dp" />
 
         <com.smk.skscalableview.ScalableTextView
-            android:id="@+id/buyer_title"
+            android:id="@+id/txt_supplier_name"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginRight="5dp"
             android:layout_weight="17"
             android:gravity="left|center_vertical"
-            android:text="လကၠားဆုိင္ အမည္"
+            android:text="-"
             android:textSize="18dp" />
 
         <com.smk.skscalableview.ScalableTextView
-            android:id="@+id/aaaaaa"
+            android:id="@+id/txt_credit_total"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginRight="5dp"
             android:layout_weight="17"
             android:gravity="center_vertical|right"
-            android:text="အေႂကြးယူေငြ"
+            android:text="0"
             android:textSize="18dp" />
 
         <com.smk.skscalableview.ScalableTextView
-            android:id="@+id/bbbbbbb"
+            android:id="@+id/txt_credit_paid_amount"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginRight="5dp"
             android:layout_weight="17"
             android:gravity="center_vertical|right"
-            android:text="ေပးေခ်ၿပီးေငြ"
+            android:text="0"
             android:textSize="18dp" />
 
         <com.smk.skscalableview.ScalableTextView
-            android:id="@+id/cccccc"
+            android:id="@+id/txt_credit_left_amount"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="17"
             android:gravity="center_vertical|right"
-            android:text="ေပးရန္က်န္ေငြ"
+            android:text="0"
             android:textSize="18dp" />
-
     </LinearLayout>
+
+    <View
+        android:id="@+id/view1"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray" />
 
 </RelativeLayout>

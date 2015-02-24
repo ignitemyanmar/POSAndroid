@@ -40,7 +40,7 @@
                 android:text="အေၾကြးစာရင္းမွတ္တမ္း (လကၠား)"
                 android:textColor="@color/white"
                 android:textSize="20dp"
-                android:visibility="gone" />
+                android:visibility="visible" />
 
             <com.ignite.custom.view.CustomButton
                 android:id="@+id/btn_sale_return_report"

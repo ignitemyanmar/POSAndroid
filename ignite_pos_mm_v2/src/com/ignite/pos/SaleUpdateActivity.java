@@ -690,8 +690,13 @@ public class SaleUpdateActivity  extends SherlockActivity{
 				
 				Credit credit = (Credit)creditList.get(0);
 				
+				String buyerName = ((Buyer)SP_buyername.getSelectedItem()).getBuyerName();
 				
-				txt_total_credit_left_amt.setText("** ေဘာင္ ခ်ာနံပါတ္  "+sale_vou_no+" တြင္  "+buyerName+" ၏ ေႂကြးက်န္ေငြ :    "+credit.getCreditLeftAmount()+" က်ပ္");
+				if (credit.getBuyer_name().equals(buyerName)) {
+					txt_total_credit_left_amt.setText("** ေဘာင္ ခ်ာနံပါတ္  "+sale_vou_no+" တြင္  "+buyerName+" ၏ ေႂကြးက်န္ေငြ :    "+credit.getCreditLeftAmount()+" က်ပ္");
+				}else {
+					txt_total_credit_left_amt.setText("** ေဘာင္ ခ်ာနံပါတ္  "+sale_vou_no+" တြင္  "+buyerName+" ၏ ေႂကြးက်န္ေငြ :    0 က်ပ္");
+				}
 			}else {
 				txt_total_credit_left_amt.setText("** ေဘာင္ ခ်ာနံပါတ္  "+sale_vou_no+" တြင္  "+buyerName+" ၏ ေႂကြးက်န္ေငြ :    0 က်ပ္");
 			}

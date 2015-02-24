@@ -515,6 +515,7 @@ public class SaleActivity  extends SherlockActivity{
 				if (checkPayAmountFields()) {
 					creditPaidAmount = edt_credit_pay_amt.getText().toString();
 					
+					//If it is Credit
 					if ((voucherTotal - Integer.valueOf(creditPaidAmount)) > 0) {
 						if (buyerName.equals("other")) {
 							SKToastMessage.showMessage(SaleActivity.this, "Choose Buyer Name to allow Credit!", SKToastMessage.WARNING);
@@ -563,7 +564,9 @@ public class SaleActivity  extends SherlockActivity{
 		}
 	}
 	
-	//Save Credit & Sale Voucher - Show Voucher slip 
+	/**
+	 * Save Credit & Sale Voucher - Show Voucher slip 
+	 */
 	private void saveAndShowSlip() {
 		// TODO Auto-generated method stub
 		saveCredit();

@@ -19,6 +19,7 @@ import com.ignite.pos.model.Ledger;
 import com.ignite.pos.model.PurchaseVoucher;
 import com.smk.skalertmessage.SKToastMessage;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -35,7 +36,7 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 
-public class SupplierReportListViewAdapter extends BaseAdapter{
+@SuppressLint("ResourceAsColor") public class SupplierReportListViewAdapter extends BaseAdapter{
 
 	private List<Object> listVoucher;
 	private LayoutInflater mInflater;
@@ -105,11 +106,13 @@ public class SupplierReportListViewAdapter extends BaseAdapter{
 		if (purchaseVoucherItem.getStatus() == 0) {
 			holder.btn_confirm.setVisibility(View.VISIBLE);
 			holder.btn_vou_update.setVisibility(View.VISIBLE);
+			holder.btn_vou_update.setText("ျပင္ ရန္");
 			holder.btn_delete.setVisibility(View.VISIBLE);
 			convertView.setBackgroundResource(R.color.bg_warning);
 		}else if (purchaseVoucherItem.getStatus() == 1) {
 			holder.btn_confirm.setVisibility(View.GONE);
-			holder.btn_vou_update.setVisibility(View.GONE);
+			holder.btn_vou_update.setText("အေႂကြး ျပင္မည္");
+			//holder.btn_vou_update.setVisibility(View.GONE);
 			holder.btn_delete.setVisibility(View.GONE);
 			convertView.setBackgroundResource(R.color.bg_success);
 		}
