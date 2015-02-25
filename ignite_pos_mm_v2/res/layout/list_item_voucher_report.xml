@@ -69,7 +69,7 @@
             android:layout_weight="13"
             android:gravity="center"
             android:orientation="horizontal" >
-
+
             <com.ignite.custom.view.CustomButton
                 android:id="@+id/btn_confirm"
                 android:layout_width="65dp"
@@ -79,19 +79,20 @@
                 android:padding="5dp"
                 android:text="အတည္ ျပဳမည္"
                 android:textColor="@color/black"
-                android:textSize="14dp" />
-
+                android:textSize="14dp"
+                android:visibility="gone" />
+
             <com.ignite.custom.view.CustomButton
                 android:id="@+id/btn_view_detail"
-                android:layout_width="65dp"
+                android:layout_width="150dp"
                 android:layout_height="match_parent"
                 android:layout_marginRight="5dp"
                 android:background="@drawable/girditem_border"
                 android:padding="5dp"
-                android:text="အ ေသး စိတ္"
+                android:text="ျပင္ ဆင္ မည္"
                 android:textColor="@color/white"
-                android:textSize="14dp" />
-
+                android:textSize="18dp" />
+
             <com.ignite.custom.view.CustomButton
                 android:id="@+id/btn_vou_update"
                 android:layout_width="65dp"
@@ -101,8 +102,9 @@
                 android:padding="5dp"
                 android:text="ျပင္ ရန္"
                 android:textColor="@color/white"
-                android:textSize="14dp" />
-
+                android:textSize="14dp"
+                android:visibility="gone" />
+
             <com.ignite.custom.view.CustomButton
                 android:id="@+id/btn_delete"
                 android:layout_width="65dp"
@@ -110,8 +112,8 @@
                 android:background="@drawable/bg_btn_red_corner"
                 android:text="ဖ်က္မည္"
                 android:textColor="@color/black"
-                android:textSize="14dp" />
-
+                android:textSize="14dp"
+                android:visibility="gone" />
         </com.smk.skscalableview.ScalableLinearLayout>
 
     </LinearLayout>

@@ -27,6 +27,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -102,138 +103,35 @@ import android.widget.TextView;
 		holder.txt_supplier.setText(purchaseVoucherItem.getSupplierName());
 		holder.txt_vou_total.setText(purchaseVoucherItem.getGrandtotal());
 		
+		
 		//Show Confirm Button when pending..... 
 		if (purchaseVoucherItem.getStatus() == 0) {
-			holder.btn_confirm.setVisibility(View.VISIBLE);
-			holder.btn_vou_update.setVisibility(View.VISIBLE);
-			holder.btn_vou_update.setText("ျပင္ ရန္");
-			holder.btn_delete.setVisibility(View.VISIBLE);
 			convertView.setBackgroundResource(R.color.bg_warning);
 		}else if (purchaseVoucherItem.getStatus() == 1) {
-			holder.btn_confirm.setVisibility(View.GONE);
-			holder.btn_vou_update.setText("အေႂကြး ျပင္မည္");
-			//holder.btn_vou_update.setVisibility(View.GONE);
-			holder.btn_delete.setVisibility(View.GONE);
 			convertView.setBackgroundResource(R.color.bg_success);
+			holder.txt_vno.setText(Html.fromHtml(purchaseVoucherItem.getVid()+"(confirm) <font color=red> * </font>"));
 		}
-		
-		
-		holder.btn_confirm.setOnClickListener(new OnClickListener() {
-			
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				
-				if(mCallback != null){
-					mCallback.onConfirmClick(position);
-				}
-			}
-		});
 		
 		holder.btn_view_detail.setOnClickListener(new OnClickListener() {
 			
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				
-				Intent next = new Intent(aty.getApplication(), PurchaseDetailReportActivity.class);
-				
-				Bundle bundle = new Bundle();
-				bundle.putString("VoucherNo", purchaseVoucherItem.getVid());
-				bundle.putString("Date", purchaseVoucherItem.getVdate());
-				bundle.putString("SupplierName", purchaseVoucherItem.getSupplierName());
-				
-				next.putExtras(bundle);
-				aty.startActivity(next);
+				if(mCallback != null){
+					mCallback.onDetailClick(position, v);
+				}
 			}
 		});
-		
-		holder.btn_vou_update.setOnClickListener(new OnClickListener() {
-			
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				
-				if(mCallback != null){
-					mCallback.onUpdateClick(position);
-				}
-
-			}
-		});
-		
-		holder.btn_delete.setId(position);
-		holder.btn_delete.setOnClickListener(new OnClickListener() {
-			
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				
-				if(mCallback != null){
-					mCallback.onDeleteClick(position);
-				}
-				
-			}
-		});	
 		
 		return convertView;
-	}
-	
-    protected void removeItemFromList(int position, String vid) {
-    	
-        final int deletePosition = position;
-        
-        AlertDialog.Builder alert = new AlertDialog.Builder(aty);
-    
-        alert.setTitle("Delete Purchasse Voucher - "+vid+" ?");
-        
-        alert.setPositiveButton("YES", new DialogInterface.OnClickListener() {
-        	
-        	
-			public void onClick(DialogInterface dialog, int which) {
-				// TODO Auto-generated method stub
-				
-				//Voucher Object that you want to delete
-				PurchaseVoucher pv = (PurchaseVoucher) getItem(deletePosition);
-				
-				//Get Voucher Item List By VouID
-				dbManager = new PurchaseVoucherController(aty);
-				PurchaseVoucherController pvControl = (PurchaseVoucherController)dbManager;
-				List<Object> itemList = new ArrayList<Object>();
-				itemList = pvControl.selectRecordByVouID(pv.getVid());
-				
-				Log.i("", "Voucher Item List: "+itemList);
-				
-				//Delete in Purchase Table
-				dbManager = new PurchaseVoucherController(aty);
-				PurchaseVoucherController pv_control = (PurchaseVoucherController)dbManager;
-				pv_control.delete(pv.getVid());
-				
-				Log.i("","Deleted Voucher : " + pv.getVid());
-				
-				listVoucher.remove(deletePosition);
-				notifyDataSetChanged();
-				
-				SKToastMessage.showMessage(aty, pv.getVid()+" Deleted!", SKToastMessage.SUCCESS);
-            	
-			}
-		});
-        
-        alert.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
-			
-			public void onClick(DialogInterface dialog, int which) {
-				// TODO Auto-generated method stub
-				dialog.dismiss();
-			}
-		});
-      
-        alert.show();
-        alert.setCancelable(true);
-    }
+	}	
     
 	public void setCallbackListiner(Callback callback){
 		mCallback = callback;
 	}
     
 	public interface Callback{
-		public void onConfirmClick(Integer pos);
-		public void onUpdateClick(Integer pos);
-		public void onDeleteClick(Integer pos);
+		public void onDetailClick(Integer pos, View v);
 	}
 
 	static class ViewHolder {

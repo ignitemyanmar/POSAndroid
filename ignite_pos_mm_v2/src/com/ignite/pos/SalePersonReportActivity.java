@@ -5,6 +5,10 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+
+import net.londatiga.android.ActionItem;
+import net.londatiga.android.QuickAction;
+import net.londatiga.android.QuickAction.OnActionItemClickListener;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -22,6 +26,8 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.actionbarsherlock.app.ActionBar;
 import com.ignite.pos.adapter.SalePersonReportAdapter;
 import com.ignite.pos.adapter.SalePersonReportAdapter.saleCallback;
@@ -38,6 +44,7 @@ import com.ignite.pos.database.controller.spSalePersonController;
 import com.ignite.pos.database.util.DatabaseManager;
 import com.ignite.pos.model.ItemList;
 import com.ignite.pos.model.Ledger;
+import com.ignite.pos.model.PurchaseVoucher;
 import com.ignite.pos.model.SaleHistory;
 import com.ignite.pos.model.SaleVouncher;
 import com.ignite.pos.model.spSalePerson;
@@ -66,6 +73,17 @@ public class SalePersonReportActivity extends BaseSherlockActivity{
 	private RelativeLayout add_layout;
 	private Button btn_print;
 	private String currentDateTime;
+	
+	private ActionItem detailItem;
+    private ActionItem updateItem;
+    private ActionItem deleteItem;
+	
+	//action id
+	private static final int ID_DETAIL   = 1;
+	private static final int ID_UPDATE = 2;
+	private static final int ID_DELETE   = 3;
+	
+	private QuickAction quickAction;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -125,13 +143,45 @@ public class SalePersonReportActivity extends BaseSherlockActivity{
 		
 		setOnLoginListener(loginCallbacks);
 		
-		/*getVoucher();
-		GrandTotal();*/
-		
-		/*if (listVoucher.size() == 0) {
-			txt_grand_total.setText("0.00");
-		}*/
+		//Put Choice Actions Buttons
+		detailItem 	= new ActionItem(ID_DETAIL, "အ ေသးစိတ္");
+        updateItem 	= new ActionItem(ID_UPDATE, "ျပင္ ရန္");
+        deleteItem 	= new ActionItem(ID_DELETE, "ဖ်က္မည္");
+        
+        quickAction = new QuickAction(SalePersonReportActivity.this, QuickAction.VERTICAL);
+        quickAction.setOnActionItemClickListener(actionItemClickListener);
+        
+		//Vertical Quick Action Menu
+        quickAction.addActionItem(detailItem);
+        quickAction.addActionItem(updateItem);
+        quickAction.addActionItem(deleteItem);
 	}
+	
+    //Set listener for action item clicked
+	private OnActionItemClickListener actionItemClickListener = new OnActionItemClickListener() {
+		
+		public void onItemClick(QuickAction source, int pos, int actionId) {
+			// TODO Auto-generated method stub
+			Log.i("", "Enter Action Itemmmmmmmmmmmmmmmmmmmmmmmmmmm");
+			
+			//ActionItem actionItem = quickAction.getActionItem(pos);
+				
+			//here we can filter which action item was clicked with pos or actionId parameter
+			if (actionId == ID_DETAIL) {
+				Toast.makeText(getApplicationContext(), "Detail", Toast.LENGTH_SHORT).show();
+				detailClick(itemPosition);
+				
+			}  else if (actionId == ID_UPDATE) {
+				Toast.makeText(getApplicationContext(), "Update", Toast.LENGTH_SHORT).show();
+				updateClick(itemPosition);
+				
+			}
+			else {
+				//Toast.makeText(getApplicationContext(), "Delete", Toast.LENGTH_SHORT).show();
+				deleteClick(itemPosition);
+			}
+		}
+	}; 
 	
 	private OnClickListener clickListener = new OnClickListener() {
 		
@@ -285,6 +335,7 @@ public class SalePersonReportActivity extends BaseSherlockActivity{
 			
 		}
 	};
+	protected Integer itemPosition;
 	
 	private void getSalePerson()
 	{
@@ -348,44 +399,66 @@ public class SalePersonReportActivity extends BaseSherlockActivity{
 	
 	private SalePersonReportAdapter.saleCallback sCallback = new saleCallback() {
 		
-		public void onUpdateClick(Integer pos) {
+		public void onDetailClick(Integer pos, View v) {
 			// TODO Auto-generated method stub
-			Log.i("", "Update Listener: ");
-			Log.i("", "Voucher to Update000000000000: "+listVoucher.toString());
 			
+			itemPosition = pos;
+			quickAction.show(v);
 			
-			SaleVouncher sv = (SaleVouncher) listVoucher.get(pos);
-			
-			Log.i("", "Buyer Name 000000000000: "+sv.getCusname());
-			
-			if (AdminName.equals("-")) {
-				SKToastMessage.showMessage(SalePersonReportActivity.this, "Please log in with Admin account first!", SKToastMessage.WARNING);
-				showAdminDialog();
-			}else {
-				
-				Intent next = new Intent(SalePersonReportActivity.this, SaleUpdateActivity.class);
-				
-				Bundle bundle = new Bundle();
-				bundle.putString("VoucherNo", sv.getVid());
-				bundle.putString("BuyerName", sv.getCusname());
-				
-				next.putExtras(bundle);
-				SalePersonReportActivity.this.startActivity(next);
-			}
-		}
-		
-		public void onDeleteClick(Integer pos) {
-			// TODO Auto-generated method stub
-			SaleVouncher sv = (SaleVouncher) listVoucher.get(pos);
-			
-			if (AdminName.equals("-")) {
-				SKToastMessage.showMessage(SalePersonReportActivity.this, "Please log in with Admin account first!", SKToastMessage.WARNING);
-				showAdminDialog();
-			}else {
-				removeItemFromList(pos, sv.getVid());
-			}
+
 		}
 	};
+	
+	private void detailClick(Integer pos) {
+		// TODO Auto-generated method stub
+		SaleVouncher sv = (SaleVouncher) listVoucher.get(pos);
+		
+		Intent next = new Intent(SalePersonReportActivity.this, SaleDetailReportActivity.class);
+		
+		Bundle bundle = new Bundle();
+		bundle.putString("VoucherNo", sv.getVid());
+		bundle.putString("Date", sv.getVdate());
+		bundle.putString("SalepersonName", sv.getSalePerson());
+		
+		next.putExtras(bundle);
+		SalePersonReportActivity.this.startActivity(next);
+		
+	}
+	
+	private void updateClick(Integer pos) {
+		// TODO Auto-generated method stub
+		
+		SaleVouncher sv = (SaleVouncher) listVoucher.get(pos);
+		
+		Log.i("", "Buyer Name 000000000000: "+sv.getCusname());
+		
+		if (AdminName.equals("-")) {
+			SKToastMessage.showMessage(SalePersonReportActivity.this, "Please log in with Admin account first!", SKToastMessage.WARNING);
+			showAdminDialog();
+		}else {
+			
+			Intent next = new Intent(SalePersonReportActivity.this, SaleUpdateActivity.class);
+			
+			Bundle bundle = new Bundle();
+			bundle.putString("VoucherNo", sv.getVid());
+			bundle.putString("BuyerName", sv.getCusname());
+			
+			next.putExtras(bundle);
+			SalePersonReportActivity.this.startActivity(next);
+		}
+	}
+	
+	private void deleteClick(Integer pos) {
+		// TODO Auto-generated method stub
+		SaleVouncher sv = (SaleVouncher) listVoucher.get(pos);
+		
+		if (AdminName.equals("-")) {
+			SKToastMessage.showMessage(SalePersonReportActivity.this, "Please log in with Admin account first!", SKToastMessage.WARNING);
+			showAdminDialog();
+		}else {
+			removeItemFromList(pos, sv.getVid());
+		}
+	}
 	
     protected void removeItemFromList(int position, String vid) {
     	

@@ -4,6 +4,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import net.londatiga.android.ActionItem;
+import net.londatiga.android.QuickAction;
+import net.londatiga.android.QuickAction.OnActionItemClickListener;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -20,6 +23,7 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.AdapterView.OnItemSelectedListener;
 import com.actionbarsherlock.app.ActionBar;
 import com.ignite.pos.adapter.SupplierReportListViewAdapter;
@@ -58,12 +62,27 @@ public class SupplierPurchaseReportActivity extends BaseSherlockActivity{
 	private String AdminName;
 	private RelativeLayout add_layout;
 	private Button btn_print;
+	private Integer itemPosition;
+	private ActionItem confirmItem;
+	private ActionItem detailItem;
+    private ActionItem updateItem;
+    private ActionItem deleteItem;
+    private ActionItem creditItem;
+	
+	//action id
+	private static final int ID_CONFIRM     = 1;
+	private static final int ID_DETAIL   = 2;
+	private static final int ID_UPDATE = 3;
+	private static final int ID_DELETE   = 4;
+	private static final int ID_CREDIT = 5;
+	
+	private QuickAction quickAction;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_supplier_purchase_report);
+		setContentView(R.layout.activity_supplier_purchase_report);		
 		
 		SharedPreferences pref = getSharedPreferences("Admin",Activity.MODE_PRIVATE);
 		AdminName = pref.getString("admin_name", "-");
@@ -109,15 +128,51 @@ public class SupplierPurchaseReportActivity extends BaseSherlockActivity{
 		todate.setText(currentDate);
 		selectedToDate = todate.getText().toString();
 		
-		setOnLoginListener(loginCallbacks);
+		setOnLoginListener(loginCallbacks);        		
 		
-		//getVoucher();
-		//GrandTotal();
-		
-		/*if (listVoucher.size() == 0) {
-			txt_grand_total.setText("0.00");
-		}*/
+		//Put Choice Actions Buttons
+		confirmItem = new ActionItem(ID_CONFIRM, "အတည္ျပဳမည္");
+		detailItem 	= new ActionItem(ID_DETAIL, "အ ေသးစိတ္");
+        updateItem 	= new ActionItem(ID_UPDATE, "ျပင္ ရန္");
+        deleteItem 	= new ActionItem(ID_DELETE, "ဖ်က္မည္");
+        creditItem 	= new ActionItem(ID_CREDIT, "အေႂကြး ျပင္မည္");                
+        
+        quickAction = new QuickAction(SupplierPurchaseReportActivity.this, QuickAction.VERTICAL);
+        
 	}
+	
+    //Set listener for action item clicked
+	private OnActionItemClickListener actionItemClickListener = new OnActionItemClickListener() {
+		
+		public void onItemClick(QuickAction source, int pos, int actionId) {
+			// TODO Auto-generated method stub
+			Log.i("", "Enter Action Itemmmmmmmmmmmmmmmmmmmmmmmmmmm");
+			
+			ActionItem actionItem = quickAction.getActionItem(pos);
+				
+			//here we can filter which action item was clicked with pos or actionId parameter
+			if (actionId == ID_CONFIRM) {
+				Toast.makeText(getApplicationContext(), "Confirm", Toast.LENGTH_SHORT).show();
+				confirmClick(itemPosition);
+				
+			} else if (actionId == ID_DETAIL) {
+				Toast.makeText(getApplicationContext(), "Detail", Toast.LENGTH_SHORT).show();
+				detailClick(itemPosition);
+				
+			}  else if (actionId == ID_UPDATE) {
+				Toast.makeText(getApplicationContext(), "Update", Toast.LENGTH_SHORT).show();
+				updateClick(itemPosition);
+				
+			} else if (actionId == ID_CREDIT) {
+				Toast.makeText(getApplicationContext(), "Credit", Toast.LENGTH_SHORT).show();
+				updateClick(itemPosition);
+				
+			}else {
+				//Toast.makeText(getApplicationContext(), "Delete", Toast.LENGTH_SHORT).show();
+				deleteClick(itemPosition);
+			}
+		}
+	}; 
 	
 	private OnClickListener clickListener = new OnClickListener() {
 		
@@ -259,63 +314,106 @@ public class SupplierPurchaseReportActivity extends BaseSherlockActivity{
 	
 	private SupplierReportListViewAdapter.Callback callback = new Callback() {
 		
-		public void onUpdateClick(Integer pos) {
+		public void onDetailClick(Integer pos, View v) {
 			// TODO Auto-generated method stub
-
-			PurchaseVoucher pv = (PurchaseVoucher) listVoucher.get(pos);
+			itemPosition = pos;
 			
-			if (AdminName.equals("-")) {
-				SKToastMessage.showMessage(SupplierPurchaseReportActivity.this, "Please log in with Admin account first!", SKToastMessage.WARNING);
-				showAdminDialog();
-			}else {
-				Intent next = new Intent(SupplierPurchaseReportActivity.this, PurchaseUpdateActivity.class);
+			if (listVoucher != null && listVoucher.size() > 0) {
+				PurchaseVoucher pv = (PurchaseVoucher)listVoucher.get(pos);
 				
-				Bundle bundle = new Bundle();
-				bundle.putString("VoucherNo", pv.getVid());
-				bundle.putString("SupplierName", pv.getSupplierName());
-				bundle.putInt("ConfirmStatus", pv.getStatus());
-				
-				next.putExtras(bundle);
-				SupplierPurchaseReportActivity.this.startActivity(next);
+				if (pv.getStatus() == 0) {
+					//add action items into QuickAction
+					//Vertical Quick Action Menu
+					quickAction = new QuickAction(SupplierPurchaseReportActivity.this, QuickAction.VERTICAL);
+					quickAction.setOnActionItemClickListener(actionItemClickListener);
+			        quickAction.addActionItem(confirmItem);
+					quickAction.addActionItem(detailItem);
+			        quickAction.addActionItem(updateItem);
+			        quickAction.addActionItem(deleteItem);
+				}else if (pv.getStatus() == 1) {
+					//Vertical Quick Action Menu
+					quickAction = new QuickAction(SupplierPurchaseReportActivity.this, QuickAction.VERTICAL);
+					quickAction.setOnActionItemClickListener(actionItemClickListener);
+					quickAction.addActionItem(detailItem);
+			        quickAction.addActionItem(creditItem);
+				}
 			}
-		}
-		
-		public void onDeleteClick(Integer pos) {
-			// TODO Auto-generated method stub
-			PurchaseVoucher pv = (PurchaseVoucher) listVoucher.get(pos);
 			
-			if (AdminName.equals("-")) {
-				SKToastMessage.showMessage(SupplierPurchaseReportActivity.this, "Please log in with Admin account first!", SKToastMessage.WARNING);
-				showAdminDialog();
-				
-			}else {
-				removeItemFromList(pos, pv.getVid());
-			}
-		}
-		
-		public void onConfirmClick(Integer pos) {
-			// TODO Auto-generated method stub
+			quickAction.show(v);
 			
-			PurchaseVoucher pv = (PurchaseVoucher) listVoucher.get(pos);
-			
-			if (AdminName.equals("-")) {
-				SKToastMessage.showMessage(SupplierPurchaseReportActivity.this, "Please log in with Admin account first!", SKToastMessage.WARNING);
-				showAdminDialog();
-			}else {
-				Intent next = new Intent(SupplierPurchaseReportActivity.this, PurchaseConfirmListActivity.class);
-				
-				Bundle bundle = new Bundle();
-				bundle.putString("VoucherNo", pv.getVid());
-				bundle.putString("Date", pv.getVdate());
-				bundle.putString("SupplierName", pv.getSupplierName());
-				
-				next.putExtras(bundle);
-				SupplierPurchaseReportActivity.this.startActivity(next);
-				
-				//startActivity(new Intent(SupplierPurchaseReportActivity.this, PurchaseConfirmListActivity.class).getBundleExtra("bundle"));
-			}
 		}
 	};
+	
+	private void detailClick(Integer pos) {
+		// TODO Auto-generated method stub
+		PurchaseVoucher pv = (PurchaseVoucher) listVoucher.get(pos);
+		
+		Intent next = new Intent(SupplierPurchaseReportActivity.this, PurchaseDetailReportActivity.class);
+		
+		Bundle bundle = new Bundle();
+		bundle.putString("VoucherNo", pv.getVid());
+		bundle.putString("Date", pv.getVdate());
+		bundle.putString("SupplierName", pv.getSupplierName());
+		
+		next.putExtras(bundle);
+		SupplierPurchaseReportActivity.this.startActivity(next);
+	}
+	
+	
+	private void confirmClick(Integer pos) {
+		// TODO Auto-generated method stub
+		PurchaseVoucher pv = (PurchaseVoucher) listVoucher.get(pos);
+		
+		if (AdminName.equals("-")) {
+			SKToastMessage.showMessage(SupplierPurchaseReportActivity.this, "Please log in with Admin account first!", SKToastMessage.WARNING);
+			showAdminDialog();
+		}else {
+			Intent next = new Intent(SupplierPurchaseReportActivity.this, PurchaseConfirmListActivity.class);
+			
+			Bundle bundle = new Bundle();
+			bundle.putString("VoucherNo", pv.getVid());
+			bundle.putString("Date", pv.getVdate());
+			bundle.putString("SupplierName", pv.getSupplierName());
+			
+			next.putExtras(bundle);
+			SupplierPurchaseReportActivity.this.startActivity(next);
+			
+			//startActivity(new Intent(SupplierPurchaseReportActivity.this, PurchaseConfirmListActivity.class).getBundleExtra("bundle"));
+		}
+	}
+	
+	private void updateClick(Integer pos) {
+		// TODO Auto-generated method stub
+		PurchaseVoucher pv = (PurchaseVoucher) listVoucher.get(pos);
+		
+		if (AdminName.equals("-")) {
+			SKToastMessage.showMessage(SupplierPurchaseReportActivity.this, "Please log in with Admin account first!", SKToastMessage.WARNING);
+			showAdminDialog();
+		}else {
+			Intent next = new Intent(SupplierPurchaseReportActivity.this, PurchaseUpdateActivity.class);
+			
+			Bundle bundle = new Bundle();
+			bundle.putString("VoucherNo", pv.getVid());
+			bundle.putString("SupplierName", pv.getSupplierName());
+			bundle.putInt("ConfirmStatus", pv.getStatus());
+			
+			next.putExtras(bundle);
+			SupplierPurchaseReportActivity.this.startActivity(next);
+		}
+	}
+	
+	private void deleteClick(Integer pos) {
+		// TODO Auto-generated method stub
+		PurchaseVoucher pv = (PurchaseVoucher) listVoucher.get(pos);
+		
+		if (AdminName.equals("-")) {
+			SKToastMessage.showMessage(SupplierPurchaseReportActivity.this, "Please log in with Admin account first!", SKToastMessage.WARNING);
+			showAdminDialog();
+			
+		}else {
+			removeItemFromList(pos, pv.getVid());
+		}
+	}
 	
 	/**
 	 * 
@@ -328,7 +426,7 @@ public class SupplierPurchaseReportActivity extends BaseSherlockActivity{
         
         AlertDialog.Builder alert = new AlertDialog.Builder(SupplierPurchaseReportActivity.this);
     
-        alert.setTitle("Delete Purchasse Voucher - "+vid+" ?");
+        alert.setTitle("Delete Purchase Voucher - "+vid+" ?");
         
         alert.setPositiveButton("YES", new DialogInterface.OnClickListener() {
         	

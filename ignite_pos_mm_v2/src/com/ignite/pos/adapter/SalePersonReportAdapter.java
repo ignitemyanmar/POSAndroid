@@ -115,42 +115,12 @@ public class SalePersonReportAdapter extends BaseAdapter{
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				
-				Intent next = new Intent(aty.getApplication(), SaleDetailReportActivity.class);
-				
-				Bundle bundle = new Bundle();
-				bundle.putString("VoucherNo", sv.getVid());
-				bundle.putString("Date", sv.getVdate());
-				bundle.putString("SalepersonName", sv.getSalePerson());
-				
-				next.putExtras(bundle);
-				aty.startActivity(next);
-			}
-		});
-		
-		holder.btn_vou_update.setOnClickListener(new OnClickListener() {
-			
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				
 				if(mCallback != null){
-					mCallback.onUpdateClick(position);
-				}else {
-					Log.i("", "mcallback is null!");
+					mCallback.onDetailClick(position, v);
 				}
 
 			}
 		});
-		
-		holder.btn_delete.setId(position);
-		holder.btn_delete.setOnClickListener(new OnClickListener() {
-			
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				if(mCallback != null){
-					mCallback.onDeleteClick(position);
-				}
-			}
-		});		
 		
 		return convertView;
 	}
@@ -160,8 +130,7 @@ public class SalePersonReportAdapter extends BaseAdapter{
 	}
     
 	public interface saleCallback{
-		public void onUpdateClick(Integer pos);
-		public void onDeleteClick(Integer pos);
+		public void onDetailClick(Integer pos, View v);
 	}
 
 	static class ViewHolder {
