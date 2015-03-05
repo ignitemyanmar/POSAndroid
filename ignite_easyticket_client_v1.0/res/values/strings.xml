@@ -1,0 +1,8 @@
+<resources>
+
+    <string name="app_name">Easy Ticket</string>
+    <string name="hello_world">Ticketing</string>
+    <string name="menu_settings">Settings</string>
+    <string name="title_activity_main">Easy Ticket</string>
+
+</resources>

@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:descendantFocusability="beforeDescendants"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical" >
+
+    <com.smk.custom.view.CustomTextView
+        android:id="@+id/CustomTextView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:layout_marginTop="10dp"
+        android:text="ထြက္ခြာမည့္ ေန႕" />
+
+    <com.smk.custom.view.CustomButton
+        android:id="@+id/edt_departure_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="10dp"
+        android:background="?android:attr/editTextBackground"
+        android:ems="10"
+        android:gravity="left|center_vertical"
+        android:inputType="textPersonName"
+        android:textColor="?android:attr/editTextColor" >
+
+    </com.smk.custom.view.CustomButton>
+
+    <com.smk.custom.view.CustomTextView
+        android:id="@+id/CustomTextView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:text="ခရီးစဥ္ (မွ)" />
+
+    <Spinner
+        android:id="@+id/sp_from"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="10dp" />
+
+    <com.smk.custom.view.CustomTextView
+        android:id="@+id/CustomTextView01"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:text="ခရီးစဥ္ (သို႕)" />
+
+    <Spinner
+        android:id="@+id/sp_to"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="10dp" />
+
+    <com.smk.custom.view.CustomTextView
+        android:id="@+id/txt_operator_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:text="အခ်ိန္" />
+
+    <Spinner
+        android:id="@+id/sp_time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="10dp" >
+    </Spinner>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal" >
+
+        <com.smk.custom.view.CustomButton
+            android:id="@+id/btn_cancel"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_weight="50"
+            android:background="@drawable/btn_gray"
+            android:maxWidth="320dp"
+            android:text="ထြက္မည္"
+            android:textColor="@color/white" />
+
+        <com.smk.custom.view.CustomButton
+            android:id="@+id/btn_search"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_weight="50"
+            android:background="@drawable/btn_green"
+            android:maxWidth="320dp"
+            android:text="ရွာမည္"
+            android:textColor="@color/white" />
+    </LinearLayout>
+
+</LinearLayout>

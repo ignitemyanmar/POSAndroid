@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="forest_green">#0DFFB5</color>
+    <color name="dark_green">#01AEBF</color>
+    <color name="pussian_blue">#001AFF</color>
+    <color name="golden_brown">#9A6610</color>
+    <color name="golden_brown_dark">#8a5b0e</color>
+    <color name="golden_brown_light">#b89357</color>
+    <color name="golden_brown_light2">#c2a36f</color>
+    <color name="white">#FFFFFF</color>
+    <color name="gray">#CCCCCC</color>
+    <color name="black">#000000</color>
+    <color name="dark_blue">#22409A</color>
+    <color name="red">#FF0000</color>
+    <color name="orange">#FF9408</color>
+    <color name="transparent_dark_green">#CC01AEBF</color>
+    <color name="transparent_dark_blue">#CC22409A</color>
+    <color name="blue">#2073D3</color>
+    <color name="orange_light">#F74C3C</color>
+    <color name="orange_dark">#dd1b09</color>
+    <color name="transprant_black">#99000000</color>
+    <color name="transprant_white">#80FFFFFF</color>
+    <color name="gray_light">#E1E1E1</color>
+</resources>

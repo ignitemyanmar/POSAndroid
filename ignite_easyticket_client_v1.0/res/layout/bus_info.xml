@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/ticketing_background"
+    android:orientation="vertical" >
+
+    <View
+        android:id="@+id/View01"
+        android:layout_width="wrap_content"
+        android:layout_height="2dp"
+        android:background="#FF8C26" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/action_bar_title2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="ခရီးစဥ္"
+            android:textColor="#FF8C26" />
+
+        <TextView
+            android:id="@+id/tDestination"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:paddingLeft="25dp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/txt_user_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="သြားမည့္ရက္"
+            android:textColor="#FF8C26" />
+
+        <TextView
+            android:id="@+id/tTripDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:paddingLeft="25dp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/TextView03"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="၀န္ေဆာင္မွဳ"
+            android:textColor="#FF8C26" />
+
+        <TextView
+            android:id="@+id/tAgentName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:paddingLeft="25dp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/TextView04"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="လက္မွတ္ေစ်း"
+            android:textColor="#FF8C26" />
+
+        <TextView
+            android:id="@+id/tTicketPrice"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:paddingLeft="25dp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/TextView09"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="ထြက္ခြာမည့္အခ်ိန္"
+            android:textColor="#FF8C26" />
+
+        <TextView
+            android:id="@+id/tDepTime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:paddingLeft="25dp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/TextView05"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="ခံုနံပါတ္"
+            android:textColor="#FF8C26" />
+
+        <TextView
+            android:id="@+id/tSeats"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:paddingLeft="25dp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/TextView06"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="လက္မွတ္ေစာင္ေရ"
+            android:textColor="#FF8C26" />
+
+        <TextView
+            android:id="@+id/tTotaltickets"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:paddingLeft="25dp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/TextView07"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="စုစုေပါင္း"
+            android:textColor="#FF8C26" />
+
+        <TextView
+            android:id="@+id/tTotalAmount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:paddingLeft="25dp" />
+
+    </LinearLayout>
+
+</LinearLayout>

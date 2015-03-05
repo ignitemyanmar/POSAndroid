@@ -1,0 +1,46 @@
+<LinearLayout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/LinearLayout1"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal|center_vertical"
+    android:orientation="horizontal"
+    android:padding="5dp" >
+
+    <CheckBox
+        android:id="@+id/chk_remove"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <com.smk.custom.view.CustomTextView
+            android:id="@+id/txt_customer_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Mg Mg"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textSize="18dp" />
+
+        <com.smk.custom.view.CustomTextView
+            android:id="@+id/txt_nrc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="14/(bbz) 1234445"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textSize="16dp" />
+
+        <com.smk.custom.view.CustomTextView
+            android:id="@+id/txt_seat_no"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Seat No: A01"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textSize="18dp" />
+    </LinearLayout>
+
+</LinearLayout>

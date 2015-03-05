@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/RelativeLayout1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <ScrollView
+        android:id="@+id/scrollView1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center" >
+
+                <LinearLayout
+                    android:id="@+id/btn_sale_ticket"
+                    android:layout_width="140dp"
+                    android:layout_height="match_parent"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/bg_menu_item"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="10dp" >
+
+                    <ImageView
+                        android:id="@+id/sale_ticket"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:layout_margin="10dp"
+                        android:src="@drawable/sale_ticket" />
+
+                    <com.smk.custom.view.CustomTextView
+                        android:id="@+id/txt_operator_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="လက္မွတ္ ေရာင္းရန္"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/btn_cancel_order"
+                    android:layout_width="140dp"
+                    android:layout_height="match_parent"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/bg_menu_item"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="10dp" >
+
+                    <ImageView
+                        android:id="@+id/ImageView02"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:layout_margin="10dp"
+                        android:src="@drawable/sale_ticket" />
+
+                    <com.smk.custom.view.CustomTextView
+                        android:id="@+id/CustomTextView01"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="ေရာင္းၿပီး လက္မွတ္ မ်ား သြင္းရန္"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:visibility="visible" >
+
+                <LinearLayout
+                    android:id="@+id/btn_credit_list"
+                    android:layout_width="140dp"
+                    android:layout_height="match_parent"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/bg_menu_item"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="10dp"
+                    android:visibility="visible" >
+
+                    <ImageView
+                        android:id="@+id/credit_list"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:layout_margin="10dp"
+                        android:src="@drawable/credit_list" />
+
+                    <com.smk.custom.view.CustomTextView
+                        android:id="@+id/txt_operator_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="ေန႔အလိုက္ Booking စာရင္းမ်ား"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/all_booking"
+                    android:layout_width="140dp"
+                    android:layout_height="match_parent"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/bg_menu_item"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="10dp"
+                    android:visibility="visible" >
+
+                    <ImageView
+                        android:id="@+id/ImageView01"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:layout_margin="10dp"
+                        android:src="@drawable/credit_list" />
+
+                    <com.smk.custom.view.CustomTextView
+                        android:id="@+id/CustomTextView01"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="Booking စာရင္း အားလံုးၾကည့္ရန္"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:visibility="visible" >
+
+                <LinearLayout
+                    android:id="@+id/btn_search_code"
+                    android:layout_width="140dp"
+                    android:layout_height="match_parent"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/bg_menu_item"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="10dp"
+                    android:visibility="visible" >
+
+                    <ImageView
+                        android:id="@+id/ImageView04"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:layout_margin="10dp"
+                        android:src="@drawable/credit_list" />
+
+                    <com.smk.custom.view.CustomTextView
+                        android:id="@+id/CustomTextView02"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="Booking Code ႏွင့္ ရွာရန္"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/LinearLayout02"
+                    android:layout_width="140dp"
+                    android:layout_height="match_parent"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/bg_menu_item"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="10dp"
+                    android:visibility="invisible" >
+
+                    <ImageView
+                        android:id="@+id/ImageView03"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:layout_margin="10dp"
+                        android:src="@drawable/credit_list" />
+
+                    <com.smk.custom.view.CustomTextView
+                        android:id="@+id/CustomTextView03"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="Booking Code ႏွင့္ ရွာရန္"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+    </ScrollView>
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="wrap_content"
+        android:layout_height="200dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/ticket" />
+
+    <TextView
+        android:id="@+id/txt_notrip"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="10dp"
+        android:gravity="center"
+        android:text="Power by Ignite Software Solution"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:typeface="serif" />
+
+</RelativeLayout>

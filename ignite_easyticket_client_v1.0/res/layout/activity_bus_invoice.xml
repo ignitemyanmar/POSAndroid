@@ -1,0 +1,178 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/screen_main"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#ffffff"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:id="@+id/screen"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#ffffff"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:visibility="visible" >
+
+        <ImageView
+            android:id="@+id/imageView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ignite_small" />
+
+        <com.smk.custom.view.CustomTextView
+            android:id="@+id/txt_document"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:padding="5dp"
+            android:text="Invoice"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp" >
+        </LinearLayout>
+
+        <View
+            android:id="@+id/view1"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginTop="10dp"
+            android:background="#000" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp" >
+
+            <com.smk.custom.view.CustomTextView
+                android:id="@+id/txt_trip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Trip to :" />
+            
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp" >
+
+            <com.smk.custom.view.CustomTextView
+                android:id="@+id/txt_customer_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ေဒၚေအးေအး" />
+
+            <com.smk.custom.view.CustomTextView
+                android:id="@+id/txt_status"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:text="Status: Buy" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp" >
+
+            <com.smk.custom.view.CustomTextView
+                android:id="@+id/txt_agent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ELite" />
+
+            <com.smk.custom.view.CustomTextView
+                android:id="@+id/txt_depature_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:text="Date : 12/03/2014" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp" >
+
+            <com.smk.custom.view.CustomTextView
+                android:id="@+id/txt_depature_time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:text="Time : 8:00 PM" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp" >
+
+            <com.smk.custom.view.CustomTextView
+                android:id="@+id/textView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="40"
+                android:text="ခံုနံပါတ္" />
+
+            <com.smk.custom.view.CustomTextView
+                android:id="@+id/TextView06"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_weight="20"
+                android:gravity="right"
+                android:text="ေစ်းႏွဳန္း" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ticket_item_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+        </LinearLayout>
+
+        <com.smk.custom.view.CustomTextView
+            android:id="@+id/View01"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="2dp"
+            android:background="#000" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <com.smk.custom.view.CustomTextView
+                android:id="@+id/txt_grand_total"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="right"
+                android:text="Grand Total :28000" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <com.smk.custom.view.CustomTextView
+        android:id="@+id/txt_notrip"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:gravity="center_horizontal"
+        android:text="Your Ticket"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textSize="22dp"
+        android:typeface="sans" />
+
+    <View
+        android:id="@+id/View02"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginTop="10dp"
+        android:background="#000" />
+
+</LinearLayout>

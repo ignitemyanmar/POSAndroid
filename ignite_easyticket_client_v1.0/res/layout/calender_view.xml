@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/calender_header_bg"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/prevMonth"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="0.05"
+            android:background="@drawable/calender_prev_month_bg"
+            android:drawableLeft="@drawable/calender_pre_icon" />
+
+        <Button
+            android:id="@+id/currentMonth"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="0.69"
+            android:background="@android:color/transparent"
+            android:text="January"
+            android:textSize="16dp" />
+
+        <Button
+            android:id="@+id/nextMonth"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="0.06"
+            android:background="@drawable/calender_next_month_bg"
+            android:drawableRight="@drawable/calender_next_icon" />
+
+    </LinearLayout>
+
+    <GridView
+        android:id="@+id/grid_week_day"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_gravity="center_vertical"
+        android:listSelector="@drawable/calender_grid_cell_default_bg"
+        android:numColumns="7" >
+
+    </GridView>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" >
+    </LinearLayout>
+
+    <GridView
+        android:id="@+id/calendar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="20dp"
+        android:listSelector="@drawable/calender_grid_cell_default_bg"
+        android:numColumns="7" >
+
+    </GridView>
+
+    <GridView
+        android:id="@+id/grid_month_year"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="20dp"
+        android:clickable="false"
+        android:focusable="false"
+        android:listSelector="@drawable/calender_grid_cell_default_bg"
+        android:numColumns="3"
+        android:padding="0dp"
+        android:visibility="gone" >
+
+    </GridView>
+
+</LinearLayout>

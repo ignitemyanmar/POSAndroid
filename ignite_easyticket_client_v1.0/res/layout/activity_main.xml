@@ -1,0 +1,17 @@
+<LinearLayout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/LinearLayout1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:background="#fff"
+    android:gravity="center_horizontal|center_vertical"
+    android:orientation="vertical" >
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="222dp"
+        android:layout_height="139dp"
+        android:src="@drawable/easy_ticket" />
+
+</LinearLayout>
