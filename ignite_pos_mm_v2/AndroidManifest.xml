@@ -17,11 +17,13 @@
         
         <activity
             android:name=".MainActivity"
-            android:label="@string/title_activity_main" android:screenOrientation="sensorLandscape">
+            android:label="@string/title_activity_main" 
+            android:screenOrientation="sensorLandscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
         
         <activity android:name="MainFragment" android:screenOrientation="sensorLandscape"></activity>
@@ -94,6 +96,17 @@
         <activity android:name="UpdateBuyerInfoEdit" android:screenOrientation="sensorLandscape" android:windowSoftInputMode="adjustPan"></activity>
         <activity android:name="CreditBuyerReportActivity" android:screenOrientation="sensorLandscape" android:windowSoftInputMode="adjustPan"></activity>
         <activity android:name="CreditSupplierReportActivity" android:screenOrientation="sensorLandscape" android:windowSoftInputMode="adjustPan"></activity>
+        <activity 
+            android:name=".BusTicketSaleReportActivity" 
+            android:screenOrientation="sensorLandscape" 
+            android:windowSoftInputMode="adjustPan">
+            
+                <intent-filter>
+			        <action android:name="android.intent.action.SEND" />
+			        <category android:name="android.intent.category.DEFAULT" />
+			        <data android:mimeType="text/plain" />
+    			</intent-filter>
+        </activity>
         
     </application>
 

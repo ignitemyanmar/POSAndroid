@@ -12,8 +12,6 @@ import com.ignite.pos.database.util.OnDelete;
 import com.ignite.pos.database.util.OnSave;
 import com.ignite.pos.database.util.OnSelect;
 import com.ignite.pos.database.util.OnUpdate;
-import com.ignite.pos.model.ItemList;
-import com.ignite.pos.model.PurchaseVoucher;
 import com.ignite.pos.model.SaleVouncher;
 
 public class SaleVouncherController extends DatabaseManager{

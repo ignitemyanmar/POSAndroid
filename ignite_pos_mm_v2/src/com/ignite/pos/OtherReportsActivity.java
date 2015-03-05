@@ -20,6 +20,7 @@ public class OtherReportsActivity extends SherlockActivity{
 	private RelativeLayout layout_add_new;
 	private Button btn_credit_buyer_report;
 	private Button btn_credit_supplier_report;
+	private Button btn_bus_ticket_sale_report;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +41,7 @@ public class OtherReportsActivity extends SherlockActivity{
 		title.setText("အျခားမွတ္တမ္းမ်ား");
 		actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
 		
+		btn_bus_ticket_sale_report = (Button)findViewById(R.id.btn_bus_ticket_sale_report);
 		btn_credit_buyer_report = (Button)findViewById(R.id.btn_credit_buyer_report);
 		btn_credit_supplier_report = (Button)findViewById(R.id.btn_credit_supplier_report);
 		btn_sale_history_report = (Button) findViewById(R.id.btn_sale_history_report);
@@ -49,6 +51,7 @@ public class OtherReportsActivity extends SherlockActivity{
 		btn_slow_moving = (Button)findViewById(R.id.btn_slow_moving_report);
 		btn_stock_report = (Button) findViewById(R.id.btn_stock_report);
 		
+		btn_bus_ticket_sale_report.setOnClickListener(clickListener);
 		btn_credit_buyer_report.setOnClickListener(clickListener);
 		btn_credit_supplier_report.setOnClickListener(clickListener);
 		btn_sale_history_report.setOnClickListener(clickListener);
@@ -63,6 +66,9 @@ public class OtherReportsActivity extends SherlockActivity{
 
 		public void onClick(View v) {
 			// TODO Auto-generated method stub
+			if (v == btn_bus_ticket_sale_report) {
+				startActivity(new Intent(OtherReportsActivity.this, BusTicketSaleReportActivity.class));
+			}
 			if (v == btn_credit_supplier_report) {
 				startActivity(new Intent(OtherReportsActivity.this, CreditSupplierReportActivity.class));
 			}

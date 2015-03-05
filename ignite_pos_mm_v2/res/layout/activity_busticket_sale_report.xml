@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res/com.ignite.pos"
+    android:id="@+id/RelativeLayout1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" xmlns:android1="http://schemas.android.com/apk/res/android">
+
+
+
+
+
+
+
+
+
+
+    <LinearLayout
+        android:id="@+id/lyheader1"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingBottom="5dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="5dp" >
+
+        <com.smk.skscalableview.ScalableLinearLayout
+            android:layout_width="250dp"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            app:scale_width="4" >
+
+            <AutoCompleteTextView
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/autocom_operator_name"
+                android:layout_width="230dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:gravity="left|center_vertical"
+                android:hint="all [or] Operator Name" >
+
+                <requestFocus />
+            </AutoCompleteTextView>
+        </com.smk.skscalableview.ScalableLinearLayout>
+
+
+
+        <com.smk.skscalableview.ScalableLinearLayout
+            android:layout_width="250dp"
+            android:layout_height="match_parent"
+            android:layout_marginRight="5dp"
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            app:scale_width="4" >
+
+
+            <com.ignite.custom.view.CustomTextView
+                android:id="@+id/txt_co_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="ေန႔မွ: " />
+
+
+
+
+
+
+
+            <com.ignite.custom.view.CustomButton
+                android:id="@+id/btn_from_date"
+                android:layout_width="230dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_button"
+                android:text="From Date" />
+
+        </com.smk.skscalableview.ScalableLinearLayout>
+
+        <com.smk.skscalableview.ScalableLinearLayout
+            android:layout_width="250dp"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            app:scale_width="4" >
+
+
+            <com.ignite.custom.view.CustomTextView
+                android:id="@+id/txt_contact"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="ေန႔ထိ: " />
+
+
+
+
+
+
+
+
+
+            <com.ignite.custom.view.CustomButton
+                android:id="@+id/btn_to_date"
+                android:layout_width="230dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dp"
+                android:background="@drawable/bg_button"
+                android:text="To Date" />
+
+        </com.smk.skscalableview.ScalableLinearLayout>
+
+
+        <com.smk.skscalableview.ScalableLinearLayout
+            android:layout_width="250dp"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            android:visibility="gone"
+            app:scale_width="4" >
+
+
+            <Spinner
+                android:id="@+id/spn_weekly"
+                style="@android:style/Theme.DeviceDefault"
+                android:layout_width="230dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/bg_button"
+                android:drawSelectorOnTop="true" />
+
+        </com.smk.skscalableview.ScalableLinearLayout>
+
+
+        <com.smk.skscalableview.ScalableLinearLayout
+            android:layout_width="250dp"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            android:visibility="gone"
+            app:scale_width="4" >
+
+
+            <Spinner
+                android:id="@+id/spn_monthly"
+                style="@android:style/Theme.DeviceDefault"
+                android:layout_width="230dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/bg_button"
+                android:drawSelectorOnTop="true" />
+
+        </com.smk.skscalableview.ScalableLinearLayout>
+
+
+        <com.smk.skscalableview.ScalableLinearLayout
+            android:layout_width="250dp"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            app:scale_width="4" >
+
+
+
+
+            <com.ignite.custom.view.CustomButton
+                android:id="@+id/btnSearch"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/bg_btn_darkblue"
+                android:text="ရွာမည္"
+                android:textColor="@color/white" />
+
+        </com.smk.skscalableview.ScalableLinearLayout>
+    </LinearLayout>
+
+
+
+
+
+    <LinearLayout
+        android:id="@+id/lyheader"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_below="@+id/lyheader1"
+        android:layout_margin="10dp"
+        android:background="@drawable/girditem_border"
+        android:gravity="center|center_horizontal|center_vertical"
+        android:orientation="horizontal"
+        android:padding="5dp"
+        android:visibility="gone" >
+
+
+        <com.smk.skscalableview.ScalableTextView
+            android:id="@+id/txt_item_code"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="2dp"
+            android:layout_weight="30"
+            android:gravity="center_vertical|center_horizontal"
+            android:text="-"
+            android:textColor="@color/white"
+            android:textSize="18dp" />
+
+
+        <com.smk.skscalableview.ScalableTextView
+            android:id="@+id/txt_item_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="2dp"
+            android:layout_weight="30"
+            android:gravity="center_vertical|center_horizontal"
+            android:text="-"
+            android:textColor="@color/white"
+            android:textSize="18dp" />
+    </LinearLayout>
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/lyheader"
+        android:orientation="vertical" >
+
+        <include
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            layout="@layout/busticket_report_header" />
+
+        <ListView
+            android:id="@+id/lv_bus_ticket_report"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="3" >
+
+        </ListView>
+
+        <include
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            layout="@layout/saleperson_footer" />
+
+    </LinearLayout>
+
+</RelativeLayout>
