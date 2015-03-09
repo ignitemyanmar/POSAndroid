@@ -23,7 +23,7 @@
             android:layout_marginRight="5dp"
             android:layout_weight="13"
             android:gravity="left|center_vertical"
-            android:text="ဘားကုတ္ နံပါတ္"
+            android:text="ကုတ္ နံပါတ္"
             android:textSize="18dp" />
 
         <com.smk.skscalableview.ScalableTextView
@@ -53,7 +53,7 @@
             android:layout_marginRight="5dp"
             android:layout_weight="13"
             android:gravity="left|center_vertical"
-            android:text="ကားဂိတ္အမည္"
+            android:text="ကားဂိတ္"
             android:textSize="18dp" />
 
         <com.smk.skscalableview.ScalableTextView
@@ -93,7 +93,8 @@
             android:layout_weight="13"
             android:gravity="right|center_vertical"
             android:text="စုစုေပါင္း"
-            android:textSize="18dp" />
+            android:textSize="18dp" 
+            android:layout_marginRight="10dp"/>
 
         <com.smk.skscalableview.ScalableLinearLayout
             android:id="@+id/layout_detail"

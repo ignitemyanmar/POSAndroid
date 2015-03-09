@@ -9,15 +9,13 @@
     <LinearLayout
         android:id="@+id/LinearLayout1"
         android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
+        android:layout_height="80dp"
         android:layout_marginBottom="2dp"
         android:layout_marginTop="2dp"
         android:clickable="false"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:padding="10dp" >
+        android:padding="5dp" >
 
         <com.smk.skscalableview.ScalableTextView
             android:id="@+id/txt_bar_code"
@@ -94,30 +92,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="13"
+            android:drawableRight="@drawable/rightarrow"
             android:gravity="right|center_vertical"
             android:text="-"
-            android:textSize="18dp" />
+            android:textSize="18dp"
+            android:drawablePadding="10dp" />
 
-        <com.smk.skscalableview.ScalableLinearLayout
-            android:id="@+id/layout_detail"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="17"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:visibility="gone" >
-
-            <com.ignite.custom.view.CustomButton
-                android:id="@+id/btn_view_detail"
-                android:layout_width="120dp"
-                android:layout_height="match_parent"
-                android:layout_marginRight="5dp"
-                android:background="@drawable/girditem_border"
-                android:padding="5dp"
-                android:text="အ ေသးစိတ္"
-                android:textColor="@color/white"
-                android:textSize="16dp" />
-        </com.smk.skscalableview.ScalableLinearLayout>
     </LinearLayout>
 
     <View

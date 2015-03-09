@@ -69,6 +69,7 @@ public class BusTicketReportAdapter extends BaseAdapter{
 		holder.txt_date.setText(sale.getConfirmDate());
 		holder.txt_customer_name.setText(sale.getCustomerName());
 		holder.txt_operator_name.setText(sale.getOperatorName());
+		
 		holder.txt_trip.setText(sale.getTrip());
 		holder.txt_seat_count.setText(sale.getSeatCount()+"");
 		holder.txt_seat_price.setText(sale.getSeatPrice()+"");

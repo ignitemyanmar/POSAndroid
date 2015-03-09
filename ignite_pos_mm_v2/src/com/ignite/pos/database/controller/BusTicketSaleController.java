@@ -266,7 +266,7 @@ public class BusTicketSaleController extends DatabaseManager{
 					VALUE[0] = fromDate;
 					VALUE[1] = toDate;
 					VALUE[2] = operatorName;
-					WHERE = FIELD_NAME[11]+" >= ? and "+FIELD_NAME[11]+" <= ? and "+FIELD_NAME[3]+" = ?";
+					WHERE = FIELD_NAME[11]+" >= ? and "+FIELD_NAME[11]+" <= ? and "+FIELD_NAME[3]+" = ? COLLATE NOCASE";
 				}
 				
 				//String GROUP_BY = FIELD_NAME[0];
@@ -366,6 +366,73 @@ public class BusTicketSaleController extends DatabaseManager{
 		}
 
 	};
+	
+	//Select Operator Names - Group by
+	public List<Object> selectOperators() {
+		// TODO Auto-generated method stub
+		try {
+			String[] FROM = {
+					FIELD_NAME[0], 
+					FIELD_NAME[1],
+					FIELD_NAME[2], 
+					FIELD_NAME[3],
+					FIELD_NAME[4],
+					FIELD_NAME[5],
+					FIELD_NAME[6],
+					FIELD_NAME[7],
+					FIELD_NAME[8],
+					FIELD_NAME[9],
+					FIELD_NAME[10],
+					FIELD_NAME[11]
+				};
+			
+			String GROUP_BY = FIELD_NAME[3];
+			String ORDER_BY = FIELD_NAME[3]+ " ASC";
+			
+			sale_list = new ArrayList<Object>();
+			SQLiteDatabase db = getReadableDatabase();
+			Cursor cursor = db.query(TABLE_NAME, FROM, null, null, GROUP_BY, null, ORDER_BY);
+			
+			Log.i("","Data count :" + cursor.getCount());
+			
+			try {
+				if (cursor.moveToFirst()) {
+			        do {
+			        	BusTicketSale sv = new BusTicketSale();
+			        	
+			        	sv.setId(cursor.getInt(0));
+			        	sv.setBarcodeNo(cursor.getString(1));
+			        	sv.setCustomerName(cursor.getString(2));
+			        	sv.setOperatorName(cursor.getString(3));
+			        	sv.setTrip(cursor.getString(4));
+			        	sv.setDate(cursor.getString(5));
+			        	sv.setTime(cursor.getString(6));
+			        	sv.setBusClass(cursor.getString(7));
+			        	sv.setSeatNo(cursor.getString(8));
+			        	sv.setSeatCount(cursor.getInt(9));
+			        	sv.setSeatPrice(cursor.getInt(10));
+			        	sv.setConfirmDate(cursor.getString(11));
+			        		        	
+			        	sale_list.add(sv);
+			        } while (cursor.moveToNext());
+			    }
+			} catch (Exception e) {
+				// TODO: handle exception
+				e.printStackTrace();
+			} finally {
+				cursor.close();
+				db.close();
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		} finally {
+			if(complete != null){
+				complete.onComplete();
+			}
+		}
+		return sale_list;
+	}
 
 
 	

@@ -107,6 +107,7 @@
 			        <data android:mimeType="text/plain" />
     			</intent-filter>
         </activity>
+        <activity android:name="BusTicketSaleDetailReportActivity" android:screenOrientation="sensorLandscape" android:windowSoftInputMode="adjustPan"></activity>
         
     </application>
 

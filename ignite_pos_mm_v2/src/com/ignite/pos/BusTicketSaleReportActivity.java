@@ -13,6 +13,8 @@ import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -47,7 +49,6 @@ import com.smk.skalertmessage.SKToastMessage;
 	private String currentDate;
 	private String selectedFromDate;
 	private String selectedToDate;
-	private List<Object> listItemCode;
 	private Button btn_print;
 	private List<Object> busTicketList;
 	
@@ -72,6 +73,7 @@ import com.smk.skalertmessage.SKToastMessage;
 		todate = (Button)findViewById(R.id.btn_to_date);
 		search = (Button)findViewById(R.id.btnSearch);
 		lv_bus_ticket_report = (ListView) findViewById(R.id.lv_bus_ticket_report);
+		lv_bus_ticket_report.setDivider(null);
 		txt_grand_total = (TextView) findViewById(R.id.txtTotal);
 		
 		fromdate.setOnClickListener(clickListener);
@@ -93,11 +95,10 @@ import com.smk.skalertmessage.SKToastMessage;
 		selectedToDate = todate.getText().toString();
 		
 		//Get Data from Bus Ticket App & Save 
-		//saveBusTicket();
 		getBusTicket();
 		
 		//Get Auto Operator Name
-		//getOperatorName();
+		getOperators();
 		
 	}
 	
@@ -158,7 +159,7 @@ import com.smk.skalertmessage.SKToastMessage;
         	BusTicketSaleController busControl = (BusTicketSaleController)dbManager;
     		busControl.save(busTicketList);
     		
-    		Toast.makeText(getApplicationContext(), "saved", Toast.LENGTH_SHORT).show();
+    		//Toast.makeText(getApplicationContext(), "saved", Toast.LENGTH_SHORT).show();
 		}
 	}
 
@@ -176,8 +177,8 @@ import com.smk.skalertmessage.SKToastMessage;
 					dbManager = new BusTicketSaleController(BusTicketSaleReportActivity.this);
 					BusTicketSaleController control = (BusTicketSaleController) dbManager;
 					listBusTicket = new ArrayList<Object>();
-					//listBusTicket = control.select(selectedOperatorName, selectedFromDate, selectedToDate);
-					listBusTicket = control.select();
+					listBusTicket = control.select(selectedOperatorName, selectedFromDate, selectedToDate);
+					//listBusTicket = control.select();
 					
 					Log.i("", "List Bus Ticket: "+listBusTicket.toString());
 					
@@ -189,7 +190,29 @@ import com.smk.skalertmessage.SKToastMessage;
 						lv_bus_ticket_report.setAdapter(null);
 						txt_grand_total.setText("0.00");
 					}
-						
+					
+					lv_bus_ticket_report.setOnItemClickListener(new OnItemClickListener() {
+
+						public void onItemClick(AdapterView<?> parent,
+								View view, int position, long id) {
+							// TODO Auto-generated method stub
+							
+							dbManager = new BusTicketSaleController(BusTicketSaleReportActivity.this);
+							BusTicketSaleController control = (BusTicketSaleController) dbManager;
+							listBusTicket = new ArrayList<Object>();
+							listBusTicket = control.select();
+							
+							if (listBusTicket != null && listBusTicket.size() > 0) {
+								BusTicketSale bus = (BusTicketSale)listBusTicket.get(position);
+								
+								Bundle bundle = new Bundle();
+								bundle.putString("Barcode", bus.getBarcodeNo());
+								
+								startActivity(new Intent(BusTicketSaleReportActivity.this, BusTicketSaleDetailReportActivity.class).putExtras(bundle));
+							}
+						}
+					});
+					
 					GrandTotal();
 				}
 						
@@ -297,29 +320,32 @@ import com.smk.skalertmessage.SKToastMessage;
 		}
 	};
 	
-	private void getItemCode()
+	private void getOperators()
 	{
-		dbManager = new ItemListController(this);
-		ItemListController itemControl = (ItemListController)dbManager;
-		listItemCode = new ArrayList<Object>();
+		List<Object> listBusOperator;
+		dbManager = new BusTicketSaleController(this);
+		BusTicketSaleController busControl = (BusTicketSaleController)dbManager;
+		listBusOperator = new ArrayList<Object>();
 		
-		listItemCode.add(new ItemList("All"));
-		listItemCode.addAll(itemControl.select());
+		BusTicketSale bs = new BusTicketSale();
+		bs.setOperatorName("All");
+		listBusOperator.add(bs);
+		listBusOperator.addAll(busControl.selectOperators());
 		
-		Log.i("", "Item Code List: "+listItemCode.toString());
+		Log.i("", "Operator List: "+listBusOperator.toString());
 		
 		//Change List<Object> to String Array
-		String[] itemArray = new String[listItemCode.size()];
+		String[] operatorArray = new String[listBusOperator.size()];
 		
-		for (int i = 0; i < listItemCode.size(); i++) {
+		for (int i = 0; i < listBusOperator.size(); i++) {
 			
-			ItemList itemObj = (ItemList)listItemCode.get(i);
-			itemArray[i] = itemObj.getItemName(); 
+			BusTicketSale busObj = (BusTicketSale)listBusOperator.get(i);
+			operatorArray[i] = busObj.getOperatorName(); 
 			
 		}
 		
 		ArrayAdapter<String> adapter = 
-		        new ArrayAdapter<String>(this, R.layout.custom_autocomplete_view, itemArray);
+		        new ArrayAdapter<String>(this, R.layout.custom_autocomplete_view, operatorArray);
 		autocom_operator_name.setAdapter(adapter);
 		
 		// specify the minimum type of characters before drop-down list is shown

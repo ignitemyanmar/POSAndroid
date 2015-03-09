@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res/com.ignite.pos"
+    android:id="@+id/RelativeLayout1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:id="@+id/lyheader"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="5dp" 
+        android:background="@drawable/girditem_border"
+        android:layout_margin="5dp">
+
+        <com.ignite.custom.view.CustomTextView
+            android:id="@+id/txt_bar_code"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="50"
+            android:gravity="center"
+            android:text="000000000000"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@color/white" />
+
+        <com.ignite.custom.view.CustomTextView
+            android:id="@+id/txt_confirm_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="50"
+            android:gravity="center"
+            android:text="00/00/0000"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@color/white" />
+ 
+    </LinearLayout>
+
+    <ScrollView
+        android:id="@+id/scrollView1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/lyheader" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal" >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_weight="70"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:paddingLeft="50dp" >
+
+                    <com.smk.skscalableview.ScalableTextView
+                        android:id="@+id/ScalableTextView1"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_margin="9dp"
+                        android:gravity="center_vertical|left"
+                        android:text="၀ယ္သူ : "
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                    <com.smk.skscalableview.ScalableTextView
+                        android:id="@+id/ScalableTextView2"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_margin="9dp"
+                        android:gravity="center_vertical|left"
+                        android:text="ကားဂိတ္ အမည္ : "
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                    <com.smk.skscalableview.ScalableTextView
+                        android:id="@+id/ScalableTextView3"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_margin="9dp"
+                        android:gravity="center_vertical|left"
+                        android:text="ခရီးစဥ္ : "
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                    <com.smk.skscalableview.ScalableTextView
+                        android:id="@+id/ScalableTextView4"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_margin="9dp"
+                        android:gravity="center_vertical|left"
+                        android:text="ထြက္ခြာမည့္ ရက္ : "
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                    <com.smk.skscalableview.ScalableTextView
+                        android:id="@+id/ScalableTextView5"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_margin="9dp"
+                        android:gravity="center_vertical|left"
+                        android:text="ထြက္ခြာမည့္ အခ်ိန္ : "
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                    <com.smk.skscalableview.ScalableTextView
+                        android:id="@+id/ScalableTextView6"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_margin="9dp"
+                        android:gravity="center_vertical|left"
+                        android:text="ကား အမ်ိဳးအစား : "
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                    <com.smk.skscalableview.ScalableTextView
+                        android:id="@+id/ScalableTextView7"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_margin="9dp"
+                        android:gravity="center_vertical|left"
+                        android:text="ခံု နံပါတ္ မ်ား : "
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                    <com.smk.skscalableview.ScalableTextView
+                        android:id="@+id/ScalableTextView8"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_margin="9dp"
+                        android:gravity="center_vertical|left"
+                        android:text="ခံု အေရအတြက္ : "
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                    <com.smk.skscalableview.ScalableTextView
+                        android:id="@+id/ScalableTextView9"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_margin="9dp"
+                        android:gravity="center_vertical|left"
+                        android:text="ခံု ေစ်းႏႈန္း : "
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                    <com.smk.skscalableview.ScalableTextView
+                        android:id="@+id/ScalableTextView10"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_margin="9dp"
+                        android:gravity="center_vertical|left"
+                        android:text="က်သင့္ ေငြ : "
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="30"
+                    android:orientation="vertical" >
+
+                    <com.smk.skscalableview.ScalableTextView
+                        android:id="@+id/txt_customer"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_margin="9dp"
+                        android:gravity="center_vertical|left"
+                        android:text="-"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                    <View
+                        android:id="@+id/view1"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/dark_blue" />
+
+                    <com.smk.skscalableview.ScalableTextView
+                        android:id="@+id/txt_operator"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_margin="9dp"
+                        android:gravity="center_vertical|left"
+                        android:text="-"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                    <View
+                        android:id="@+id/View07"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/dark_blue" />
+
+                    <com.smk.skscalableview.ScalableTextView
+                        android:id="@+id/txt_trip"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_margin="9dp"
+                        android:gravity="center_vertical|left"
+                        android:text="-"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                    <View
+                        android:id="@+id/View06"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/dark_blue" />
+
+                    <com.smk.skscalableview.ScalableTextView
+                        android:id="@+id/txt_date"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_margin="9dp"
+                        android:gravity="center_vertical|left"
+                        android:text="-"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                    <View
+                        android:id="@+id/View05"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/dark_blue" />
+
+                    <com.smk.skscalableview.ScalableTextView
+                        android:id="@+id/txt_time"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_margin="9dp"
+                        android:gravity="center_vertical|left"
+                        android:text="-"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                    <View
+                        android:id="@+id/View04"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/dark_blue" />
+
+                    <com.smk.skscalableview.ScalableTextView
+                        android:id="@+id/txt_bus_class"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_margin="9dp"
+                        android:gravity="center_vertical|left"
+                        android:text="-"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                    <View
+                        android:id="@+id/View03"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/dark_blue" />
+
+                    <com.smk.skscalableview.ScalableTextView
+                        android:id="@+id/txt_seats"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_margin="9dp"
+                        android:gravity="center_vertical|left"
+                        android:text="-"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                    <View
+                        android:id="@+id/View02"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/dark_blue" />
+
+                    <com.smk.skscalableview.ScalableTextView
+                        android:id="@+id/txt_seat_count"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_margin="9dp"
+                        android:gravity="center_vertical|left"
+                        android:text="0"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                    <View
+                        android:id="@+id/View01"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/dark_blue" />
+
+                    <com.smk.skscalableview.ScalableTextView
+                        android:id="@+id/txt_seat_price"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_margin="9dp"
+                        android:gravity="center_vertical|left"
+                        android:text="0"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                    <View
+                        android:id="@+id/View09"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/dark_blue" />
+
+                    <com.smk.skscalableview.ScalableTextView
+                        android:id="@+id/txt_amount"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_margin="9dp"
+                        android:gravity="center_vertical|left"
+                        android:text="0"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+</RelativeLayout>
