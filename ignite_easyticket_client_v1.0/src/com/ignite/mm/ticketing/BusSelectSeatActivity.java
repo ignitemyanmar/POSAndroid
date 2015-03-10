@@ -26,6 +26,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -150,8 +151,9 @@ import com.smk.skalertmessage.SKToastMessage;
 		
 		//Get TodayDate
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		currentDate = sdf.format(new Date());
-		todayDate = changeDate(currentDate);
+		todayDate = sdf.format(new Date());
+		
+		Log.i("", "Today date: "+todayDate);
 		
 		//Get Current Time
 		SimpleDateFormat sdf2 = new SimpleDateFormat("HH:mm:ss");
@@ -436,19 +438,17 @@ import com.smk.skalertmessage.SKToastMessage;
 		        				isBooking = 0;
 		        				//getSeatPlan();
 		        				
+		        				Log.i("", "Bundle to send.............: "+bundle.toString());
+		        				
 		        				// Create the text message with a string
 		        				Intent sendIntent = new Intent();
 		        				sendIntent.setAction(Intent.ACTION_SEND);
 		        				sendIntent.putExtras(bundle);
-		        				//sendIntent.putExtra("sendAddress", address);
 		        				sendIntent.setType("text/plain");
 		        				
 		        				// Verify that the intent will resolve to an activity
 		        				if (sendIntent.resolveActivity(getPackageManager()) != null) {
-		        				    
-		        					Toast.makeText(getBaseContext(), "Sending", Toast.LENGTH_SHORT).show();
 		        					startActivity(sendIntent);
-		        					//finish();
 		        				}
 		        			}
 							

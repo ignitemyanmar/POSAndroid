@@ -84,21 +84,7 @@ public class UserLogin extends SherlockActivity {
 			}
 			//for Login button
 			if (v == buttons[0]) {
-				
-/*				if (checkFields()) {
-					String email = txtEmail.getText().toString();
-					String password = txtPassword.getText().toString();
-					
-					if (email.equals("123") && password.equals("123")) {
-						startActivity(new Intent(ctx, BusOperatorActivity.class));
-					}else {
-						SKToastMessage.showMessage(UserLogin.this, "wrong!", SKToastMessage.ERROR);
-					}
-				}*/
 
-				if (isSkip) {
-					
-				}
 				if(connectionDetector.isConnectingToInternet()){
 					
 					if(checkFields()){
@@ -147,6 +133,7 @@ public class UserLogin extends SherlockActivity {
 									//Intent intent = new Intent(getApplicationContext(),	BusMenuActivity.class);
 									Intent intent = new Intent(getApplicationContext(),	BusOperatorActivity.class);
 			   						startActivity(intent);
+			   						finish();
 								}
 							}
 							
@@ -186,7 +173,7 @@ public class UserLogin extends SherlockActivity {
 					finish();
 					startActivity(intent);
 				}
-			}
+			}//End Log in button
 			
 			//for skip button
 			if(v == buttons[1])

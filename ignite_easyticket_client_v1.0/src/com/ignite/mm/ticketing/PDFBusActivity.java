@@ -17,6 +17,8 @@ import android.graphics.Bitmap.CompressFormat;
 import android.graphics.Matrix;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.Settings.System;
 import android.util.Log;
 import android.view.View;
 import android.view.View.MeasureSpec;
@@ -41,7 +43,7 @@ import com.itextpdf.text.pdf.PdfWriter;
 
 @SuppressLint("SdCardPath")
 public class PDFBusActivity extends BaseSherlockActivity {
-	private final static String PDF_FILE_PATH = "/sdcard/external_sd/IgniteEasyTticket/";
+	private final static String PDF_FILE_PATH = Environment.getExternalStorageDirectory()+"/IgniteEasyTicket/";
 	private ActionBar actionBar;
 	private TextView actionBarTitle;
 	private ImageButton actionBarBack;
@@ -116,7 +118,9 @@ public class PDFBusActivity extends BaseSherlockActivity {
 
 		public void onClick(View v) {
 			if (v == actionBarBack) {
-				finish();
+				closeAllActivities();
+				UserLogin login = new UserLogin();
+				login.finish();
 			}
 		}
 	};
@@ -355,5 +359,15 @@ public class PDFBusActivity extends BaseSherlockActivity {
 		}
 
 		return true;
+	}
+	
+	@Override
+	public void onBackPressed() {
+		// TODO Auto-generated method stub
+		super.onBackPressed();
+		closeAllActivities();
+		UserLogin login = new UserLogin();
+		login.finish();
+		//android.os.Process.killProcess(android.os.Process.myPid());
 	}
 }

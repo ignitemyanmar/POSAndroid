@@ -105,7 +105,7 @@ public class BaseSherlockActivity extends SherlockActivity {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return DateFormat.format("dd/MM/yyyy", StartDate).toString();
+		return DateFormat.format("dd-MM-yyyy", StartDate).toString();
 	}
 	
 }
