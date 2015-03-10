@@ -287,11 +287,20 @@ public class SaleActivity  extends Activity{
         	dbManager = new BusTicketSaleController(SaleActivity.this);
         	BusTicketSaleController busControl = (BusTicketSaleController)dbManager;
     		busControl.save(busTicketList);
-    		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
-    		finish();
-    		
-    		//Toast.makeText(getApplicationContext(), "saved", Toast.LENGTH_SHORT).show();
+    		setOrientation();
 		}
+	}
+	
+	protected void setOrientation() {
+		
+	    int current = getRequestedOrientation();
+	    Log.i("", "Check Orientation: "+current);
+	    // only switch the orientation if not in portrait
+	    if ( current != ActivityInfo.SCREEN_ORIENTATION_PORTRAIT ) {
+	    	setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT );
+	        finish();
+	    }
+	  
 	}
 	
 	private OnItemSelectedListener buyernameClickListener = new OnItemSelectedListener() {
@@ -455,7 +464,6 @@ public class SaleActivity  extends Activity{
 		//clicked = false;
 		//getItems();
 		super.onResume();
-		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
 	}
 	
 	private OnClickListener clickListener = new OnClickListener() {

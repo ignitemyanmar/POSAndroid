@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.format.DateFormat;
+import android.transition.ChangeBounds;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -25,6 +26,7 @@ import android.widget.Toast;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockActivity;
 import com.ignite.pos.adapter.BusTicketReportAdapter;
+import com.ignite.pos.application.BusTicketSaleReportExcelUtility;
 import com.ignite.pos.database.controller.BusTicketSaleController;
 import com.ignite.pos.database.controller.ItemListController;
 import com.ignite.pos.database.util.DatabaseManager;
@@ -204,7 +206,7 @@ import com.smk.skalertmessage.SKToastMessage;
 				  skCalender.show();
 			}
 			if (v == btn_print) {
-				/*SaveFileDialog fileDialog = new SaveFileDialog(BusTicketSaleReportActivity.this);
+				SaveFileDialog fileDialog = new SaveFileDialog(BusTicketSaleReportActivity.this);
 		        fileDialog.setCallbackListener(new SaveFileDialog.Callback() {
 					
 					public void onCancel() {
@@ -222,18 +224,18 @@ import com.smk.skalertmessage.SKToastMessage;
 							if (listBusTicket != null && listBusTicket.size() > 0) {
 								for (int j = 0; j < listBusTicket.size(); j++) {
 									
-									Profit profit = (Profit) listBusTicket.get(j);
+									BusTicketSale busSale = (BusTicketSale) listBusTicket.get(j);
 									
-									String profitDate = profit.getDate();
-									//Split sale date 
-									String[] parts = profitDate.split("-");
+									String saleDate = busSale.getConfirmDate();
+									//Split sale date 									
+									String[] parts = saleDate.split("-");
 									String year = parts[0]; 
 									String month = parts[1];
 									String day = parts[2];
 									
 									String formatedDate = day+"-"+month+"-"+year;
 									
-									((Profit)listBusTicket.get(j)).setDate(formatedDate);
+									((BusTicketSale)listBusTicket.get(j)).setConfirmDate(formatedDate);
 								}
 							}
 
@@ -243,8 +245,8 @@ import com.smk.skalertmessage.SKToastMessage;
 							searchInfoList.add(dmyDateFormat(selectedToDate));
 							
 							if (listBusTicket != null && listBusTicket.size() > 0) {
-								new ProfitReportExcelUtility(listBusTicket, filename, searchInfoList).write();
-								SKToastMessage.showMessage(BusTicketSaleReportActivity.this, filename+".xls is saved in your Device External SD card!", SKToastMessage.SUCCESS);
+								new BusTicketSaleReportExcelUtility(listBusTicket, filename, searchInfoList).write();
+								SKToastMessage.showMessage(BusTicketSaleReportActivity.this, filename+".xls is saved ==> sdcard/POS!", SKToastMessage.SUCCESS);
 							}else {
 								alertDialog("No Data Yet");
 							}
@@ -252,7 +254,7 @@ import com.smk.skalertmessage.SKToastMessage;
 					}
 				});
 		        fileDialog.show();
-		        return;*/
+		        return;
 			}
 		}
 	};
