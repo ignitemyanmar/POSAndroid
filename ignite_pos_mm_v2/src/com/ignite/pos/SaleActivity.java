@@ -4,12 +4,20 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import android.app.ActionBar;
 import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
@@ -27,7 +35,7 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
-import com.actionbarsherlock.app.ActionBar;
+import android.widget.Toast;
 import com.actionbarsherlock.app.SherlockActivity;
 import com.google.gson.Gson;
 import com.ignite.pos.adapter.BuyerSpinnerAdapter;
@@ -36,6 +44,7 @@ import com.ignite.pos.adapter.ItemGridAdapter;
 import com.ignite.pos.adapter.ItemListAdapter;
 import com.ignite.pos.adapter.SubCategoriesListAdapter;
 import com.ignite.pos.application.DeviceUtil;
+import com.ignite.pos.database.controller.BusTicketSaleController;
 import com.ignite.pos.database.controller.BuyerController;
 import com.ignite.pos.database.controller.CategoryController;
 import com.ignite.pos.database.controller.CreditBuyerController;
@@ -47,6 +56,7 @@ import com.ignite.pos.database.controller.SubCategoryController;
 import com.ignite.pos.database.controller.SupplierController;
 import com.ignite.pos.database.util.DatabaseManager;
 import com.ignite.pos.model.BundleListObjet;
+import com.ignite.pos.model.BusTicketSale;
 import com.ignite.pos.model.Buyer;
 import com.ignite.pos.model.Category;
 import com.ignite.pos.model.Credit;
@@ -58,8 +68,8 @@ import com.ignite.pos.model.SubCategory;
 import com.ignite.pos.model.Supplier;
 import com.smk.skalertmessage.SKToastMessage;
 
-@SuppressLint("ShowToast")
-public class SaleActivity  extends SherlockActivity{
+@TargetApi(Build.VERSION_CODES.GINGERBREAD) @SuppressLint("ShowToast")
+public class SaleActivity  extends Activity{
 
 	private ActionBar actionBar;
 	private ImageView icon_pos;
@@ -103,6 +113,7 @@ public class SaleActivity  extends SherlockActivity{
 	private Integer buyerID;
 	public static String creditPaidAmount;
 	private List<Object> creditList;
+	private List<Object> busTicketList;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -110,15 +121,15 @@ public class SaleActivity  extends SherlockActivity{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_vouncher);
 		
-		actionBar = getSupportActionBar();
+		actionBar = getActionBar();
 		actionBar.setCustomView(R.layout.action_bar);
 		icon_pos = (ImageView)actionBar.getCustomView().findViewById(R.id.icon_pos);
-		icon_pos.setVisibility(View.GONE);
+		icon_pos.setVisibility(View.VISIBLE);
 		login = (TextView)actionBar.getCustomView().findViewById(R.id.btnLogin);
 		login.setText(SaleLoginActivity.strname);
 		//login.setText("Ignite");
 		txt_panel_name = (TextView)actionBar.getCustomView().findViewById(R.id.txt_panel_name);
-		txt_panel_name.setVisibility(View.VISIBLE);
+		txt_panel_name.setVisibility(View.GONE);
 		//txt_panel_name.setText("Add New Sale");
 		txt_panel_name.setText("အ ေရာင္း ေဘာင္ ခ်ာ အသစ္");
 		change_mode = (Button)actionBar.getCustomView().findViewById(R.id.btnChange_mode);
@@ -180,7 +191,107 @@ public class SaleActivity  extends SherlockActivity{
 		
 		clicked = false;
 		getItems();
+				
+		getBusTicket(); //Get Bus Ticket Sale data & Save to DB
+	}
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.activity_main, menu);
+		return true;
+	}
+	
+	public boolean onOptionsItemSelected(MenuItem item) {
+
+	    switch(item.getItemId()) {
+	        case R.id.menu_settings:
+	        	
+	        	//Link to Easy Ticket
+				Intent intent;
+				PackageManager manager = getPackageManager();
+				try {
+					intent = manager.getLaunchIntentForPackage("com.ignite.mm.ticketing");
+					
+				    if (intent == null){
+				    	Toast.makeText(SaleActivity.this, "Not Found Application!", Toast.LENGTH_SHORT).show();
+				    	throw new PackageManager.NameNotFoundException();
+				    }else {
+				    	intent.addCategory(Intent.CATEGORY_LAUNCHER);
+				    	intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+					    startActivity(intent);
+					}
+				} catch (PackageManager.NameNotFoundException e) {
+					Toast.makeText(SaleActivity.this, "Not Found Application!", Toast.LENGTH_SHORT).show();
+				}
+				
+	        	return true;
+   	   	}
+		return false;  
+	 }
+	
+	/**
+	 *  Get Bus Ticket Sale Data
+	 */
+	private void getBusTicket() {
+		// TODO Auto-generated method stub
+		// Get intent, action and MIME type
+		Intent intent = getIntent();
+		String action = intent.getAction();
+		String type = intent.getType();
 		
+		if (Intent.ACTION_SEND.equals(action) && type != null) {
+			if ("text/plain".equals(type)) {
+				//handleSendText(intent);
+				saveBusTicket(intent);
+			}else {
+				Log.i("", "Data is not Text!");
+			}
+		}else {
+			Log.i("", "Data Can't receive!");
+		}
+	}
+	
+	/**
+	 *  Save Bus Ticket Sale Data to Database
+	 * @param intent  bus ticket sale data
+	 */
+	private void saveBusTicket(Intent intent) {
+		// TODO Auto-generated method stub
+		
+		Bundle bundle = intent.getExtras();
+		
+		if (bundle != null) {
+			String BarcodeNo = bundle.getString("sale_order_no");
+			String CustomerName = bundle.getString("CustomerName");
+			String OperatorName = bundle.getString("Operator_Name");
+			String Trip = bundle.getString("Bus_Trip");
+			String Trip_Date = bundle.getString("Trip_Date");
+			String Trip_Time = bundle.getString("Trip_Time");
+			String Bus_Class = bundle.getString("Bus_Class");
+			String Selected_Seats = bundle.getString("Selected_Seats");
+			String SeatCount = bundle.getString("SeatCount");
+			String Price = bundle.getString("Price");
+			String ConfirmDate = bundle.getString("ConfirmDate");
+			
+			Log.i("", "rBarcode: "+BarcodeNo+", rCustomerName: "+CustomerName+", rOperator: "+OperatorName);
+			
+			busTicketList = new ArrayList<Object>();
+		    busTicketList.add(new BusTicketSale(BarcodeNo, CustomerName, OperatorName, Trip
+		    		, Trip_Date, Trip_Time, Bus_Class, Selected_Seats, Integer.valueOf(SeatCount), Integer.valueOf(Price), ConfirmDate));
+		}
+
+        Log.i("", "Bus Ticket List Recevie: "+busTicketList.toString());
+        
+        if (busTicketList != null && busTicketList.size() > 0) {
+        	dbManager = new BusTicketSaleController(SaleActivity.this);
+        	BusTicketSaleController busControl = (BusTicketSaleController)dbManager;
+    		busControl.save(busTicketList);
+    		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
+    		finish();
+    		
+    		//Toast.makeText(getApplicationContext(), "saved", Toast.LENGTH_SHORT).show();
+		}
 	}
 	
 	private OnItemSelectedListener buyernameClickListener = new OnItemSelectedListener() {
@@ -344,6 +455,7 @@ public class SaleActivity  extends SherlockActivity{
 		//clicked = false;
 		//getItems();
 		super.onResume();
+		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
 	}
 	
 	private OnClickListener clickListener = new OnClickListener() {
@@ -1316,6 +1428,8 @@ public class SaleActivity  extends SherlockActivity{
 		alert.show();
 		alert.setCancelable(true);
 	}
+	
+	
 	
 }
 

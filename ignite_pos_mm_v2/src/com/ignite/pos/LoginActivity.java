@@ -66,8 +66,8 @@ public class LoginActivity extends SherlockActivity{
 						
 						editor.commit();
 						
-						finish();
 						startActivity(new Intent(LoginActivity.this,AdminMainActivity.class));
+						finish();
 						
 					}else{
 						dbManager = new AdminController(LoginActivity.this);

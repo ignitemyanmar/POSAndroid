@@ -94,9 +94,6 @@ import com.smk.skalertmessage.SKToastMessage;
 		todate.setText(currentDate);
 		selectedToDate = todate.getText().toString();
 		
-		//Get Data from Bus Ticket App & Save 
-		getBusTicket();
-		
 		//Get Auto Operator Name
 		getOperators();
 		
@@ -106,61 +103,6 @@ import com.smk.skalertmessage.SKToastMessage;
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// TODO Auto-generated method stub
 		super.onActivityResult(requestCode, resultCode, data);
-	}
-	
-	private void getBusTicket() {
-		// TODO Auto-generated method stub
-		// Get intent, action and MIME type
-		Intent intent = getIntent();
-		String action = intent.getAction();
-		String type = intent.getType();
-		
-		if (Intent.ACTION_SEND.equals(action) && type != null) {
-			if ("text/plain".equals(type)) {
-				//handleSendText(intent);
-				saveBusTicket(intent);
-			}else {
-				Log.i("", "Data is not Text!");
-			}
-		}else {
-			Log.i("", "Data Can't receive!");
-		}
-	}
-	
-	private void saveBusTicket(Intent intent) {
-		// TODO Auto-generated method stub
-		
-		Bundle bundle = intent.getExtras();
-		
-		if (bundle != null) {
-			String BarcodeNo = bundle.getString("sale_order_no");
-			String CustomerName = bundle.getString("CustomerName");
-			String OperatorName = bundle.getString("Operator_Name");
-			String Trip = bundle.getString("Bus_Trip");
-			String Trip_Date = bundle.getString("Trip_Date");
-			String Trip_Time = bundle.getString("Trip_Time");
-			String Bus_Class = bundle.getString("Bus_Class");
-			String Selected_Seats = bundle.getString("Selected_Seats");
-			String SeatCount = bundle.getString("SeatCount");
-			String Price = bundle.getString("Price");
-			String ConfirmDate = bundle.getString("ConfirmDate");
-			
-			Log.i("", "rBarcode: "+BarcodeNo+", rCustomerName: "+CustomerName+", rOperator: "+OperatorName);
-			
-			busTicketList = new ArrayList<Object>();
-		    busTicketList.add(new BusTicketSale(BarcodeNo, CustomerName, OperatorName, Trip
-		    		, Trip_Date, Trip_Time, Bus_Class, Selected_Seats, Integer.valueOf(SeatCount), Integer.valueOf(Price), ConfirmDate));
-		}
-
-        Log.i("", "Bus Ticket List Recevie: "+busTicketList.toString());
-        
-        if (busTicketList != null && busTicketList.size() > 0) {
-        	dbManager = new BusTicketSaleController(BusTicketSaleReportActivity.this);
-        	BusTicketSaleController busControl = (BusTicketSaleController)dbManager;
-    		busControl.save(busTicketList);
-    		
-    		//Toast.makeText(getApplicationContext(), "saved", Toast.LENGTH_SHORT).show();
-		}
 	}
 
 	private OnClickListener clickListener = new OnClickListener() {
@@ -196,11 +138,6 @@ import com.smk.skalertmessage.SKToastMessage;
 						public void onItemClick(AdapterView<?> parent,
 								View view, int position, long id) {
 							// TODO Auto-generated method stub
-							
-							dbManager = new BusTicketSaleController(BusTicketSaleReportActivity.this);
-							BusTicketSaleController control = (BusTicketSaleController) dbManager;
-							listBusTicket = new ArrayList<Object>();
-							listBusTicket = control.select();
 							
 							if (listBusTicket != null && listBusTicket.size() > 0) {
 								BusTicketSale bus = (BusTicketSale)listBusTicket.get(position);

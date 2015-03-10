@@ -116,43 +116,6 @@ public class AdminMainActivity extends Activity{
 		
 	}
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.activity_main, menu);
-		return true;
-	}
-	
-	public boolean onOptionsItemSelected(MenuItem item) {
-
-	    switch(item.getItemId()) {
-	        case R.id.menu_settings:
-	        	
-	        //	Toast.makeText(getApplicationContext(), "Test", Toast.LENGTH_LONG).show();
-	        	
-	        	//Link to Provider App
-				Intent intent;
-				PackageManager manager = getPackageManager();
-				try {
-					intent = manager.getLaunchIntentForPackage("com.ignite.mm.ticketing");
-					
-				    if (intent == null){
-				    	Toast.makeText(AdminMainActivity.this, "Not Found Application!", Toast.LENGTH_SHORT).show();
-				    	throw new PackageManager.NameNotFoundException();
-				    }else {
-				    	intent.addCategory(Intent.CATEGORY_LAUNCHER);
-				    	intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-					    startActivity(intent);
-					}
-				} catch (PackageManager.NameNotFoundException e) {
-					Toast.makeText(AdminMainActivity.this, "Not Found Application!", Toast.LENGTH_SHORT).show();
-				}
-				
-	        	return true;
-   	   	}
-		return false;  
-	 }
-
 	
 	private OnClickListener clickListener = new OnClickListener() {
 		

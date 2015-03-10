@@ -29,7 +29,14 @@
         <activity android:name="MainFragment" android:screenOrientation="sensorLandscape"></activity>
         <activity android:name="MenuActivity" android:screenOrientation="sensorLandscape"></activity>
         <activity android:name="LoginActivity" android:screenOrientation="sensorLandscape"></activity>
-        <activity android:name="SaleActivity" android:screenOrientation="sensorLandscape" android:windowSoftInputMode="adjustPan"></activity>
+        <activity android:name="SaleActivity" 
+            android:windowSoftInputMode="adjustPan">
+                <intent-filter>
+			        <action android:name="android.intent.action.SEND" />
+			        <category android:name="android.intent.category.DEFAULT" />
+			        <data android:mimeType="text/plain" />
+    			</intent-filter>
+        </activity>
         <activity android:name="AdminMainActivity" android:screenOrientation="sensorLandscape"></activity>
         <activity android:name="AddBarcodeActivity" android:screenOrientation="sensorLandscape"></activity>
         <activity android:name="AddNewCustomerActivity" android:screenOrientation="sensorLandscape"></activity>
@@ -97,15 +104,10 @@
         <activity android:name="CreditBuyerReportActivity" android:screenOrientation="sensorLandscape" android:windowSoftInputMode="adjustPan"></activity>
         <activity android:name="CreditSupplierReportActivity" android:screenOrientation="sensorLandscape" android:windowSoftInputMode="adjustPan"></activity>
         <activity 
-            android:name=".BusTicketSaleReportActivity" 
+            android:name=".BusTicketSaleReportActivity"
             android:screenOrientation="sensorLandscape" 
-            android:windowSoftInputMode="adjustPan">
-            
-                <intent-filter>
-			        <action android:name="android.intent.action.SEND" />
-			        <category android:name="android.intent.category.DEFAULT" />
-			        <data android:mimeType="text/plain" />
-    			</intent-filter>
+            android:windowSoftInputMode="adjustPan"
+            >
         </activity>
         <activity android:name="BusTicketSaleDetailReportActivity" android:screenOrientation="sensorLandscape" android:windowSoftInputMode="adjustPan"></activity>
         
