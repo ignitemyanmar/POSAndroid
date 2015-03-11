@@ -593,9 +593,12 @@ import com.smk.skalertmessage.SKToastMessage;
 				editor.putString("order_date", Date);
 				editor.putString("from", FromCity);
 				editor.putString("to", ToCity);
-				editor.putString("time", Time);
+				editor.putString("time", Time);				
 				editor.commit();
-	        	startActivity(new Intent(getApplicationContext(),	BusBookingListActivity.class));
+				
+				Bundle bundle = new Bundle();
+				bundle.putString("operator_id", OperatorID);				
+	        	startActivity(new Intent(getApplicationContext(),	BusBookingListActivity.class).putExtras(bundle));
 			}
 			
 			if(v == btn_now_booking){
@@ -616,16 +619,12 @@ import com.smk.skalertmessage.SKToastMessage;
 							Log.i("", "Enter here + Agent ID: "+AgentID);
 							getServermsg();
 						}	
-						///startActivity(new Intent(BusSelectSeatActivity.this, PDFBusActivity.class));
-						
-						//bookingDialog.show();
 					}else{
 						connectionDetector.showErrorDialog();
 					}
 				}else{
 					SKToastMessage.showMessage(BusSelectSeatActivity.this, "Please choose the seat.", SKToastMessage.ERROR);
 				}
-				
 			}
 			
 			if(v == btn_check_out){

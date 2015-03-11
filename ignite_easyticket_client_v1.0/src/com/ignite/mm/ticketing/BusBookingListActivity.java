@@ -42,6 +42,7 @@ public class BusBookingListActivity extends BaseSherlockActivity {
 	private Button btn_search;
 	private String BookCode = "";
 	private TextView actionBarTitle2;
+	private String OperatorID;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +62,12 @@ public class BusBookingListActivity extends BaseSherlockActivity {
 		actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
 		
 		setContentView(R.layout.activity_busticketing_credit);
+
+		Bundle bundle = getIntent().getExtras();
+		if (bundle != null) {
+			OperatorID = bundle.getString("operator_id");
+		}
+
 		txt_title = (TextView) findViewById(R.id.txt_title);
 		btn_search = (Button) findViewById(R.id.btn_search);
 		btn_search.setOnClickListener(clickListener);
@@ -104,6 +111,7 @@ public class BusBookingListActivity extends BaseSherlockActivity {
 				finish();
 			}
 			if(v == btn_search){
+				
 				BookingFilterDialog filterDialog = new BookingFilterDialog(BusBookingListActivity.this);
 				filterDialog.setFromCity(fromCities);
 				filterDialog.setToCity(toCities);
@@ -146,12 +154,14 @@ public class BusBookingListActivity extends BaseSherlockActivity {
 			
 		}
 	};
+	
 	private ProgressDialog dialog;
 	protected List<From> fromCities;
 	protected List<To> toCities;
 	protected List<TimesbyOperator> Times;
+	
 	private void getCity() {
-		NetworkEngine.getInstance().getCitybyOperator(AppLoginUser.getAccessToken(), AppLoginUser.getUserID(), new Callback<Cities>() {
+		NetworkEngine.getInstance().getCitybyOperator(AppLoginUser.getAccessToken(), OperatorID, new Callback<Cities>() {
 		
 			public void success(Cities arg0, Response arg1) {
 				// TODO Auto-generated method stub
@@ -167,7 +177,7 @@ public class BusBookingListActivity extends BaseSherlockActivity {
 	}
 	
 	private void getTimeData() {
-		NetworkEngine.getInstance().getTimebyOperator(AppLoginUser.getAccessToken(), AppLoginUser.getUserID() , new Callback<List<TimesbyOperator>>() {
+		NetworkEngine.getInstance().getTimebyOperator(AppLoginUser.getAccessToken(), OperatorID, new Callback<List<TimesbyOperator>>() {
 
 			public void success(List<TimesbyOperator> arg0, Response arg1) {
 				// TODO Auto-generated method stub

@@ -1,6 +1,9 @@
 package com.ignite.mm.ticketing;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import retrofit.Callback;
@@ -11,6 +14,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
@@ -18,6 +22,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
@@ -26,16 +31,20 @@ import android.widget.TextView;
 import com.actionbarsherlock.app.ActionBar;
 import com.ignite.mm.ticketing.application.BaseSherlockActivity;
 import com.ignite.mm.ticketing.clientapi.NetworkEngine;
+import com.ignite.mm.ticketing.custom.listview.adapter.BusOperatorGridAdapter;
 import com.ignite.mm.ticketing.custom.listview.adapter.BusOperatorListViewAdapter;
 import com.ignite.mm.ticketing.custom.listview.adapter.TripsCityAdapter;
 import com.ignite.mm.ticketing.sqlite.database.model.Operator;
 import com.ignite.mm.ticketing.sqlite.database.model.Operators;
 import com.ignite.mm.ticketing.sqlite.database.model.TripsCollection;
+import com.smk.calender.widget.SKCalender;
+import com.smk.calender.widget.SKCalender.Callbacks;
 import com.smk.skconnectiondetector.SKConnectionDetector;
 import com.actionbarsherlock.app.SherlockActivity;
 
 public class BusOperatorActivity extends BaseSherlockActivity {
 
+	private GridView grd_trips_city;
 	private ActionBar actionBar;
 	private TextView actionBarTitle;
 	private ImageButton actionBarBack;
@@ -45,6 +54,7 @@ public class BusOperatorActivity extends BaseSherlockActivity {
 	private ProgressDialog dialog;
 	protected List<Operator> operatorList;
 	private TextView actionBarTitle2;
+	private int NofColumn;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -70,19 +80,39 @@ public class BusOperatorActivity extends BaseSherlockActivity {
 		setContentView(R.layout.activity_bus_operator);
 		
 		lv_bus_operator = (ListView)findViewById(R.id.lv_bus_operator);
-		lv_bus_operator.setOnItemClickListener(itemClicklistener);
+		//lv_bus_operator.setOnItemClickListener(itemClickListener);
 		
-		SKConnectionDetector detector = SKConnectionDetector.getInstance(BusOperatorActivity.this);
+		NofColumn = 2;		
+		grd_trips_city = (GridView) findViewById(R.id.grd_trips_city);
+		grd_trips_city.setNumColumns(NofColumn);
+		grd_trips_city.setOnItemClickListener(operatorClickListener);
 		
-		if (detector.isConnectingToInternet()) {
-			//getAgents();
-			getNotiBooking();
+		SKConnectionDetector skDetector = SKConnectionDetector.getInstance(this);
+		skDetector.setMessageStyle(SKConnectionDetector.VERTICAL_TOASH);
+		if(skDetector.isConnectingToInternet()){
 			getOperators();
-		}else {
-			detector.showErrorMessage();
+			//getNotiBooking();
+		}else{
+			skDetector.showErrorMessage();
 			fadeData();
 		}
+
 	}
+	
+	private OnItemClickListener operatorClickListener = new OnItemClickListener() {
+
+		public void onItemClick(AdapterView<?> parent, View view, int position,
+				long id) {
+			// TODO Auto-generated method stub
+			Bundle bundle = new Bundle();
+			bundle.putString("operator_id", operatorList.get(position).getId());
+			
+			Log.i("", "User's Operator ID: "+operatorList.get(position).getId());
+			
+			startActivity(new Intent(getApplicationContext(), BusTripsCityActivity.class).putExtras(bundle));
+			
+		}
+	};
 	
 	/**
 	 * Get Booking List Notification
@@ -175,8 +205,10 @@ public class BusOperatorActivity extends BaseSherlockActivity {
 					Log.i("", "User access token : "+AppLoginUser.getAccessToken());
 					Log.i("", "Operators List : "+operatorList.toString());
 					
-					BusOperatorListViewAdapter adapter = new BusOperatorListViewAdapter(BusOperatorActivity.this, operatorList);
-					lv_bus_operator.setAdapter(adapter);
+					grd_trips_city.setAdapter(new BusOperatorGridAdapter(BusOperatorActivity.this, operatorList));
+					
+					/*BusOperatorListViewAdapter adapter = new BusOperatorListViewAdapter(BusOperatorActivity.this, operatorList);
+					lv_bus_operator.setAdapter(adapter);*/
 					
 					dialog.dismiss();
 				}
