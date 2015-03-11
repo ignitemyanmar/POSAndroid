@@ -11,7 +11,6 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -192,7 +191,6 @@ public class SaleActivity  extends Activity{
 		clicked = false;
 		getItems();
 				
-		getBusTicket(); //Get Bus Ticket Sale data & Save to DB
 	}
 	
 	@Override
@@ -229,79 +227,6 @@ public class SaleActivity  extends Activity{
    	   	}
 		return false;  
 	 }
-	
-	/**
-	 *  Get Bus Ticket Sale Data
-	 */
-	private void getBusTicket() {
-		// TODO Auto-generated method stub
-		// Get intent, action and MIME type
-		Intent intent = getIntent();
-		String action = intent.getAction();
-		String type = intent.getType();
-		
-		if (Intent.ACTION_SEND.equals(action) && type != null) {
-			if ("text/plain".equals(type)) {
-				//handleSendText(intent);
-				saveBusTicket(intent);
-			}else {
-				Log.i("", "Data is not Text!");
-			}
-		}else {
-			Log.i("", "Data Can't receive!");
-		}
-	}
-	
-	/**
-	 *  Save Bus Ticket Sale Data to Database
-	 * @param intent  bus ticket sale data
-	 */
-	private void saveBusTicket(Intent intent) {
-		// TODO Auto-generated method stub
-		
-		Bundle bundle = intent.getExtras();
-		
-		if (bundle != null) {
-			String BarcodeNo = bundle.getString("sale_order_no");
-			String CustomerName = bundle.getString("CustomerName");
-			String OperatorName = bundle.getString("Operator_Name");
-			String Trip = bundle.getString("Bus_Trip");
-			String Trip_Date = bundle.getString("Trip_Date");
-			String Trip_Time = bundle.getString("Trip_Time");
-			String Bus_Class = bundle.getString("Bus_Class");
-			String Selected_Seats = bundle.getString("Selected_Seats");
-			String SeatCount = bundle.getString("SeatCount");
-			String Price = bundle.getString("Price");
-			String ConfirmDate = bundle.getString("ConfirmDate");
-			
-			Log.i("", "rBarcode: "+BarcodeNo+", rCustomerName: "+CustomerName+", rOperator: "+OperatorName);
-			
-			busTicketList = new ArrayList<Object>();
-		    busTicketList.add(new BusTicketSale(BarcodeNo, CustomerName, OperatorName, Trip
-		    		, Trip_Date, Trip_Time, Bus_Class, Selected_Seats, Integer.valueOf(SeatCount), Integer.valueOf(Price), ConfirmDate));
-		}
-
-        Log.i("", "Bus Ticket List Recevie: "+busTicketList.toString());
-        
-        if (busTicketList != null && busTicketList.size() > 0) {
-        	dbManager = new BusTicketSaleController(SaleActivity.this);
-        	BusTicketSaleController busControl = (BusTicketSaleController)dbManager;
-    		busControl.save(busTicketList);
-    		setOrientation();
-		}
-	}
-	
-	protected void setOrientation() {
-		
-	    int current = getRequestedOrientation();
-	    Log.i("", "Check Orientation: "+current);
-	    // only switch the orientation if not in portrait
-	    if ( current != ActivityInfo.SCREEN_ORIENTATION_PORTRAIT ) {
-	    	setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT );
-	        finish();
-	    }
-	  
-	}
 	
 	private OnItemSelectedListener buyernameClickListener = new OnItemSelectedListener() {
 
