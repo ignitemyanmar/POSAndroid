@@ -140,7 +140,7 @@
                                 android:background="#FF1711" />
 
                             <com.smk.custom.view.CustomTextView
-                                android:id="@+id/textView2"
+                                android:id="@+id/txt_wifi"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:padding="3dp"

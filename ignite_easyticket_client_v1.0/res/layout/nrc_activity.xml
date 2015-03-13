@@ -23,7 +23,7 @@
             android:padding="20dp" >
 
             <com.smk.custom.view.CustomTextView
-                android:id="@+id/textView2"
+                android:id="@+id/txt_wifi"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="ဝယ္သူ အမည္"

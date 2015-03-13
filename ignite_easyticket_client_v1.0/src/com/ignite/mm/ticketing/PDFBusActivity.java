@@ -18,11 +18,12 @@ import android.graphics.Matrix;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.provider.Settings.System;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.view.View.MeasureSpec;
 import android.view.View.OnClickListener;
+import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -31,17 +32,21 @@ import android.widget.Toast;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
+import com.dl.helper.printer.PrinterClass;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
 import com.ignite.barcode.GenerateBarcode;
 import com.ignite.mm.ticketing.application.BaseSherlockActivity;
+import com.ignite.mm.ticketing.application.BluetoothDeviceDialog;
+import com.ignite.mm.ticketing.custom.listview.adapter.DeviceAdapter;
 import com.ignite.mm.ticketing.custom.listview.adapter.PDFBusAdapter;
 import com.ignite.mm.ticketing.sqlite.database.model.AllBusObject;
+import com.ignite.mm.ticketing.sqlite.database.model.Device;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.Image;
 import com.itextpdf.text.pdf.PdfWriter;
 
-@SuppressLint("SdCardPath")
+@SuppressLint({ "SdCardPath", "ShowToast" })
 public class PDFBusActivity extends BaseSherlockActivity {
 	private final static String PDF_FILE_PATH = Environment.getExternalStorageDirectory()+"/IgniteEasyTicket/";
 	private ActionBar actionBar;
@@ -55,7 +60,7 @@ public class PDFBusActivity extends BaseSherlockActivity {
 	private String TripTime = "";
 	private String BusClass = "";
 	private String SeatPrice = "0";
-	private static String Bar_Code_No = "0";
+	public static String Bar_Code_No = "0";
 	public static String TripDate = "";
 	public static String SelectedSeat = "";
 	private static int bitmapWidth = 150;
@@ -63,8 +68,16 @@ public class PDFBusActivity extends BaseSherlockActivity {
 	private String ConfirmDate;
 	private String ConfirmTime;
 	private static ListView lv_bus_booking_sheet;
+	private Bitmap bmTicketView;
+	
+	//Print Ticket Slip - Variables
+	public Handler mhandler = null;
+	public static PrinterClass printerClass = null;
+	private ArrayAdapter<String> mPairedDevicesArrayAdapter = null;
+	public static ArrayAdapter<String> mNewDevicesArrayAdapter = null;
+	public static List<Device> deviceList = new ArrayList<Device>();
+	private DeviceAdapter adapter;
 
-		
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -101,10 +114,11 @@ public class PDFBusActivity extends BaseSherlockActivity {
 
 		lv_bus_booking_sheet = (ListView)findViewById(R.id.lv_bus_booking_sheet);
 		getData();
-		
 	}
 	
-	//Set Data into Adapter
+	/**
+	 *  Set Bus Ticket Data into adapter
+	 */
 	private void getData() {
 		
 		allBusObject = new ArrayList<AllBusObject>();
@@ -177,9 +191,7 @@ public class PDFBusActivity extends BaseSherlockActivity {
 		startActivity(intent);
 	}
 	
-	private Bitmap bmTicketView;
-
-	public boolean printTicket() {
+	public boolean saveTicket() {
 		boolean printed = false;
 		bmTicketView = getWholeListViewItemsToBitmap();
 		
@@ -201,20 +213,113 @@ public class PDFBusActivity extends BaseSherlockActivity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case 1:
-			if (printTicket()) {
-				//changePDF();
+			//Save Ticket
+			if (saveTicket()) {
 				Toast.makeText(
 						this,
-						"Your ticket is printed to " + PDF_FILE_PATH
+						"Your ticket is saved to " + PDF_FILE_PATH
 								+ "BookingSheet", Toast.LENGTH_LONG).show();
 			} else {
-				Toast.makeText(this, "Can't print your ticket!",
+				Toast.makeText(this, "Can't save your ticket!",
 						Toast.LENGTH_LONG).show();
 			}
+			
+			//Print Ticket
+			//If not connected , show dialog for device list
+			//If connected, print directly
+			final Bitmap ticketBitmap = getWholeListViewItemsToBitmap();
+			
+			if (ticketBitmap != null) {
+				if(printerClass.getState() != PrinterClass.STATE_CONNECTED && MainActivity.checkState == false)
+				{
+					BluetoothDeviceDialog deviceDialog = new BluetoothDeviceDialog(PDFBusActivity.this);
+					
+					//Print Setting
+					mPairedDevicesArrayAdapter = new ArrayAdapter<String>(this,
+							R.drawable.device_name);
+					
+					//Paired DeviceList Show
+					if (deviceList != null && deviceList.size() > 0) {
+						adapter = new DeviceAdapter(PDFBusActivity.this, deviceList);
+						deviceDialog.getListView().setAdapter(adapter);	
+					}else {
+						//New DeviceList & Scan
+						mNewDevicesArrayAdapter = new ArrayAdapter<String>(this,
+								R.drawable.device_name);
+						
+						deviceList = new ArrayList<Device>();
+						
+						if(deviceList!=null)
+						{
+							deviceList.clear();
+						}
+						
+						if (!printerClass.IsOpen()) {
+							printerClass.open(PDFBusActivity.this);
+						}
+						
+						mNewDevicesArrayAdapter.clear();
+						printerClass.scan();
+						
+						//Get Device List after scanning
+						deviceList = printerClass.getDeviceList();
+						
+						if (deviceList != null && deviceList.size() > 0) {
+							adapter = new DeviceAdapter(PDFBusActivity.this, deviceList);
+							deviceDialog.getListView().setAdapter(adapter);	
+						}
+					}
+					
+					if (printerClass != null) {
+						if (printerClass.getState() == PrinterClass.STATE_CONNECTED) {
+							Toast.makeText(PDFBusActivity.this, "connected", Toast.LENGTH_LONG).show();	
+							MainActivity.checkState = true;
+						}else if (printerClass.getState() == PrinterClass.STATE_CONNECTING) {
+							Toast.makeText(PDFBusActivity.this, "connecting...", Toast.LENGTH_LONG).show();	
+						}else if(printerClass.getState() == PrinterClass.STATE_SCAN_STOP)
+						{
+							Toast.makeText(PDFBusActivity.this, "scan finished!", Toast.LENGTH_LONG).show();	
+							if (deviceList != null && deviceList.size() > 0) {
+								adapter = new DeviceAdapter(PDFBusActivity.this, deviceList);
+								deviceDialog.getListView().setAdapter(adapter);	
+							}
+						}else if(printerClass.getState() == PrinterClass.STATE_SCANING)
+						{
+							Toast.makeText(PDFBusActivity.this, "scanning....", Toast.LENGTH_LONG).show();	
+							if (deviceList != null && deviceList.size() > 0) {
+								adapter = new DeviceAdapter(PDFBusActivity.this, deviceList);
+								deviceDialog.getListView().setAdapter(adapter);	
+							}
+						}else {
+							//int ss=PrintActivity.pl.getState();
+							Toast.makeText(PDFBusActivity.this, "Not connect!", Toast.LENGTH_LONG).show();	
+						}
+					}
+						
+					deviceDialog.setCallbackListener(new BluetoothDeviceDialog.Callback() {
+						
+						public void onDeviceChoose(int position) {
+							//Connect to Selected Device's Address
+							printerClass.connect(deviceList.get(position).getDeviceAddress());
+							printerClass.printImage(ticketBitmap);
+						}
+					});
+					deviceDialog.show();
+				}else if(printerClass.getState() == PrinterClass.STATE_CONNECTED && MainActivity.checkState == true){
+					try {
+						printerClass.printImage(ticketBitmap);
+					} catch (Exception e) {
+						// TODO: handle exception
+						Toast.makeText(PDFBusActivity.this, "Fail to print!", Toast.LENGTH_LONG);
+					}
+					
+				}
+			}
+			
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
-	}
+	}	
 
 	public Bitmap getResizedBitmap(Bitmap bm, int newWidth, int newHeight) {
 		int width = bm.getWidth();
@@ -359,6 +464,13 @@ public class PDFBusActivity extends BaseSherlockActivity {
 		}
 
 		return true;
+	}	
+	
+	@Override
+	protected void onDestroy() {
+		// TODO Auto-generated method stub
+		printerClass.disconnect();
+		super.onDestroy();
 	}
 	
 	@Override
