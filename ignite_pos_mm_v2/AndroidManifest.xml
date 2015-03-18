@@ -98,6 +98,7 @@
         <activity android:name="CreditSupplierReportActivity" android:screenOrientation="sensorLandscape" android:windowSoftInputMode="adjustPan"></activity>
         <activity android:name=".BusTicketSaleReportActivity" android:screenOrientation="sensorLandscape" android:windowSoftInputMode="adjustPan"></activity>
         <activity android:name="BusTicketSaleDetailReportActivity" android:screenOrientation="sensorLandscape" android:windowSoftInputMode="adjustPan"></activity>
+        <!-- Get Bus SaleTicket Data @POS Database -->
         <activity android:name="BusTicketDataActivity" android:screenOrientation="portrait">
             <intent-filter>
 		        <action android:name="android.intent.action.SEND" />

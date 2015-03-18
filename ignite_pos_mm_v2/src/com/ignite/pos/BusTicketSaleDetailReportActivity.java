@@ -41,6 +41,8 @@ public class BusTicketSaleDetailReportActivity extends BaseSherlockActivity{
 	private String barcode;
 	private List<Object> busDetail;
 	private int position;
+	private TextView txt_customer_ph;
+	private TextView txt_customer_nrc;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +61,8 @@ public class BusTicketSaleDetailReportActivity extends BaseSherlockActivity{
 		txt_bar_code = (TextView)findViewById(R.id.txt_bar_code);
 		txt_confirm_date = (TextView)findViewById(R.id.txt_confirm_date);
 		txt_customer = (TextView)findViewById(R.id.txt_customer);
+		txt_customer_ph = (TextView)findViewById(R.id.txt_buyer_ph);
+		txt_customer_nrc = (TextView)findViewById(R.id.txt_buyer_nrc);
 		txt_operator = (TextView)findViewById(R.id.txt_operator);
 		txt_trip = (TextView)findViewById(R.id.txt_trip);
 		txt_date = (TextView)findViewById(R.id.txt_date);
@@ -87,11 +91,14 @@ public class BusTicketSaleDetailReportActivity extends BaseSherlockActivity{
 			
 			txt_bar_code.setText("ကုတ္နံပါတ္ : "+bus.getBarcodeNo());
 			txt_confirm_date.setText("ေရာင္းသည့္ ေန႔ရက္ : "+bus.getConfirmDate());
-			txt_customer.setText(bus.getCustomerName());
+			txt_customer.setText(bus.getBuyerName());
+			txt_customer_ph.setText(bus.getBuyerPhone());
+			txt_customer_nrc.setText(bus.getBuyerNRC());
 			txt_operator.setText(bus.getOperatorName());
 			txt_trip.setText(bus.getTrip());
 			txt_date.setText(bus.getDate());
 			txt_time.setText(bus.getTime());
+			
 			txt_bus_class.setText(bus.getBusClass());
 			txt_seats.setText(bus.getSeatNo());
 			txt_seat_count.setText(bus.getSeatCount()+"");

@@ -14,6 +14,9 @@ public class BusTicketSale {
 	private Integer seatCount;
 	private Integer seatPrice;
 	private String confirmDate;
+	private String buyerName;
+	private String buyerPhone;
+	private String buyerNRC;
 	
 	
 	public BusTicketSale() {
@@ -21,34 +24,14 @@ public class BusTicketSale {
 		// TODO Auto-generated constructor stub
 	}
 	
-	
-
-
-	public BusTicketSale(String barcodeNo, String customerName,
-			String operatorName, String trip, String date, String time,
-			String busClass, String seatNo, Integer seatCount,
-			Integer seatPrice, String confirmDate) {
-		super();
-		this.barcodeNo = barcodeNo;
-		this.customerName = customerName;
-		this.operatorName = operatorName;
-		this.trip = trip;
-		this.date = date;
-		this.time = time;
-		this.busClass = busClass;
-		this.seatNo = seatNo;
-		this.seatCount = seatCount;
-		this.seatPrice = seatPrice;
-		this.confirmDate = confirmDate;
-	}
-
 
 
 
 	public BusTicketSale(Integer id, String barcodeNo, String customerName,
 			String operatorName, String trip, String date, String time,
 			String busClass, String seatNo, Integer seatCount,
-			Integer seatPrice, String confirmDate) {
+			Integer seatPrice, String confirmDate, String buyerName,
+			String buyerPhone, String buyerNRC) {
 		super();
 		this.id = id;
 		this.barcodeNo = barcodeNo;
@@ -62,7 +45,37 @@ public class BusTicketSale {
 		this.seatCount = seatCount;
 		this.seatPrice = seatPrice;
 		this.confirmDate = confirmDate;
+		this.buyerName = buyerName;
+		this.buyerPhone = buyerPhone;
+		this.buyerNRC = buyerNRC;
 	}
+
+
+
+
+	public BusTicketSale(String barcodeNo, String customerName,
+			String operatorName, String trip, String date, String time,
+			String busClass, String seatNo, Integer seatCount,
+			Integer seatPrice, String confirmDate, String buyerName,
+			String buyerPhone, String buyerNRC) {
+		super();
+		this.barcodeNo = barcodeNo;
+		this.customerName = customerName;
+		this.operatorName = operatorName;
+		this.trip = trip;
+		this.date = date;
+		this.time = time;
+		this.busClass = busClass;
+		this.seatNo = seatNo;
+		this.seatCount = seatCount;
+		this.seatPrice = seatPrice;
+		this.confirmDate = confirmDate;
+		this.buyerName = buyerName;
+		this.buyerPhone = buyerPhone;
+		this.buyerNRC = buyerNRC;
+	}
+
+
 
 
 	public Integer getId() {
@@ -187,6 +200,48 @@ public class BusTicketSale {
 
 
 
+	public String getBuyerName() {
+		return buyerName;
+	}
+
+
+
+
+	public void setBuyerName(String buyerName) {
+		this.buyerName = buyerName;
+	}
+
+
+
+
+	public String getBuyerPhone() {
+		return buyerPhone;
+	}
+
+
+
+
+	public void setBuyerPhone(String buyerPhone) {
+		this.buyerPhone = buyerPhone;
+	}
+
+
+
+
+	public String getBuyerNRC() {
+		return buyerNRC;
+	}
+
+
+
+
+	public void setBuyerNRC(String buyerNRC) {
+		this.buyerNRC = buyerNRC;
+	}
+
+
+
+
 	@Override
 	public String toString() {
 		return "BusTicketSale [id=" + id + ", barcodeNo=" + barcodeNo
@@ -194,10 +249,12 @@ public class BusTicketSale {
 				+ operatorName + ", trip=" + trip + ", date=" + date
 				+ ", time=" + time + ", busClass=" + busClass + ", seatNo="
 				+ seatNo + ", seatCount=" + seatCount + ", seatPrice="
-				+ seatPrice + ", confirmDate=" + confirmDate + "]";
+				+ seatPrice + ", confirmDate=" + confirmDate + ", buyerName="
+				+ buyerName + ", buyerPhone=" + buyerPhone + ", buyerNRC="
+				+ buyerNRC + "]";
 	}
 
-	
-	
+
+
 
 }

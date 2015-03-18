@@ -73,6 +73,24 @@
                         android:textAppearance="?android:attr/textAppearanceMedium" />
 
                     <com.smk.skscalableview.ScalableTextView
+                        android:id="@+id/ScalableTextView01"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_margin="9dp"
+                        android:gravity="center_vertical|left"
+                        android:text="ဖုန္းနံပါတ္ : "
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                    <com.smk.skscalableview.ScalableTextView
+                        android:id="@+id/ScalableTextView02"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_margin="9dp"
+                        android:gravity="center_vertical|left"
+                        android:text="မွတ္ပံုတင္နံပါတ္ : "
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                    <com.smk.skscalableview.ScalableTextView
                         android:id="@+id/ScalableTextView2"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
@@ -171,6 +189,36 @@
 
                     <View
                         android:id="@+id/view1"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/dark_blue" />
+
+                    <com.smk.skscalableview.ScalableTextView
+                        android:id="@+id/txt_buyer_ph"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_margin="9dp"
+                        android:gravity="center_vertical|left"
+                        android:text="-"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                    <View
+                        android:id="@+id/View08"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/dark_blue" />
+
+                    <com.smk.skscalableview.ScalableTextView
+                        android:id="@+id/txt_buyer_nrc"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_margin="9dp"
+                        android:gravity="center_vertical|left"
+                        android:text="-"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                    <View
+                        android:id="@+id/View10"
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:background="@color/dark_blue" />

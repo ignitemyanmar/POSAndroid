@@ -20,7 +20,7 @@ public class BusTicketSaleController extends DatabaseManager{
 	private List<Object> sale_list;
 	
 	private static final String TABLE_NAME = "tbl_bus_ticket_sale";
-	private static final String[] FIELD_NAME = {"id","barcodeNo","customerName","operatorName","trip","date","time","busClass","seatNo","seatCount","seatPrice","confirmDate"};
+	private static final String[] FIELD_NAME = {"id","barcodeNo","customerName","operatorName","trip","date","time","busClass","seatNo","seatCount","seatPrice","confirmDate","buyerName","buyerPhone","buyerNRC"};
 	
 	public BusTicketSaleController(Context ctx) {
 		super(ctx);
@@ -47,7 +47,10 @@ public class BusTicketSaleController extends DatabaseManager{
 		    		FIELD_NAME[8] + " TEXT NULL," +
 		    		FIELD_NAME[9] + " INTEGER DEFAULT 0," +
 		    		FIELD_NAME[10] + " INTEGER DEFAULT 0," +
-		    		FIELD_NAME[11] + " TEXT NULL)"
+		    		FIELD_NAME[11] + " TEXT NULL," +
+		    		FIELD_NAME[12] + " TEXT NULL," +
+		    		FIELD_NAME[13] + " TEXT NULL," +
+		    		FIELD_NAME[14] + " TEXT NULL)"
 		       		);
 	}
 	
@@ -81,6 +84,9 @@ public class BusTicketSaleController extends DatabaseManager{
 					values.put(FIELD_NAME[9], sv.getSeatCount());
 					values.put(FIELD_NAME[10], sv.getSeatPrice());
 					values.put(FIELD_NAME[11], sv.getConfirmDate());
+					values.put(FIELD_NAME[12], sv.getBuyerName());
+					values.put(FIELD_NAME[13], sv.getBuyerPhone());
+					values.put(FIELD_NAME[14], sv.getBuyerNRC());
 
 					db.insert(TABLE_NAME, null, values);
 				}
@@ -114,7 +120,10 @@ public class BusTicketSaleController extends DatabaseManager{
 						FIELD_NAME[8],
 						FIELD_NAME[9],
 						FIELD_NAME[10],
-						FIELD_NAME[11]
+						FIELD_NAME[11],
+						FIELD_NAME[12],
+						FIELD_NAME[13],
+						FIELD_NAME[14]
 					};
 				
 				String ORDER_BY = FIELD_NAME[11]+ " ASC";
@@ -142,6 +151,9 @@ public class BusTicketSaleController extends DatabaseManager{
 				        	sv.setSeatCount(cursor.getInt(9));
 				        	sv.setSeatPrice(cursor.getInt(10));
 				        	sv.setConfirmDate(cursor.getString(11));
+				        	sv.setBuyerName(cursor.getString(12));
+				        	sv.setBuyerPhone(cursor.getString(13));
+				        	sv.setBuyerNRC(cursor.getString(14));
 				        		        	
 				        	sale_list.add(sv);
 				        } while (cursor.moveToNext());
@@ -180,7 +192,10 @@ public class BusTicketSaleController extends DatabaseManager{
 						FIELD_NAME[8],
 						FIELD_NAME[9],
 						FIELD_NAME[10],
-						FIELD_NAME[11]
+						FIELD_NAME[11],
+						FIELD_NAME[12],
+						FIELD_NAME[13],
+						FIELD_NAME[14]
 						};
 				
 				String[] VALUE = { barcode };
@@ -208,6 +223,9 @@ public class BusTicketSaleController extends DatabaseManager{
 				        	sv.setSeatCount(cursor.getInt(9));
 				        	sv.setSeatPrice(cursor.getInt(10));
 				        	sv.setConfirmDate(cursor.getString(11));
+				        	sv.setBuyerName(cursor.getString(12));
+				        	sv.setBuyerPhone(cursor.getString(13));
+				        	sv.setBuyerNRC(cursor.getString(14));
 				        		        	
 				        	sale_list.add(sv);
 						} while (cursor.moveToNext());
@@ -250,7 +268,10 @@ public class BusTicketSaleController extends DatabaseManager{
 						FIELD_NAME[8],
 						FIELD_NAME[9],
 						FIELD_NAME[10],
-						FIELD_NAME[11]
+						FIELD_NAME[11],
+						FIELD_NAME[12],
+						FIELD_NAME[13],
+						FIELD_NAME[14]
 					};
 				
 				String[] VALUE;
@@ -294,6 +315,9 @@ public class BusTicketSaleController extends DatabaseManager{
 				        	sv.setSeatCount(cursor.getInt(9));
 				        	sv.setSeatPrice(cursor.getInt(10));
 				        	sv.setConfirmDate(cursor.getString(11));
+				        	sv.setBuyerName(cursor.getString(12));
+				        	sv.setBuyerPhone(cursor.getString(13));
+				        	sv.setBuyerNRC(cursor.getString(14));
 				        		        	
 				        	sale_list.add(sv);
 				        } while (cursor.moveToNext());
@@ -384,6 +408,7 @@ public class BusTicketSaleController extends DatabaseManager{
 					FIELD_NAME[9],
 					FIELD_NAME[10],
 					FIELD_NAME[11]
+					
 				};
 			
 			String GROUP_BY = FIELD_NAME[3];

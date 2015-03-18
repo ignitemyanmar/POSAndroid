@@ -54,21 +54,26 @@ public class BusTicketDataActivity extends Activity{
 			String BarcodeNo = bundle.getString("sale_order_no");
 			String CustomerName = bundle.getString("CustomerName");
 			String OperatorName = bundle.getString("Operator_Name");
-			String Trip = bundle.getString("Bus_Trip");
-			String Trip_Date = bundle.getString("Trip_Date");
-			String Trip_Time = bundle.getString("Trip_Time");
-			String Bus_Class = bundle.getString("Bus_Class");
-			String Selected_Seats = bundle.getString("Selected_Seats");
+			String Trip = bundle.getString("from_to");
+			String Trip_Date = bundle.getString("date");
+			String Trip_Time = bundle.getString("time");
+			String Bus_Class = bundle.getString("classes");
+			String Selected_Seats = bundle.getString("selected_seat");
 			String SeatCount = bundle.getString("SeatCount");
 			String Price = bundle.getString("Price");
 			String ConfirmDate = bundle.getString("ConfirmDate");
+			String BuyerName = bundle.getString("BuyerName");
+			String BuyerPhone = bundle.getString("BuyerPhone");
+			String BuyerNRC = bundle.getString("BuyerNRC");
 			
 			Log.i("", "rBarcode: "+BarcodeNo+", rCustomerName: "+CustomerName+", rOperator: "+OperatorName);
 			
 			busTicketList = new ArrayList<Object>();
 		    busTicketList.add(new BusTicketSale(BarcodeNo, CustomerName, OperatorName, Trip
-		    		, Trip_Date, Trip_Time, Bus_Class, Selected_Seats, Integer.valueOf(SeatCount), Integer.valueOf(Price), ConfirmDate));
+		    		, Trip_Date, Trip_Time, Bus_Class, Selected_Seats, Integer.valueOf(SeatCount), Integer.valueOf(Price), ConfirmDate
+		    		, BuyerName, BuyerPhone, BuyerNRC));
 		}
+		
 
         Log.i("", "Bus Ticket List Recevie: "+busTicketList.toString());
         
@@ -77,7 +82,6 @@ public class BusTicketDataActivity extends Activity{
         	BusTicketSaleController busControl = (BusTicketSaleController)dbManager;
     		busControl.save(busTicketList);
     		finish();
-    		//setOrientation();
 		}
 	}
 	
