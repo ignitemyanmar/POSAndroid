@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="20dp" >
+
+    <TextView
+        android:id="@+id/titleMenu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/border"
+        android:drawablePadding="10dp"
+        android:drawableRight="@drawable/nex"
+        android:enabled="true"
+        android:gravity="left|center"
+        android:padding="5dp"
+        android:text="MOVIE"
+        android:textColor="#FF8C26" />
+
+</LinearLayout>

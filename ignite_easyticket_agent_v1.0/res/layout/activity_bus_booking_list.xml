@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/RelativeLayout1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
+
+        <RelativeLayout
+            android:id="@+id/RelativeLayout2"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/golden_brown"
+            android:orientation="vertical"
+            android:padding="5dp" >
+
+            <AutoCompleteTextView
+                android:id="@+id/auto_txt_codeno"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginRight="110dp"
+                android:ems="10"
+                android:hint="Enter Code No."
+                android:inputType="number" 
+                android:textColor="@color/gray_light">
+
+                <requestFocus />
+            </AutoCompleteTextView>
+
+            <com.smk.custom.view.CustomButton
+                android:id="@+id/btn_search_codeno"
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:background="@drawable/btn_gold_light"
+                android:text="ရွာ မည္" />
+
+        </RelativeLayout>
+
+        <ListView
+            android:id="@+id/lv_booking_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+        </ListView>
+    </LinearLayout>
+
+</RelativeLayout>

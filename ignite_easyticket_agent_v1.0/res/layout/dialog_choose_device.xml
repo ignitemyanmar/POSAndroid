@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+     >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <LinearLayout
+            android:layout_width="70dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:visibility="gone" >
+
+            <TextView
+                android:id="@+id/txt_bluetooth"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="50"
+                android:background="@color/golden_brown_light2"
+                android:gravity="center"
+                android:text=" Bluetooth"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            <TextView
+                android:id="@+id/txt_wifi"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="50"
+                android:background="@color/gray_light"
+                android:gravity="left|center_vertical"
+                android:text="  Wifi"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+        </LinearLayout>
+
+        <com.smk.custom.view.CustomButton
+            android:id="@+id/btn_search_device"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@drawable/border_radius_orange"
+            android:text="ခ်ိတ္မည့္ Printer ကုိ ရွာမည္" />
+
+    </LinearLayout>
+
+    <com.smk.custom.view.CustomTextView
+        android:id="@+id/txt_status"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="scanning, pls wait ..."
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="@color/orange_light"
+        android:visibility="gone" />
+
+    <com.smk.custom.view.CustomTextView
+        android:id="@+id/CustomTextView1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/golden_brown_light2"
+        android:text=" Devices"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="@color/white" />
+
+    <ListView
+        android:id="@+id/lv_device"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="3"
+        android:background="@drawable/border_up_down" >
+
+    </ListView>
+
+    <com.smk.custom.view.CustomButton
+        android:id="@+id/btn_print"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_gold_light2"
+        android:text="Print ထုတ္ မည္" />
+
+</LinearLayout>

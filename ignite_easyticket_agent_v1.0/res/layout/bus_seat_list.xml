@@ -1,0 +1,342 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/LinearLayout1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/app_background"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:id="@+id/layout_seat_plan"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:descendantFocusability="beforeDescendants"
+        android:focusableInTouchMode="true"
+        android:orientation="vertical" >
+
+        <ScrollView
+            android:id="@+id/scrollView1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/View01" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+                <LinearLayout
+                    android:id="@+id/no_internet"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#99000000"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical"
+                    android:padding="5dp"
+                    android:visibility="gone" >
+
+                    <TextView
+                        android:id="@+id/txt_no_internet"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableLeft="@drawable/attention_icon"
+                        android:drawablePadding="10dp"
+                        android:gravity="bottom"
+                        android:text="No Internet Connection"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="#FFF"
+                        android:textStyle="bold"
+                        android:typeface="sans"
+                        android:visibility="visible" />
+                </LinearLayout>
+
+                <com.smk.custom.view.CustomTextView
+                    android:id="@+id/txt_notrip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="20dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/screen_bg"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:singleLine="true"
+                    android:text="Driver"
+                    android:textColor="#FFF"
+                     />
+
+                <GridView
+                    android:id="@+id/grid_seat"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:isScrollContainer="false"
+                    android:numColumns="3" >
+                </GridView>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingRight="5dp" >
+
+                    <LinearLayout
+                        android:layout_width="160dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:orientation="vertical"
+                        android:padding="0dp" >
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="20dp" >
+
+                            <View
+                                android:id="@+id/view3"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:background="#52C789" />
+
+                            <com.smk.custom.view.CustomTextView
+                                android:id="@+id/textView3"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:padding="3dp"
+                                android:text="ေရြးျပီး ခံုမ်ား" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="20dp" >
+
+                            <View
+                                android:id="@+id/view1"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:background="@color/golden_brown_light"
+                                android:paddingLeft="10dp" />
+
+                            <com.smk.custom.view.CustomTextView
+                                android:id="@+id/textView4"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:padding="3dp"
+                                android:text="ခံုလြတ္မ်ား" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="20dp"
+                            android:orientation="horizontal" >
+
+                            <View
+                                android:id="@+id/view2"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:background="#FF1711" />
+
+                            <com.smk.custom.view.CustomTextView
+                                android:id="@+id/txt_wifi"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:padding="3dp"
+                                android:text="၀ယ္ျပီး ခံုမ်ား" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="20dp"
+                            android:orientation="horizontal" >
+
+                            <View
+                                android:id="@+id/View02"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:background="#470203" />
+
+                            <com.smk.custom.view.CustomTextView
+                                android:id="@+id/CustomTextView01"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:padding="3dp"
+                                android:text="Booking ခံုမ်ား" />
+                        </LinearLayout>
+
+                        <ListView
+                            android:id="@+id/lst_group_user"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:divider="#FFF"
+                            android:visibility="gone" >
+                        </ListView>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="5dp" >
+
+                        <com.smk.custom.view.CustomTextView
+                            android:id="@+id/txt_departure_date"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="0dp"
+                            android:text="ထြက္ခြာမည့္ ရက္ : 0000-00-00"
+                            android:textSize="14dp" />
+
+                        <com.smk.custom.view.CustomTextView
+                            android:id="@+id/txt_departure_time"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:text="ထြက္ခြာမည့္ အခ်ိန္ : 00:00 AM"
+                            android:textSize="14dp" />
+
+                        <com.smk.custom.view.CustomTextView
+                            android:id="@+id/txt_operator"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:text="Operator: -"
+                            android:textSize="14dp" />
+
+                        <com.smk.custom.view.CustomTextView
+                            android:id="@+id/txt_classes"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:text="Classes: -"
+                            android:textSize="14dp" />
+
+                        <com.smk.custom.view.CustomTextView
+                            android:id="@+id/txt_price"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:text="Price: 0 Kyats"
+                            android:textSize="14dp" />
+
+                        <ListView
+                            android:id="@+id/lvBusClass"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:background="@drawable/bus_border"
+                            android:divider="#FFF"
+                            android:visibility="gone" >
+                        </ListView>
+
+                        <com.smk.custom.view.CustomButton
+                            android:id="@+id/btn_check_out"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:layout_marginTop="50dp"
+                            android:background="@drawable/btn_green"
+                            android:text="ဝယ္ ရန္"
+                            android:textColor="@color/white"
+                            android:textSize="14dp"
+                            android:textStyle="bold"
+                            android:visibility="visible" />
+
+                        <com.smk.custom.view.CustomButton
+                            android:id="@+id/btn_now_booking"
+                            style="?android:attr/buttonStyleSmall"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:layout_marginTop="20dp"
+                            android:layout_marginBottom="20dp"
+                            android:background="@drawable/btn_dark_blue"
+                            android:text="Booking မွာမည္"
+                            android:textColor="@color/white"
+                            android:textSize="14dp"
+                            android:textStyle="bold" />
+
+                        <com.smk.custom.view.CustomButton
+                            android:id="@+id/btn_booking"
+                            style="?android:attr/buttonStyleSmall"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:layout_marginBottom="20dp"
+                            android:background="@drawable/btn_gold"
+                            android:text="Booking စာရင္းၾကည့္မည္"
+                            android:textColor="@color/white"
+                            android:textSize="14dp"
+                            android:textStyle="bold" 
+                            android:visibility="visible"/>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/layout_remark"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical" >
+                </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
+
+        <LinearLayout
+            android:id="@+id/ly_loading"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:gravity="center_horizontal|center_vertical"
+            android:padding="2dp"
+            android:visibility="visible"
+            android:layout_below="@+id/View01" >
+
+            <ProgressBar
+                android:id="@+id/progressBar1"
+                style="?android:attr/progressBarStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/action_bar_title2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="Please wait loading..."
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="#AAA"
+                android:textSize="12dp"
+                android:typeface="sans" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ly_title"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@color/golden_brown"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="visible" >
+
+            <com.smk.custom.view.CustomTextView
+                android:id="@+id/txt_operator_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:text="ထုိင္ခံုေရြးပါ ~"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/white"
+                android:textSize="16dp" />
+        </LinearLayout>
+
+        <View
+            android:id="@+id/View01"
+            android:layout_width="match_parent"
+            android:layout_height="4dp"
+            android:background="@color/golden_brown_dark"
+            android:visibility="visible"
+            android:layout_below="@+id/ly_title" />
+    </RelativeLayout>
+
+</LinearLayout>

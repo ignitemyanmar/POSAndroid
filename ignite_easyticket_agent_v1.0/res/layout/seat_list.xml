@@ -1,0 +1,148 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/LinearLayout1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/ticketing_background"
+    android:gravity="center_horizontal"
+    android:orientation="vertical" >
+
+    <View
+        android:id="@+id/View01"
+        android:layout_width="wrap_content"
+        android:layout_height="2dp"
+        android:background="#FF8C26" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/txt_notrip"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/screen_bg"
+                android:gravity="center_vertical|center_horizontal"
+                android:singleLine="true"
+                android:text="Screen"
+                android:textColor="#FFF" />
+
+            <GridView
+                android:id="@+id/grid_seat"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="10dp"
+                android:numColumns="3" >
+
+            </GridView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp" >
+
+                <View
+                    android:id="@+id/view3"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:background="#52C789" />
+
+                <TextView
+                    android:id="@+id/textView3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="3dp"
+                    android:text="ေရြးျပီး ခံုမ်ား" />
+
+                <View
+                    android:id="@+id/view1"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginLeft="35dp"
+                    android:background="#5586c8" />
+
+                <TextView
+                    android:id="@+id/textView4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="23dp"
+                    android:gravity="left"
+                    android:padding="3dp"
+                    android:text="ခံုလြတ္မ်ား" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:orientation="horizontal" >
+
+                <View
+                    android:id="@+id/view2"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:background="#FF1711" />
+
+                <TextView
+                    android:id="@+id/txt_wifi"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="3dp"
+                    android:text="၀ယ္ျပီး ခံုမ်ား" />
+
+                <View
+                    android:id="@+id/view4"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginLeft="30dp"
+                    android:background="#FFB857" />
+
+                <TextView
+                    android:id="@+id/textView4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="50"
+                    android:gravity="left"
+                    android:padding="3dp"
+                    android:text="စံုတြဲ ခံုမ်ား" />
+
+            </LinearLayout>
+
+            <ImageButton
+                android:id="@+id/imgBtnUpDown"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/border_up_down"
+                android:src="@drawable/upseat" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/menu_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:gravity="right|top"
+            android:visibility="visible" >
+
+            <ListView
+                android:id="@+id/lvPrice"
+                android:layout_width="178dp"
+                android:layout_height="254dp"
+                android:background="#FFF" >
+
+            </ListView>
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</LinearLayout>
