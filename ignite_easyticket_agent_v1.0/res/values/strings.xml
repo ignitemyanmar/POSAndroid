@@ -37,7 +37,7 @@
     <string name="str_nomatched">no matching equipment!</string>
     <string name="str_connected">connected </string>
     <string name="str_disconnected">not connected to</string>
-    <string name="str_connecting">connecting to </string>
+    <string name="str_connecting">connecting to ...</string>
     <string name="str_hasnodevice">no Bluetooth devices! </string>
     <string name="str_scanover">scanning is finished!</string>
     <string name="chose">select</string>

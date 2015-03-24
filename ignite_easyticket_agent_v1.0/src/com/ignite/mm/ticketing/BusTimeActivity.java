@@ -260,7 +260,7 @@ public class BusTimeActivity extends BaseSherlockActivity {
 				
 				//TODO Auto-generated method stub
 				//OAuth2Error error = (OAuth2Error) arg0.getBodyAs(OAuth2Error.class);
-				Log.i("","Hello Error Response Code : "+arg0.getResponse().getStatus());
+				//Log.i("","Hello Error Response Code : "+arg0.getResponse().getStatus());
 				/*Log.i("","Hello Error : "+arg0.getError());
 				Log.i("","Hello Error Desc : "+arg0.getError_description());*/
 			}

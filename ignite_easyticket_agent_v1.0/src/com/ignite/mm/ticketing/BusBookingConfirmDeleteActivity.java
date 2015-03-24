@@ -85,7 +85,7 @@ public class BusBookingConfirmDeleteActivity extends BaseSherlockActivity {
 			}
 			
 			if(v == btn_pay){
-				Intent nextScreen = new Intent(BusBookingConfirmDeleteActivity.this,BusConfirmActivity.class);
+				Intent nextScreen = new Intent(BusBookingConfirmDeleteActivity.this, BusConfirmActivity.class);
 				String SeatLists = "";
 				for(int i=0; i<creditOrder.getSaleitems().size(); i++){
 					SeatLists += creditOrder.getSaleitems().get(i).getSeatNo()+",";

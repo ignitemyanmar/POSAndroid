@@ -15,9 +15,11 @@ import android.widget.TextView;
 public class OrderListViewAdapter extends BaseAdapter {
 	private LayoutInflater mInflater;
 	private List<CreditOrder> listItem;
-	public OrderListViewAdapter(Activity aty, List<CreditOrder> _list){
+	private String bus_seats;
+	public OrderListViewAdapter(Activity aty, List<CreditOrder> _list, String bus_seats){
 		mInflater = LayoutInflater.from(aty);
 		listItem = _list;
+		this.bus_seats = bus_seats;
 	}
 	public int getCount() {
 		// TODO Auto-generated method stub
@@ -38,35 +40,31 @@ public class OrderListViewAdapter extends BaseAdapter {
 		if (convertView == null) {
 			holder = new ViewHolder();
         	convertView = mInflater.inflate(R.layout.list_item_credit, null);
-        	holder.buyer = (TextView) convertView.findViewById(R.id.txt_buyer);
-        	holder.phone = (TextView) convertView.findViewById(R.id.txt_phone);
-        	holder.name = (TextView) convertView.findViewById(R.id.txt_agent_name);
-        	holder.trip = (TextView) convertView.findViewById(R.id.txt_trip);
-        	holder.date = (TextView) convertView.findViewById(R.id.txt_date);
-        	holder.total_ticket = (TextView) convertView.findViewById(R.id.txt_total_ticket);
-        	holder.amount = (TextView) convertView.findViewById(R.id.txt_amount);
+        	holder.txt_trip = (TextView) convertView.findViewById(R.id.txt_trip);
+        	holder.txt_date = (TextView) convertView.findViewById(R.id.txt_date);
+        	holder.txt_time = (TextView) convertView.findViewById(R.id.txt_time);
+        	holder.txt_seats = (TextView) convertView.findViewById(R.id.txt_seats);
+        	holder.txt_price = (TextView) convertView.findViewById(R.id.txt_price);
+        	holder.txt_order_date = (TextView) convertView.findViewById(R.id.txt_order_date);
+        	holder.txt_seat_count = (TextView) convertView.findViewById(R.id.txt_seat_count);
+        	holder.txt_amount = (TextView) convertView.findViewById(R.id.txt_amount);
         	
         	convertView.setTag(holder);
 		}else{
 			holder = (ViewHolder) convertView.getTag();
 		}
-		holder.buyer.setText("Buyer: "+getItem(position).getCustomer());
-		holder.phone.setText("Phone: "+getItem(position).getPhone());
-		holder.name.setText("Agent: "+getItem(position).getAgent());
-		holder.trip.setText(getItem(position).getTrip().toString()+" ["+getItem(position).getTime()+"] "+getItem(position).getClasses());
-		holder.date.setText("Order Date: "+getItem(position).getOrderdate());
-		holder.total_ticket.setText("Total Ticket: "+getItem(position).getTotalTicket().toString());
-		holder.amount.setText("Amount: "+getItem(position).getAmount().toString());
+		holder.txt_trip.setText("Trip: "+getItem(position).getTrip()+" ["+getItem(position).getOperator()+"]");
+		holder.txt_date.setText("Date: "+getItem(position).getDate());
+		holder.txt_time.setText("Time: "+getItem(position).getTime());
+		holder.txt_seats.setText("Seat No: "+this.bus_seats);
+		holder.txt_price.setText("Price: "+getItem(position).getPrice());
+		holder.txt_order_date.setText("Order Date: "+getItem(position).getOrderdate());
+		holder.txt_seat_count.setText("Total Seats: "+getItem(position).getTotalTicket());
+		holder.txt_amount.setText("Amount: "+getItem(position).getAmount().toString());
 		
 		return convertView;
 	}
 	static class ViewHolder {
-		TextView buyer;
-		TextView phone;
-		TextView name;
-		TextView trip;
-		TextView date;
-		TextView total_ticket;
-		TextView amount;
+		TextView txt_trip, txt_date, txt_time, txt_seats, txt_price, txt_order_date, txt_seat_count, txt_amount;
 	}
 }

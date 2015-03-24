@@ -1,3 +1,4 @@
+
 package com.ignite.mm.ticketing;
 
 import java.util.ArrayList;
@@ -17,6 +18,7 @@ import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -32,6 +34,7 @@ import com.ignite.mm.ticketing.custom.listview.adapter.OrderListViewAdapter;
 import com.ignite.mm.ticketing.sqlite.database.model.Cities;
 import com.ignite.mm.ticketing.sqlite.database.model.CreditOrder;
 import com.ignite.mm.ticketing.sqlite.database.model.From;
+import com.ignite.mm.ticketing.sqlite.database.model.Saleitem;
 import com.ignite.mm.ticketing.sqlite.database.model.TimesbyOperator;
 import com.ignite.mm.ticketing.sqlite.database.model.To;
 import com.smk.skalertmessage.SKToastMessage;
@@ -45,7 +48,7 @@ public class BusBookingListActivity extends BaseSherlockActivity {
 	private ImageButton actionBarBack;
 	private Button btn_search;
 	private String BookCode = "";
-	private AutoCompleteTextView auto_txt_codeno;
+	private EditText auto_txt_codeno;
 	private Button btn_search_codeno;
 	private TextView action_bar_title2;
 
@@ -69,12 +72,13 @@ public class BusBookingListActivity extends BaseSherlockActivity {
 		//setContentView(R.layout.activity_busticketing_credit);
 		setContentView(R.layout.activity_bus_booking_list);
 		
-		auto_txt_codeno = (AutoCompleteTextView)findViewById(R.id.auto_txt_codeno);
+		auto_txt_codeno = (EditText)findViewById(R.id.auto_txt_codeno);
 		btn_search_codeno = (Button)findViewById(R.id.btn_search_codeno);
 		btn_search_codeno.setOnClickListener(clickListener);
 		
 		//btn_search = (Button) findViewById(R.id.btn_search);
 		//btn_search.setOnClickListener(clickListener);
+		
 		
 		SharedPreferences pref = getSharedPreferences("order", Activity.MODE_PRIVATE);
 		String orderDate = pref.getString("order_date", "");
@@ -97,7 +101,7 @@ public class BusBookingListActivity extends BaseSherlockActivity {
 		super.onResume();
 		SKConnectionDetector connectionDetector = SKConnectionDetector.getInstance(this);
 		if(connectionDetector.isConnectingToInternet()){
-			getBookingListAll();
+			getBookingListByCodeNo();
 		}else{
 			connectionDetector.showErrorMessage();
 		}
@@ -206,7 +210,7 @@ public class BusBookingListActivity extends BaseSherlockActivity {
         
         Log.i("", "Booking Code (User Input) : "+book_code+", Token: "+AppLoginUser.getAccessToken());
 		
-		NetworkEngine.getInstance().getBookingOrder(AppLoginUser.getAccessToken(), "", "", "", "", "", book_code, new Callback<List<CreditOrder>>() {
+		NetworkEngine.getInstance().getBookingOrder(AppLoginUser.getAccessToken(), "11", "", "", "", "", book_code, new Callback<List<CreditOrder>>() {
 
 			public void failure(RetrofitError arg0) {
 				// TODO Auto-generated method stub
@@ -220,44 +224,25 @@ public class BusBookingListActivity extends BaseSherlockActivity {
 				credit_list = arg0;
 				
 				Log.i("","Hello size: "+ credit_list.size());
+				List<Saleitem> seats = new ArrayList<Saleitem>();
+				seats = credit_list.get(0).getSaleitems();
+				String bus_seats = "";
+				for (int i = 0; i < seats.size(); i++) {
+					if (i == seats.size()-1) {
+						bus_seats += seats.get(i).getSeatNo();
+					}else {
+						bus_seats += seats.get(i).getSeatNo()+",";
+					}
+				}
 				
 				if (credit_list != null && credit_list.size() > 0) {
-					lv_booking_list.setAdapter(new OrderListViewAdapter(BusBookingListActivity.this, credit_list));
+					lv_booking_list.setAdapter(new OrderListViewAdapter(BusBookingListActivity.this, credit_list, bus_seats));
 				}
 				
 				dialog.dismiss();
 			}
 		});
-	}
-	
-	private void getBookingListAll(){
-		
-		dialog = ProgressDialog.show(this, "", " Please wait...", true);
-        dialog.setCancelable(true);
-        
-		NetworkEngine.getInstance().getBookingOrder(AppLoginUser.getAccessToken(), "", "", "", "", "", "", new Callback<List<CreditOrder>>() {
-
-			public void failure(RetrofitError arg0) {
-				// TODO Auto-generated method stub
-				Log.i("","Failure : "+ arg0.getCause());
-				dialog.dismiss();
-				showAlert();
-			}
-
-			public void success(List<CreditOrder> arg0, Response arg1) {
-				// TODO Auto-generated method stub
-				credit_list = arg0;
-				
-				Log.i("","Hello size: "+ credit_list.size());
-				
-				if (credit_list != null && credit_list.size() > 0) {
-					lv_booking_list.setAdapter(new OrderListViewAdapter(BusBookingListActivity.this, credit_list));
-				}
-				
-				dialog.dismiss();
-			}
-		});
-	}
+	}	
 	
 	private void showAlert() {
 		// TODO Auto-generated method stub

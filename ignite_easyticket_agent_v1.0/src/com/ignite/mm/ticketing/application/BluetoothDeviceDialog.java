@@ -1,7 +1,10 @@
 package com.ignite.mm.ticketing.application;
 
+import com.ignite.mm.ticketing.BusOperatorActivity;
+import com.ignite.mm.ticketing.PDFBusActivity;
 import com.ignite.mm.ticketing.R;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.view.View;
 import android.widget.AdapterView;
@@ -27,6 +30,7 @@ public class BluetoothDeviceDialog extends Dialog {
 			if (mCallback != null) {
 				mCallback.onDeviceChoose(position);
 				dismiss();
+				
 			}
 		}
 	};

@@ -18,7 +18,7 @@
             android:orientation="vertical"
             android:padding="5dp" >
 
-            <AutoCompleteTextView
+            <com.smk.custom.view.CustomEditText
                 android:id="@+id/auto_txt_codeno"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -29,7 +29,7 @@
                 android:textColor="@color/gray_light">
 
                 <requestFocus />
-            </AutoCompleteTextView>
+            </com.smk.custom.view.CustomEditText>
 
             <com.smk.custom.view.CustomButton
                 android:id="@+id/btn_search_codeno"

@@ -1,33 +1,23 @@
-package com.ignite.mm.ticketing;
-
+package com.ignite.mm.ticketing.application;
 
 import java.util.ArrayList;
 import java.util.List;
-import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.app.SherlockActivity;
+
+import android.app.Activity;
+import android.os.Handler;
+import android.os.Message;
+import android.util.Log;
+import android.widget.Toast;
+import com.ignite.mm.ticketing.PDFBusActivity;
 import com.ignite.mm.ticketing.sqlite.database.model.Device;
 import com.zkc.helper.printer.PrintService;
 import com.zkc.helper.printer.PrinterClass;
 import com.zkc.helper.printer.PrinterClassFactory;
 
-import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.util.Log;
-import android.widget.TextView;
-import android.widget.Toast;
-import android.annotation.SuppressLint;
-import android.content.Context;
-import android.content.Intent;
+public class CheckBluetoothConnect extends Activity {
 
-@SuppressLint("ShowToast") public class MainActivity extends SherlockActivity {
-	private Context ctx = this;
-	private ActionBar actionBar;
-	
 	//Check Device connected
 	public static boolean checkState = true;
-	private Thread tv_update;
-	TextView textView_state;
 	public static final int MESSAGE_STATE_CHANGE = 1;
 	public static final int MESSAGE_READ = 2;
 	public static final int MESSAGE_WRITE = 3;
@@ -35,43 +25,13 @@ import android.content.Intent;
 	public static final int MESSAGE_TOAST = 5;
 	Handler mhandler=null;
 	Handler handler = null;
+	
+	private void oncreate() {
+		// TODO Auto-generated method stub
 
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		actionBar = getSupportActionBar();
-		
-		actionBar.hide();
-		//getActionBar().hide();
-		setContentView(R.layout.activity_main);
-
-		//Check Bluetooth Connect
-		//checkBluetoothConnect();
-		
-		Thread splashTread = new Thread() {
-
-			@Override
-			public void run() {
-				try {
-					
-					sleep(1000);
-					
-				} catch (InterruptedException e) {
-					// do nothing
-				} finally {
-					finish();
-
-					//startActivity(new Intent(ctx, UserLogin.class));
-					startActivity(new Intent(ctx, UserLogin.class));
-					
-				}
-			}
-		};
-
-		splashTread.start();
-
+		checkBluetoothConnect();
 	}
-
+	
 	public void checkBluetoothConnect() {
 		// TODO Auto-generated method stub
 		
@@ -92,7 +52,7 @@ import android.content.Intent;
 					 else{
 		                // construct a string from the valid bytes in the buffer
 		                String readMessage = new String(readBuf, 0, msg.arg1);
-		                /*Toast.makeText(getApplicationContext(),readMessage,
+		                /*Toast.makeText(CheckBluetoothConnect.this,readMessage,
 	                               Toast.LENGTH_SHORT).show();*/
 					 }
 					break;
@@ -142,8 +102,6 @@ import android.content.Intent;
 							PDFBusActivity.deviceList.add(d);
 							Log.i("", "Devlice list: "+PDFBusActivity.deviceList.toString());
 						}
-					}else {
-						Log.i("", "Message Device Addr: is null!");
 					}
 					break;
 				case 2:// å�œæ­¢æ‰«æ��
@@ -163,20 +121,21 @@ import android.content.Intent;
 			
 			if (PDFBusActivity.printerClass != null) {
 				if (PDFBusActivity.printerClass.getState() == PrinterClass.STATE_CONNECTED) {
-					Toast.makeText(MainActivity.this, "connected device", Toast.LENGTH_LONG).show();	
-					//MainActivity.checkState=true;
+					Toast.makeText(CheckBluetoothConnect.this, "connected device", Toast.LENGTH_LONG).show();	
+					//CheckBluetoothConnect.checkState=true;
 				}else if (PDFBusActivity.printerClass.getState() == PrinterClass.STATE_CONNECTING) {
 					
-					Toast.makeText(MainActivity.this, "connecting device ...", Toast.LENGTH_LONG).show();
+					Toast.makeText(CheckBluetoothConnect.this, "connecting device ...", Toast.LENGTH_LONG).show();
 					
 				}else if(PDFBusActivity.printerClass.getState() == PrinterClass.LOSE_CONNECT
 						|| PDFBusActivity.printerClass.getState() == PrinterClass.FAILED_CONNECT){
 					
 					checkState = false;
-					Toast.makeText(MainActivity.this, "Not connect device yet!", Toast.LENGTH_LONG).show();
+					Toast.makeText(CheckBluetoothConnect.this, "Not connect device yet!", Toast.LENGTH_LONG).show();
 					
 				}else{
-					Toast.makeText(MainActivity.this, "Not connect device yet!", Toast.LENGTH_LONG).show();
+					checkState = false;
+					Toast.makeText(CheckBluetoothConnect.this, "Not connect device yet!", Toast.LENGTH_LONG).show();
 				}
 			}
 		}
@@ -186,7 +145,7 @@ import android.content.Intent;
 			PDFBusActivity.printerClass = PrinterClassFactory.create(0, this, mhandler, handler);
 		} catch (Exception e) {
 			// TODO: handle exception
-			Toast.makeText(MainActivity.this, "Fail Bluetooth Service!", Toast.LENGTH_SHORT);
+			Toast.makeText(CheckBluetoothConnect.this, "Fail Bluetooth Service!", Toast.LENGTH_SHORT);
 		}
 		
 	}
@@ -196,22 +155,16 @@ import android.content.Intent;
     	for (Device device : list) {
 			if(device.getDeviceAddress().equals(d.getDeviceAddress()))
 			{
-				Log.i("", "Equal!");
 				return true;
 			}
 		}
-    	
-    	Log.i("", "Not Equal!");
     	return false;
     } 
-
-
+    
     @Override
     protected void onRestart() {
     	// TODO Auto-generated method stub
     	checkState=true;
     	super.onRestart();
     }
-
-	
 }
