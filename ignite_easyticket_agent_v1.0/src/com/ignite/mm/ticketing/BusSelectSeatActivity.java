@@ -175,7 +175,7 @@ import com.smk.skalertmessage.SKToastMessage;
 		SharedPreferences notify = getSharedPreferences("NotifyBooking", Context.MODE_PRIVATE);
 		NotifyBooking = notify.getInt("count", 0);
 		if(NotifyBooking > 0){
-			actionBarNoti.setVisibility(View.VISIBLE);
+			actionBarNoti.setVisibility(View.GONE);
 			actionBarNoti.setText(NotifyBooking.toString());
 		}
 		
@@ -393,7 +393,11 @@ import com.smk.skalertmessage.SKToastMessage;
 	        				
 	        				for(int i=0; i<jsonArray.length(); i++){
 	        					JSONObject obj = jsonArray.getJSONObject(i);
-	        					SeatLists += obj.getString("seat_no")+",";
+	        					if (i == jsonArray.length() - 1) {
+	        						SeatLists += obj.getString("seat_no");
+								}else {
+									SeatLists += obj.getString("seat_no")+", ";
+								}
 	        				}
 	        				
 	        				//Buy Ticket
@@ -407,7 +411,7 @@ import com.smk.skalertmessage.SKToastMessage;
 			    				bundle.putString("from_to", From+"-"+To);
 			    				bundle.putString("time", Time);
 			    				bundle.putString("classes", BusClasses);
-			    				bundle.putString("date", changeDate(Date));
+			    				bundle.putString("date", changeDateString(Date));
 			    				bundle.putString("selected_seat",  SeatLists);
 			    				bundle.putString("sale_order_no", jsonObject.getString("sale_order_no"));
 			    				bundle.putString("bus_occurence", BusSeats.get(0).getSeat_plan().get(0).getId().toString());

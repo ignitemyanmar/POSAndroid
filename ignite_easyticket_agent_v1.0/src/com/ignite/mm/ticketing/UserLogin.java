@@ -59,7 +59,7 @@ public class UserLogin extends SherlockActivity {
 		txtEmail = (EditText) this.findViewById(R.id.txt_login_email);
 		txtPassword = (EditText) this.findViewById(R.id.txt_login_password);
 
-		buttons[0] = (Button) findViewById(R.id.cmd_login);
+		buttons[0] = (Button) findViewById(R.id.btn_login);
 		buttons[1] = (Button) findViewById(R.id.btn_skip_login);
 		buttons[2] = (Button) findViewById(R.id.btn_register);
 
@@ -131,7 +131,7 @@ public class UserLogin extends SherlockActivity {
 									startActivity(intent);
 								}else{
 									//Intent intent = new Intent(getApplicationContext(),	BusMenuActivity.class);
-									Intent intent = new Intent(getApplicationContext(),	BusOperatorActivity.class);
+									Intent intent = new Intent(getApplicationContext(),	HomeActivity.class);
 			   						startActivity(intent);
 			   						finish();
 								}

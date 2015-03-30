@@ -14,7 +14,7 @@
             android:id="@+id/RelativeLayout2"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:background="@color/golden_brown"
+            android:background="@color/golden_brown_light"
             android:orientation="vertical"
             android:padding="5dp" >
 
@@ -22,12 +22,16 @@
                 android:id="@+id/auto_txt_codeno"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginRight="110dp"
-                android:ems="10"
-                android:hint="Enter Code No."
+                android:layout_marginRight="105dp"
+                android:hint="Enter Code No."                
                 android:inputType="number" 
-                android:textColor="@color/gray_light">
-
+                android:textColor="@color/gray_light"
+                android:maxWidth="300dp"
+                android:ems="10"
+                android:textColorHint="@color/gray"
+                
+                android:background="@drawable/apptheme_edit_text_holo_light">
+				
                 <requestFocus />
             </com.smk.custom.view.CustomEditText>
 
@@ -37,8 +41,9 @@
                 android:layout_height="match_parent"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentTop="true"
-                android:background="@drawable/btn_gold_light"
-                android:text="ရွာ မည္" />
+                android:background="@drawable/btn_gold"
+                android:text="ရွာ မည္"
+                android:textColor="@color/white" />
 
         </RelativeLayout>
 

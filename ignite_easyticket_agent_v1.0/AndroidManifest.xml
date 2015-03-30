@@ -69,6 +69,7 @@
          <activity android:name=".BusBookingDetailActivity" android:screenOrientation="portrait"></activity>
          <activity android:name=".BusOperatorActivity" android:screenOrientation="portrait"></activity>
          <activity android:name=".CheckBluetoothConnect" android:screenOrientation="portrait"></activity>
+         <activity android:name=".HomeActivity" android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>

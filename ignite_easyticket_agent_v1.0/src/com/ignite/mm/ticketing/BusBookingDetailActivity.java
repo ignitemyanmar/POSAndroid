@@ -58,6 +58,7 @@ public class BusBookingDetailActivity extends BaseSherlockActivity {
 	private TextView txt_customer_name;
 	private TextView txt_phone;
 	private Button btn_delete;
+	private TextView action_bar_title2;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -70,7 +71,10 @@ public class BusBookingDetailActivity extends BaseSherlockActivity {
 		actionBarBack = (ImageButton) actionBar.getCustomView().findViewById(
 				R.id.action_bar_back);
 		actionBarBack.setOnClickListener(clickListener);
-		actionBarTitle.setText("Easy Ticket");
+		actionBarTitle.setText("ခံုနံပါတ္ မ်ား ဖ်က္ျခင္း");
+		action_bar_title2 = (TextView) actionBar.getCustomView().findViewById(
+				R.id.action_bar_title2);
+		action_bar_title2.setVisibility(View.GONE);
 		actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
 		
 		setContentView(R.layout.activity_busticketing_customer_ticket);

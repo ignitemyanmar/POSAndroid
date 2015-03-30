@@ -5,263 +5,319 @@
     android:background="#ffffff"
     android:orientation="vertical" >
 
-    <LinearLayout
+    <ScrollView
+        android:id="@+id/scrollView1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:background="#ffffff"
-        android:orientation="vertical" >
+        android:layout_height="wrap_content" >
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:scrollbars="none" >
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
 
-            <ImageView
-                android:id="@+id/imageView1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ignite_small" />
-
-            <View
-                android:id="@+id/view1"
-                android:layout_width="1dp"
-                android:layout_height="50dp"
-                android:background="@color/gray"
-                android:layout_gravity="center_vertical" />
-
-            <TextView
-                android:id="@+id/txt_wifi"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:gravity="center_vertical|center_horizontal"
-                android:text="Ticket Confirm Sheet"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
+                android:layout_margin="5dp"
+                android:background="#ffffff"
+                android:orientation="vertical" >
 
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="3dp"
-            android:layout_marginBottom="3dp"
-            android:orientation="vertical" >
-
-            <TextView
-                android:id="@+id/txtPrintDate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:paddingRight="2dp"
-                android:text="Print Date : -" />
-
-            <TextView
-                android:id="@+id/txtPrintTime"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:paddingRight="2dp"
-                android:text="Print Time : -" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:orientation="vertical" >
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center">
-
-                <TextView
-                    android:id="@+id/txt_customer"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="25"
-                    android:gravity="center"
-                    android:paddingRight="2dp"
-                    android:text="-" />
-
-                <TextView
-                    android:id="@+id/txt_user_id"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="25"
-                    android:paddingRight="2dp"
-                    android:text="-"
-                    android:gravity="center" />
-            </LinearLayout>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/ticket_retangle"
-            android:orientation="vertical" >
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="20dp" >
-
-                <TextView
-                    android:id="@+id/txtDestination"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="20"
-                    android:paddingLeft="5dp"
-                    android:text="Yangon - Mandalay" />
-
-                <View
-                    android:id="@+id/view2"
-                    android:layout_width="1dp"
-                    android:layout_height="match_parent"
-                    android:background="#000" />
-
-                <TextView
-                    android:id="@+id/txtprice"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="40"
-                    android:paddingLeft="5dp"
-                    android:text="3500.00 KS" />
-            </LinearLayout>
-
-            <View
-                android:id="@+id/View03"
-                android:layout_width="wrap_content"
-                android:layout_height="1dp"
-                android:background="#000" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="20dp" >
-
-                <TextView
-                    android:id="@+id/txt_operator_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="35"
-                    android:paddingLeft="5dp"
-                    android:text="Elite" />
-
-                <View
-                    android:id="@+id/View01"
-                    android:layout_width="1dp"
-                    android:layout_height="match_parent"
-                    android:background="#000" />
-
-                <TextView
-                    android:id="@+id/txtDate"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="35"
-                    android:paddingLeft="5dp"
-                    android:text="12.3.14" />
-            </LinearLayout>
-
-            <View
-                android:id="@+id/View04"
-                android:layout_width="wrap_content"
-                android:layout_height="1dp"
-                android:layout_weight="35"
-                android:background="#000" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="20dp"
-                android:layout_weight="35" >
-
-                <TextView
-                    android:id="@+id/txtTime"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="25"
-                    android:paddingLeft="5dp"
-                    android:text="10:00 AM" />
-
-                <View
-                    android:id="@+id/View06"
-                    android:layout_width="1dp"
-                    android:layout_height="match_parent"
-                    android:background="#000" />
-
-                <TextView
-                    android:id="@+id/txt_bus_class"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="40"
-                    android:paddingLeft="5dp"
-                    android:text="Class - " />
-
-            </LinearLayout>
-
-            <View
-                android:id="@+id/View05"
-                android:layout_width="wrap_content"
-                android:layout_height="1dp"
-                android:layout_weight="35"
-                android:background="#000" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" >
-
-                <TextView
-                    android:id="@+id/txtSeatNo"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingLeft="5dp"
-                    android:text="Seat No B12" />
+                    android:layout_marginBottom="20dp"
+                    android:scrollbars="none" >
+
+                    <ImageView
+                        android:id="@+id/imageView1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ignite_small" />
+
+                    <View
+                        android:id="@+id/view1"
+                        android:layout_width="1dp"
+                        android:layout_height="60dp"
+                        android:layout_gravity="center_vertical"
+                        android:background="@color/black" />
+
+                    <com.smk.custom.view.CustomTextView
+                        android:id="@+id/txt_wifi"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:text="Ticket Confirm Sheet"
+                        android:textAppearance="?android:attr/textAppearanceLarge" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="3dp"
+                    android:layout_marginTop="3dp"
+                    android:orientation="vertical" >
+
+                    <com.smk.custom.view.CustomTextView
+                        android:id="@+id/txtPrintDate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:layout_marginBottom="5dp"
+                        android:paddingRight="2dp"
+                        android:text="Print Date : -" />
+
+                    <com.smk.custom.view.CustomTextView
+                        android:id="@+id/txtPrintTime"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:paddingRight="2dp"
+                        android:text="Print Time :  -" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:orientation="vertical"
+                    android:padding="5dp" 
+                    android:visibility="visible">
+
+                    <com.smk.custom.view.CustomTextView
+                        android:id="@+id/txt_agent"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Agent : -"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                    <View
+                        android:id="@+id/view2"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/line_dotted" />
+
+                    <com.smk.custom.view.CustomTextView
+                        android:id="@+id/txt_passenger"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:text="Passenger : -"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                    <com.smk.custom.view.CustomTextView
+                        android:id="@+id/txt_phone"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Phone        : -"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                    <View
+                        android:id="@+id/View01"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/line_dotted" />
+
+                    <com.smk.custom.view.CustomTextView
+                        android:id="@+id/txt_operator"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:text="Bus : -"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                    <com.smk.custom.view.CustomTextView
+                        android:id="@+id/txt_trip"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:text="Trip : -"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                    <com.smk.custom.view.CustomTextView
+                        android:id="@+id/txt_date"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:text="Dept: Date : -"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                    <com.smk.custom.view.CustomTextView
+                        android:id="@+id/txt_time"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:text="Dept: Time : - "
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                    <com.smk.custom.view.CustomTextView
+                        android:id="@+id/txt_class"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:text="Class : -"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                    <com.smk.custom.view.CustomTextView
+                        android:id="@+id/txt_seat_no"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Seat No. : -"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                    <View
+                        android:id="@+id/View07"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/line_dotted" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" >
+
+                        <com.smk.custom.view.CustomTextView
+                            android:id="@+id/CustomTextView01"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="70"
+                            android:text="Ticket Nos   : "
+                            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                        <com.smk.custom.view.CustomTextView
+                            android:id="@+id/ticket_nos"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="30"
+                            android:gravity="left|top"
+                            android:text="  -"
+                            android:padding="5dp"
+                            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="5dp" >
+
+                    <View
+                        android:id="@+id/View02"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/line_dotted" />
+
+                    <com.smk.custom.view.CustomTextView
+                        android:id="@+id/txt_seat_total"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:text="Seat Total : 0"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                    <com.smk.custom.view.CustomTextView
+                        android:id="@+id/txt_price"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:text="Price : 0.00"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                    <com.smk.custom.view.CustomTextView
+                        android:id="@+id/txt_discount"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:text="Disc (%) : 0.00"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                    <View
+                        android:id="@+id/View03"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/line_dotted" />
+
+                    <View
+                        android:id="@+id/View05"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginBottom="10dp"
+                        android:background="@drawable/line_dotted" />
+
+                    <com.smk.custom.view.CustomTextView
+                        android:id="@+id/txt_amount"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:text="Amount : 0.00 Ks"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                    <View
+                        android:id="@+id/View04"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@drawable/line_dotted" />
+
+                    <View
+                        android:id="@+id/View06"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginBottom="10dp"
+                        android:background="@drawable/line_dotted" />
+
+                    <com.smk.custom.view.CustomTextView
+                        android:id="@+id/CustomTextView10"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:text="***  Thank you! Have a nice &amp; safe trip ..."
+                        android:textSize="14dp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/lybarcode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="right"
+                    android:layout_weight="30"
+                    android:gravity="bottom|center_horizontal"
+                    android:orientation="vertical" >
+
+                    <ImageView
+                        android:id="@+id/img_barcode"
+                        android:layout_width="150dp"
+                        android:layout_height="50dp"
+                        android:background="#FFF" />
+
+                    <TextView
+                        android:id="@+id/txtBarcode"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="---"
+                        android:textColor="@color/black" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/txt_notrip"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="--------------------------------------------" />
             </LinearLayout>
 
         </LinearLayout>
-
-        <TextView
-            android:id="@+id/textView9"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:text="***  Thank you! Have a nice &amp; safe trip  ..."
-            android:textSize="14dp" />
-
-
-        <LinearLayout
-            android:id="@+id/lybarcode"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="right"
-            android:layout_weight="30"
-            android:gravity="bottom|center_horizontal"
-            android:orientation="vertical" >
-
-
-            <ImageView
-                android:id="@+id/img_barcode"
-                android:layout_width="150dp"
-                android:layout_height="50dp"
-                android:background="#FFF" />
-
-            <TextView
-                android:id="@+id/txtBarcode"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="1234555662342"
-                android:textColor="@color/black" />
-
-        </LinearLayout>
-
-
-        <TextView
-            android:id="@+id/txt_notrip"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="--------------------------------------------"
-            android:gravity="center" />
-
-    </LinearLayout>
+    </ScrollView>
 
 </LinearLayout>

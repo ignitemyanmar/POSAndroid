@@ -238,8 +238,9 @@
                             android:layout_width="match_parent"
                             android:layout_height="50dp"
                             android:layout_marginTop="50dp"
+                            android:layout_marginBottom="20dp"
                             android:background="@drawable/btn_green"
-                            android:text="ဝယ္ ရန္"
+                            android:text="ဝယ္ မည္"
                             android:textColor="@color/white"
                             android:textSize="14dp"
                             android:textStyle="bold"
@@ -256,7 +257,8 @@
                             android:text="Booking မွာမည္"
                             android:textColor="@color/white"
                             android:textSize="14dp"
-                            android:textStyle="bold" />
+                            android:textStyle="bold"
+                            android:visibility="gone" />
 
                         <com.smk.custom.view.CustomButton
                             android:id="@+id/btn_booking"
@@ -269,7 +271,7 @@
                             android:textColor="@color/white"
                             android:textSize="14dp"
                             android:textStyle="bold" 
-                            android:visibility="visible"/>
+                            android:visibility="gone"/>
                     </LinearLayout>
                 </LinearLayout>
 

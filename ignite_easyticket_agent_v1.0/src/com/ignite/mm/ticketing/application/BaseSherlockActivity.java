@@ -97,6 +97,7 @@ public class BaseSherlockActivity extends SherlockActivity {
 	 }
 	
 	public static String changeDate(String date){
+		Log.i("", "to change date: "+date);
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 		Date StartDate = null;
 		try {
@@ -105,7 +106,21 @@ public class BaseSherlockActivity extends SherlockActivity {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		Log.i("", "start date: "+StartDate);
 		return DateFormat.format("dd-MM-yyyy", StartDate).toString();
+	}
+	
+	public static String changeDateString(String date){
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+		Date StartDate = null;
+		try {
+			StartDate = df.parse(date);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return DateFormat.format("dd-MMMM-yyyy", StartDate).toString();
 	}
 	
 }

@@ -102,6 +102,10 @@ public class PDFBusActivity extends BaseSherlockActivity {
 	
 	private ProgressDialog dialog;
 	private LinearLayout img_print;
+	private String OrderDateTime;
+	private String Phone;
+	private String TicketNo;
+	private String SeatCount;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -118,7 +122,7 @@ public class PDFBusActivity extends BaseSherlockActivity {
 		actionBarTitle2.setVisibility(View.GONE);
 		actionBarBack = (ImageButton) actionBar.getCustomView().findViewById(
 				R.id.action_bar_back);
-		actionBarTitle.setText("Booking Sheet");
+		actionBarTitle.setText("Ticket Sheet");
 		img_print = (LinearLayout)actionBar.getCustomView().findViewById(R.id.img_print_layout);
 		img_print.setVisibility(View.VISIBLE);
 		img_print.setOnClickListener(clickListener);
@@ -147,7 +151,11 @@ public class PDFBusActivity extends BaseSherlockActivity {
 			Bar_Code_No = bundle.getString("sale_order_no");
 			ConfirmDate = bundle.getString("ConfirmDate");
 			ConfirmTime = bundle.getString("ConfirmTime");
+			OrderDateTime = bundle.getString("order_date");
 			BuyerName = bundle.getString("BuyerName");
+			Phone = bundle.getString("BuyerPhone");
+			TicketNo = bundle.getString("TicketNo");
+			SeatCount = bundle.getString("SeatCount");
 		}
 
 		lv_bus_booking_sheet = (ListView)findViewById(R.id.lv_bus_booking_sheet);
@@ -171,8 +179,10 @@ public class PDFBusActivity extends BaseSherlockActivity {
 	private void getData() {
 		
 		allBusObject = new ArrayList<AllBusObject>();
+		Integer amount = Integer.valueOf(SeatCount) * Integer.valueOf(SeatPrice);
 		allBusObject.add(new AllBusObject(BusTrip, TripDate, "", OperatorName, TripTime, ""
-				, SelectedSeat, SeatPrice, "", AppLoginUser.getUserName(), BusClass,  ConfirmDate, ConfirmTime, Bar_Code_No, getBarcode(), BuyerName));
+				, SelectedSeat, SeatPrice, "", AppLoginUser.getUserName(), BusClass, ConfirmDate, ConfirmTime
+				, Bar_Code_No, getBarcode(), BuyerName, Phone, TicketNo, SeatCount, 0, amount));
 		
 		Log.i("", "All Bus Object: "+allBusObject.toString());
 		lv_bus_booking_sheet.setAdapter(new PDFBusAdapter(PDFBusActivity.this, allBusObject));
@@ -419,7 +429,7 @@ public class PDFBusActivity extends BaseSherlockActivity {
 								}*/ 
 								
 								progressDialog = ProgressDialog.show(PDFBusActivity.this, "", "Connecting , pls wait  ...", true);
-								progressDialog.setCancelable(false);
+								progressDialog.setCancelable(true);
 							}
 						});
 						
@@ -631,9 +641,9 @@ public class PDFBusActivity extends BaseSherlockActivity {
 							if (printerClass.getState() == PrinterClass.STATE_CONNECTED) {
 								
 								checkState = true;
-								Toast.makeText(PDFBusActivity.this, "Connected & printing ... !", Toast.LENGTH_SHORT).show();
 								printerClass.printImage(ticketBitmap);
 								progressDialog.dismiss();
+								Toast.makeText(PDFBusActivity.this, "Connected & printing ... !", Toast.LENGTH_SHORT).show();
 							}
 						}
 						break;

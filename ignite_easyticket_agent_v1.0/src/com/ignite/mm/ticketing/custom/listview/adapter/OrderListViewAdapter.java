@@ -53,14 +53,14 @@ public class OrderListViewAdapter extends BaseAdapter {
 		}else{
 			holder = (ViewHolder) convertView.getTag();
 		}
-		holder.txt_trip.setText("Trip: "+getItem(position).getTrip()+" ["+getItem(position).getOperator()+"]");
-		holder.txt_date.setText("Date: "+getItem(position).getDate());
-		holder.txt_time.setText("Time: "+getItem(position).getTime());
-		holder.txt_seats.setText("Seat No: "+this.bus_seats);
-		holder.txt_price.setText("Price: "+getItem(position).getPrice());
-		holder.txt_order_date.setText("Order Date: "+getItem(position).getOrderdate());
-		holder.txt_seat_count.setText("Total Seats: "+getItem(position).getTotalTicket());
-		holder.txt_amount.setText("Amount: "+getItem(position).getAmount().toString());
+		holder.txt_trip.setText("Trip:  "+getItem(position).getTrip()+" ["+getItem(position).getOperator()+"]");
+		holder.txt_date.setText("Date:  "+getItem(position).getDate());
+		holder.txt_time.setText("Time:  "+getItem(position).getTime());
+		holder.txt_seats.setText("Seat No:  "+this.bus_seats);
+		holder.txt_price.setText("Price:  "+getItem(position).getPrice()+" Ks");
+		holder.txt_order_date.setText("Order Date:  "+getItem(position).getOrderdate());
+		holder.txt_seat_count.setText("Total Seats:  "+getItem(position).getTotalTicket());
+		holder.txt_amount.setText("Amount: "+getItem(position).getAmount()+" Ks");
 		
 		return convertView;
 	}

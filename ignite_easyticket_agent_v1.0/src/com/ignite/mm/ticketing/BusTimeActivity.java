@@ -131,7 +131,7 @@ public class BusTimeActivity extends BaseSherlockActivity {
 		SharedPreferences notify = getSharedPreferences("NotifyBooking", Context.MODE_PRIVATE);
 		NotifyBooking = notify.getInt("count", 0);
 		if(NotifyBooking > 0){
-			actionBarNoti.setVisibility(View.VISIBLE);
+			actionBarNoti.setVisibility(View.GONE);
 			actionBarNoti.setText(NotifyBooking.toString());
 		}
 		

@@ -51,6 +51,7 @@ public class BusBookingListActivity extends BaseSherlockActivity {
 	private EditText auto_txt_codeno;
 	private Button btn_search_codeno;
 	private TextView action_bar_title2;
+	private SKConnectionDetector connectionDetector;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -99,9 +100,9 @@ public class BusBookingListActivity extends BaseSherlockActivity {
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
-		SKConnectionDetector connectionDetector = SKConnectionDetector.getInstance(this);
+		connectionDetector = SKConnectionDetector.getInstance(this);
 		if(connectionDetector.isConnectingToInternet()){
-			getBookingListByCodeNo();
+			//getBookingListByCodeNo();
 		}else{
 			connectionDetector.showErrorMessage();
 		}
@@ -118,7 +119,11 @@ public class BusBookingListActivity extends BaseSherlockActivity {
 				if (auto_txt_codeno.getText().toString().length() == 0) {
 					SKToastMessage.showMessage(BusBookingListActivity.this, "Enter Booking Code No.", SKToastMessage.WARNING);
 				}else {
-					getBookingListByCodeNo();
+					if(connectionDetector.isConnectingToInternet()){
+						getBookingListByCodeNo();
+					}else{
+						connectionDetector.showErrorMessage();
+					}
 				}
 			}
 		}
@@ -205,7 +210,7 @@ public class BusBookingListActivity extends BaseSherlockActivity {
 		
 		dialog = ProgressDialog.show(this, "", " Please wait...", true);
         dialog.setCancelable(true);
-        
+               
         String book_code = auto_txt_codeno.getText().toString(); 
         
         Log.i("", "Booking Code (User Input) : "+book_code+", Token: "+AppLoginUser.getAccessToken());
@@ -217,26 +222,35 @@ public class BusBookingListActivity extends BaseSherlockActivity {
 				Log.i("","Failure : "+ arg0.getCause());
 				dialog.dismiss();
 				showAlert();
+				lv_booking_list.setAdapter(null);
 			}
 
 			public void success(List<CreditOrder> arg0, Response arg1) {
 				// TODO Auto-generated method stub
 				credit_list = arg0;
 				
-				Log.i("","Hello size: "+ credit_list.size());
-				List<Saleitem> seats = new ArrayList<Saleitem>();
-				seats = credit_list.get(0).getSaleitems();
-				String bus_seats = "";
-				for (int i = 0; i < seats.size(); i++) {
-					if (i == seats.size()-1) {
-						bus_seats += seats.get(i).getSeatNo();
-					}else {
-						bus_seats += seats.get(i).getSeatNo()+",";
-					}
-				}
-				
 				if (credit_list != null && credit_list.size() > 0) {
+					Log.i("","Hello size: "+ credit_list.size());
+					List<Saleitem> seats = new ArrayList<Saleitem>();
+					
+					seats = credit_list.get(0).getSaleitems();
+					String bus_seats = "";
+					for (int i = 0; i < seats.size(); i++) {
+						if (i == seats.size()-1) {
+							bus_seats += seats.get(i).getSeatNo();
+						}else {
+							bus_seats += seats.get(i).getSeatNo()+",";
+						}
+					}
+					
+					String changeDate = changeDateString(credit_list.get(0).getDate());
+					CreditOrder co = (CreditOrder)credit_list.get(0);
+					co.setDate(changeDate);
+					
 					lv_booking_list.setAdapter(new OrderListViewAdapter(BusBookingListActivity.this, credit_list, bus_seats));
+				}else {
+					showAlert();
+					lv_booking_list.setAdapter(null);
 				}
 				
 				dialog.dismiss();

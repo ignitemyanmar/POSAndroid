@@ -27,7 +27,7 @@
             android:layout_width="match_parent"
             android:layout_height="80dp"
             android:layout_marginTop="15dp"
-            android:background="@drawable/btn_orange"
+            android:background="@drawable/btn_gray"
             android:text="Booking ဖ်က္ မည္"
             android:textColor="@color/white" />
     </LinearLayout>
@@ -40,7 +40,7 @@
         android:layout_alignParentRight="true"
         android:layout_marginBottom="20dp"
         android:layout_marginTop="20dp"
-        android:background="@drawable/btn_blue"
+        android:background="@drawable/btn_gold"
         android:text="&lt;&lt; ေနာက္သို႕"
         android:textColor="@color/white" />
 

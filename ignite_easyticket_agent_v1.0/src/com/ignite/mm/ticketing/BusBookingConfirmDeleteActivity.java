@@ -1,5 +1,9 @@
 package com.ignite.mm.ticketing;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -11,6 +15,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -35,6 +40,9 @@ public class BusBookingConfirmDeleteActivity extends BaseSherlockActivity {
 	private Button btn_back;
 	private String creditOrderString;
 	private CreditOrder creditOrder;
+	private TextView action_bar_title2;
+	private String todayDate;
+	private String todayTime;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +56,9 @@ public class BusBookingConfirmDeleteActivity extends BaseSherlockActivity {
 				R.id.action_bar_back);
 		actionBarBack.setOnClickListener(clickListener);
 		actionBarTitle.setText("Easy Ticket");
+		action_bar_title2 = (TextView) actionBar.getCustomView().findViewById(
+				R.id.action_bar_title2);
+		action_bar_title2.setVisibility(View.GONE);
 		actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
 		
 		setContentView(R.layout.activity_pay_delete);
@@ -59,6 +70,17 @@ public class BusBookingConfirmDeleteActivity extends BaseSherlockActivity {
 		btn_pay.setOnClickListener(clickListener);
 		btn_cancel_order.setOnClickListener(clickListener);
 		btn_back.setOnClickListener(clickListener);
+		
+		//Get TodayDate
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		todayDate = sdf.format(new Date());
+		
+		Log.i("", "Today date: "+todayDate);
+		
+		//Get Current Time
+		SimpleDateFormat sdf2 = new SimpleDateFormat("HH:mm:ss");
+		Calendar cal = Calendar.getInstance();
+		todayTime = sdf2.format(cal.getTime()).toString();
 		
 	}
 	
@@ -87,11 +109,18 @@ public class BusBookingConfirmDeleteActivity extends BaseSherlockActivity {
 			if(v == btn_pay){
 				Intent nextScreen = new Intent(BusBookingConfirmDeleteActivity.this, BusConfirmActivity.class);
 				String SeatLists = "";
+				
 				for(int i=0; i<creditOrder.getSaleitems().size(); i++){
-					SeatLists += creditOrder.getSaleitems().get(i).getSeatNo()+",";
+					if (i == creditOrder.getSaleitems().size() - 1) {
+						SeatLists += creditOrder.getSaleitems().get(i).getSeatNo();
+					}else {
+						SeatLists += creditOrder.getSaleitems().get(i).getSeatNo()+", ";
+					}
 				}
+				
 				Bundle bundle = new Bundle();
 				bundle.putString("from_intent", "booking");
+				bundle.putString("Operator_Name", creditOrder.getOperator());
 				bundle.putString("from_to", creditOrder.getTrip());
 				bundle.putString("time", creditOrder.getTime());
 				bundle.putString("classes",creditOrder.getClasses());
@@ -99,9 +128,16 @@ public class BusBookingConfirmDeleteActivity extends BaseSherlockActivity {
 				bundle.putString("agent_id", creditOrder.getAgentId().toString());
 				bundle.putString("name", creditOrder.getCustomer());
 				bundle.putString("phone", creditOrder.getPhone());
+				bundle.putString("Price", creditOrder.getPrice().toString());
 				bundle.putString("selected_seat",  SeatLists);
 				bundle.putString("sale_order_no", creditOrder.getId().toString());
+				bundle.putString("order_date", creditOrder.getOrderdate());
 				bundle.putString("bus_occurence", creditOrder.getSaleitems().get(0).getBusoccuranceId().toString());
+				bundle.putString("ConfirmDate", todayDate);
+				bundle.putString("ConfirmTime", todayTime);
+				//Get Seat Count
+				String[] seats = SeatLists.split(",");
+				bundle.putString("SeatCount", seats.length+"");
 				nextScreen.putExtras(bundle);
 				startActivity(nextScreen);
 			}

@@ -179,7 +179,7 @@ public class BusTripsCityActivity extends BaseSherlockActivity{
 				editor.commit();
 				
 				if(arg0 > 0){
-					actionBarNoti.setVisibility(View.VISIBLE);
+					actionBarNoti.setVisibility(View.GONE);
 					actionBarNoti.setText(arg0.toString());
 				}
 			}

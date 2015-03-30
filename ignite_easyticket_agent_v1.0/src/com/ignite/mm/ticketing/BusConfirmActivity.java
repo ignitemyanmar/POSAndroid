@@ -24,6 +24,7 @@ import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -105,6 +106,7 @@ public class BusConfirmActivity extends BaseSherlockActivity {
 	private SKConnectionDetector skDetector;
 	private ConnectionDetector connectionDetector;
 	private String user_type;
+	private EditText ticket_no;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -116,8 +118,10 @@ public class BusConfirmActivity extends BaseSherlockActivity {
 		actionBar.setCustomView(R.layout.action_bar_with_2title);
 		actionBarTitle = (TextView) actionBar.getCustomView().findViewById(
 				R.id.action_bar_title);
+		actionBarTitle.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
 		actionBarSubtitle = (TextView) actionBar.getCustomView().findViewById(
 				R.id.action_bar_title_2);
+		actionBarSubtitle.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
 		actionBarBack = (ImageButton) actionBar.getCustomView().findViewById(
 				R.id.action_bar_back);
 		actionBarBack.setOnClickListener(clickListener);
@@ -130,7 +134,7 @@ public class BusConfirmActivity extends BaseSherlockActivity {
 		SharedPreferences notify = getSharedPreferences("NotifyBooking", Context.MODE_PRIVATE);
 		NotifyBooking = notify.getInt("count", 0);
 		if(NotifyBooking > 0){
-			actionBarNoti.setVisibility(View.VISIBLE);
+			actionBarNoti.setVisibility(View.GONE);
 			actionBarNoti.setText(NotifyBooking.toString());
 		}
 		
@@ -148,8 +152,10 @@ public class BusConfirmActivity extends BaseSherlockActivity {
 		}
 		
 		actionBarTitle.setText(bundle.getString("from_to")+ " ["+bundle.getString("time")+"] "+ bundle.getString("classes"));
-		actionBarSubtitle.setText(changeDate(bundle.getString("date")));
+		Log.i("", "Date: "+bundle.getString("date"));
+		actionBarSubtitle.setText(bundle.getString("date"));
 		SelectedSeatIndex = bundle.getString("selected_seat");
+		
 		SaleOrderNo = bundle.getString("sale_order_no");
 		BusOccurence = bundle.getString("bus_occurence");
 		
@@ -167,8 +173,8 @@ public class BusConfirmActivity extends BaseSherlockActivity {
 		sp_remark_type = (Spinner) findViewById(R.id.sp_remark_type);
 		edt_remark = (EditText) findViewById(R.id.edt_remark);
 		
-		edt_buyer.setText(Name);
-		edt_phone.setText(Phone);
+		//edt_buyer.setText(Name);
+		//edt_phone.setText(Phone);
 		
 		nrcFormat = new ArrayList<String>();
 		nrcFormat.add("14/Ba Ba La (N)");
@@ -569,7 +575,7 @@ public class BusConfirmActivity extends BaseSherlockActivity {
 			layout_free_ticket.addView(rdo_gp_free);
 			layout_ticket_no_container.addView(layout_free_ticket);
 			
-			EditText ticket_no = new EditText(this);
+			ticket_no = new EditText(this);
 			ticket_no.setInputType(InputType.TYPE_CLASS_TEXT);
 			ticket_no.setId(i+1);
 			ticket_no.setSingleLine(true);
@@ -698,9 +704,12 @@ public class BusConfirmActivity extends BaseSherlockActivity {
 		String accessToken = pref.getString("access_token", null);
 		String user_id = pref.getString("user_id", null);
 		String user_type = pref.getString("user_type", null);
-		if(user_type.equals("agent")){
+		if(user_type.equals("Agent")){
 			AgentID = user_id;
 		}
+		
+		Log.i("", "(to confirm) User_id: "+user_id+", UserType: "+user_type+", AgentID: "+AgentID);
+		Log.i("", "Ticket Arrays: "+seats.toString());
 		
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
 		params.add(new BasicNameValuePair("buyer_name", edt_buyer.getText().toString()));
@@ -724,13 +733,32 @@ public class BusConfirmActivity extends BaseSherlockActivity {
 		
 		Log.i("","Hello Params :"+ params.toString());
 		
+		bundle.putString("BuyerName", edt_buyer.getText().toString());
+		bundle.putString("BuyerPhone", edt_phone.getText().toString());
+		bundle.putString("BuyerNRC", edt_nrc_no.getText().toString());
+		
+		String ticketNo = "";
+		for (int j = 0; j < seats.size(); j++) {
+			
+			if (j == seats.size()-1) {
+				ticketNo += seats.get(j).getTicket_no()+" (seat no. "+seats.get(j).getSeat_no()+")";
+			}else {
+				ticketNo += seats.get(j).getTicket_no()+" (seat no. "+seats.get(j).getSeat_no()+"), <br/>";
+			}
+			
+			/*String styledText = "This is <font color='red'>simple</font>.";
+			textView.setText(Html.fromHtml(styledText), TextView.BufferType.SPANNABLE);*/
+		}
+
+		bundle.putString("TicketNo", ticketNo);
+		
 		final Handler handler = new Handler() {
 
 			public void handleMessage(Message msg) {
 
 				String jsonData = msg.getData().getString("data");
 				try {
-					Log.i("","Hello Response :"+ jsonData);
+					Log.i("","Hello Response Confirm Data:"+ jsonData);
 					
 					JSONObject jsonObj = new JSONObject(jsonData);
 					if(!jsonObj.getBoolean("status") && jsonObj.getString("device_id").equals(DeviceUtil.getInstance(BusConfirmActivity.this).getID())){
@@ -753,15 +781,10 @@ public class BusConfirmActivity extends BaseSherlockActivity {
 				"http://easyticket.com.mm/sale/comfirm", params);
 		lt.execute();
 		
-		Log.i("", "finish Confirm booking!!!");
 		//Show Voucher
-		
-		bundle.putString("BuyerName", edt_buyer.getText().toString());
-		bundle.putString("BuyerPhone", edt_phone.getText().toString());
-		bundle.putString("BuyerNRC", edt_nrc_no.getText().toString());
-		
 		startActivity(new Intent(BusConfirmActivity.this, PDFBusActivity.class).putExtras(bundle));
 		finish();
+		
 	}
 	
 	public boolean checkFieldsAgent()
