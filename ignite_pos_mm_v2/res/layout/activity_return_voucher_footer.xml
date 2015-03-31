@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" 
+    android:gravity="center_horizontal">
+
+    <LinearLayout
+        android:layout_width="450dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="450dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:id="@+id/LinearLayout1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="5dp"
+                android:orientation="vertical" >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical|right" >
+
+                    <com.smk.skscalableview.ScalableTextView
+                        android:id="@+id/txt_category"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:layout_marginRight="2dp"
+                        android:layout_weight="20"
+                        android:gravity="left|center_vertical"
+                        android:paddingLeft="190dp"
+                        android:text="စုစုေပါင္း"
+                        android:textSize="16dp" />
+
+                    <com.smk.skscalableview.ScalableTextView
+                        android:id="@+id/txt_grand_total"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:layout_weight="50"
+                        android:gravity="right|center_vertical"
+                        android:text="0.00"
+                        android:textSize="18dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical|right" >
+
+                    <com.smk.skscalableview.ScalableTextView
+                        android:id="@+id/txt_vouNo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:layout_marginRight="2dp"
+                        android:layout_weight="20"
+                        android:gravity="left|center_vertical"
+                        android:paddingLeft="180dp"
+                        android:text="ေလွ်ာ့ေစ်း"
+                        android:textSize="16dp" />
+
+                    <com.smk.skscalableview.ScalableTextView
+                        android:id="@+id/txt_discount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:layout_weight="50"
+                        android:gravity="right|center_vertical"
+                        android:text="0.00"
+                        android:textSize="18dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical|right" >
+
+                    <com.smk.skscalableview.ScalableTextView
+                        android:id="@+id/txt_credit_total"
+                        android:layout_width="wrap_content"
+                        android:layout_height="60dp"
+                        android:layout_marginRight="2dp"
+                        android:layout_weight="20"
+                        android:gravity="left|center_vertical"
+                        android:paddingLeft="180dp"
+                        android:text="ျပန္ အမ္း ေငြ"
+                        android:textSize="16dp" />
+
+                    <com.smk.skscalableview.ScalableTextView
+                        android:id="@+id/txt_net_amount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="60dp"
+                        android:layout_weight="50"
+                        android:gravity="right|center_vertical"
+                        android:text="0.00"
+                        android:textSize="18dp" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayout2"
+            android:layout_width="450dp"
+            android:layout_height="80dp"
+            android:background="@color/gray"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="10dp" >
+
+            <com.ignite.custom.view.CustomTextView
+                android:id="@+id/txt_co_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="ေက်းဇူးတင္ ပါသည္။ ေပ်ာ္ရႊင္ေသာေန႔ေလးျဖစ္ပါေစ =)"
+                android:textSize="16dp" />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

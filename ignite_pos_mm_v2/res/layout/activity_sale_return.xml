@@ -29,9 +29,10 @@
 
                 <AutoCompleteTextView
                     android:id="@+id/autoComTxt_voucher"
-                    android:layout_width="200dp"
+                    android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_marginRight="10dp"
+                    android:layout_weight="1"
                     android:ems="10"
                     android:hint="အေရာင္းေဘာင္ခ်ာ"
                     android:padding="10dp" >

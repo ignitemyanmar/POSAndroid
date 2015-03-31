@@ -9,34 +9,42 @@ import java.util.ArrayList;
 import java.util.List;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
-import android.content.Context;
+import android.app.ProgressDialog;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
-import android.media.RemoteControlClient;
 import android.os.Build;
 import android.os.Bundle;
-import android.print.PrintManager;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.MeasureSpec;
 import android.view.ViewGroup.LayoutParams;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 import com.actionbarsherlock.app.SherlockActivity;
 import com.google.gson.Gson;
-import com.ignite.pos.adapter.SaleVoucherSlipAdapter;
+import com.ignite.pos.adapter.DeviceAdapter;
 import com.ignite.pos.adapter.VoucherSlipListViewAdapter;
+import com.ignite.pos.application.BluetoothDeviceDialog;
 import com.ignite.pos.model.BundleListObjet;
+import com.ignite.pos.model.Device;
 import com.ignite.pos.model.SaleVouncher;
 import com.smk.skalertmessage.SKToastMessage;
+import com.zkc.helper.printer.BlueToothService;
+import com.zkc.helper.printer.PrintService;
+import com.zkc.helper.printer.PrinterClass;
+import com.zkc.helper.printer.PrinterClassFactory;
 
 @SuppressLint("SdCardPath")
 @TargetApi(Build.VERSION_CODES.KITKAT)
@@ -58,13 +66,40 @@ public class VoucherSlipActivity extends SherlockActivity{
 	private TextView txt_paid_amount;
 	private TextView txt_credit_left_amount;
 	
+	//Print Ticket Slip - Variables
+	public Handler mhandler = null;
+	public static PrinterClass printerClass = null;
+	private ArrayAdapter<String> mPairedDevicesArrayAdapter = null;
+	public static ArrayAdapter<String> mNewDevicesArrayAdapter = null;
+	public static List<Device> deviceList;
+	private DeviceAdapter adapter;
+	private String BuyerName;
+	
+	//Check Device connected
+	public static boolean checkState = true;
+	private Thread tv_update;
+	TextView textView_state;
+	public static final int MESSAGE_STATE_CHANGE = 1;
+	public static final int MESSAGE_READ = 2;
+	public static final int MESSAGE_WRITE = 3;
+	public static final int MESSAGE_DEVICE_NAME = 4;
+	public static final int MESSAGE_TOAST = 5;
+	Handler handler = null;
+	
+	private ProgressDialog dialog;
+	private Bitmap bitmapVoucher;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_voucher_slip);
 		
+		//Data to print
 		setData();
+		
+		//Check Bluetooth Connection
+		checkBluetoothConnect();
 		
 		btn_done = (Button) findViewById(R.id.btn_done);
 		btn_print = (Button) findViewById(R.id.btn_print);
@@ -81,7 +116,10 @@ public class VoucherSlipActivity extends SherlockActivity{
 			
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				SKToastMessage.showMessage(VoucherSlipActivity.this, "Print not set up..!!", SKToastMessage.ERROR);
+				//Save & Print the Slip
+				printSlip();
+				
+				//SKToastMessage.showMessage(VoucherSlipActivity.this, "Print not set up..!!", SKToastMessage.ERROR);
 				
 				//private int verson = 52;
 				
@@ -252,8 +290,19 @@ public class VoucherSlipActivity extends SherlockActivity{
 //			}
 	    }
 	    
-	    storeImage(bigbitmap, PRINT_FILE_PATH, "SaleVoucher.png");
+	   // storeImage(bigbitmap, PRINT_FILE_PATH, "SaleVoucher.png");
 	    return bigbitmap;
+	}
+	
+	public boolean isSaveVoucher() {
+		boolean saved = false;
+		bitmapVoucher = getWholeListViewItemsToBitmap();
+		
+		if (storeImage(bitmapVoucher, PRINT_FILE_PATH, "SaleVoucher.png")) {
+			saved = true;
+		}
+		
+		return saved;
 	}
 	
 	public static void getBitmapFromView(View view) {
@@ -310,6 +359,324 @@ public class VoucherSlipActivity extends SherlockActivity{
 		return resizedBitmap;
 	}
 	
+	/**
+	 *  Print the Slip !
+	 */
+	protected ProgressDialog progressDialog;
+	private void printSlip() {
+		// TODO Auto-generated method stub
+		Log.i("", "Check State (2nd) On Print Method: "+printerClass.getState());
+		
+		//Save Voucher
+		if (isSaveVoucher()) {
+			
+			Log.i("", "Saved!");
+			
+			/*Toast.makeText(
+					this,
+					"Your ticket is saved to " + PDF_FILE_PATH
+							+ "BookingSheet", Toast.LENGTH_SHORT).show();*/
+		} else {
+			Log.i("", "Fail Saved!");
+			/*Toast.makeText(this, "Can't save your ticket!",
+					Toast.LENGTH_LONG).show();*/
+		}
+		
+		//Print Voucher
+		//If not connected , show dialog for device list
+		//If connected, print directly
+		final Bitmap bitmapVoucher = getWholeListViewItemsToBitmap();
+		if (bitmapVoucher != null) {
+			
+			Log.i("", "Voucher Bitmap is not null!");
+			
+			if (printerClass != null) {
+				
+				Log.i("", "Printer class is not null!");
+				
+				//If Bluetooth Support not have ... 
+		        if (!BlueToothService.HasDevice()) {
+		        	
+		            SKToastMessage.showMessage(VoucherSlipActivity.this, "The device does not have Bluetooth support!", SKToastMessage.LENGTH_LONG);
+		            
+		        }else {
+		        	
+		        	Log.i("", "Check State (2nd) On Print Method ==> If bluetooth support: "+printerClass.getState());
+		        	
+					if(printerClass.getState() != PrinterClass.STATE_CONNECTED)
+					{
+						Log.i("", "Not connect yet with device !!! ");
+						
+						BluetoothDeviceDialog deviceDialog = new BluetoothDeviceDialog(VoucherSlipActivity.this);
+						
+						if (printerClass != null) {
+							if (printerClass.getState() == PrinterClass.STATE_CONNECTED) {
+								Toast.makeText(VoucherSlipActivity.this, "connected", Toast.LENGTH_SHORT).show();	
+								checkState = true;
+							}else if (printerClass.getState() == PrinterClass.STATE_CONNECTING) {
+								Toast.makeText(VoucherSlipActivity.this, "connecting...", Toast.LENGTH_SHORT).show();	
+							}else if(printerClass.getState() == PrinterClass.STATE_SCAN_STOP)
+							{
+								Toast.makeText(VoucherSlipActivity.this, "stop scanning...", Toast.LENGTH_SHORT).show();	
+								
+								if (deviceList != null && deviceList.size() > 0) {
+									adapter = new DeviceAdapter(VoucherSlipActivity.this, deviceList);
+									deviceDialog.getListView().setAdapter(adapter);	
+								}
+							}else if(printerClass.getState() == PrinterClass.STATE_SCANING)
+							{
+								Log.i("", "Scanning...!");
+								
+								Toast.makeText(VoucherSlipActivity.this, "scanning....", Toast.LENGTH_LONG).show();	
+								
+								if (deviceList != null && deviceList.size() > 0) {
+									adapter = new DeviceAdapter(VoucherSlipActivity.this, deviceList);
+									deviceDialog.getListView().setAdapter(adapter);	
+								}
+								
+							}else {
+								
+								Toast.makeText(VoucherSlipActivity.this, "Not connect yet!", Toast.LENGTH_SHORT).show();	
+								if (deviceList != null && deviceList.size() > 0) {
+									adapter = new DeviceAdapter(VoucherSlipActivity.this, deviceList);
+									deviceDialog.getListView().setAdapter(adapter);	
+								}
+							}
+						}
+						
+						//Print Setting
+						mPairedDevicesArrayAdapter = new ArrayAdapter<String>(this,
+								R.drawable.device_name);
+						
+						//Paired DeviceList Show
+						//if (deviceList != null && deviceList.size() > 0) {
+							/*Log.i("", "Paired Device List !! ");
+							
+							adapter = new DeviceAdapter(VoucherSlipActivity.this, deviceList);
+							deviceDialog.getListView().setAdapter(adapter);	*/
+							
+							//New DeviceList & Scan							
+							mNewDevicesArrayAdapter = new ArrayAdapter<String>(this,
+									R.drawable.device_name);
+							
+							deviceList = new ArrayList<Device>();
+							
+							if(deviceList!=null)
+							{
+								deviceList.clear();
+							}
+							
+							mNewDevicesArrayAdapter.clear();
+							printerClass.scan();
+							
+							//Get Device List after scanning
+							deviceList = printerClass.getDeviceList();
+							
+							if (deviceList != null && deviceList.size() > 0) {
+								Log.i("", "New Device's list: "+deviceList.toString());
+								
+								adapter = new DeviceAdapter(VoucherSlipActivity.this, deviceList);
+								deviceDialog.getListView().setAdapter(adapter);	
+							}
+							
+						deviceDialog.setCallbackListener(new BluetoothDeviceDialog.Callback() {
+							
+							public void onDeviceChoose(int position) {
+								//Connect to Selected Device's Address
+								Log.i("", "Enter Here, device choose !!!!!!!!!!!!!!");
+								
+								//Connect with the selected device
+								printerClass.connect(deviceList.get(position).getDeviceAddress());
+															
+								/*if (printerClass.getState() == PrinterClass.STATE_CONNECTING) {
+									Toast.makeText(VoucherSlipActivity.this, "connecting , pls wait ... !", Toast.LENGTH_SHORT).show();
+								}*/ 
+								
+								progressDialog = ProgressDialog.show(VoucherSlipActivity.this, "", "Connecting , pls wait  ...", true);
+								progressDialog.setCancelable(true);
+							}
+						});
+						
+						deviceDialog.show();
+						
+					}else if(printerClass.getState() == PrinterClass.STATE_CONNECTED){
+						
+						Log.i("", "Connect with Device !!!!!!!!!");
+						
+						try {
+							checkState = true;
+							printerClass.printImage(bitmapVoucher);
+							Toast.makeText(VoucherSlipActivity.this, "Connected & Printing ...", Toast.LENGTH_SHORT).show();
+						} catch (Exception e) {
+							// TODO: handle exception
+							Toast.makeText(VoucherSlipActivity.this, "Fail to print!", Toast.LENGTH_LONG).show();
+						}
+					}//End if - check connected 
+				}//End if - check if have Bluetooth support
+			}else {
+				Log.i("", "Printer class is null!");
+			}
+		}
+	}
+	
+	//Check Bluetooth Connect on Create
+	public void checkBluetoothConnect() {
+		// TODO Auto-generated method stub
+		
+		mhandler = new Handler() {
+			public void handleMessage(Message msg) {
+				switch (msg.what) {
+				case MESSAGE_READ:
+					 byte[] readBuf = (byte[]) msg.obj;
+					 Log.i("", "readBuf:"+readBuf[0]);
+					 if(readBuf[0]==0x13)
+					 {
+						 PrintService.isFUll=true;
+					 }
+					 else if(readBuf[0]==0x11)
+					 {
+						 PrintService.isFUll=false;
+					 }
+					 else{
+		                // construct a string from the valid bytes in the buffer
+		                String readMessage = new String(readBuf, 0, msg.arg1);
+		                /*Toast.makeText(getApplicationContext(),readMessage,
+	                               Toast.LENGTH_SHORT).show();*/
+					 }
+					break;
+				case MESSAGE_STATE_CHANGE:// Ã¨â€œï¿½Ã§â€°â„¢Ã¨Â¿Å¾Ã¦Å½Â¥Ã§Å Â¶
+					switch (msg.arg1) {
+					case PrinterClass.STATE_CONNECTED:// Ã¥Â·Â²Ã§Â»ï¿½Ã¨Â¿Å¾Ã¦Å½Â¥
+						break;
+					case PrinterClass.STATE_CONNECTING:// Ã¦Â­Â£Ã¥Å“Â¨Ã¨Â¿Å¾Ã¦Å½Â¥
+						break;
+					case PrinterClass.STATE_LISTEN:
+					case PrinterClass.STATE_NONE:
+						break;
+					case PrinterClass.SUCCESS_CONNECT:
+						Log.i("", "Success Connected & Printing..... ");
+						final Bitmap ticketBitmap = getWholeListViewItemsToBitmap();
+						if (ticketBitmap != null) {
+							if (printerClass.getState() == PrinterClass.STATE_CONNECTED) {
+								
+								checkState = true;
+								printerClass.printImage(ticketBitmap);
+								progressDialog.dismiss();
+								Toast.makeText(VoucherSlipActivity.this, "Connected & printing ... !", Toast.LENGTH_SHORT).show();
+							}
+						}
+						break;
+					case PrinterClass.FAILED_CONNECT:
+						break;
+					case PrinterClass.LOSE_CONNECT:
+						Log.i("", "LOSE_CONNECT");
+					}
+					break;
+				case MESSAGE_WRITE:
+
+					break;
+				}
+				super.handleMessage(msg);
+			}
+		};
+		
+		handler = new Handler() {
+			@Override
+			public void handleMessage(Message msg) {
+				super.handleMessage(msg);
+				switch (msg.what) {
+				case 0:
+					break;
+				case 1:// Ã¦â€°Â«Ã¦ï¿½ï¿½Ã¥Â®Å’Ã¦Â¯â€¢
+					Device d=(Device)msg.obj;
+					if(d!=null)
+					{
+						if(deviceList == null)
+						{
+							deviceList = new ArrayList<Device>();
+						}
+						
+						if(!checkData(deviceList, d))
+						{
+							//deviceList.add(d);
+							Log.i("", "Device list: "+VoucherSlipActivity.deviceList.toString());
+						}
+					}else {
+						Log.i("", "Message Device Addr: is null!");
+					}
+					break;
+				case 2:// Ã¥ï¿½Å“Ã¦Â­Â¢Ã¦â€°Â«Ã¦ï¿½ï¿½
+					break;
+				}
+			}
+		};
+		
+		if(checkState)
+		{
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			if (VoucherSlipActivity.printerClass != null) {								
+				
+				if (VoucherSlipActivity.printerClass.getState() == PrinterClass.STATE_CONNECTED) {
+					Toast.makeText(VoucherSlipActivity.this, "connected device", Toast.LENGTH_LONG).show();	
+					checkState=true;
+				}else if (VoucherSlipActivity.printerClass.getState() == PrinterClass.STATE_CONNECTING) {
+					
+					Toast.makeText(VoucherSlipActivity.this, "connecting device ...", Toast.LENGTH_LONG).show();
+					connectBluetoothService();  //Edited by Su Wai on 24 Mar, 2015
+					
+				}else if(VoucherSlipActivity.printerClass.getState() == PrinterClass.LOSE_CONNECT
+						|| VoucherSlipActivity.printerClass.getState() == PrinterClass.FAILED_CONNECT){
+					
+					checkState = false;
+					Toast.makeText(VoucherSlipActivity.this, "Not connect device yet!", Toast.LENGTH_LONG).show();
+					
+					connectBluetoothService();   //Edited by Su Wai on 24 Mar, 2015
+					
+				}else{
+					Toast.makeText(getApplicationContext(), "Not connect device yet!", Toast.LENGTH_LONG).show();
+					connectBluetoothService();   //Edited by Su Wai on 24 Mar, 2015
+				}
+			}else {
+				connectBluetoothService();
+			}//End If printerClass is Null
+		}
+	}
+	
+	/**
+	 *  If the first time, connect Bluetooth ... 
+	 */
+	private void connectBluetoothService() {
+		// TODO Auto-generated method stub
+		//Connect Bluetooth Service
+		try {
+			printerClass = PrinterClassFactory.create(0, this, mhandler, handler);
+		} catch (Exception e) {
+			// TODO: handle exception
+			Toast.makeText(VoucherSlipActivity.this, "Fail Bluetooth Service!", Toast.LENGTH_SHORT).show();
+		}
+	}
+
+	
+    private boolean checkData(List<Device> list,Device d)
+    {
+    	for (Device device : list) {
+			if(device.getDeviceAddress().equals(d.getDeviceAddress()))
+			{
+				Log.i("", "Equal!");
+				return true;
+			}
+		}
+    	
+    	Log.i("", "Not Equal!");
+    	return false;
+    }
+	
 	public static void setListViewHeightBasedOnChildren(ListView listView) {
 		ListAdapter listAdapter = listView.getAdapter();
 		if (listAdapter == null && listView.getCount() == 0) {
@@ -330,4 +697,14 @@ public class VoucherSlipActivity extends SherlockActivity{
 		listView.setLayoutParams(params);
 		listView.requestLayout();
 	}
+	
+    @Override
+    protected void onRestart() {
+    	// TODO Auto-generated method stub
+    	checkState = true;
+    	Log.i("", "On Restart: "+checkState);
+    	super.onRestart();
+    }
+    
+    
 }
