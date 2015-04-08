@@ -590,7 +590,7 @@ public class VoucherSlipActivity extends SherlockActivity{
 				case 1:// Ã¦â€°Â«Ã¦ï¿½ï¿½Ã¥Â®Å’Ã¦Â¯â€¢
 					Device d=(Device)msg.obj;
 					if(d!=null)
-					{
+					{						
 						if(deviceList == null)
 						{
 							deviceList = new ArrayList<Device>();

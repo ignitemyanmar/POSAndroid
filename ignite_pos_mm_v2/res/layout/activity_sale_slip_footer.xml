@@ -35,98 +35,112 @@
                 android:orientation="vertical"
                 android:paddingRight="5dp" >
 
+                <View
+                    android:id="@+id/view3"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/line_dotted" />
+
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="70dp"
                     android:gravity="center_vertical|right" >
 
                     <com.smk.skscalableview.ScalableTextView
                         android:id="@+id/txt_total"
                         android:layout_width="wrap_content"
-                        android:layout_height="40dp"
+                        android:layout_height="match_parent"
                         android:layout_marginRight="2dp"
                         android:layout_weight="20"
                         android:gravity="left|center_vertical"
                         android:paddingLeft="190dp"
                         android:text="စုစုေပါင္း"
-                        android:textSize="16dp" />
+                        android:textSize="25dp" />
 
                     <com.smk.skscalableview.ScalableTextView
                         android:id="@+id/txt_grand_total"
                         android:layout_width="wrap_content"
-                        android:layout_height="40dp"
+                        android:layout_height="match_parent"
                         android:layout_weight="50"
                         android:gravity="right|center_vertical"
                         android:text="0.00"
-                        android:textSize="18dp" />
+                        android:textSize="25dp" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="70dp"
                     android:gravity="center_vertical|right" >
 
                     <com.smk.skscalableview.ScalableTextView
                         android:id="@+id/txtDiscount"
                         android:layout_width="wrap_content"
-                        android:layout_height="40dp"
+                        android:layout_height="match_parent"
                         android:layout_marginRight="2dp"
                         android:layout_weight="20"
                         android:gravity="left|center_vertical"
                         android:paddingLeft="180dp"
                         android:text="ေလွ်ာ့ေစ်း"
-                        android:textSize="16dp" />
+                        android:textSize="25dp" />
 
                     <com.smk.skscalableview.ScalableTextView
                         android:id="@+id/txt_discount"
                         android:layout_width="wrap_content"
-                        android:layout_height="40dp"
+                        android:layout_height="match_parent"
                         android:layout_weight="50"
                         android:gravity="right|center_vertical"
                         android:text="0.00"
-                        android:textSize="18dp" />
+                        android:textSize="25dp" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical|right"
-                    android:layout_marginBottom="20dp" >
+                    android:layout_height="70dp"
+                    android:layout_marginBottom="20dp"
+                    android:gravity="center_vertical|right" >
 
                     <com.smk.skscalableview.ScalableTextView
                         android:id="@+id/txt"
                         android:layout_width="wrap_content"
-                        android:layout_height="60dp"
+                        android:layout_height="match_parent"
                         android:layout_marginRight="2dp"
                         android:layout_weight="20"
                         android:gravity="left|center_vertical"
                         android:paddingLeft="180dp"
                         android:text="က်သင့္ေငြ"
-                        android:textSize="16dp" />
+                        android:textSize="25dp" />
 
                     <com.smk.skscalableview.ScalableTextView
                         android:id="@+id/txt_net_amount"
                         android:layout_width="wrap_content"
-                        android:layout_height="60dp"
+                        android:layout_height="match_parent"
                         android:layout_weight="50"
                         android:gravity="right|center_vertical"
                         android:text="0.00"
-                        android:textSize="18dp" />
+                        android:textSize="25dp" />
                 </LinearLayout>
+
+                <View
+                    android:id="@+id/view2"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/line_dotted" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="0dp"
-                    android:layout_marginBottom="5dp" >
+                    android:layout_marginBottom="5dp"
+                    android:padding="0dp" >
 
                     <com.smk.skscalableview.ScalableTextView
                         android:id="@+id/txt_paid_amount"
                         android:layout_width="match_parent"
-                        android:layout_height="30dp"
+                        android:layout_height="50dp"
                         android:gravity="center_horizontal|center_vertical"
                         android:text="ေပးေခ်ေငြ  -  "
-                        android:textSize="16dp"
+                        android:textSize="20dp"
                         android:visibility="visible" />
                 </LinearLayout>
 
@@ -138,17 +152,24 @@
                     <com.smk.skscalableview.ScalableTextView
                         android:id="@+id/txt_credit_left_amount"
                         android:layout_width="match_parent"
-                        android:layout_height="30dp"
+                        android:layout_height="50dp"
                         android:gravity="center_horizontal|center_vertical"
                         android:text="ေပးရန္က်န္ေငြ - "
-                        android:textSize="16dp"
+                        android:textSize="20dp"
                         android:visibility="visible" />
                 </LinearLayout>
+
+                <View
+                    android:id="@+id/View01"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/line_dotted" />
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/layout_footer2"
-                android:layout_width="450dp"
+                android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@color/white"
                 android:gravity="center"
@@ -158,10 +179,10 @@
                 <com.ignite.custom.view.CustomTextView
                     android:id="@+id/txt_thanks"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:gravity="center"
                     android:text="ေက်းဇူးတင္ ပါသည္။ ေပ်ာ္ရႊင္ေသာေန႔ေလးျဖစ္ပါေစ =)"
-                    android:textSize="16dp" />
+                    android:textSize="20dp" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

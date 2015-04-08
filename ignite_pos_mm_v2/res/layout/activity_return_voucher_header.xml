@@ -23,7 +23,8 @@
                 android:layout_height="50dp"
                 android:layout_marginLeft="70dp"
                 android:padding="5dp"
-                android:src="@drawable/ic_launcher" />
+                android:src="@drawable/ic_launcher"
+                android:visibility="gone" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -35,18 +36,20 @@
                     android:id="@+id/txt_co_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Ignite"
+                    android:gravity="center"
+                    android:text="န ဂါး မင္း"
                     android:textColor="@color/dark_gray"
-                    android:textSize="24dp"
+                    android:textSize="28dp"
                     android:textStyle="bold" />
 
                 <com.ignite.custom.view.CustomTextView
                     android:id="@+id/txt_contact"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Moshi Mart | ဖုန္းနံပါတ္: 09-454545"
+                    android:text="Ph:  02-69365, 09-2166196"
                     android:textColor="@color/dark_gray"
-                    android:textSize="18dp" />
+                    android:textSize="18dp" 
+                    android:gravity="center"/>
             </LinearLayout>
         </LinearLayout>
 

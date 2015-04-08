@@ -28,7 +28,8 @@
                 android:layout_height="50dp"
                 android:layout_marginLeft="70dp"
                 android:padding="5dp"
-                android:src="@drawable/ic_launcher" />
+                android:src="@drawable/ic_launcher"
+                android:visibility="gone" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -40,18 +41,21 @@
                     android:id="@+id/txt_co_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Ignite"
+                    android:gravity="center"
+                    android:text="န ဂါး မင္း"
                     android:textColor="@color/black"
-                    android:textSize="24dp"
+                    android:textSize="40dp"
                     android:textStyle="bold" />
 
                 <com.ignite.custom.view.CustomTextView
                     android:id="@+id/txt_contact"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Moshi Mart | ဖုန္းနံပါတ္: 09-454545"
+                    android:gravity="center"
+                    android:text="Ph:  02-69365, 09-2166196"
                     android:textColor="@color/dark_gray"
-                    android:textSize="18dp" />
+                    android:textSize="30dp" />
+
             </LinearLayout>
         </LinearLayout>
 
@@ -64,109 +68,111 @@
             <LinearLayout
                 android:id="@+id/layout_title2"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="50dp"
                 android:layout_marginBottom="5dp"
                 android:gravity="center" >
 
                 <com.smk.skscalableview.ScalableTextView
                     android:id="@+id/txt_vouNo"
-                    android:layout_width="80dp"
-                    android:layout_height="30dp"
+                    android:layout_width="95dp"
+                    android:layout_height="match_parent"
                     android:layout_marginRight="2dp"
                     android:gravity="left|center_vertical"
                     android:text="ေဘာင္ ခ်ာ:"
-                    android:textSize="16dp" />
+                    android:textSize="20dp" />
 
                 <com.smk.skscalableview.ScalableTextView
                     android:id="@+id/txt_vou_no"
                     android:layout_width="145dp"
-                    android:layout_height="30dp"
+                    android:layout_height="match_parent"
                     android:layout_marginRight="5dp"
                     android:gravity="left|center_vertical"
                     android:text="-"
-                    android:textSize="18dp" />
+                    android:textSize="20dp" />
 
                 <com.smk.skscalableview.ScalableTextView
                     android:id="@+id/txt_voucher_date"
                     android:layout_width="75dp"
-                    android:layout_height="30dp"
+                    android:layout_height="match_parent"
                     android:layout_marginRight="2dp"
                     android:gravity="left|center_vertical"
                     android:text="ေန႔ရက္  : "
-                    android:textSize="16dp" />
+                    android:textSize="20dp" />
 
                 <com.smk.skscalableview.ScalableTextView
                     android:id="@+id/txt_date"
                     android:layout_width="120dp"
-                    android:layout_height="30dp"
+                    android:layout_height="match_parent"
                     android:gravity="left|center_vertical"
                     android:text="-"
-                    android:textSize="18dp" />
+                    android:textSize="20dp" />
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/layout_title3"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="50dp"
                 android:layout_marginBottom="20dp"
                 android:gravity="center" >
 
                 <com.smk.skscalableview.ScalableTextView
                     android:id="@+id/txt_salePerson"
-                    android:layout_width="80dp"
-                    android:layout_height="30dp"
+                    android:layout_width="95dp"
+                    android:layout_height="match_parent"
                     android:layout_marginRight="2dp"
                     android:gravity="left|center_vertical"
                     android:text="ေရာင္းသူ :  "
-                    android:textSize="16dp" />
+                    android:textSize="20dp" />
 
                 <com.smk.skscalableview.ScalableTextView
                     android:id="@+id/txt_sale_person"
                     android:layout_width="145dp"
-                    android:layout_height="30dp"
+                    android:layout_height="match_parent"
                     android:layout_marginRight="5dp"
                     android:gravity="left|center_vertical"
                     android:text="-"
-                    android:textSize="18dp" />
+                    android:textSize="20dp"
+                    android:singleLine="true" />
 
                 <com.smk.skscalableview.ScalableTextView
                     android:id="@+id/txtBuyer"
                     android:layout_width="75dp"
-                    android:layout_height="30dp"
+                    android:layout_height="match_parent"
                     android:layout_marginRight="2dp"
                     android:gravity="left|center_vertical"
                     android:text="၀ယ္သူ : "
-                    android:textSize="16dp" />
+                    android:textSize="20dp" />
 
                 <com.smk.skscalableview.ScalableTextView
                     android:id="@+id/txt_buyer"
                     android:layout_width="120dp"
-                    android:layout_height="30dp"
+                    android:layout_height="match_parent"
                     android:gravity="left|center_vertical"
                     android:text="-"
-                    android:textSize="18dp" />
+                    android:textSize="20dp"
+                    android:singleLine="true" />
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/layout_title4"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="50dp"
                 android:background="@drawable/editext_border"
                 android:padding="5dp" >
 
                 <com.smk.skscalableview.ScalableTextView
                     android:id="@+id/txt_Voucher_No"
                     android:layout_width="wrap_content"
-                    android:layout_height="30dp"
+                    android:layout_height="match_parent"
                     android:layout_weight="30"
                     android:gravity="center_vertical"
                     android:text="ပစၥည္းအမည္"
-                    android:textSize="16dp" />
+                    android:textSize="18dp" />
 
                 <com.smk.skscalableview.ScalableLinearLayout
                     android:id="@+id/ScalableLinearLayout1"
                     android:layout_width="wrap_content"
-                    android:layout_height="30dp"
+                    android:layout_height="match_parent"
                     android:layout_weight="20"
                     android:gravity="left|center_vertical"
                     android:paddingLeft="30dp" >
@@ -177,26 +183,25 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="left|center_vertical"
                         android:text="ေစ်းႏႈန္း * "
-                        android:textSize="16dp" />
+                        android:textSize="18dp" />
 
                     <com.ignite.custom.view.CustomTextView
                         android:id="@+id/txt_qty"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="left|center_vertical"
-                        android:gravity="center"
+                        android:gravity="left|center_vertical"
                         android:text="အ ေရ အတြက္"
-                        android:textSize="16dp" />
+                        android:textSize="18dp" />
                 </com.smk.skscalableview.ScalableLinearLayout>
 
                 <com.smk.skscalableview.ScalableTextView
                     android:id="@+id/txt_amount"
                     android:layout_width="wrap_content"
-                    android:layout_height="30dp"
+                    android:layout_height="match_parent"
                     android:layout_weight="30"
                     android:gravity="right|center_vertical"
                     android:text="ေငြပမာဏ"
-                    android:textSize="16dp" />
+                    android:textSize="18dp" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
