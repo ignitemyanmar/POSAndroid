@@ -1,0 +1,65 @@
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/!svn/ver/111/trunk/src/java/tests/detailed/dialog
+END
+DevToolsDialog.java
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/!svn/ver/111/trunk/src/java/tests/detailed/dialog/DevToolsDialog.java
+END
+PasswordDialog.java
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/!svn/ver/57/trunk/src/java/tests/detailed/dialog/PasswordDialog.java
+END
+CookieManagerDialog.java
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/!svn/ver/69/trunk/src/java/tests/detailed/dialog/CookieManagerDialog.java
+END
+SearchDialog.java
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/!svn/ver/57/trunk/src/java/tests/detailed/dialog/SearchDialog.java
+END
+ShowTextDialog.java
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/!svn/ver/57/trunk/src/java/tests/detailed/dialog/ShowTextDialog.java
+END
+CertErrorDialog.java
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/!svn/ver/57/trunk/src/java/tests/detailed/dialog/CertErrorDialog.java
+END
+UrlRequestDialogReply.java
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/!svn/ver/76/trunk/src/java/tests/detailed/dialog/UrlRequestDialogReply.java
+END
+WebPluginManagerDialog.java
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/!svn/ver/70/trunk/src/java/tests/detailed/dialog/WebPluginManagerDialog.java
+END
+DownloadDialog.java
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/!svn/ver/57/trunk/src/java/tests/detailed/dialog/DownloadDialog.java
+END
+UrlRequestDialog.java
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/!svn/ver/111/trunk/src/java/tests/detailed/dialog/UrlRequestDialog.java
+END
