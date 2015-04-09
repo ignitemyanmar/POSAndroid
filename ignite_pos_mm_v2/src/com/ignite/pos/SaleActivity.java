@@ -42,6 +42,7 @@ import com.ignite.pos.adapter.CategoriesListAdapter;
 import com.ignite.pos.adapter.ItemGridAdapter;
 import com.ignite.pos.adapter.ItemListAdapter;
 import com.ignite.pos.adapter.SubCategoriesListAdapter;
+import com.ignite.pos.application.BaseActivity;
 import com.ignite.pos.application.DeviceUtil;
 import com.ignite.pos.database.controller.BusTicketSaleController;
 import com.ignite.pos.database.controller.BuyerController;
@@ -68,12 +69,13 @@ import com.ignite.pos.model.Supplier;
 import com.smk.skalertmessage.SKToastMessage;
 
 @TargetApi(Build.VERSION_CODES.GINGERBREAD) @SuppressLint("ShowToast")
-public class SaleActivity  extends Activity{
+public class SaleActivity  extends BaseActivity{
 
 	private ActionBar actionBar;
 	private ImageView icon_pos;
 	private Button change_mode , categories , search ;
 	private LinearLayout scanner_mode , picker_mode;
+	
 	private boolean clicked = false;
 	private DatabaseManager dbManager;
 	private List<Object> list_obj;
@@ -113,6 +115,7 @@ public class SaleActivity  extends Activity{
 	public static String creditPaidAmount;
 	private List<Object> creditList;
 	private List<Object> busTicketList;
+	private TextView txt_today_date;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -137,6 +140,7 @@ public class SaleActivity  extends Activity{
 		categories.setOnClickListener(clickListener);
 		actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);		
 		
+		txt_today_date = (TextView)findViewById(R.id.txt_today_date);
 		scanner_mode = (LinearLayout)findViewById(R.id.scanner_mode);
 		picker_mode = (LinearLayout)findViewById(R.id.picker_mode);
 		scan = (EditText)findViewById(R.id.editText_scan);
@@ -188,9 +192,10 @@ public class SaleActivity  extends Activity{
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		currentDate = sdf.format(new Date());
 		
+		txt_today_date.setText(changeDateString(currentDate));
+		
 		clicked = false;
 		getItems();
-				
 	}
 	
 	@Override

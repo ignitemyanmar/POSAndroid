@@ -1,6 +1,7 @@
 package com.ignite.pos;
 
 import java.text.SimpleDateFormat;
+import android.app.ActionBar;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -29,7 +30,6 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
-import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockActivity;
 import com.google.gson.Gson;
 import com.ignite.pos.adapter.CategoriesListAdapter;
@@ -37,6 +37,7 @@ import com.ignite.pos.adapter.ItemGridAdapter;
 import com.ignite.pos.adapter.PurchaseItemListAdapter;
 import com.ignite.pos.adapter.SubCategoriesListAdapter;
 import com.ignite.pos.adapter.SupplierSpinnerAdapter;
+import com.ignite.pos.application.BaseActivity;
 import com.ignite.pos.application.DeviceUtil;
 import com.ignite.pos.database.controller.CategoryController;
 import com.ignite.pos.database.controller.CreditBuyerController;
@@ -56,7 +57,7 @@ import com.ignite.pos.model.Supplier;
 import com.smk.skalertmessage.SKToastMessage;
 
 @SuppressLint({ "ShowToast", "ResourceAsColor" })
-public class AddNewPurchaseVoucherActivity  extends SherlockActivity{
+public class AddNewPurchaseVoucherActivity  extends BaseActivity{
 
 	private ActionBar actionBar;
 	private Button change_mode, categories, search;
@@ -109,6 +110,7 @@ public class AddNewPurchaseVoucherActivity  extends SherlockActivity{
 	public static String creditPaidAmount;
 	
 	private List<Object> creditList;
+	private TextView txt_today_date;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -116,7 +118,7 @@ public class AddNewPurchaseVoucherActivity  extends SherlockActivity{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_purchase_voucher);
 		
-		actionBar = getSupportActionBar();						
+		actionBar = getActionBar();				
 		actionBar.setCustomView(R.layout.action_bar);
 		login = (TextView)actionBar.getCustomView().findViewById(R.id.btnLogin);
 		//login.setText("Add New Purchase Voucher");
@@ -128,6 +130,7 @@ public class AddNewPurchaseVoucherActivity  extends SherlockActivity{
 		categories.setOnClickListener(clickListener);
 		actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);		
 		
+		txt_today_date = (TextView)findViewById(R.id.txt_today_date);
 		scanner_mode = (LinearLayout)findViewById(R.id.scanner_mode);
 		picker_mode = (LinearLayout)findViewById(R.id.picker_mode);
 		scan = (EditText)findViewById(R.id.editText_scan);
@@ -178,6 +181,7 @@ public class AddNewPurchaseVoucherActivity  extends SherlockActivity{
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		currentDate = sdf.format(new Date());
 		
+		txt_today_date.setText(changeDateString(currentDate));
 	}
 	
 	private OnItemSelectedListener suppliernameClickListener = new OnItemSelectedListener() {

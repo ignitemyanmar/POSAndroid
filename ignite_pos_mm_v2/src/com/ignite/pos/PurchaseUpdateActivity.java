@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import android.annotation.SuppressLint;
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -32,13 +33,13 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
-import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockActivity;
 import com.ignite.pos.adapter.CategoriesListAdapter;
 import com.ignite.pos.adapter.ItemGridAdapter;
 import com.ignite.pos.adapter.PurchaseUpdateItemListAdapter;
 import com.ignite.pos.adapter.SubCategoriesListAdapter;
 import com.ignite.pos.adapter.SupplierSpinnerAdapter;
+import com.ignite.pos.application.BaseActivity;
 import com.ignite.pos.application.DeviceUtil;
 import com.ignite.pos.database.controller.CategoryController;
 import com.ignite.pos.database.controller.CreditSupplierController;
@@ -58,7 +59,7 @@ import com.ignite.pos.model.Supplier;
 import com.smk.skalertmessage.SKToastMessage;
 
 @SuppressLint("ShowToast")
-public class PurchaseUpdateActivity  extends SherlockActivity{
+public class PurchaseUpdateActivity  extends BaseActivity{
 
 	private ActionBar actionBar;
 	private ImageView icon_pos;
@@ -116,6 +117,8 @@ public class PurchaseUpdateActivity  extends SherlockActivity{
 	private EditText edt_credit_pay_amt;
 	protected Integer supplierID;
 	private int ConfirmStatus;
+	private String Date;
+	private TextView txt_purchae_date;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -127,7 +130,7 @@ public class PurchaseUpdateActivity  extends SherlockActivity{
 		SharedPreferences pref = getSharedPreferences("Admin",Activity.MODE_PRIVATE);
 		AdminName = pref.getString("admin_name", "-");
 		
-		actionBar = getSupportActionBar();
+		actionBar = getActionBar();
 		actionBar.setCustomView(R.layout.action_bar);
 		icon_pos = (ImageView)actionBar.getCustomView().findViewById(R.id.icon_pos);
 		icon_pos.setVisibility(View.GONE);
@@ -136,6 +139,7 @@ public class PurchaseUpdateActivity  extends SherlockActivity{
 		txt_panel_name.setVisibility(View.VISIBLE);
 		//txt_panel_name.setText("Update Purchase");
 		
+		txt_purchae_date = (TextView)findViewById(R.id.txt_today_date);
 		discount_layout = (LinearLayout) findViewById(R.id.lyDiscount2);
 		discount_layout.setVisibility(View.GONE);
 		sp_supplier_name = (Spinner)findViewById(R.id.sp_supplier_name);
@@ -147,7 +151,10 @@ public class PurchaseUpdateActivity  extends SherlockActivity{
 		VoucherNo = bundle.getString("VoucherNo");
 		SupplierName = bundle.getString("SupplierName");
 		ConfirmStatus = bundle.getInt("ConfirmStatus");
+		Date = bundle.getString("Date");
+		
 		vouncherno.setText(VoucherNo);
+		txt_purchae_date.setText(changeDateString(Date));
 				
 		//Get Admin Name 
 		Log.i("", "Admin Name: "+AdminName);

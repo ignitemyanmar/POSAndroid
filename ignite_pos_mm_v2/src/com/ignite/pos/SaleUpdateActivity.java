@@ -6,6 +6,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import android.annotation.SuppressLint;
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -30,7 +31,6 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
-import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockActivity;
 import com.google.gson.Gson;
 import com.ignite.pos.adapter.BuyerSpinnerAdapter;
@@ -39,6 +39,7 @@ import com.ignite.pos.adapter.ItemGridAdapter;
 import com.ignite.pos.adapter.UpdateItemListAdapter;
 import com.ignite.pos.adapter.SubCategoriesListAdapter;
 import com.ignite.pos.adapter.UpdateItemListAdapter;
+import com.ignite.pos.application.BaseActivity;
 import com.ignite.pos.application.DeviceUtil;
 import com.ignite.pos.database.controller.BuyerController;
 import com.ignite.pos.database.controller.CategoryController;
@@ -63,7 +64,7 @@ import com.ignite.pos.model.Supplier;
 import com.smk.skalertmessage.SKToastMessage;
 
 @SuppressLint("ShowToast")
-public class SaleUpdateActivity  extends SherlockActivity{
+public class SaleUpdateActivity  extends BaseActivity{
 
 	private ActionBar actionBar;
 	private ImageView icon_pos;
@@ -110,6 +111,8 @@ public class SaleUpdateActivity  extends SherlockActivity{
 	protected Integer buyerID;
 	private List<Object> creditList;
 	private String BuyerNameStr;
+	private String SaleDate;
+	private TextView txt_sale_date;
 	public static String creditPaidAmount;
 	
 	@Override
@@ -122,7 +125,7 @@ public class SaleUpdateActivity  extends SherlockActivity{
 		SharedPreferences pref = getSharedPreferences("Admin",Activity.MODE_PRIVATE);
 		AdminName = pref.getString("admin_name", "-");
 		
-		actionBar = getSupportActionBar();
+		actionBar = getActionBar();
 		actionBar.setCustomView(R.layout.action_bar);
 		icon_pos = (ImageView)actionBar.getCustomView().findViewById(R.id.icon_pos);
 		icon_pos.setVisibility(View.GONE);
@@ -142,12 +145,14 @@ public class SaleUpdateActivity  extends SherlockActivity{
 			login.setText(AdminName);
 		}
 		
+		
 		change_mode = (Button)actionBar.getCustomView().findViewById(R.id.btnChange_mode);
 		change_mode.setOnClickListener(clickListener);
 		categories = (Button)actionBar.getCustomView().findViewById(R.id.btnCategories);
 		categories.setOnClickListener(clickListener);
 		actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);		
 		
+		txt_sale_date = (TextView)findViewById(R.id.txt_today_date);
 		scanner_mode = (LinearLayout)findViewById(R.id.scanner_mode);
 		picker_mode = (LinearLayout)findViewById(R.id.picker_mode);
 		scan = (EditText)findViewById(R.id.editText_scan);
@@ -194,7 +199,10 @@ public class SaleUpdateActivity  extends SherlockActivity{
 		Bundle bundle = getIntent().getExtras();
 		VoucherNo = bundle.getString("VoucherNo");
 		BuyerNameStr = bundle.getString("BuyerName"); 
+		SaleDate = bundle.getString("SaleDate"); 
+		
 		vouncherno.setText(VoucherNo);
+		txt_sale_date.setText(changeDateString(SaleDate));
 		
 		Log.i("", "Buyer Name to update: "+BuyerNameStr);
 		
@@ -740,16 +748,19 @@ public class SaleUpdateActivity  extends SherlockActivity{
 		
 		//Get Voucher Total after discount reduce 
 		//Integer voucherTotal = Integer.valueOf(priceTotal.getText().toString()) - Integer.valueOf(txt_disc_show.getText().toString());
-		Integer toPay = ((Credit)creditList.get(0)).getCreditLeftAmount();
-		Integer creditLeftAmount = toPay - Integer.valueOf(creditPaidAmount);
-		
-		if (creditLeftAmount >= 0) {
+		if (creditList != null && creditList.size() > 0) {
+			Integer toPay = ((Credit)creditList.get(0)).getCreditLeftAmount();
+			Integer creditLeftAmount = toPay - Integer.valueOf(creditPaidAmount);
 			
-			credits.add(new Credit(buyerID, buyerName, vouncherno.getText().toString()
-					, currentDate, toPay, Integer.valueOf(creditPaidAmount), creditLeftAmount));
-			
-			creditControl.save(credits);	
+			if (creditLeftAmount >= 0) {
+				
+				credits.add(new Credit(buyerID, buyerName, vouncherno.getText().toString()
+						, currentDate, toPay, Integer.valueOf(creditPaidAmount), creditLeftAmount));
+				
+				creditControl.save(credits);	
+			}
 		}
+
 	}
 	
 	protected List<Object> item_list_obj;

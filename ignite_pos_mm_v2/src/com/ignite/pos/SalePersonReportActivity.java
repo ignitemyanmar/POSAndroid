@@ -442,6 +442,7 @@ public class SalePersonReportActivity extends BaseSherlockActivity{
 			Bundle bundle = new Bundle();
 			bundle.putString("VoucherNo", sv.getVid());
 			bundle.putString("BuyerName", sv.getCusname());
+			bundle.putString("SaleDate", sv.getVdate());
 			
 			next.putExtras(bundle);
 			SalePersonReportActivity.this.startActivity(next);

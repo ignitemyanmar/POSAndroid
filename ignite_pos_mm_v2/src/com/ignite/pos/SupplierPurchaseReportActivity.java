@@ -396,6 +396,7 @@ public class SupplierPurchaseReportActivity extends BaseSherlockActivity{
 			bundle.putString("VoucherNo", pv.getVid());
 			bundle.putString("SupplierName", pv.getSupplierName());
 			bundle.putInt("ConfirmStatus", pv.getStatus());
+			bundle.putString("Date", pv.getVdate());
 			
 			next.putExtras(bundle);
 			SupplierPurchaseReportActivity.this.startActivity(next);
