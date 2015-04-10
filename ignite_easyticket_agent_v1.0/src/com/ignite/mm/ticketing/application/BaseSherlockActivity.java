@@ -64,9 +64,9 @@ public class BaseSherlockActivity extends SherlockActivity {
 	@Override
 	protected void onResume() {
 		// TODO Auto-generated method stub
-		if(AppLoginUser.isExpires()){
+/*		if(AppLoginUser.isExpires()){
 			closeAllActivities();
-		}
+		}*/
 		super.onResume();
 	}
 	

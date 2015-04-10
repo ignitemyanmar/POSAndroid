@@ -43,7 +43,7 @@ public class HomeActivity extends BaseSherlockActivity{
 				finish();
 			}
 		});
-		actionBarTitle.setText(AppLoginUser.getUserName());
+		actionBarTitle.setText(AppLoginUser.getName());
 		actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
 		
 		setContentView(R.layout.activity_home);

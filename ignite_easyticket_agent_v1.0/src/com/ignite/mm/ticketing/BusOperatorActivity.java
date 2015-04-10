@@ -1,9 +1,6 @@
 package com.ignite.mm.ticketing;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import retrofit.Callback;
@@ -14,9 +11,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.text.format.DateFormat;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
@@ -29,18 +24,16 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import com.actionbarsherlock.app.ActionBar;
+import com.google.gson.reflect.TypeToken;
 import com.ignite.mm.ticketing.application.BaseSherlockActivity;
+import com.ignite.mm.ticketing.application.DecompressGZIP;
+import com.ignite.mm.ticketing.application.MCrypt;
+import com.ignite.mm.ticketing.application.SecureParam;
 import com.ignite.mm.ticketing.clientapi.NetworkEngine;
 import com.ignite.mm.ticketing.custom.listview.adapter.BusOperatorGridAdapter;
 import com.ignite.mm.ticketing.custom.listview.adapter.BusOperatorListViewAdapter;
-import com.ignite.mm.ticketing.custom.listview.adapter.TripsCityAdapter;
 import com.ignite.mm.ticketing.sqlite.database.model.Operator;
-import com.ignite.mm.ticketing.sqlite.database.model.Operators;
-import com.ignite.mm.ticketing.sqlite.database.model.TripsCollection;
-import com.smk.calender.widget.SKCalender;
-import com.smk.calender.widget.SKCalender.Callbacks;
 import com.smk.skconnectiondetector.SKConnectionDetector;
-import com.actionbarsherlock.app.SherlockActivity;
 
 public class BusOperatorActivity extends BaseSherlockActivity {
 
@@ -90,7 +83,7 @@ public class BusOperatorActivity extends BaseSherlockActivity {
 		skDetector.setMessageStyle(SKConnectionDetector.VERTICAL_TOASH);
 		if(skDetector.isConnectingToInternet()){
 			getOperators();
-			getNotiBooking();
+			//getNotiBooking();
 		}else{
 			skDetector.showErrorMessage();
 			fadeData();
@@ -116,33 +109,37 @@ public class BusOperatorActivity extends BaseSherlockActivity {
 	/**
 	 * Get Booking List Notification
 	 */
+	private Integer bookCount;
+	private List<Operator> operators;
 	private void getNotiBooking(){
 		
-		NetworkEngine.getInstance().getNotiBooking(AppLoginUser.getAccessToken(), getToday() , new Callback<Integer>() {
+		String param = MCrypt.getInstance().encrypt(SecureParam.getNotiBookingParam(AppLoginUser.getAccessToken(), getToday()));
+		NetworkEngine.getInstance().getNotiBooking(param, new Callback<Response>() {
 			
-			public void success(Integer arg0, Response arg1) {
+			public void failure(RetrofitError arg0) {
 				// TODO Auto-generated method stub
 				
+			}
+
+			public void success(Response arg0, Response arg1) {
+				// TODO Auto-generated method stub
 				if (arg0 != null) {
+					
+					bookCount = DecompressGZIP.fromBody(arg0.getBody(), new TypeToken<Integer>(){}.getType());
 					SharedPreferences sharedPreferences = getSharedPreferences("NotifyBooking",Activity.MODE_PRIVATE);
 					SharedPreferences.Editor editor = sharedPreferences.edit();
 					
 					editor.clear();
 					editor.commit();
 					
-					editor.putInt("count", arg0);
+					editor.putInt("count", bookCount);
 					editor.commit();
 					
-					if(arg0 > 0){
+					if(bookCount > 0){
 						actionBarNoti.setVisibility(View.GONE);
-						actionBarNoti.setText(arg0.toString());
+						actionBarNoti.setText(bookCount.toString());
 					}
 				}
-			}
-			
-			public void failure(RetrofitError arg0) {
-				// TODO Auto-generated method stub
-				
 			}
 		});
 	}
@@ -177,10 +174,12 @@ public class BusOperatorActivity extends BaseSherlockActivity {
 		dialog = ProgressDialog.show(BusOperatorActivity.this, "", "Please wait ...", true);
 		dialog.setCancelable(false);
 		
-		SharedPreferences pref = getSharedPreferences("User", Activity.MODE_PRIVATE);
-		String userID = pref.getString("user_id", null);				
+		/*SharedPreferences pref = getSharedPreferences("User", Activity.MODE_PRIVATE);
+		String userID = pref.getString("user_id", null);	*/			
 		
-		NetworkEngine.getInstance().getAllOperators(AppLoginUser.getAccessToken(), new Callback<Operators>() {
+		//String param = MCrypt.getInstance().encrypt(SecureParam.getAllOperatorsParam(AppLoginUser.getAccessToken()));
+		NetworkEngine.setIP("app.easyticket.com.mm");
+		NetworkEngine.getInstance().getAllOperator(AppLoginUser.getAccessToken(), new Callback<List<Operator>>() {
 
 			public void failure(RetrofitError arg0) {
 				// TODO Auto-generated method stub
@@ -194,20 +193,13 @@ public class BusOperatorActivity extends BaseSherlockActivity {
 				dialog.dismiss();
 			}
 
-			public void success(Operators arg0, Response arg1) {
+			public void success(List<Operator> arg0, Response arg1) {
 				// TODO Auto-generated method stub
-				
-				if (arg0.getOperators() != null && arg0.getOperators().size() > 0) {
+				if (arg0 != null) {
 					
-					operatorList = arg0.getOperators();
-					
-					Log.i("", "User access token : "+AppLoginUser.getAccessToken());
-					Log.i("", "Operators List : "+operatorList.toString());
-					
+					operatorList = arg0;
+					Log.i("", "Operator List: "+arg0.toString());
 					grd_trips_city.setAdapter(new BusOperatorGridAdapter(BusOperatorActivity.this, operatorList));
-					
-					/*BusOperatorListViewAdapter adapter = new BusOperatorListViewAdapter(BusOperatorActivity.this, operatorList);
-					lv_bus_operator.setAdapter(adapter);*/
 					
 					dialog.dismiss();
 				}

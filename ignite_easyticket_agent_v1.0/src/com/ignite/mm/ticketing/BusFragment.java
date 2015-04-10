@@ -149,7 +149,7 @@ public class BusFragment extends SherlockFragment{
 	private void getCity() {
 		SharedPreferences pref = this.getActivity().getSharedPreferences("User", Activity.MODE_PRIVATE);
 		String accessToken = pref.getString("access_token", null);
-		NetworkEngine.getInstance().getAllCity(accessToken, new Callback<CityList>() {
+/*		NetworkEngine.getInstance().getAllCity(accessToken, new Callback<CityList>() {
 		
 			public void success(CityList arg0, Response arg1) {
 				// TODO Auto-generated method stub
@@ -168,7 +168,7 @@ public class BusFragment extends SherlockFragment{
 				Log.i("","Hello Error Desc : "+error.getError_description());
 			}
 			
-		});
+		});*/
 	}
 	
 	private void getFrom(){
@@ -277,7 +277,7 @@ public class BusFragment extends SherlockFragment{
 	private void getDataOperator() {
 		SharedPreferences pref = this.getActivity().getSharedPreferences("User", Activity.MODE_PRIVATE);
 		String accessToken = pref.getString("access_token", null);
-		NetworkEngine.getInstance().getAllOperators(accessToken, new Callback<Operators>() {
+/*		NetworkEngine.getInstance().getAllOperators(accessToken, new Callback<Operators>() {
 
 			public void success(Operators arg0, Response arg1) {
 				// TODO Auto-generated method stub
@@ -294,7 +294,7 @@ public class BusFragment extends SherlockFragment{
 				Log.i("","Hello Error : "+error.getError());
 				Log.i("","Hello Error Desc : "+error.getError_description());
 			}
-		});
+		});*/
 	}
 	
 	private OnClickListener clickListener	= new OnClickListener() {

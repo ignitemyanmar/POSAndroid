@@ -556,8 +556,6 @@ public class PDFBusActivity extends BaseSherlockActivity {
 //			}
 	    }
 	    
-	   // storeImage(bigbitmap, PRINT_FILE_PATH, "BusTicketing.png");
-	    
 	    return bigbitmap;
 	}
 	
@@ -756,14 +754,7 @@ public class PDFBusActivity extends BaseSherlockActivity {
     	
     	Log.i("", "Not Equal!");
     	return false;
-    }
-	
-/*	@Override
-	protected void onDestroy() {
-		// TODO Auto-generated method stub
-		printerClass.disconnect();
-		super.onDestroy();
-	}*/
+    }	
     
     @Override
     protected void onRestart() {

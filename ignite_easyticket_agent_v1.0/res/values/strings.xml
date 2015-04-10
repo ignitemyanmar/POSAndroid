@@ -5,7 +5,7 @@
     <string name="menu_settings">Settings</string>
     <string name="title_activity_main">Easy Ticket</string>
     
-        <string name="str_checkdevice">check equipment </string>
+    <string name="str_checkdevice">check equipment </string>
     <string name="str_open">turn on Bluetooth</string>
     <string name="str_close">turn off Bluetooth</string>
     <string name="str_matched">View paired devices</string>

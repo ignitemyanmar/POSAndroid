@@ -25,8 +25,10 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import com.actionbarsherlock.app.ActionBar;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.ignite.mm.ticketing.application.BaseSherlockActivity;
 import com.ignite.mm.ticketing.application.BookingFilterDialog;
+import com.ignite.mm.ticketing.application.DecompressGZIP;
 import com.ignite.mm.ticketing.application.MCrypt;
 import com.ignite.mm.ticketing.application.SecureParam;
 import com.ignite.mm.ticketing.clientapi.NetworkEngine;
@@ -176,7 +178,7 @@ public class BusBookingListActivity extends BaseSherlockActivity {
 	protected List<To> toCities;
 	protected List<TimesbyOperator> Times;
 	private void getCity() {
-		NetworkEngine.getInstance().getCitybyOperator(AppLoginUser.getAccessToken(), AppLoginUser.getUserID(), new Callback<Cities>() {
+/*		NetworkEngine.getInstance().getCitybyOperator(AppLoginUser.getAccessToken(), AppLoginUser.getUserID(), new Callback<Cities>() {
 		
 			public void success(Cities arg0, Response arg1) {
 				// TODO Auto-generated method stub
@@ -188,11 +190,11 @@ public class BusBookingListActivity extends BaseSherlockActivity {
 				
 			}
 			
-		});
+		});*/
 	}
 	
 	private void getTimeData() {
-		NetworkEngine.getInstance().getTimebyOperator(AppLoginUser.getAccessToken(), AppLoginUser.getUserID() , new Callback<List<TimesbyOperator>>() {
+/*		NetworkEngine.getInstance().getTimebyOperator(AppLoginUser.getAccessToken(), AppLoginUser.getUserID() , new Callback<List<TimesbyOperator>>() {
 
 			public void success(List<TimesbyOperator> arg0, Response arg1) {
 				// TODO Auto-generated method stub
@@ -202,7 +204,7 @@ public class BusBookingListActivity extends BaseSherlockActivity {
 				// TODO Auto-generated method stub
 				
 			}
-		});
+		});*/
 	}
 	
 	private void getBookingListByCodeNo(){
@@ -215,7 +217,8 @@ public class BusBookingListActivity extends BaseSherlockActivity {
         
         Log.i("", "Booking Code (User Input) : "+book_code+", Token: "+AppLoginUser.getAccessToken());
 		
-		NetworkEngine.getInstance().getBookingOrder(AppLoginUser.getAccessToken(), "11", "", "", "", "", book_code, new Callback<List<CreditOrder>>() {
+        String param = MCrypt.getInstance().encrypt(SecureParam.getBookingOrderParam(AppLoginUser.getAccessToken(), "11", "", "", "", "", book_code));
+		NetworkEngine.getInstance().getBookingOrder(param, new Callback<Response>() {
 
 			public void failure(RetrofitError arg0) {
 				// TODO Auto-generated method stub
@@ -225,35 +228,40 @@ public class BusBookingListActivity extends BaseSherlockActivity {
 				lv_booking_list.setAdapter(null);
 			}
 
-			public void success(List<CreditOrder> arg0, Response arg1) {
+			public void success(Response arg0, Response arg1) {
 				// TODO Auto-generated method stub
-				credit_list = arg0;
-				
-				if (credit_list != null && credit_list.size() > 0) {
-					Log.i("","Hello size: "+ credit_list.size());
-					List<Saleitem> seats = new ArrayList<Saleitem>();
+				if (arg0 != null) {
 					
-					seats = credit_list.get(0).getSaleitems();
-					String bus_seats = "";
-					for (int i = 0; i < seats.size(); i++) {
-						if (i == seats.size()-1) {
-							bus_seats += seats.get(i).getSeatNo();
-						}else {
-							bus_seats += seats.get(i).getSeatNo()+",";
+					credit_list = DecompressGZIP.fromBody(arg0.getBody(), new TypeToken<List<CreditOrder>>(){}.getType());
+					
+					if (credit_list != null && credit_list.size() > 0) {
+						
+						Log.i("","Hello size: "+ credit_list.size());
+						
+						List<Saleitem> seats = new ArrayList<Saleitem>();
+						
+						seats = credit_list.get(0).getSaleitems();
+						String bus_seats = "";
+						for (int i = 0; i < seats.size(); i++) {
+							if (i == seats.size()-1) {
+								bus_seats += seats.get(i).getSeatNo();
+							}else {
+								bus_seats += seats.get(i).getSeatNo()+",";
+							}
 						}
+						
+						String changeDate = changeDateString(credit_list.get(0).getDate());
+						CreditOrder co = (CreditOrder)credit_list.get(0);
+						co.setDate(changeDate);
+						
+						lv_booking_list.setAdapter(new OrderListViewAdapter(BusBookingListActivity.this, credit_list, bus_seats));
+					}else {
+						showAlert();
+						lv_booking_list.setAdapter(null);
 					}
 					
-					String changeDate = changeDateString(credit_list.get(0).getDate());
-					CreditOrder co = (CreditOrder)credit_list.get(0);
-					co.setDate(changeDate);
-					
-					lv_booking_list.setAdapter(new OrderListViewAdapter(BusBookingListActivity.this, credit_list, bus_seats));
-				}else {
-					showAlert();
-					lv_booking_list.setAdapter(null);
+					dialog.dismiss();
 				}
-				
-				dialog.dismiss();
 			}
 		});
 	}	

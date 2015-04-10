@@ -47,8 +47,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.actionbarsherlock.app.ActionBar;
+import com.google.gson.reflect.TypeToken;
 import com.ignite.mm.ticketing.application.BaseSherlockActivity;
+import com.ignite.mm.ticketing.application.DecompressGZIP;
 import com.ignite.mm.ticketing.application.DeviceUtil;
+import com.ignite.mm.ticketing.application.MCrypt;
+import com.ignite.mm.ticketing.application.SecureParam;
 import com.ignite.mm.ticketing.clientapi.NetworkEngine;
 import com.ignite.mm.ticketing.connection.detector.ConnectionDetector;
 import com.ignite.mm.ticketing.custom.listview.adapter.ExtraCityAdapter;
@@ -508,8 +512,8 @@ public class BusConfirmActivity extends BaseSherlockActivity {
 			user_type = pref.getString("user_type", null);
 			
 			if(user_type.equals("operator")){
-				getAgent();
-				getExtraDestination();
+				//getAgent();
+				//getExtraDestination();
 			}else{
 				txt_agent.setVisibility(View.GONE);
 				auto_txt_agent.setVisibility(View.GONE);
@@ -632,23 +636,30 @@ public class BusConfirmActivity extends BaseSherlockActivity {
 	};
 	
 	private void getExtraDestination(){
-		NetworkEngine.getInstance().getExtraDestination(AppLoginUser.getAccessToken(), BusOccurence, new Callback<List<ExtraCity>>() {
-			
-			public void success(List<ExtraCity> arg0, Response arg1) {
-				// TODO Auto-generated method stub
-				if(arg0.size() > 0){
-					extra_city_container.setVisibility(View.VISIBLE);
-					extraCity.addAll(arg0);
-					sp_extra_city.setAdapter(new ExtraCityAdapter(BusConfirmActivity.this, extraCity));
-					sp_extra_city.setOnItemSelectedListener(itemSelectedListener);
-				}else{
-					extra_city_container.setVisibility(View.GONE);
-				}
-			}
+		
+		String param = MCrypt.getInstance().encrypt(SecureParam.getExtraDestinationParam(AppLoginUser.getAccessToken()));
+		NetworkEngine.getInstance().getExtraDestination(param, BusOccurence, new Callback<Response>() {
 			
 			public void failure(RetrofitError arg0) {
 				// TODO Auto-generated method stub
 				
+			}
+
+			public void success(Response arg0, Response arg1) {
+				// TODO Auto-generated method stub
+				if (arg0 != null) {
+					
+					extraCity = DecompressGZIP.fromBody(arg0.getBody(), new TypeToken<List<ExtraCity>>(){}.getType());
+					
+					if(extraCity != null && extraCity.size() > 0){
+						
+						extra_city_container.setVisibility(View.VISIBLE);
+						sp_extra_city.setAdapter(new ExtraCityAdapter(BusConfirmActivity.this, extraCity));
+						sp_extra_city.setOnItemSelectedListener(itemSelectedListener);
+					}else{
+						extra_city_container.setVisibility(View.GONE);
+					}
+				}
 			}
 		});
 	}
@@ -778,7 +789,7 @@ public class BusConfirmActivity extends BaseSherlockActivity {
 		};
 		
 		HttpConnection lt = new HttpConnection(handler, "POST",
-				"http://easyticket.com.mm/sale/comfirm", params);
+				"http://elite.easyticket.com.mm/sale/comfirm", params);
 		lt.execute();
 		
 		//Show Voucher
@@ -868,33 +879,41 @@ public class BusConfirmActivity extends BaseSherlockActivity {
 		String accessToken = pref.getString("access_token", null);
 		String user_id = pref.getString("user_id", null);
 		
-		NetworkEngine.getInstance().getAllAgent(accessToken,user_id, new Callback<AgentList>() {
+		String param = MCrypt.getInstance().encrypt(SecureParam.getAllAgentParam(accessToken,user_id));
+		NetworkEngine.getInstance().getAllAgent(param, new Callback<Response>() {
 
 			public void failure(RetrofitError arg0) {
 				// TODO Auto-generated method stub
 				
 			}
 
-			public void success(AgentList arg0, Response arg1) {
+			public void success(Response arg0, Response arg1) {
 				// TODO Auto-generated method stub
-				agentList = arg0.getAgents();
-				agentListAdapter = new ArrayAdapter<Agent>(BusConfirmActivity.this, android.R.layout.simple_dropdown_item_1line, agentList);
-			    auto_txt_agent.setAdapter(agentListAdapter);
-			    for(int i=0; i< arg0.getAgents().size(); i++){
-			    	if(arg0.getAgents().get(i).getId().equals(AgentID)){
-			    		auto_txt_agent.setText(arg0.getAgents().get(i).getName().toString());
-			    	}
-			    }
-			    auto_txt_agent.setOnItemClickListener(new OnItemClickListener() {
+				if (arg0 != null) {
+					
+					agentList = DecompressGZIP.fromBody(arg0.getBody(), new TypeToken<List<Agent>>(){}.getType());
+					
+					if (agentList != null && agentList.size() > 0) {
+						
+						agentListAdapter = new ArrayAdapter<Agent>(BusConfirmActivity.this, android.R.layout.simple_dropdown_item_1line, agentList);
+					    auto_txt_agent.setAdapter(agentListAdapter);
+					    
+					    for(int i=0; i< agentList.size(); i++){
+					    	if(agentList.get(i).getId().equals(AgentID)){
+					    		auto_txt_agent.setText(agentList.get(i).getName().toString());
+					    	}
+					    }
+					    auto_txt_agent.setOnItemClickListener(new OnItemClickListener() {
 
-					public void onItemClick(AdapterView<?> arg0, View arg1,
-							int arg2, long arg3) {
-						// TODO Auto-generated method stub
-						Log.i("", "Hello Selected Agent ID = "+ ((Agent)arg0.getAdapter().getItem(arg2)).getId());
-			           	AgentID = ((Agent)arg0.getAdapter().getItem(arg2)).getId();
+							public void onItemClick(AdapterView<?> arg0, View arg1,
+									int arg2, long arg3) {
+								// TODO Auto-generated method stub
+								Log.i("", "Hello Selected Agent ID = "+ ((Agent)arg0.getAdapter().getItem(arg2)).getId());
+					           	AgentID = ((Agent)arg0.getAdapter().getItem(arg2)).getId();
+							}
+						});
 					}
-				});
-			    
+				}
 			}
 		});
 	}
@@ -917,7 +936,7 @@ public class BusConfirmActivity extends BaseSherlockActivity {
 								.getSharedPreferences("User", Activity.MODE_PRIVATE);
 						String accessToken = pref.getString("access_token", null);
 						Log.i("","Hello OrderNo: "+ SaleOrderNo);
-						NetworkEngine.getInstance().deleteSaleOrder(accessToken, SaleOrderNo, new Callback<JSONObject>() {
+/*						NetworkEngine.getInstance().deleteSaleOrder(accessToken, SaleOrderNo, new Callback<JSONObject>() {
 							
 							public void success(JSONObject arg0, Response arg1) {
 								// TODO Auto-generated method stub
@@ -927,7 +946,7 @@ public class BusConfirmActivity extends BaseSherlockActivity {
 							public void failure(RetrofitError arg0) {
 								// TODO Auto-generated method stub
 							}
-						});
+						});*/
 					}				
 					finish();
 				}

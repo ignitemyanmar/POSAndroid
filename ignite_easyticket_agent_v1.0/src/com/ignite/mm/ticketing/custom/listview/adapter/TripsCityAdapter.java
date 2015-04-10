@@ -16,11 +16,13 @@ public class TripsCityAdapter extends BaseAdapter {
 	private LayoutInflater mInflater;
 	private List<TripsCollection> listItem;
 	private Activity aty;
+	
 	public TripsCityAdapter(Activity aty, List<TripsCollection> _list){
 		mInflater = LayoutInflater.from(aty);
 		listItem = _list;
 		this.aty = aty;
 	}
+	
 	public int getCount() {
 		// TODO Auto-generated method stub
 		return listItem.size();

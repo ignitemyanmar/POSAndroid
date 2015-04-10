@@ -26,7 +26,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.text.format.DateFormat;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -44,13 +43,16 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 
 import com.actionbarsherlock.app.ActionBar;
+import com.google.gson.reflect.TypeToken;
 import com.ignite.mm.ticketing.application.BaseSherlockActivity;
 import com.ignite.mm.ticketing.application.BookingDialog;
+import com.ignite.mm.ticketing.application.DecompressGZIP;
 import com.ignite.mm.ticketing.application.DeviceUtil;
+import com.ignite.mm.ticketing.application.MCrypt;
+import com.ignite.mm.ticketing.application.SecureParam;
 import com.ignite.mm.ticketing.clientapi.NetworkEngine;
 import com.ignite.mm.ticketing.connection.detector.ConnectionDetector;
 import com.ignite.mm.ticketing.custom.listview.adapter.BusClassAdapter;
@@ -59,7 +61,6 @@ import com.ignite.mm.ticketing.custom.listview.adapter.GroupUserListAdapter;
 import com.ignite.mm.ticketing.custom.listview.adapter.RemarkListAdapter;
 import com.ignite.mm.ticketing.http.connection.HttpConnection;
 import com.ignite.mm.ticketing.sqlite.database.model.Agent;
-import com.ignite.mm.ticketing.sqlite.database.model.AgentList;
 import com.ignite.mm.ticketing.sqlite.database.model.BusSeat;
 import com.ignite.mm.ticketing.sqlite.database.model.OperatorGroupUser;
 import com.ignite.mm.ticketing.sqlite.database.model.ReturnComfrim;
@@ -118,6 +119,7 @@ import com.smk.skalertmessage.SKToastMessage;
 	private String currentDate;
 	private String todayDate;
 	private String todayTime;
+	private String permit_access_token;
 	public static List<BusSeat> BusSeats;
 	public static List<OperatorGroupUser> groupUser = new ArrayList<OperatorGroupUser>();
 	public static String CheckOut;
@@ -160,7 +162,8 @@ import com.smk.skalertmessage.SKToastMessage;
 		Calendar cal = Calendar.getInstance();
 		todayTime = sdf2.format(cal.getTime()).toString();
 				
-		Bundle bundle = getIntent().getExtras();	
+		Bundle bundle = getIntent().getExtras();
+		permit_access_token = bundle.getString("permit_access_token");
 		AgentID = bundle.getString("agent_id");
 		OperatorID = bundle.getString("operator_id");
 		FromCity = bundle.getString("from_city_id");
@@ -221,19 +224,30 @@ import com.smk.skalertmessage.SKToastMessage;
 	}
 	
 	private void getOperatorGroupUser(){
-		NetworkEngine.getInstance().getOperatorGroupUser(AppLoginUser.getAccessToken(), AppLoginUser.getUserID(), new Callback<List<OperatorGroupUser>>() {
+		String param = MCrypt.getInstance().encrypt(SecureParam.getOperatorGroupUserParam(permit_access_token, String.valueOf(AppLoginUser.getId())));
+		NetworkEngine.getInstance().getOperatorGroupUser(param, new Callback<Response>() {
 
 			public void failure(RetrofitError arg0) {
 				// TODO Auto-generated method stub
-				
+				if (arg0 != null) {
+					Log.i("", "Error Operator Group: "+arg0.getResponse().getStatus());	
+					Log.i("", "Permit A Token: "+permit_access_token+", user id: "+AppLoginUser.getId());			
+				}
 			}
 
-			public void success(List<OperatorGroupUser> arg0, Response arg1) {
+			public void success(Response arg0, Response arg1) {
 				// TODO Auto-generated method stub
-				groupUser = arg0;
-				Log.i("","Hello Group User: "+ groupUser.size());
-				lst_group_user.setAdapter(new GroupUserListAdapter(BusSelectSeatActivity.this, groupUser));
-				setListViewHeightBasedOnChildren(lst_group_user);
+				if (arg0 != null) {
+					groupUser = DecompressGZIP.fromBody(arg0.getBody(), new TypeToken<List<OperatorGroupUser>>() {}.getType());
+					
+					if (groupUser != null && groupUser.size() > 0) {
+						
+						Log.i("","Hello Group User: "+ groupUser.size());
+						
+						lst_group_user.setAdapter(new GroupUserListAdapter(BusSelectSeatActivity.this, groupUser));
+						setListViewHeightBasedOnChildren(lst_group_user);
+					}
+				}
 			}
 		});
 	}
@@ -254,22 +268,26 @@ import com.smk.skalertmessage.SKToastMessage;
 
 	}
 	
+	
 	private void getAgent(){
 		SharedPreferences pref = this.getApplicationContext().getSharedPreferences("User", Activity.MODE_PRIVATE);
 		String accessToken = pref.getString("access_token", null);
 		String user_id = pref.getString("user_id", null);
 		
-		NetworkEngine.getInstance().getAllAgent(accessToken,user_id, new Callback<AgentList>() {
+		String param = MCrypt.getInstance().encrypt(SecureParam.getAllAgentParam(accessToken, user_id));
+		NetworkEngine.getInstance().getAllAgent(param, new Callback<Response>() {
 
 			private List<Agent> agentList;
 			public void failure(RetrofitError arg0) {
 				// TODO Auto-generated method stub
 				
 			}
-
-			public void success(AgentList arg0, Response arg1) {
+			
+			public void success(Response arg0, Response arg1) {
 				// TODO Auto-generated method stub
-				agentList = arg0.getAgents();
+				
+				//agentList = arg0.getAgents();
+				agentList = DecompressGZIP.fromBody(arg0.getBody(), new TypeToken<List<Agent>>(){}.getType());
 				bookingDialog = new BookingDialog(BusSelectSeatActivity.this, agentList);
 				bookingDialog.setCallbackListener(new BookingDialog.Callback() {
 
@@ -291,36 +309,39 @@ import com.smk.skalertmessage.SKToastMessage;
 							getServermsg();
 						}*/	
 					}
-				});				
+				});	
 			}
 		});
 	}
 	
 	private void getSeatPlan() {
 		
-/*		SharedPreferences pref = this.getApplicationContext().getSharedPreferences("User", Activity.MODE_PRIVATE);
-		String accessToken = pref.getString("access_token", null);*/
-		
-		Log.i("","Hello : "+ OperatorID+"/"+ FromCity+"/"+ ToCity+"/"+ Classes+"/"+Date+"/"+Time);
-		
-		NetworkEngine.getInstance().getItems(AppLoginUser.getAccessToken(), OperatorID, FromCity, ToCity, Classes, Date, Time, new Callback<List<BusSeat>>() {
+		String param = MCrypt.getInstance().encrypt(SecureParam.getSeatPlanParam(permit_access_token, OperatorID, FromCity, ToCity, Classes, Date, Time));
+		NetworkEngine.getInstance().getItems(param, new Callback<Response>() {
 			
-			public void success(List<BusSeat> arg0, Response arg1) {
+			public void success(Response arg0, Response arg1) {
 				// TODO Auto-generated method stub
-				SelectedSeat = "";
-				BusSeats = arg0;
-				
-				Log.i("", "User's Operator ID: "+OperatorID);
-				Log.i("", "Bus Seats from Server: "+BusSeats.toString());
-				
-				getData();
-				mLoadingView.setVisibility(View.GONE);
-				mLoadingView.startAnimation(topOutAnimaiton());
+				// Try to get response body
+				if (arg0 != null) {
+					SelectedSeat = "";
+					
+					Log.i("","Success Seat Plan: ");
+					
+					BusSeats = DecompressGZIP.fromBody(arg0.getBody(), new TypeToken<List<BusSeat>>() {}.getType());
+					
+					if (BusSeats != null && BusSeats.size() > 0) {
+						getData();
+						mLoadingView.setVisibility(View.GONE);
+						mLoadingView.startAnimation(topOutAnimaiton());
+					}
+				}
 			}
 			
 			public void failure(RetrofitError arg0) {
 				// TODO Auto-generated method stub
-				
+				Log.i("","Hello Seat Error: "+ arg0.getCause());
+				Log.i("","Hello Seat Error: "+ arg0.getResponse().getBody());
+				Log.i("","Hello Seat Error: "+ arg0.getResponse().getHeaders().toString());
 			}
 		});
 	}
@@ -471,7 +492,7 @@ import com.smk.skalertmessage.SKToastMessage;
 			}
 		};
 		
-		HttpConnection lt = new HttpConnection(handler,"POST", "http://easyticket.com.mm/sale", params);
+		HttpConnection lt = new HttpConnection(handler,"POST", "http://elite.easyticket.com.mm/sale", params);
 		lt.execute();
 	}
 	

@@ -29,10 +29,15 @@ import android.widget.TextView;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockActivity;
+import com.google.gson.reflect.TypeToken;
 import com.ignite.mm.ticketing.application.BaseSherlockActivity;
+import com.ignite.mm.ticketing.application.DecompressGZIP;
 import com.ignite.mm.ticketing.application.DeviceUtil;
+import com.ignite.mm.ticketing.application.MCrypt;
+import com.ignite.mm.ticketing.application.SecureParam;
 import com.ignite.mm.ticketing.clientapi.NetworkEngine;
 import com.ignite.mm.ticketing.custom.listview.adapter.TripsCityAdapter;
+import com.ignite.mm.ticketing.sqlite.database.model.Permission;
 import com.ignite.mm.ticketing.sqlite.database.model.TripsCollection;
 import com.smk.calender.widget.SKCalender;
 import com.smk.calender.widget.SKCalender.Callbacks;
@@ -49,6 +54,9 @@ public class BusTripsCityActivity extends BaseSherlockActivity{
 	private TextView actionBarNoti;
 	private String operatorId;
 	private TextView actionBarTitle2;
+	
+	//Permission Variables
+	private String permit_ip, permit_access_token, permit_operator_id;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -117,7 +125,7 @@ public class BusTripsCityActivity extends BaseSherlockActivity{
 	};
 	
 	private void fadeData(){
-		 tripsCollections = new ArrayList<TripsCollection>();
+		 /*tripsCollections = new ArrayList<TripsCollection>();
 		 tripsCollections.add(new TripsCollection("1", "Yangon", "2", "Mandalay"));
 		 tripsCollections.add(new TripsCollection("1", "Yangon", "3", "Nay Pyi Taw"));
 		 tripsCollections.add(new TripsCollection("1", "Yangon", "4", "Pyin Oo Lwin"));
@@ -127,68 +135,111 @@ public class BusTripsCityActivity extends BaseSherlockActivity{
 		 grd_trips_city.setAdapter(new TripsCityAdapter(BusTripsCityActivity.this, tripsCollections));
 		 //grd_trips_city.setChoiceMode(GridView.CHOICE_MODE_SINGLE);
 		 //setGridViewHeightBasedOnChildren(grd_trips_city, 2);
-	}
+*/	}
 	
 
-	protected List<TripsCollection> tripsCollections;	
+	private Permission permission;	
+	private List<TripsCollection> tripsCollections;
+	
 	
 	private void getTripsCity(){
 		
 		dialog = ProgressDialog.show(this, "", " Please wait...", true);
         dialog.setCancelable(true);
 		
-		NetworkEngine.getInstance().getTrips(AppLoginUser.getAccessToken(), operatorId, new Callback<List<TripsCollection>>() {
-			
-			public void success(List<TripsCollection> arg0, Response arg1) {
-				// TODO Auto-generated method stub
-				
-				if (arg0.size() > 0 && arg0 != null) {
-					
-					tripsCollections = arg0;
-					
-					Log.i("", "Trip Operator ID: "+operatorId);
-					Log.i("", "Trip List: "+tripsCollections.toString());
-					
-					grd_trips_city.setAdapter(new TripsCityAdapter(BusTripsCityActivity.this, tripsCollections));
-					//grd_trips_city.setChoiceMode(GridView.CHOICE_MODE_SINGLE);
-					//setGridViewHeightBasedOnChildren(grd_trips_city, 2);
-					dialog.dismiss();
-				}
-			}
+		NetworkEngine.getInstance().getPermission(AppLoginUser.getAccessToken(), operatorId, new Callback<Response>() {
 			
 			public void failure(RetrofitError arg0) {
 				// TODO Auto-generated method stub
+				if (arg0.getResponse() != null) {
+					Log.i("", "Fail permission: "+arg0.getResponse().getStatus());
+					Log.i("", "Trip Operator ID: "+operatorId);
+				}
+				
 				dialog.dismiss();
+			}
+
+			public void success(Response arg0, Response arg1) {
+				// TODO Auto-generated method stub
+				if (arg0 != null) {
+					permission = DecompressGZIP.fromBody(arg0.getBody(), new TypeToken<Permission>(){}.getType());
+					
+					if (permission != null) {
+						Log.i("", "Trip Operator ID: "+operatorId);
+						Log.i("", "Permission: "+permission.toString());
+						
+						permit_ip = permission.getIp();
+						permit_access_token = permission.getAccess_token();
+						permit_operator_id = permission.getOperator_id();
+						
+						String param = MCrypt.getInstance().encrypt(SecureParam.getTripsParam(permit_access_token, permit_operator_id));
+						NetworkEngine.setIP(permit_ip);
+						NetworkEngine.getInstance().getTrips(param, new Callback<Response>() {
+
+							public void failure(RetrofitError arg0) {
+								// TODO Auto-generated method stub
+								if (arg0.getResponse() != null) {
+									Log.i("", "Fail permission: "+arg0.getResponse().getStatus());
+									Log.i("", "Trip Operator ID: "+operatorId);
+								}
+								
+								dialog.dismiss();
+							}
+
+							public void success(Response arg0, Response arg1) {
+								// TODO Auto-generated method stub
+								if (arg0 != null) {
+									
+									tripsCollections = DecompressGZIP.fromBody(arg0.getBody(), new TypeToken<List<TripsCollection>>(){}.getType());
+									if (tripsCollections != null && tripsCollections.size() > 0) {
+										
+										Log.i("", "Trip collection: "+tripsCollections.toString());
+										grd_trips_city.setAdapter(new TripsCityAdapter(BusTripsCityActivity.this, tripsCollections));
+										//grd_trips_city.setChoiceMode(GridView.CHOICE_MODE_SINGLE);
+										//setGridViewHeightBasedOnChildren(grd_trips_city, 2);
+										dialog.dismiss();
+									}
+								}
+							}
+						});
+					}
+				}
 			}
 		});
 	}
 	
+	private Integer bookCount;
 	private void getNotiBooking(){
 		
-		NetworkEngine.getInstance().getNotiBooking(AppLoginUser.getAccessToken(), getToday() , new Callback<Integer>() {
-			
-			public void success(Integer arg0, Response arg1) {
-				// TODO Auto-generated method stub
-				SharedPreferences sharedPreferences = getSharedPreferences("NotifyBooking",Activity.MODE_PRIVATE);
-				SharedPreferences.Editor editor = sharedPreferences.edit();
-				
-				editor.clear();
-				editor.commit();
-				
-				editor.putInt("count", arg0);
-				editor.commit();
-				
-				if(arg0 > 0){
-					actionBarNoti.setVisibility(View.GONE);
-					actionBarNoti.setText(arg0.toString());
-				}
-			}
+/*		String param = MCrypt.getInstance().encrypt(SecureParam.getNotiBookingParam(AppLoginUser.getAccessToken(), getToday()));
+		NetworkEngine.getInstance().getNotiBooking(param, new Callback<Response>() {
 			
 			public void failure(RetrofitError arg0) {
 				// TODO Auto-generated method stub
 				
 			}
-		});
+
+			public void success(Response arg0, Response arg1) {
+				// TODO Auto-generated method stub
+				if (arg0 != null) {
+					
+					bookCount = DecompressGZIP.fromBody(arg0.getBody(), new TypeToken<Integer>(){}.getType());
+					SharedPreferences sharedPreferences = getSharedPreferences("NotifyBooking",Activity.MODE_PRIVATE);
+					SharedPreferences.Editor editor = sharedPreferences.edit();
+					
+					editor.clear();
+					editor.commit();
+					
+					editor.putInt("count", bookCount);
+					editor.commit();
+					
+					if(bookCount > 0){
+						actionBarNoti.setVisibility(View.GONE);
+						actionBarNoti.setText(bookCount.toString());
+					}
+				}
+			}
+		});*/
 	}
 	
 	private OnItemClickListener itemClickListener = new OnItemClickListener() {
@@ -213,7 +264,8 @@ public class BusTripsCityActivity extends BaseSherlockActivity{
 			        	skCalender.dismiss();
 			        	
 			        	Bundle bundle = new Bundle();
-			        	bundle.putString("operator_id", operatorId);
+			        	bundle.putString("permit_access_token", permit_access_token);
+			        	bundle.putString("operator_id", permit_operator_id);
 						bundle.putString("from_id", tripsCollections.get(arg2).getFrom_id());
 						bundle.putString("to_id", tripsCollections.get(arg2).getTo_id());
 						bundle.putString("from", tripsCollections.get(arg2).getFrom());

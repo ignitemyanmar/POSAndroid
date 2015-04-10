@@ -4,12 +4,6 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -23,13 +17,9 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.app.SherlockActivity;
 import com.google.gson.Gson;
 import com.ignite.mm.ticketing.application.BaseSherlockActivity;
-import com.ignite.mm.ticketing.clientapi.NetworkEngine;
 import com.ignite.mm.ticketing.sqlite.database.model.CreditOrder;
-import com.smk.skalertmessage.SKToastMessage;
-import com.smk.skconnectiondetector.SKConnectionDetector;
 
 public class BusBookingConfirmDeleteActivity extends BaseSherlockActivity {
 	private ActionBar actionBar;
@@ -160,7 +150,7 @@ public class BusBookingConfirmDeleteActivity extends BaseSherlockActivity {
         dialog.setCancelable(true);
 		SharedPreferences pref = getSharedPreferences("User", Activity.MODE_PRIVATE);
 		String accessToken = pref.getString("access_token", null);
-		NetworkEngine.getInstance().confirmBooking(accessToken, creditOrder.getId().toString(), new Callback<JSONObject>() {
+/*		NetworkEngine.getInstance().confirmBooking(accessToken, creditOrder.getId().toString(), new Callback<JSONObject>() {
 			
 			public void failure(RetrofitError arg0) {
 				// TODO Auto-generated method stub
@@ -174,6 +164,6 @@ public class BusBookingConfirmDeleteActivity extends BaseSherlockActivity {
 				SKToastMessage.showMessage(BusBookingConfirmDeleteActivity.this, "Successfully confirm.", SKToastMessage.SUCCESS);
 				finish();
 			}
-		});
+		});*/
 	}
 }
