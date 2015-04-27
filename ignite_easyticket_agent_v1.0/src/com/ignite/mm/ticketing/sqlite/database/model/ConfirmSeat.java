@@ -133,16 +133,13 @@ public class ConfirmSeat {
 	}
 
 
-
 	@Override
 	public String toString() {
-		return "ConfirmSeat [busoccurance_id=" + busoccurance_id + ", seat_no="
-				+ seat_no + ", name=" + name + ", nrc_no=" + nrc_no
-				+ ", ticket_no=" + ticket_no + ", free_ticket=" + free_ticket
-				+ ", free_ticket_remark=" + free_ticket_remark + ", discount="
-				+ discount + "]";
+		return "{\"busoccurance_id\":\"" + busoccurance_id
+				+ "\", \"seat_no\":\"" + seat_no + "\", \"name\":\"" + name
+				+ "\", \"nrc_no\":\"" + nrc_no + "\", \"free_ticket\": \""+ free_ticket 
+				+ "\", \"ticket_no\":\"" + ticket_no + "\",\"free_ticket_remark\": \""+free_ticket_remark
+				+"\",\"discount\": \""+discount+"\"}";
 	}
-
-
 	
 }

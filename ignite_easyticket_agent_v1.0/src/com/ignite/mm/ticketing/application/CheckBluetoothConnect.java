@@ -8,7 +8,8 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.widget.Toast;
-import com.ignite.mm.ticketing.PDFBusActivity;
+
+import com.ignite.mm.ticketing.agent.PDFBusActivity;
 import com.ignite.mm.ticketing.sqlite.database.model.Device;
 import com.zkc.helper.printer.PrintService;
 import com.zkc.helper.printer.PrinterClass;

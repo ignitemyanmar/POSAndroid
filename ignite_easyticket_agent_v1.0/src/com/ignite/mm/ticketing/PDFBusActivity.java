@@ -197,13 +197,24 @@ public class PDFBusActivity extends BaseSherlockActivity {
 				login.finish();
 			}
 			if (v == img_print) {
-				Log.i("", "Check State (2nd) On Print Click: "+printerClass.getState());
-				if (!printerClass.IsOpen()) {
-					printerClass.open(PDFBusActivity.this);
-					connectBluetoothService();
-					printSlip();
-				}else {
-					printSlip();
+				if (printerClass != null) {
+					Log.i("", "Check State (2nd) On Print Click: "+printerClass.getState());
+					
+					//If Bluetooth Support not have ... 
+			        if (!BlueToothService.HasDevice()) {
+			        	
+			            SKToastMessage.showMessage(PDFBusActivity.this, "The device does not have Bluetooth support!", SKToastMessage.LENGTH_LONG);
+			            
+			        }else {
+			        	if (!printerClass.IsOpen()) {
+							printerClass.open(PDFBusActivity.this);
+							connectBluetoothService();
+							printSlip();
+						}else {
+							printSlip();
+						}
+			        	
+					}
 				}
 			}
 		}

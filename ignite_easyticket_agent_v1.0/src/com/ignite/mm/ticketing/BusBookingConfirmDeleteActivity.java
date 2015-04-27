@@ -104,7 +104,7 @@ public class BusBookingConfirmDeleteActivity extends BaseSherlockActivity {
 					if (i == creditOrder.getSaleitems().size() - 1) {
 						SeatLists += creditOrder.getSaleitems().get(i).getSeatNo();
 					}else {
-						SeatLists += creditOrder.getSaleitems().get(i).getSeatNo()+", ";
+						SeatLists += creditOrder.getSaleitems().get(i).getSeatNo()+",";
 					}
 				}
 				
@@ -122,9 +122,11 @@ public class BusBookingConfirmDeleteActivity extends BaseSherlockActivity {
 				bundle.putString("selected_seat",  SeatLists);
 				bundle.putString("sale_order_no", creditOrder.getId().toString());
 				bundle.putString("order_date", creditOrder.getOrderdate());
-				bundle.putString("bus_occurence", creditOrder.getSaleitems().get(0).getBusoccuranceId().toString());
+				bundle.putString("bus_occurence", creditOrder.getSaleitems().get(0).getTripId().toString());
 				bundle.putString("ConfirmDate", todayDate);
 				bundle.putString("ConfirmTime", todayTime);
+				bundle.putString("permit_access_token", creditOrder.getPermit_access_token());
+				bundle.putString("permit_ip", creditOrder.getPermit_ip());
 				//Get Seat Count
 				String[] seats = SeatLists.split(",");
 				bundle.putString("SeatCount", seats.length+"");

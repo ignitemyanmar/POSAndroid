@@ -33,12 +33,15 @@ import com.ignite.mm.ticketing.application.MCrypt;
 import com.ignite.mm.ticketing.application.SecureParam;
 import com.ignite.mm.ticketing.clientapi.NetworkEngine;
 import com.ignite.mm.ticketing.custom.listview.adapter.OrderListViewAdapter;
+import com.ignite.mm.ticketing.custom.listview.adapter.TripsCityAdapter;
 import com.ignite.mm.ticketing.sqlite.database.model.Cities;
 import com.ignite.mm.ticketing.sqlite.database.model.CreditOrder;
 import com.ignite.mm.ticketing.sqlite.database.model.From;
+import com.ignite.mm.ticketing.sqlite.database.model.Permission;
 import com.ignite.mm.ticketing.sqlite.database.model.Saleitem;
 import com.ignite.mm.ticketing.sqlite.database.model.TimesbyOperator;
 import com.ignite.mm.ticketing.sqlite.database.model.To;
+import com.ignite.mm.ticketing.sqlite.database.model.TripsCollection;
 import com.smk.skalertmessage.SKToastMessage;
 import com.smk.skconnectiondetector.SKConnectionDetector;
 
@@ -54,6 +57,8 @@ public class BusBookingListActivity extends BaseSherlockActivity {
 	private Button btn_search_codeno;
 	private TextView action_bar_title2;
 	private SKConnectionDetector connectionDetector;
+	private String operatorId;
+	private String operatorName;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -69,11 +74,20 @@ public class BusBookingListActivity extends BaseSherlockActivity {
 		actionBarBack = (ImageButton) actionBar.getCustomView().findViewById(
 				R.id.action_bar_back);
 		actionBarBack.setOnClickListener(clickListener);
-		actionBarTitle.setText("Booking စာရင္း");
 		actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
 		
 		//setContentView(R.layout.activity_busticketing_credit);
 		setContentView(R.layout.activity_bus_booking_list);
+		
+		//Get Operator ID
+		Bundle bundle = getIntent().getExtras();
+		
+		if (bundle != null) {
+			operatorId = bundle.getString("operator_id");
+			operatorName = bundle.getString("operator_name");
+		}
+				
+		actionBarTitle.setText(operatorName+" / Booking စာရင္း");
 		
 		auto_txt_codeno = (EditText)findViewById(R.id.auto_txt_codeno);
 		btn_search_codeno = (Button)findViewById(R.id.btn_search_codeno);
@@ -81,7 +95,6 @@ public class BusBookingListActivity extends BaseSherlockActivity {
 		
 		//btn_search = (Button) findViewById(R.id.btn_search);
 		//btn_search.setOnClickListener(clickListener);
-		
 		
 		SharedPreferences pref = getSharedPreferences("order", Activity.MODE_PRIVATE);
 		String orderDate = pref.getString("order_date", "");
@@ -168,6 +181,10 @@ public class BusBookingListActivity extends BaseSherlockActivity {
 				long arg3) {
 			// TODO Auto-generated method stub
 			Intent intent = new Intent(getApplicationContext(), BusBookingConfirmDeleteActivity.class);
+			
+			CreditOrder co = (CreditOrder)credit_list.get(arg2);
+			co.setPermit_access_token(permit_access_token);
+			co.setPermit_ip(permit_ip);
 			intent.putExtra("credit_order", new Gson().toJson(credit_list.get(arg2)));
 			startActivity(intent);
 			
@@ -207,60 +224,103 @@ public class BusBookingListActivity extends BaseSherlockActivity {
 		});*/
 	}
 	
+	private Permission permission;
+	protected String permit_ip;
+	protected String permit_access_token;
+	protected String permit_operator_id;	
+	
 	private void getBookingListByCodeNo(){
 		Log.i("", "Enter here............. get booking list!!!");
 		
 		dialog = ProgressDialog.show(this, "", " Please wait...", true);
         dialog.setCancelable(true);
-               
-        String book_code = auto_txt_codeno.getText().toString(); 
         
-        Log.i("", "Booking Code (User Input) : "+book_code+", Token: "+AppLoginUser.getAccessToken());
-		
-        String param = MCrypt.getInstance().encrypt(SecureParam.getBookingOrderParam(AppLoginUser.getAccessToken(), "11", "", "", "", "", book_code));
-		NetworkEngine.getInstance().getBookingOrder(param, new Callback<Response>() {
-
+        NetworkEngine.setIP("app.easyticket.com.mm");
+        NetworkEngine.getInstance().getPermission(AppLoginUser.getAccessToken(), operatorId, new Callback<Response>() {
+			
 			public void failure(RetrofitError arg0) {
 				// TODO Auto-generated method stub
-				Log.i("","Failure : "+ arg0.getCause());
+				if (arg0.getResponse() != null) {
+					Log.i("", "Fail permission: "+arg0.getResponse().getStatus());
+					Log.i("", "Trip Operator ID: "+operatorId);
+				}
+				
 				dialog.dismiss();
-				showAlert();
-				lv_booking_list.setAdapter(null);
 			}
-
+			
 			public void success(Response arg0, Response arg1) {
 				// TODO Auto-generated method stub
 				if (arg0 != null) {
+					permission = DecompressGZIP.fromBody(arg0.getBody(), new TypeToken<Permission>(){}.getType());
 					
-					credit_list = DecompressGZIP.fromBody(arg0.getBody(), new TypeToken<List<CreditOrder>>(){}.getType());
-					
-					if (credit_list != null && credit_list.size() > 0) {
+					if (permission != null) {
+						Log.i("", "Trip Operator ID: "+operatorId);
+						Log.i("", "Permission: "+permission.toString());
 						
-						Log.i("","Hello size: "+ credit_list.size());
+						permit_ip = permission.getIp();
+						permit_access_token = permission.getAccess_token();
+						permit_operator_id = permission.getOperator_id();
 						
-						List<Saleitem> seats = new ArrayList<Saleitem>();
+						String book_code = auto_txt_codeno.getText().toString(); 
+				        
+				        Log.i("", "Booking Code (User Input) : "+book_code);
 						
-						seats = credit_list.get(0).getSaleitems();
-						String bus_seats = "";
-						for (int i = 0; i < seats.size(); i++) {
-							if (i == seats.size()-1) {
-								bus_seats += seats.get(i).getSeatNo();
-							}else {
-								bus_seats += seats.get(i).getSeatNo()+",";
+				        NetworkEngine.setIP(permit_ip);
+						
+						Log.i("", "Permit IP: "+permit_ip);
+						Log.i("", "Network engine instance: "+NetworkEngine.instance);
+						
+				        String param = MCrypt.getInstance().encrypt(SecureParam.getBookingOrderParam(permit_access_token, permit_operator_id
+				        		, "", "", "", "", book_code));
+				        
+				        Log.i("", "Param(Reservation): "+param);
+						NetworkEngine.getInstance().getBookingOrder(param, new Callback<Response>() {
+
+							public void failure(RetrofitError arg0) {
+								// TODO Auto-generated method stub
+								Log.i("","Failure : "+ arg0.getCause());
+								dialog.dismiss();
+								showAlert();
+								lv_booking_list.setAdapter(null);
 							}
-						}
-						
-						String changeDate = changeDateString(credit_list.get(0).getDate());
-						CreditOrder co = (CreditOrder)credit_list.get(0);
-						co.setDate(changeDate);
-						
-						lv_booking_list.setAdapter(new OrderListViewAdapter(BusBookingListActivity.this, credit_list, bus_seats));
-					}else {
-						showAlert();
-						lv_booking_list.setAdapter(null);
+
+							public void success(Response arg0, Response arg1) {
+								// TODO Auto-generated method stub
+								if (arg0 != null) {
+									
+									credit_list = DecompressGZIP.fromBody(arg0.getBody(), new TypeToken<List<CreditOrder>>(){}.getType());
+									
+									if (credit_list != null && credit_list.size() > 0) {
+										
+										Log.i("","Hello Credit List: "+ credit_list.toString());
+										
+										List<Saleitem> seats = new ArrayList<Saleitem>();
+										
+										seats = credit_list.get(0).getSaleitems();
+										String bus_seats = "";
+										for (int i = 0; i < seats.size(); i++) {
+											if (i == seats.size()-1) {
+												bus_seats += seats.get(i).getSeatNo();
+											}else {
+												bus_seats += seats.get(i).getSeatNo()+",";
+											}
+										}
+										
+										String changeDate = changeDateString(credit_list.get(0).getDate());
+										CreditOrder co = (CreditOrder)credit_list.get(0);
+										co.setDate(changeDate);
+										
+										lv_booking_list.setAdapter(new OrderListViewAdapter(BusBookingListActivity.this, credit_list, bus_seats));
+									}else {
+										showAlert();
+										lv_booking_list.setAdapter(null);
+									}
+									
+									dialog.dismiss();
+								}
+							}
+						});
 					}
-					
-					dialog.dismiss();
 				}
 			}
 		});

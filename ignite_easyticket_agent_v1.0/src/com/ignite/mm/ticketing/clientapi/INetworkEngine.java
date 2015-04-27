@@ -107,4 +107,12 @@ public interface INetworkEngine {
 	@GET("/api/gettrips")
 	void getPermission(@Query("access_token") String token, @Query("operator_id") String operatorId, Callback<Response> callback);
 	
+	@GET("/sale/order")
+	void getBooking(@Query("access_token") String token,
+			@Query("operator_id") String operator_id,
+			@Query("departure_date") String departure_date,
+			@Query("from") String from,
+			@Query("to") String to,
+			@Query("time") String time,
+			@Query("book_code") String book_code, Callback<Response> callback);
 }

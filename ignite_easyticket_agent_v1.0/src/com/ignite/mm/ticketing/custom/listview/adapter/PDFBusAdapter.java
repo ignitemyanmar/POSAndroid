@@ -2,7 +2,7 @@ package com.ignite.mm.ticketing.custom.listview.adapter;
 
 import java.util.ArrayList;
 
-import com.ignite.mm.ticketing.R;
+import com.ignite.mm.ticketing.agent.R;
 import com.ignite.mm.ticketing.sqlite.database.model.AllBusObject;
 import android.app.Activity;
 import android.text.Html;
@@ -87,8 +87,11 @@ public class PDFBusAdapter extends BaseAdapter {
 		holder.txtBarcode.setText(getItem(position).getBarcode());
 				
 		holder.txt_agent.setText("Agent  :  "+getItem(position).getUserName());
-		holder.txt_passenger.setText("Passenger   :  "+getItem(position).getCustomerName());
-		holder.txt_phone.setText("Phone          :  "+getItem(position).getPhone());
+		
+		if (getItem(position).getCustomerName() != null && getItem(position).getPhone() != null) {
+			holder.txt_passenger.setText("Passenger   :  "+getItem(position).getCustomerName());
+			holder.txt_phone.setText("Phone          :  "+getItem(position).getPhone());
+		}
 		
 		holder.txt_operator.setText("Bus               :  "+getItem(position).getOperatorName());
 		holder.txt_trip.setText("Trip               :  "+getItem(position).getTrip());
@@ -101,7 +104,9 @@ public class PDFBusAdapter extends BaseAdapter {
 		holder.txt_price.setText("Price             :  "+getItem(position).getPrice()+".00");
 		holder.txt_discount.setText("Disc (%)       :  "+getItem(position).getDiscount()+".00");
 		holder.txt_amount.setText("Amount        :  "+getItem(position).getAmount()+".00 Ks");
-		holder.ticket_nos.setText(Html.fromHtml(getItem(position).getTicketNo()));
+		if (getItem(position).getTicketNo() != null) {
+			holder.ticket_nos.setText(Html.fromHtml(getItem(position).getTicketNo()));
+		}
 		holder.img_barcode.setImageBitmap(getItem(position).getBarcode_img());
 		
 		return convertView;

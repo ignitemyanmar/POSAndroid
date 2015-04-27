@@ -23,9 +23,9 @@ public class Saleitem {
 	private String name;
 	@Expose
 	private String phone;
-	@SerializedName("busoccurance_id")
+	@SerializedName("trip_id")
 	@Expose
-	private Integer busoccuranceId;
+	private String tripId;
 	@Expose
 	private Integer operator;
 	
@@ -85,12 +85,12 @@ public class Saleitem {
 	this.phone = phone;
 	}
 	
-	public Integer getBusoccuranceId() {
-	return busoccuranceId;
+	public String getTripId() {
+	return tripId;
 	}
 	
-	public void setBusoccuranceId(Integer busoccuranceId) {
-	this.busoccuranceId = busoccuranceId;
+	public void setTripId(String tripId) {
+	this.tripId = tripId;
 	}
 	
 	public Integer getOperator() {

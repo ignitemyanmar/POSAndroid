@@ -34,6 +34,7 @@ public class HomeActivity extends BaseSherlockActivity{
 		actionBarTitle2 = (TextView) actionBar.getCustomView().findViewById(
 				R.id.action_bar_title2);
 		actionBarTitle2.setVisibility(View.GONE);
+		//actionBarTitle2.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
 		actionBarBack = (ImageButton) actionBar.getCustomView().findViewById(
 				R.id.action_bar_back);
 		actionBarBack.setOnClickListener(new OnClickListener() {
@@ -43,7 +44,7 @@ public class HomeActivity extends BaseSherlockActivity{
 				finish();
 			}
 		});
-		actionBarTitle.setText(AppLoginUser.getName());
+		actionBarTitle.setText("Menu");
 		actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
 		
 		setContentView(R.layout.activity_home);
@@ -55,7 +56,9 @@ public class HomeActivity extends BaseSherlockActivity{
 			
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				startActivity(new Intent(getApplicationContext(), BusOperatorActivity.class));
+				Bundle bundle = new Bundle();
+				bundle.putString("from_intent", "sale");
+				startActivity(new Intent(getApplicationContext(), BusOperatorActivity.class).putExtras(bundle));
 			}
 		});
 		
@@ -63,7 +66,9 @@ public class HomeActivity extends BaseSherlockActivity{
 			
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				startActivity(new Intent(getApplicationContext(), BusBookingListActivity.class));
+				Bundle bundle = new Bundle();
+				bundle.putString("from_intent", "reservation");
+				startActivity(new Intent(getApplicationContext(), BusOperatorActivity.class).putExtras(bundle));
 			}
 		});
 	}

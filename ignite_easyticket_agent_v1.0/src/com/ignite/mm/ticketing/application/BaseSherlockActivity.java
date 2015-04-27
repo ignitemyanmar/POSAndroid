@@ -16,7 +16,7 @@ import android.util.Log;
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
-import com.ignite.mm.ticketing.R;
+import com.ignite.mm.ticketing.agent.R;
 
 public class BaseSherlockActivity extends SherlockActivity {
 	

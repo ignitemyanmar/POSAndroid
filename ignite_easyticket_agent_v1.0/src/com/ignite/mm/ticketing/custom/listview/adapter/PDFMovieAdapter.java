@@ -5,9 +5,9 @@ import java.util.ArrayList;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
 import com.ignite.barcode.GenerateBarcode;
-import com.ignite.mm.ticketing.PDFMovieActivity;
-import com.ignite.mm.ticketing.R;
-import com.ignite.mm.ticketing.SelectingSeatActivity;
+import com.ignite.mm.ticketing.agent.PDFMovieActivity;
+import com.ignite.mm.ticketing.agent.R;
+import com.ignite.mm.ticketing.agent.SelectingSeatActivity;
 import com.ignite.mm.ticketing.sqlite.database.model.AllMovieObject;
 
 import android.app.Activity;

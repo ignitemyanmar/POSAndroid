@@ -5,12 +5,12 @@
     android:layout_height="wrap_content"
     android:gravity="center_horizontal|center_vertical"
     android:orientation="horizontal"
-    android:padding="5dp" >
+    android:layout_marginBottom="20dp" >
 
     <View
         android:id="@+id/view_color"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
         android:background="#5586c8" />
 
     <TextView
@@ -19,6 +19,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="5dp"
         android:text="Medium Text"        
-        android:textSize="14dp" />
+        android:textSize="14dp"
+        android:padding="3dp" />
 
 </LinearLayout>

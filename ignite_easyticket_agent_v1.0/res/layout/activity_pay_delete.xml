@@ -29,7 +29,8 @@
             android:layout_marginTop="15dp"
             android:background="@drawable/btn_gray"
             android:text="Booking ဖ်က္ မည္"
-            android:textColor="@color/white" />
+            android:textColor="@color/white"
+            android:visibility="invisible" />
     </LinearLayout>
 
     <com.smk.custom.view.CustomButton

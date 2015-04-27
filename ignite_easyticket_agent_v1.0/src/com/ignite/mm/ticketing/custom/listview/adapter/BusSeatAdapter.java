@@ -5,6 +5,7 @@ import java.util.List;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,8 +16,8 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.ignite.mm.ticketing.R;
-import com.ignite.mm.ticketing.BusSelectSeatActivity;
+import com.ignite.mm.ticketing.agent.BusSelectSeatActivity;
+import com.ignite.mm.ticketing.agent.R;
 import com.ignite.mm.ticketing.sqlite.database.model.OperatorGroupUser;
 import com.ignite.mm.ticketing.sqlite.database.model.Seat_list;
 
@@ -68,6 +69,7 @@ public class BusSeatAdapter extends BaseAdapter{
 			
 			switch(getColor(list.get(position).getOperatorgroup_id())){
 				case 1:
+					//holder.cover.setVisibility(View.VISIBLE);
 					if(list.get(position).getBooking() == 0)
 						holder.seat.setButtonDrawable(R.drawable.rdo_shape_1);
 					else
@@ -80,23 +82,26 @@ public class BusSeatAdapter extends BaseAdapter{
 						holder.seat.setButtonDrawable(R.drawable.rdo_shape_2_1);
 					break;
 				case 3:
+					//holder.cover.setVisibility(View.VISIBLE);
 					if(list.get(position).getBooking() == 0)
 						holder.seat.setButtonDrawable(R.drawable.rdo_shape_3);
 					else
 						holder.seat.setButtonDrawable(R.drawable.rdo_shape_3_1);
 					break;
 				case 4:
+					//holder.cover.setVisibility(View.VISIBLE);
 					if(list.get(position).getBooking() == 0)
 						holder.seat.setButtonDrawable(R.drawable.rdo_shape_4);
 					else
 						holder.seat.setButtonDrawable(R.drawable.rdo_shape_4_1);
 					break;
 				default:
+					Log.i("", "Default Color !!!!!!!!!!!!!");
+					//holder.cover.setVisibility(View.VISIBLE);
 					if(list.get(position).getBooking() == 0)
 						holder.seat.setButtonDrawable(R.drawable.rdo_shape_0);
 					else
 						holder.seat.setButtonDrawable(R.drawable.rdo_shape_0_1);
-					
 			}
 			
 			//Already Purchase or Booking

@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName;
 public class AccessToken {
 
 @Expose
-private int id;
+private String id;
 @Expose
 private String name;
 @Expose
@@ -38,7 +38,7 @@ private String updatedAt;
 	* @return
 	* The id
 	*/
-	public int getId() {
+	public String getId() {
 	return id;
 	}
 	
@@ -47,7 +47,7 @@ private String updatedAt;
 	* @param id
 	* The id
 	*/
-	public void setId(int id) {
+	public void setId(String id) {
 	this.id = id;
 	}
 	

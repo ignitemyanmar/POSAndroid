@@ -2,8 +2,8 @@ package com.ignite.mm.ticketing.custom.listview.adapter;
 
 import java.util.List;
 
-import com.ignite.mm.ticketing.R;
-import com.ignite.mm.ticketing.SelectingSeatActivity;
+import com.ignite.mm.ticketing.agent.R;
+import com.ignite.mm.ticketing.agent.SelectingSeatActivity;
 import com.ignite.mm.ticketing.sqlite.database.model.Seat;
 
 import android.app.Activity;

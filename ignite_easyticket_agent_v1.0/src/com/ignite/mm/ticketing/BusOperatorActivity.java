@@ -12,6 +12,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
@@ -48,16 +49,26 @@ public class BusOperatorActivity extends BaseSherlockActivity {
 	protected List<Operator> operatorList;
 	private TextView actionBarTitle2;
 	private int NofColumn;
+	private String intents = "";
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		
+		setContentView(R.layout.activity_bus_operator);
+		
+		Bundle bundle = getIntent().getExtras();
+		
+		if (bundle != null) {
+			intents = bundle.getString("from_intent");
+		}
+		
 		actionBar = getSupportActionBar();
 		actionBar.setCustomView(R.layout.action_bar);
 		actionBarTitle = (TextView) actionBar.getCustomView().findViewById(
 				R.id.action_bar_title);
+		//actionBarTitle.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
 		actionBarTitle2 = (TextView) actionBar.getCustomView().findViewById(
 				R.id.action_bar_title2);
 		actionBarTitle2.setVisibility(View.GONE);
@@ -67,10 +78,18 @@ public class BusOperatorActivity extends BaseSherlockActivity {
 		actionBarBack.setOnClickListener(clickListener);
 		actionBarNoti = (TextView) actionBar.getCustomView().findViewById(R.id.txt_notify_booking);
 		actionBarNoti.setOnClickListener(clickListener);
-		actionBarTitle.setText("Choose Bus Operator");
-		actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
 		
-		setContentView(R.layout.activity_bus_operator);
+		if (intents.equals("sale")) {
+			actionBarTitle.setText("Sale Tickets ");
+			//actionBarTitle2.setText("Choose Bus Operator");
+		}else if (intents.equals("reservation")) {
+			actionBarTitle.setText("Reservation Confirm");
+			//actionBarTitle2.setText("Choose Bus Operator");
+		}else {
+			actionBarTitle.setText("Choose Operator");
+		}
+		
+		actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
 		
 		lv_bus_operator = (ListView)findViewById(R.id.lv_bus_operator);
 		
@@ -88,7 +107,6 @@ public class BusOperatorActivity extends BaseSherlockActivity {
 			skDetector.showErrorMessage();
 			fadeData();
 		}
-
 	}
 	
 	private OnItemClickListener operatorClickListener = new OnItemClickListener() {
@@ -98,13 +116,23 @@ public class BusOperatorActivity extends BaseSherlockActivity {
 			// TODO Auto-generated method stub
 			Bundle bundle = new Bundle();
 			bundle.putString("operator_id", operatorList.get(position).getId());
+			bundle.putString("operator_name", operatorList.get(position).getName());
 			
 			Log.i("", "User's Operator ID: "+operatorList.get(position).getId());
 			
-			startActivity(new Intent(getApplicationContext(), BusTripsCityActivity.class).putExtras(bundle));
-			
+			if (intents.equals("sale")) {
+				
+				startActivity(new Intent(getApplicationContext(), BusTripsCityActivity.class).putExtras(bundle));
+			}else if (intents.equals("reservation")) {
+				
+				startActivity(new Intent(getApplicationContext(), BusBookingListActivity.class).putExtras(bundle));
+			}else {
+				
+				startActivity(new Intent(getApplicationContext(), BusTripsCityActivity.class).putExtras(bundle));
+			} 
 		}
 	};
+	
 	
 	/**
 	 * Get Booking List Notification

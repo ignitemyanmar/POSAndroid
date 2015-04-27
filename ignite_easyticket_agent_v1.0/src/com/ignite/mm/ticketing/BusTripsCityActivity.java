@@ -17,6 +17,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
@@ -57,26 +58,12 @@ public class BusTripsCityActivity extends BaseSherlockActivity{
 	
 	//Permission Variables
 	private String permit_ip, permit_access_token, permit_operator_id;
+	private String operator_name;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		
-		actionBar = getSupportActionBar();
-		actionBar.setCustomView(R.layout.action_bar);
-		actionBarTitle = (TextView) actionBar.getCustomView().findViewById(
-				R.id.action_bar_title);
-		actionBarTitle2 = (TextView) actionBar.getCustomView().findViewById(
-				R.id.action_bar_title2);
-		actionBarTitle2.setVisibility(View.GONE);
-		actionBarBack = (ImageButton) actionBar.getCustomView().findViewById(
-				R.id.action_bar_back);
-		actionBarNoti = (TextView) actionBar.getCustomView().findViewById(R.id.txt_notify_booking);
-		actionBarNoti.setOnClickListener(clickListener);
-		actionBarTitle.setText("Choose City");
-		actionBarBack.setOnClickListener(clickListener);
-		actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
 		
 		setContentView(R.layout.activity_trips_city);
 		
@@ -85,7 +72,26 @@ public class BusTripsCityActivity extends BaseSherlockActivity{
 		
 		if (bundle != null) {
 			operatorId = bundle.getString("operator_id");
+			operator_name = bundle.getString("operator_name");
 		}
+		
+		actionBar = getSupportActionBar();
+		actionBar.setCustomView(R.layout.action_bar);
+		actionBarTitle = (TextView) actionBar.getCustomView().findViewById(
+				R.id.action_bar_title);
+		//actionBarTitle.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
+		actionBarTitle2 = (TextView) actionBar.getCustomView().findViewById(
+				R.id.action_bar_title2);
+		actionBarTitle2.setVisibility(View.GONE);
+		//actionBarTitle2.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
+		actionBarBack = (ImageButton) actionBar.getCustomView().findViewById(
+				R.id.action_bar_back);
+		actionBarNoti = (TextView) actionBar.getCustomView().findViewById(R.id.txt_notify_booking);
+		actionBarNoti.setOnClickListener(clickListener);
+		actionBarTitle.setText(operator_name);
+		//actionBarTitle2.setText("Choose Trip");
+		actionBarBack.setOnClickListener(clickListener);
+		actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
 		
 		NofColumn = 2;		
 		grd_trips_city = (GridView) findViewById(R.id.grd_trips_city);
@@ -146,7 +152,8 @@ public class BusTripsCityActivity extends BaseSherlockActivity{
 		
 		dialog = ProgressDialog.show(this, "", " Please wait...", true);
         dialog.setCancelable(true);
-		
+        
+        NetworkEngine.setIP("app.easyticket.com.mm");
 		NetworkEngine.getInstance().getPermission(AppLoginUser.getAccessToken(), operatorId, new Callback<Response>() {
 			
 			public void failure(RetrofitError arg0) {
@@ -174,6 +181,10 @@ public class BusTripsCityActivity extends BaseSherlockActivity{
 						
 						String param = MCrypt.getInstance().encrypt(SecureParam.getTripsParam(permit_access_token, permit_operator_id));
 						NetworkEngine.setIP(permit_ip);
+						
+						Log.i("", "Permit IP: "+permit_ip);
+						Log.i("", "Network engine instance: "+NetworkEngine.instance);
+						
 						NetworkEngine.getInstance().getTrips(param, new Callback<Response>() {
 
 							public void failure(RetrofitError arg0) {
@@ -271,6 +282,8 @@ public class BusTripsCityActivity extends BaseSherlockActivity{
 						bundle.putString("from", tripsCollections.get(arg2).getFrom());
 						bundle.putString("to", tripsCollections.get(arg2).getTo());
 						bundle.putString("date", selectedDate);
+						bundle.putString("permit_ip", permit_ip);
+						bundle.putString("operator_name", operator_name);
 						
 						startActivity(new Intent(getApplicationContext(), BusTimeActivity.class).putExtras(bundle));			        	
 			        	

@@ -50,7 +50,7 @@ public class LoginUser {
 	@Expose
 	private String Address;
 	@Expose
-	private int id;
+	private String id;
 	@Expose
 	private String name;
 	@Expose
@@ -88,7 +88,7 @@ public class LoginUser {
 		Expires = pref.getLong("expires", 0);
 		ExpiresIn = pref.getLong("expires_in", 0);
 		RefreshToken = pref.getString("refresh_token", null);
-		id = pref.getInt("user_id", 0);
+		id = pref.getString("user_id", null);
 		UserGroupID = pref.getString("usergroup_id", null);
 		LoginUserID = pref.getString("login_user_id", null);
 		UserName = pref.getString("user_name", null);
@@ -125,7 +125,7 @@ public class LoginUser {
 		editor.commit();
 		
 		editor.putString("access_token", getAccessToken());
-		editor.putInt("user_id", getId());
+		editor.putString("user_id", getId());
 		editor.putString("user_name", getName());
 		editor.putString("email", getEmail());
 		editor.putString("code_no", getCodeNo());
@@ -310,11 +310,11 @@ public class LoginUser {
 		this.ctx = ctx;
 	}
 
-	public int getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 

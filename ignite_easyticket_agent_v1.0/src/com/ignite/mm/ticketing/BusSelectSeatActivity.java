@@ -88,9 +88,9 @@ import com.smk.skalertmessage.SKToastMessage;
 	private String AgentID = "0";
 	private String CustName = "";
 	private String CustPhone = "";
-	private int RemarkType;
-	private String Remark;
-	private String OperatorID;
+	private int RemarkType = 0;
+	private String Remark = "";
+	private String OperatorID = "0";
 	private String FromCity;
 	private String ToCity;
 	private String Time;
@@ -119,7 +119,9 @@ import com.smk.skalertmessage.SKToastMessage;
 	private String currentDate;
 	private String todayDate;
 	private String todayTime;
-	private String permit_access_token;
+	private String permit_access_token = "";
+	private String permit_ip;
+	private String operator_name = "";
 	public static List<BusSeat> BusSeats;
 	public static List<OperatorGroupUser> groupUser = new ArrayList<OperatorGroupUser>();
 	public static String CheckOut;
@@ -173,6 +175,8 @@ import com.smk.skalertmessage.SKToastMessage;
 		Classes = bundle.getString("class_id");
 		Time = bundle.getString("time");
 		Date = bundle.getString("date");
+		permit_ip = bundle.getString("permit_ip");
+		operator_name = bundle.getString("operator_name");
 		
 		
 		SharedPreferences notify = getSharedPreferences("NotifyBooking", Context.MODE_PRIVATE);
@@ -182,8 +186,8 @@ import com.smk.skalertmessage.SKToastMessage;
 			actionBarNoti.setText(NotifyBooking.toString());
 		}
 		
-		actionBarTitle.setText(From+" - "+To);
-		actionBarTitle2.setText("["+Time+"] - "+changeDate(Date));
+		actionBarTitle.setText(From+" - "+To+" ["+operator_name+"]");
+		actionBarTitle2.setText(changeDate(Date)+" ["+Time+"]");
 		
 		SelectedSeat 	= "";
 		btn_booking		= (Button) findViewById(R.id.btn_booking);
@@ -346,7 +350,7 @@ import com.smk.skalertmessage.SKToastMessage;
 		});
 	}
 	
-	public void getServermsg()
+	public void postSale()
 	{
 		dialog = ProgressDialog.show(this, "", " Please wait...", true);
         dialog.setCancelable(true);
@@ -356,7 +360,10 @@ import com.smk.skalertmessage.SKToastMessage;
         String[] selectedSeat = SelectedSeat.split(",");
         
 		for (int i = 0; i < selectedSeat.length; i++) {
-			seats.add(new SelectSeat(BusSeats.get(0).getSeat_plan().get(0).getId(), BusSeats.get(0).getSeat_plan().get(0).getSeat_list().get(Integer.valueOf(selectedSeat[i])).getSeat_no().toString()));
+			seats.add(new SelectSeat(BusSeats.get(0).getSeat_plan().get(0)
+					.getId(), BusSeats.get(0).getSeat_plan().get(0)
+					.getSeat_list().get(Integer.valueOf(selectedSeat[i]))
+					.getSeat_no().toString()));
 		}
 		
 		final String FromCity = BusSeats.get(0).getSeat_plan().get(0).getFrom().toString();
@@ -364,34 +371,49 @@ import com.smk.skalertmessage.SKToastMessage;
 		
         Log.i("","Hello From City: "+FromCity+" , To City : "+ToCity+" and Select Seat -> "+seats.toString());
         
-        SharedPreferences pref = this.getApplicationContext().getSharedPreferences("User", Activity.MODE_PRIVATE);
+        /*SharedPreferences pref = this.getApplicationContext().getSharedPreferences("User", Activity.MODE_PRIVATE);
 		String accessToken = pref.getString("access_token", null);
-		String user_id = pref.getString("user_id", null);
-		String user_type = pref.getString("user_type", null);
+		int user_id = pref.getInt("user_id", 0);
+		String user_type = pref.getString("user_type", null);*/
 		
-		if(user_type.equals("agent")){
-			AgentID = user_id;
-		}else if(AgentID.length() == 0){
-			AgentID = "0";
-		}
-                
+		//if (AppLoginUser.getUserType().equals("agent")) {
+			AgentID = String.valueOf(AppLoginUser.getId());
+		//} else if (AgentID.length() == 0) {
+			//AgentID = "0";
+		//}
+               
+		Log.i("", "Param sale to encrypt: "
+		+"access: "+permit_access_token+
+		"operatorID: "+OperatorID+
+		"agent id: "+AgentID+
+		"Cus Name: "+CustName+
+		"cus ph: "+CustPhone+
+		"Remark type: "+RemarkType+
+		"Remark: "+Remark+
+		"groupid: "+AppLoginUser.getAgentgroupId()+
+		"Seats : "+seats.toString()+
+		"trip id: "+BusSeats.get(0).getSeat_plan()
+		.get(0).getId()+
+		"date: "+Date+
+		"from city: "+FromCity+
+		"to city: "+ToCity+
+		"user id: "+AppLoginUser
+		.getId()+
+		"device id: "+DeviceUtil.getInstance(this).getID()+
+		"is booking: "+isBooking.toString());
+		
+		//Do Encrypt of Params
+		String param = MCrypt.getInstance().encrypt(SecureParam.postSaleParam(permit_access_token
+				, OperatorID, AgentID, CustName, CustPhone, String
+				.valueOf(RemarkType), Remark, String.valueOf(AppLoginUser.getAgentgroupId()), MCrypt.getInstance()
+				.encrypt(seats.toString()), BusSeats.get(0).getSeat_plan()
+				.get(0).getId().toString(), Date, FromCity, ToCity, String.valueOf(AppLoginUser
+				.getId()), DeviceUtil.getInstance(this).getID(), isBooking.toString()));
+		
+		Log.i("","Hello param (for sale) : "+ param);
+		
         List<NameValuePair> params = new ArrayList<NameValuePair>();
-        params.add(new BasicNameValuePair("device_id", DeviceUtil.getInstance(this).getID()));
-        params.add(new BasicNameValuePair("operator_id", OperatorID));
-        params.add(new BasicNameValuePair("agent_id", AgentID));
-        params.add(new BasicNameValuePair("name", CustName));
-        params.add(new BasicNameValuePair("phone", CustPhone));
-        params.add(new BasicNameValuePair("remark_type", String.valueOf(RemarkType)));
-        params.add(new BasicNameValuePair("remark", Remark));
-        params.add(new BasicNameValuePair("from_city", FromCity));
-        params.add(new BasicNameValuePair("to_city", ToCity));
-        params.add(new BasicNameValuePair("group_operator_id", AppLoginUser.getUserGroupID()));
-        params.add(new BasicNameValuePair("seat_list", seats.toString()));
-        params.add(new BasicNameValuePair("booking", isBooking.toString()));
-        params.add(new BasicNameValuePair("user_id", AppLoginUser.getLoginUserID()));
-        params.add(new BasicNameValuePair("access_token", AppLoginUser.getAccessToken()));
-        
-        Log.i("","Hello Param: " + params.toString());
+        params.add(new BasicNameValuePair("param", param));       
         
 		final Handler handler = new Handler() {
 
@@ -402,7 +424,13 @@ import com.smk.skalertmessage.SKToastMessage;
 				Log.i("ans:","Server Response: "+jsonData);
 				
 				try {
-					JSONObject jsonObject = new JSONObject(jsonData);
+					
+					JSONObject jsonObject = null;
+					
+					if (jsonData != null) {
+						jsonObject = new JSONObject(jsonData);
+						
+					}
 					String SeatLists = "";
 					
 					if(jsonObject.getString("status").equals("1")){
@@ -417,7 +445,7 @@ import com.smk.skalertmessage.SKToastMessage;
 	        					if (i == jsonArray.length() - 1) {
 	        						SeatLists += obj.getString("seat_no");
 								}else {
-									SeatLists += obj.getString("seat_no")+", ";
+									SeatLists += obj.getString("seat_no")+",";
 								}
 	        				}
 	        				
@@ -443,6 +471,8 @@ import com.smk.skalertmessage.SKToastMessage;
 		        				//Get Seat Count
 		        				String[] seats = SeatLists.split(",");
 		        				bundle.putString("SeatCount", seats.length+"");
+			    				bundle.putString("permit_ip", permit_ip);
+			    				bundle.putString("permit_access_token", permit_access_token);
 			    				
 			    				nextScreen.putExtras(bundle);
 			    				startActivity(nextScreen);
@@ -453,8 +483,26 @@ import com.smk.skalertmessage.SKToastMessage;
 		        				
 		        				isBooking = 0;
 		        				
-/*		        				Bundle bundle = new Bundle();
-		        				bundle.putString("Operator_Name", BusSeats.get(0).getOperator());
+		        				Bundle bundle = new Bundle();
+		        				bundle.putString("Operator_Name", BusSeats.get(0).getOperator());			    				
+			    				bundle.putString("from_to", From+"-"+To);
+			    				bundle.putString("time", Time);
+			    				bundle.putString("classes", BusClasses);
+			    				bundle.putString("date", changeDateString(Date));
+			    				bundle.putString("selected_seat",  SeatLists);
+			    				bundle.putString("sale_order_no", jsonObject.getString("sale_order_no"));
+			    				bundle.putString("bus_occurence", BusSeats.get(0).getSeat_plan().get(0).getId().toString());
+			    				bundle.putString("Price", BusSeats.get(0).getSeat_plan().get(0).getPrice()+"");
+		        				bundle.putString("ConfirmDate", todayDate);
+		        				bundle.putString("ConfirmTime", todayTime);
+		        				bundle.putString("CustomerName", AppLoginUser.getUserName());
+		        				//Get Seat Count
+		        				String[] seats = SeatLists.split(",");
+		        				bundle.putString("SeatCount", seats.length+"");
+			    				bundle.putString("permit_ip", permit_ip);
+			    				bundle.putString("permit_access_token", permit_access_token);
+			    				
+		        				/*bundle.putString("Operator_Name", BusSeats.get(0).getOperator());
 		        				bundle.putString("Bus_Trip", From+"-"+To);
 		        				bundle.putString("Trip_Date", changeDate(Date));
 		        				bundle.putString("Trip_Time", Time);
@@ -468,8 +516,9 @@ import com.smk.skalertmessage.SKToastMessage;
 		        				//Get Seat Count
 		        				String[] seats = SeatLists.split(",");
 		        				bundle.putString("SeatCount", seats.length+"");*/
-/*		        				//Show Voucher
-		        				startActivity(new Intent(BusSelectSeatActivity.this, PDFBusActivity.class).putExtras(bundle));*/
+			    				
+		        				//Show Voucher
+		        				startActivity(new Intent(BusSelectSeatActivity.this, PDFBusActivity.class).putExtras(bundle));
 		        				
 		        				Log.i("", "Book Code to save: "+jsonObject.getString("sale_order_no"));
 		        				
@@ -492,8 +541,11 @@ import com.smk.skalertmessage.SKToastMessage;
 			}
 		};
 		
-		HttpConnection lt = new HttpConnection(handler,"POST", "http://elite.easyticket.com.mm/sale", params);
+		//"http://elite.easyticket.com.mm/sale"
+		HttpConnection lt = new HttpConnection(handler,"POST", "http://"+ permit_ip +"/sale", params);
 		lt.execute();
+		
+		Log.i("", "Permit IP: "+permit_ip);
 	}
 	
 		
@@ -642,7 +694,7 @@ import com.smk.skalertmessage.SKToastMessage;
 						if(!AgentID.equals("0")){
 							
 							Log.i("", "Enter here + Agent ID: "+AgentID);
-							getServermsg();
+							postSale();
 						}	
 					}else{
 						connectionDetector.showErrorDialog();
@@ -655,7 +707,7 @@ import com.smk.skalertmessage.SKToastMessage;
 			if(v == btn_check_out){
 				if(SelectedSeat.length() != 0){
 					if(connectionDetector.isConnectingToInternet()){
-						getServermsg();
+						postSale();
 					}else{
 						connectionDetector.showErrorDialog();
 					}

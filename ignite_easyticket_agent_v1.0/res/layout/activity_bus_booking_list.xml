@@ -17,20 +17,19 @@
             android:background="@color/golden_brown_light"
             android:orientation="vertical"
             android:padding="5dp" >
-
+
             <com.smk.custom.view.CustomEditText
                 android:id="@+id/auto_txt_codeno"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginRight="105dp"
-                android:hint="Enter Code No."                
-                android:inputType="number" 
-                android:textColor="@color/gray_light"
-                android:maxWidth="300dp"
+                android:background="@drawable/apptheme_edit_text_holo_light"
                 android:ems="10"
-                android:textColorHint="@color/gray"
-                
-                android:background="@drawable/apptheme_edit_text_holo_light">
+                android:hint="Enter Booking Code"
+                android:inputType="number"
+                android:maxWidth="300dp"
+                android:textColor="@color/gray_light"
+                android:textColorHint="@color/gray" >
 				
                 <requestFocus />
             </com.smk.custom.view.CustomEditText>

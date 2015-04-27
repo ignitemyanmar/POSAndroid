@@ -136,8 +136,8 @@ public class UserLogin extends SherlockActivity {
 									startActivity(intent);
 								}else{
 									Log.i("", "Enter here.... home act:");
-									//Intent intent = new Intent(getApplicationContext(),	BusMenuActivity.class);
-									Intent intent = new Intent(getApplicationContext(),	HomeActivity.class);
+									//Intent intent = new Intent(getApplicationContext(),	HomeActivity.class);
+									Intent intent = new Intent(getApplicationContext(),	BusOperatorActivity.class);
 			   						startActivity(intent);
 			   						//finish();
 								}

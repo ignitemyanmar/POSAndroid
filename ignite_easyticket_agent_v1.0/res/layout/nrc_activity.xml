@@ -27,10 +27,10 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:padding="10dp" >
-
+
                 <com.smk.custom.view.CustomTextView
                     android:id="@+id/txt_wifi"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="ဝယ္သူ အမည္"
                     android:textAppearance="?android:attr/textAppearanceMedium" />
@@ -46,10 +46,10 @@
 
                     <requestFocus />
                 </com.smk.custom.view.CustomEditText>
-
+
                 <com.smk.custom.view.CustomTextView
                     android:id="@+id/textView3"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:text="မွတ္ပံုတင္ အမွတ္"
@@ -64,10 +64,10 @@
                     android:ems="10"
                     android:inputType="text"
                     android:singleLine="true" />
-
+
                 <com.smk.custom.view.CustomTextView
                     android:id="@+id/CustomTextView03"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:text="ဖုန္းနံပါတ္"

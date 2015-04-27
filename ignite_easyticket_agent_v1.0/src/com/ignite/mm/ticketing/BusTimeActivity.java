@@ -80,6 +80,8 @@ public class BusTimeActivity extends BaseSherlockActivity {
 	private TextView actionBarTitle2;
 	private List<Time> lst_time;
 	private String permit_access_token;
+	private String permit_ip;
+	private String operator_name;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -134,6 +136,8 @@ public class BusTimeActivity extends BaseSherlockActivity {
 		selectedFrom = bundle.getString("from");
 		selectedTo = bundle.getString("to");
 		selectedDate = bundle.getString("date");
+		permit_ip = bundle.getString("permit_ip");
+		operator_name = bundle.getString("operator_name");
 		
 		SharedPreferences notify = getSharedPreferences("NotifyBooking", Context.MODE_PRIVATE);
 		NotifyBooking = notify.getInt("count", 0);
@@ -142,8 +146,8 @@ public class BusTimeActivity extends BaseSherlockActivity {
 			actionBarNoti.setText(NotifyBooking.toString());
 		}
 		
-		actionBarTitle.setText(selectedFrom+" - "+selectedTo);
-		actionBarTitle2.setText("[ "+changeDate(selectedDate)+" ]");
+		actionBarTitle2.setText(selectedFrom+" - "+selectedTo);
+		actionBarTitle.setText(operator_name+" [ "+changeDate(selectedDate)+" ]");
 		
 		if(connectionDetector.isConnectingToInternet()){
 			mLoadingView.setVisibility(View.VISIBLE);
@@ -217,7 +221,7 @@ public class BusTimeActivity extends BaseSherlockActivity {
 		String param = MCrypt.getInstance().encrypt(SecureParam.getTimesParam(permit_access_token, selectedOperatorId
 				,selectedFromId, selectedToId, selectedDate));
 		
-		//NetworkEngine.setIP(address);
+		NetworkEngine.setIP(permit_ip);
 		NetworkEngine.getInstance().getAllTime(param, new Callback<Response>() {
 				
 			public void failure(RetrofitError arg0) {
@@ -310,6 +314,9 @@ public class BusTimeActivity extends BaseSherlockActivity {
 			bundle.putString("class_id", selectedClasses);
 			bundle.putString("time", selectedTime);
 			bundle.putString("date", selectedDate);
+			bundle.putString("permit_ip", permit_ip);
+			bundle.putString("operator_name", operator_name);
+			
 			startActivity(new Intent(getApplicationContext(), BusSelectSeatActivity.class).putExtras(bundle));
 			
 		}
@@ -333,6 +340,8 @@ public class BusTimeActivity extends BaseSherlockActivity {
 			bundle.putString("class_id", selectedClasses);
 			bundle.putString("time", selectedTime);
 			bundle.putString("date", selectedDate);
+			bundle.putString("permit_ip", permit_ip);
+			bundle.putString("operator_name", operator_name);
 			startActivity(new Intent(getApplicationContext(), BusSelectSeatActivity.class).putExtras(bundle));
 			
 		}

@@ -42,6 +42,10 @@ public class CreditOrder {
 	private Integer amount;
 	@Expose
 	private List<Saleitem> saleitems = new ArrayList<Saleitem>();
+	@Expose
+	private String permit_access_token;
+	@Expose
+	private String permit_ip;
 	
 	public String getId() {
 	return id;
@@ -170,5 +174,38 @@ public class CreditOrder {
 	public void setSaleitems(List<Saleitem> saleitems) {
 	this.saleitems = saleitems;
 	}
+
+	public String getPermit_access_token() {
+		return permit_access_token;
+	}
+
+	public void setPermit_access_token(String permit_access_token) {
+		this.permit_access_token = permit_access_token;
+	}
+	
+	
+
+	public String getPermit_ip() {
+		return permit_ip;
+	}
+
+	public void setPermit_ip(String permit_ip) {
+		this.permit_ip = permit_ip;
+	}
+
+	@Override
+	public String toString() {
+		return "CreditOrder [id=" + id + ", orderdate=" + orderdate
+				+ ", agentId=" + agentId + ", operatorId=" + operatorId
+				+ ", customer=" + customer + ", phone=" + phone + ", operator="
+				+ operator + ", agent=" + agent + ", trip=" + trip + ", time="
+				+ time + ", classes=" + classes + ", date=" + date
+				+ ", totalTicket=" + totalTicket + ", price=" + price
+				+ ", amount=" + amount + ", saleitems=" + saleitems
+				+ ", permit_access_token=" + permit_access_token
+				+ ", permit_ip=" + permit_ip + "]";
+	}
+
+	
 
 }
