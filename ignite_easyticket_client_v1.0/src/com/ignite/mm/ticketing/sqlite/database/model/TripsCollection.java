@@ -13,6 +13,8 @@ public class TripsCollection {
 	@Expose
 	private String to;
 	
+	
+	
 	public TripsCollection(String from_id, String from, String to_id, String to) {
 		super();
 		this.from_id = from_id;
@@ -58,6 +60,4 @@ public class TripsCollection {
 		return "TripsCollection [from_id=" + from_id + ", from=" + from
 				+ ", to_id=" + to_id + ", to=" + to + "]";
 	}
-
-	
 }

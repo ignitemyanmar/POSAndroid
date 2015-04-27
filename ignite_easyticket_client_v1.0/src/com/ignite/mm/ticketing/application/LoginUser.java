@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.Locale;
 
 import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 import android.app.Activity;
 import android.content.Context;
@@ -48,6 +49,32 @@ public class LoginUser {
 	private String NRC;
 	@Expose
 	private String Address;
+	@Expose
+	private String id;
+	@Expose
+	private String name;
+	@Expose
+	private String email;
+	@SerializedName("code_no")
+	@Expose
+	private String codeNo;
+	@Expose
+	private int role;
+	@SerializedName("agentgroup_id")
+	@Expose
+	private int agentgroupId;
+	@SerializedName("group_branch")
+	@Expose
+	private int groupBranch;
+	@SerializedName("access_token")
+	@Expose
+	private String accessToken;
+	@SerializedName("created_at")
+	@Expose
+	private String createdAt;
+	@SerializedName("updated_at")
+	@Expose
+	private String updatedAt;
 	
 
 	public LoginUser(Context ctx){
@@ -61,7 +88,7 @@ public class LoginUser {
 		Expires = pref.getLong("expires", 0);
 		ExpiresIn = pref.getLong("expires_in", 0);
 		RefreshToken = pref.getString("refresh_token", null);
-		UserID = pref.getString("user_id", null);
+		id = pref.getString("user_id", null);
 		UserGroupID = pref.getString("usergroup_id", null);
 		LoginUserID = pref.getString("login_user_id", null);
 		UserName = pref.getString("user_name", null);
@@ -98,18 +125,15 @@ public class LoginUser {
 		editor.commit();
 		
 		editor.putString("access_token", getAccessToken());
-		editor.putString("token_type", getTokenType());
-		editor.putLong("expires", getExpires());
-		editor.putLong("expires_in", getExpiresIn());
-		editor.putString("refresh_token", getRefreshToken());
-		editor.putString("user_id", getUserID());
-		editor.putString("usergroup_id", getUserGroupID());
-		editor.putString("login_user_id", getLoginUserID());
-		editor.putString("user_name", getUserName());
-		editor.putString("user_type", getUserType());
+		editor.putString("user_id", getId());
+		editor.putString("user_name", getName());
 		editor.putString("email", getEmail());
-		editor.putString("NRC", getNRC());
-		editor.putString("Address", getAddress());
+		editor.putString("code_no", getCodeNo());
+		editor.putInt("role", getRole());
+		editor.putInt("agent_group_id", getAgentgroupId());
+		editor.putInt("group_branch", getGroupBranch());
+		editor.putString("create_at", getCreatedAt());
+		editor.putString("update_at", getUpdatedAt());
 		
 		editor.commit();
 	}
@@ -275,6 +299,80 @@ public class LoginUser {
 	public void setAddress(String address) {
 		Address = address;
 	}
+	
+	
+
+	public Context getCtx() {
+		return ctx;
+	}
+
+	public void setCtx(Context ctx) {
+		this.ctx = ctx;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getCodeNo() {
+		return codeNo;
+	}
+
+	public void setCodeNo(String codeNo) {
+		this.codeNo = codeNo;
+	}
+
+	public int getRole() {
+		return role;
+	}
+
+	public void setRole(int role) {
+		this.role = role;
+	}
+
+	public int getAgentgroupId() {
+		return agentgroupId;
+	}
+
+	public void setAgentgroupId(int agentgroupId) {
+		this.agentgroupId = agentgroupId;
+	}
+
+	public int getGroupBranch() {
+		return groupBranch;
+	}
+
+	public void setGroupBranch(int groupBranch) {
+		this.groupBranch = groupBranch;
+	}
+
+	public String getCreatedAt() {
+		return createdAt;
+	}
+
+	public void setCreatedAt(String createdAt) {
+		this.createdAt = createdAt;
+	}
+
+	public String getUpdatedAt() {
+		return updatedAt;
+	}
+
+	public void setUpdatedAt(String updatedAt) {
+		this.updatedAt = updatedAt;
+	}
 
 	@Override
 	public String toString() {
@@ -285,6 +383,10 @@ public class LoginUser {
 				+ LoginUserID + ", UserName=" + UserName + ", UserType="
 				+ UserType + ", TodayString=" + TodayString + ", TodayLong="
 				+ TodayLong + ", ctx=" + ctx + ", Email=" + Email + ", NRC="
-				+ NRC + ", Address=" + Address + "]";
+				+ NRC + ", Address=" + Address + ", id=" + id + ", name="
+				+ name + ", email=" + email + ", codeNo=" + codeNo + ", role="
+				+ role + ", agentgroupId=" + agentgroupId + ", groupBranch="
+				+ groupBranch + ", accessToken=" + accessToken + ", createdAt="
+				+ createdAt + ", updatedAt=" + updatedAt + "]";
 	}
 }

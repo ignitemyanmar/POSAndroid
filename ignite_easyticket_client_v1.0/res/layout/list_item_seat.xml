@@ -10,11 +10,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="2dp" >
-
+
         <CheckBox
             android:id="@+id/chk_seat"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_centerInParent="true"
             android:button="@drawable/rdo_shape_0"
             android:gravity="center_vertical|center_horizontal" />
@@ -25,11 +25,11 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:textColor="#FFFFFF" />
-
+
         <RelativeLayout
             android:id="@+id/layout_customer_info"
-            android:layout_width="120dp"
-            android:layout_height="match_parent"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_centerInParent="true"
             android:background="@android:color/transparent"
             android:orientation="vertical"
@@ -89,10 +89,10 @@
                     android:textColor="@color/white" />
 
             </LinearLayout>
-
+
             <TextView
                 android:id="@+id/txt_seating_no"
-                android:layout_width="32dp"
+                android:layout_width="30dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentRight="true"
@@ -102,7 +102,7 @@
                 android:text="A-1"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textColor="@color/white"
-                android:textSize="16dp" />
+                android:textSize="10dp" />
 
         </RelativeLayout>
 

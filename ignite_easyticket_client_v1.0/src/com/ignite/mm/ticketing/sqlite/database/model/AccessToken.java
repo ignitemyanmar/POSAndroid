@@ -1,68 +1,216 @@
 package com.ignite.mm.ticketing.sqlite.database.model;
 
 import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 public class AccessToken {
+
+@Expose
+private String id;
+@Expose
+private String name;
+@Expose
+private String email;
+@SerializedName("code_no")
+@Expose
+private String codeNo;
+@Expose
+private int role;
+@SerializedName("agentgroup_id")
+@Expose
+private int agentgroupId;
+@SerializedName("group_branch")
+@Expose
+private int groupBranch;
+@SerializedName("access_token")
+@Expose
+private String accessToken;
+@SerializedName("created_at")
+@Expose
+private String createdAt;
+
+@SerializedName("updated_at")
+@Expose
+private String updatedAt;
+
+	/**
+	* 
+	* @return
+	* The id
+	*/
+	public String getId() {
+	return id;
+	}
 	
-	@Expose
-	private String access_token;
-	@Expose
-	private String token_type;
-	@Expose
-	private Integer expires;
-	@Expose
-	private Integer expires_in;
-	@Expose
-	private String refresh_token;
-	@Expose
-	private User user;
-
-	public String getAccess_token() {
-	return access_token;
+	/**
+	* 
+	* @param id
+	* The id
+	*/
+	public void setId(String id) {
+	this.id = id;
 	}
-
-	public void setAccess_token(String access_token) {
-	this.access_token = access_token;
+	
+	/**
+	* 
+	* @return
+	* The name
+	*/
+	public String getName() {
+	return name;
 	}
-
-	public String getToken_type() {
-	return token_type;
+	
+	/**
+	* 
+	* @param name
+	* The name
+	*/
+	public void setName(String name) {
+	this.name = name;
 	}
-
-	public void setToken_type(String token_type) {
-	this.token_type = token_type;
+	
+	/**
+	* 
+	* @return
+	* The email
+	*/
+	public String getEmail() {
+	return email;
 	}
-
-	public Integer getExpires() {
-	return expires;
+	
+	/**
+	* 
+	* @param email
+	* The email
+	*/
+	public void setEmail(String email) {
+	this.email = email;
 	}
-
-	public void setExpires(Integer expires) {
-	this.expires = expires;
+	
+	/**
+	* 
+	* @return
+	* The codeNo
+	*/
+	public String getCodeNo() {
+	return codeNo;
 	}
-
-	public Integer getExpires_in() {
-	return expires_in;
+	
+	/**
+	* 
+	* @param codeNo
+	* The code_no
+	*/
+	public void setCodeNo(String codeNo) {
+	this.codeNo = codeNo;
 	}
-
-	public void setExpires_in(Integer expires_in) {
-	this.expires_in = expires_in;
+	
+	/**
+	* 
+	* @return
+	* The role
+	*/
+	public int getRole() {
+	return role;
 	}
-
-	public String getRefresh_token() {
-	return refresh_token;
+	
+	/**
+	* 
+	* @param role
+	* The role
+	*/
+	public void setRole(int role) {
+	this.role = role;
 	}
-
-	public void setRefresh_token(String refresh_token) {
-	this.refresh_token = refresh_token;
+	
+	/**
+	* 
+	* @return
+	* The agentgroupId
+	*/
+	public int getAgentgroupId() {
+	return agentgroupId;
 	}
-
-	public User getUser() {
-	return user;
+	
+	/**
+	* 
+	* @param agentgroupId
+	* The agentgroup_id
+	*/
+	public void setAgentgroupId(int agentgroupId) {
+	this.agentgroupId = agentgroupId;
 	}
-
-	public void setUser(User user) {
-	this.user = user;
+	
+	/**
+	* 
+	* @return
+	* The groupBranch
+	*/
+	public int getGroupBranch() {
+	return groupBranch;
+	}
+	
+	/**
+	* 
+	* @param groupBranch
+	* The group_branch
+	*/
+	public void setGroupBranch(int groupBranch) {
+	this.groupBranch = groupBranch;
+	}
+	
+	/**
+	* 
+	* @return
+	* The accessToken
+	*/
+	public String getAccessToken() {
+	return accessToken;
+	}
+	
+	/**
+	* 
+	* @param accessToken
+	* The access_token
+	*/
+	public void setAccessToken(String accessToken) {
+	this.accessToken = accessToken;
+	}
+	
+	/**
+	* 
+	* @return
+	* The createdAt
+	*/
+	public String getCreatedAt() {
+	return createdAt;
+	}
+	
+	/**
+	* 
+	* @param createdAt
+	* The created_at
+	*/
+	public void setCreatedAt(String createdAt) {
+	this.createdAt = createdAt;
+	}
+	
+	/**
+	* 
+	* @return
+	* The updatedAt
+	*/
+	public String getUpdatedAt() {
+	return updatedAt;
+	}
+	
+	/**
+	* 
+	* @param updatedAt
+	* The updated_at
+	*/
+	public void setUpdatedAt(String updatedAt) {
+	this.updatedAt = updatedAt;
 	}
 
 }

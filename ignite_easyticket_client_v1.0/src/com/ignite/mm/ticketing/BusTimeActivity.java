@@ -31,7 +31,11 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
 
 import com.actionbarsherlock.app.ActionBar;
+import com.google.gson.reflect.TypeToken;
 import com.ignite.mm.ticketing.application.BaseSherlockActivity;
+import com.ignite.mm.ticketing.application.DecompressGZIP;
+import com.ignite.mm.ticketing.application.MCrypt;
+import com.ignite.mm.ticketing.application.SecureParam;
 import com.ignite.mm.ticketing.clientapi.NetworkEngine;
 import com.ignite.mm.ticketing.connection.detector.ConnectionDetector;
 import com.ignite.mm.ticketing.custom.listview.adapter.OperatorListAdapter;
@@ -74,6 +78,10 @@ public class BusTimeActivity extends BaseSherlockActivity {
 	private Integer NotifyBooking;
 	protected String selectedClasses;
 	private TextView actionBarTitle2;
+	private List<Time> lst_time;
+	private String permit_access_token;
+	private String permit_ip;
+	private String operator_name;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -121,34 +129,42 @@ public class BusTimeActivity extends BaseSherlockActivity {
 		//date.setOnClickListener(clickListener);
 		
 		Bundle bundle = getIntent().getExtras();
+		permit_access_token = bundle.getString("permit_access_token");
 		selectedOperatorId = bundle.getString("operator_id");
 		selectedFromId = bundle.getString("from_id");
 		selectedToId = bundle.getString("to_id");
 		selectedFrom = bundle.getString("from");
 		selectedTo = bundle.getString("to");
 		selectedDate = bundle.getString("date");
+		permit_ip = bundle.getString("permit_ip");
+		operator_name = bundle.getString("operator_name");
 		
 		SharedPreferences notify = getSharedPreferences("NotifyBooking", Context.MODE_PRIVATE);
 		NotifyBooking = notify.getInt("count", 0);
 		if(NotifyBooking > 0){
-			//actionBarNoti.setVisibility(View.VISIBLE);
+			actionBarNoti.setVisibility(View.GONE);
 			actionBarNoti.setText(NotifyBooking.toString());
 		}
 		
-		actionBarTitle.setText(selectedFrom+" - "+selectedTo);
-		actionBarTitle2.setText("[ "+changeDate(selectedDate)+" ]");
+		actionBarTitle2.setText(selectedFrom+" - "+selectedTo);
+		actionBarTitle.setText(operator_name+" [ "+changeDate(selectedDate)+" ]");
 		
 		if(connectionDetector.isConnectingToInternet()){
 			mLoadingView.setVisibility(View.VISIBLE);
 			mLoadingView.startAnimation(topInAnimaiton());
 			
 			SharedPreferences pref = getSharedPreferences("User", Activity.MODE_PRIVATE);
-			String user_id = pref.getString("user_id", null);
-			String user_type = pref.getString("user_type", null);
+			//String user_id = pref.getString("user_id", null);
+			//String user_type = pref.getString("user_type", null);
 			
-			Log.i("", "User Type for Time: "+user_type);
+			//Log.i("", "User Type for Time: "+user_type);
 			
-			if(user_type.equals("Agent")){
+			txt_operator.setVisibility(View.GONE);
+			layout_operator.setVisibility(View.GONE);
+			
+			getTime();
+			
+			/*if(user_type.equals("Agent")){
 				
 				txt_operator.setVisibility(View.GONE);
 				layout_operator.setVisibility(View.GONE);
@@ -159,7 +175,7 @@ public class BusTimeActivity extends BaseSherlockActivity {
 			}else{
 				getOperator();
 				operator.setOnItemSelectedListener(operatorClickListener);
-			}
+			}*/
 		}else{
 			mNoConnection.setVisibility(View.VISIBLE);
 			mNoConnection.startAnimation(topInAnimaiton());
@@ -199,70 +215,81 @@ public class BusTimeActivity extends BaseSherlockActivity {
 		/*SharedPreferences pref = getSharedPreferences("User", Activity.MODE_PRIVATE);
 		final String accessToken = pref.getString("access_token", null);*/
 		
-		Log.i("", "AccessToken: "+AppLoginUser.getAccessToken()+", OperatorID: "+selectedOperatorId
+		Log.i("", "Permit Access Token: "+permit_access_token+", OperatorID: "+selectedOperatorId
 				+", FromID: "+selectedFromId+", ToID: "+selectedToId+", Date: "+selectedDate);
 		
-		NetworkEngine.getInstance().getAllTime(AppLoginUser.getAccessToken(), selectedOperatorId
-				,selectedFromId, selectedToId, selectedDate, new Callback<List<Time>>() {
+		String param = MCrypt.getInstance().encrypt(SecureParam.getTimesParam(permit_access_token, selectedOperatorId
+				,selectedFromId, selectedToId, selectedDate));
+		
+		NetworkEngine.setIP(permit_ip);
+		NetworkEngine.getInstance().getAllTime(param, new Callback<Response>() {
 				
-			public void success(List<Time> arg0, Response arg1) {
+			public void failure(RetrofitError arg0) {
 				
-				Log.i("", "accessToken: "+AppLoginUser.getAccessToken()+", selectedOperatorId: "
+				Log.i("", "Fail Time - accessToken: "+permit_access_token+", selectedOperatorId: "
+				+selectedOperatorId+", selectedFromId: "+selectedFromId+", selectedToId: "+selectedToId+", selectedDate: "+selectedDate);
+				
+				//TODO Auto-generated method stub
+				//OAuth2Error error = (OAuth2Error) arg0.getBodyAs(OAuth2Error.class);
+				//Log.i("","Hello Error Response Code : "+arg0.getResponse().getStatus());
+				/*Log.i("","Hello Error : "+arg0.getError());
+				Log.i("","Hello Error Desc : "+arg0.getError_description());*/
+			}
+			public void success(Response arg0, Response arg1) {
+				// TODO Auto-generated method stub
+				Log.i("", "Success Time ==> accessToken: "+permit_access_token+", selectedOperatorId: "
 						+selectedOperatorId+", selectedFromId: "+selectedFromId+", selectedToId: "+selectedToId+", selectedDate: "+selectedDate);
 				
 				// TODO Auto-generated method stub
 				time_morning_list = new ArrayList<Time>();
 				time_evening_list = new ArrayList<Time>();
 				
-				for(Time time: arg0){
-					//String timeStr = time.getTime().replaceAll(" ", "").toLowerCase();
-					//String timeTypeStr = timeStr.substring(timeStr.length() - 2, timeStr.length());
+				if (arg0 != null) {
 					
-					if(time.getTime().toLowerCase().contains("am")){
-						time_morning_list.add(time);
-					}else{
-						time_evening_list.add(time);
+					lst_time = DecompressGZIP.fromBody(arg0.getBody(), new TypeToken<List<Time>>(){}.getType());
+					
+					if (lst_time != null && lst_time.size() > 0) {
+						
+						for(Time time: lst_time){
+							//String timeStr = time.getTime().replaceAll(" ", "").toLowerCase();
+							//String timeTypeStr = timeStr.substring(timeStr.length() - 2, timeStr.length());
+							
+							if(time.getTime().toLowerCase().contains("am")){
+								time_morning_list.add(time);
+							}else{
+								time_evening_list.add(time);
+							}
+						}
+						
+						Log.i("", "Time morning list: "+time_morning_list.toString());
+						Log.i("", "Time evening list: "+time_evening_list.toString());
+						
+						lst_morning_time.setAdapter(new TimeAdapter(BusTimeActivity.this, time_morning_list));
+						setListViewHeightBasedOnChildren(lst_morning_time);
+						
+						lst_evening_time.setAdapter(new TimeAdapter(BusTimeActivity.this, time_evening_list));
+						setListViewHeightBasedOnChildren(lst_evening_time);				
+						
+						mLoadingView.setVisibility(View.GONE);
+						mLoadingView.startAnimation(topOutAnimaiton());
+						
+						if(time_morning_list.size() == 0 && time_evening_list.size() == 0){
+							
+							AlertDialog.Builder alertDialog = new AlertDialog.Builder(BusTimeActivity.this);
+							alertDialog.setTitle("Info");
+							alertDialog.setMessage("There is no trip yet.");
+							alertDialog.setCancelable(true);
+		/*					alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+								
+								public void onClick(DialogInterface dialog, int which) {
+									// TODO Auto-generated method stub
+									finish();
+								}
+							});*/
+							alertDialog.show();
+						}
 					}
 				}
-				
-				Log.i("", "Time morning list: "+time_morning_list.toString());
-				Log.i("", "Time evening list: "+time_evening_list.toString());
-				
-				lst_morning_time.setAdapter(new TimeAdapter(BusTimeActivity.this, time_morning_list));
-				setListViewHeightBasedOnChildren(lst_morning_time);
-				
-				lst_evening_time.setAdapter(new TimeAdapter(BusTimeActivity.this, time_evening_list));
-				setListViewHeightBasedOnChildren(lst_evening_time);				
-				
-				mLoadingView.setVisibility(View.GONE);
-				mLoadingView.startAnimation(topOutAnimaiton());
-				
-				if(time_morning_list.size() == 0 && time_evening_list.size() == 0){
-					
-					AlertDialog.Builder alertDialog = new AlertDialog.Builder(BusTimeActivity.this);
-					alertDialog.setTitle("Info");
-					alertDialog.setMessage("There is no trip yet.");
-					alertDialog.setCancelable(true);
-/*					alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
-						
-						public void onClick(DialogInterface dialog, int which) {
-							// TODO Auto-generated method stub
-							finish();
-						}
-					});*/
-					alertDialog.show();
-				}
-			}
-			public void failure(RetrofitError arg0) {
-				
-				Log.i("", "accessToken: "+AppLoginUser.getAccessToken()+", selectedOperatorId: "
-				+selectedOperatorId+", selectedFromId: "+selectedFromId+", selectedToId: "+selectedToId+", selectedDate: "+selectedDate);
-				
-				//TODO Auto-generated method stub
-				//OAuth2Error error = (OAuth2Error) arg0.getBodyAs(OAuth2Error.class);
-				Log.i("","Hello Error Response Code : "+arg0.getResponse().getStatus());
-				/*Log.i("","Hello Error : "+arg0.getError());
-				Log.i("","Hello Error Desc : "+arg0.getError_description());*/
 			}
 		});
 		
@@ -277,6 +304,7 @@ public class BusTimeActivity extends BaseSherlockActivity {
 			selectedClasses = time_morning_list.get(arg2).getClass_id();
 			
 			Bundle bundle = new Bundle();
+			bundle.putString("permit_access_token", permit_access_token);
 	        bundle.putString("agent_id", selectedAgentId);
 			bundle.putString("operator_id", selectedOperatorId);
 			bundle.putString("from_city_id", selectedFromId);
@@ -286,6 +314,9 @@ public class BusTimeActivity extends BaseSherlockActivity {
 			bundle.putString("class_id", selectedClasses);
 			bundle.putString("time", selectedTime);
 			bundle.putString("date", selectedDate);
+			bundle.putString("permit_ip", permit_ip);
+			bundle.putString("operator_name", operator_name);
+			
 			startActivity(new Intent(getApplicationContext(), BusSelectSeatActivity.class).putExtras(bundle));
 			
 		}
@@ -299,6 +330,7 @@ public class BusTimeActivity extends BaseSherlockActivity {
 			selectedTime = time_evening_list.get(arg2).getTime();
 			selectedClasses = time_evening_list.get(arg2).getClass_id();
 			Bundle bundle = new Bundle();
+			bundle.putString("permit_access_token", permit_access_token);
 	        bundle.putString("agent_id", selectedAgentId);
 			bundle.putString("operator_id", selectedOperatorId);
 			bundle.putString("from_city_id", selectedFromId);
@@ -308,6 +340,8 @@ public class BusTimeActivity extends BaseSherlockActivity {
 			bundle.putString("class_id", selectedClasses);
 			bundle.putString("time", selectedTime);
 			bundle.putString("date", selectedDate);
+			bundle.putString("permit_ip", permit_ip);
+			bundle.putString("operator_name", operator_name);
 			startActivity(new Intent(getApplicationContext(), BusSelectSeatActivity.class).putExtras(bundle));
 			
 		}
@@ -336,15 +370,9 @@ public class BusTimeActivity extends BaseSherlockActivity {
 		SharedPreferences pref = getSharedPreferences("User", Activity.MODE_PRIVATE);
 		String accessToken = pref.getString("access_token", null);
 		
-		NetworkEngine.getInstance().getAllOperators(accessToken, new Callback<Operators>() {
-	
-			public void success(Operators arg0, Response arg1) {
-				// TODO Auto-generated method stub
-				operatorList = arg0;
-				operators = new ArrayList<Operator>();
-				operators.addAll(operatorList.getOperators());
-				operator.setAdapter(new OperatorListAdapter(BusTimeActivity.this, operators));
-			}
+		//String param = MCrypt.getInstance().encrypt(SecureParam.getAllOperatorsParam(AppLoginUser.getAccessToken()));				
+		
+		NetworkEngine.getInstance().getAllOperator(AppLoginUser.getAccessToken(), new Callback<List<Operator>>() {
 			
 			public void failure(RetrofitError arg0) {
 				// TODO Auto-generated method stub
@@ -352,6 +380,16 @@ public class BusTimeActivity extends BaseSherlockActivity {
 				Log.i("","Hello Error Response Code : "+arg0.getResponse().getStatus());
 				Log.i("","Hello Error : "+error.getError());
 				Log.i("","Hello Error Desc : "+error.getError_description());
+			}
+
+			public void success(List<Operator> arg0, Response arg1) {
+				// TODO Auto-generated method stub
+				if (arg0 != null) {
+					
+					Log.i("", "Operator List: "+arg0.toString());
+					
+					operator.setAdapter(new OperatorListAdapter(BusTimeActivity.this, arg0));
+				}
 			}
 		});
 	}
@@ -370,7 +408,7 @@ public class BusTimeActivity extends BaseSherlockActivity {
 				editor.commit();
 				editor.putString("order_date", getToday());
 				editor.commit();
-	        	startActivity(new Intent(getApplicationContext(),	BusBookingListActivity.class));
+	        	startActivity(new Intent(getApplicationContext(), BusBookingListActivity.class));
 			}
 		}
 		

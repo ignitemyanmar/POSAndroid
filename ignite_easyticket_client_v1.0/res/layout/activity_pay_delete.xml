@@ -19,7 +19,7 @@
             android:layout_height="80dp"
             android:layout_marginTop="10dp"
             android:background="@drawable/btn_green"
-            android:text="Booking Confirm"
+            android:text="Booking Confirm လုပ္မည္"
             android:textColor="@color/white" />
 
         <com.smk.custom.view.CustomButton
@@ -27,9 +27,10 @@
             android:layout_width="match_parent"
             android:layout_height="80dp"
             android:layout_marginTop="15dp"
-            android:background="@drawable/btn_orange"
-            android:text="Booking ဖ်တ္မည္"
-            android:textColor="@color/white" />
+            android:background="@drawable/btn_gray"
+            android:text="Booking ဖ်က္ မည္"
+            android:textColor="@color/white"
+            android:visibility="invisible" />
     </LinearLayout>
 
     <com.smk.custom.view.CustomButton
@@ -40,8 +41,8 @@
         android:layout_alignParentRight="true"
         android:layout_marginBottom="20dp"
         android:layout_marginTop="20dp"
-        android:background="@drawable/btn_blue"
-        android:text="ေနာက္သို႕"
+        android:background="@drawable/btn_gold"
+        android:text="&lt;&lt; ေနာက္သို႕"
         android:textColor="@color/white" />
 
 </RelativeLayout>

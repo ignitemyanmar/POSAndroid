@@ -1,0 +1,87 @@
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/LinearLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:background="@drawable/app_background"
+        android:gravity="center"
+        android:orientation="vertical" >
+
+        <ScrollView
+            android:id="@+id/scrollView1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_horizontal|center_vertical"
+                android:orientation="vertical" >
+
+
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:background="@drawable/border_radius"
+                    android:minWidth="320dp"
+                    android:orientation="vertical"
+                    android:padding="30dp" >
+
+                    <com.smk.custom.view.CustomTextView
+                        android:id="@+id/CustomTextView1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="လက္ မွတ္ ေရာင္းမည္"
+                        android:textColor="@color/gray"
+                        android:textSize="16dp" />
+
+                    <Button
+                        android:id="@+id/btn_sale_tickets"
+                        android:layout_width="fill_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginBottom="20dp"
+                        android:layout_marginTop="5dp"
+                        android:background="@drawable/btn_gold"
+                        android:maxWidth="300dp"
+                        android:shadowColor="@color/orange"
+                        android:shadowDx="1"
+                        android:shadowDy="1"
+                        android:shadowRadius="5"
+                        android:text="Sale Tickets"
+                        android:textColor="@color/white"
+                        android:textSize="18dp" />
+
+                    <com.smk.custom.view.CustomTextView
+                        android:id="@+id/txt_notrip"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Booking မ်ားကုိ Confirm လုပ္ မည္"
+                        android:textColor="@color/gray"
+                        android:textSize="16dp" />
+
+                    <Button
+                        android:id="@+id/btn_book_confirm"
+                        android:layout_width="fill_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginTop="5dp"
+                        android:background="@drawable/btn_gold"
+                        android:maxWidth="300dp"
+                        android:text="Reservation Confirm"
+                        android:textColor="@color/white"
+                        android:textSize="18dp" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </ScrollView>
+
+</LinearLayout>
+    
+    
+
+

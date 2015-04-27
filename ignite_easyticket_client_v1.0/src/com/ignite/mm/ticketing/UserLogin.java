@@ -27,6 +27,7 @@ public class UserLogin extends SherlockActivity {
 
 	private EditText txtEmail;
 	private EditText txtPassword;
+	
 	private Context ctx = this;
 	private Button[] buttons = new Button[3];
 	private ProgressDialog dialog;
@@ -59,7 +60,7 @@ public class UserLogin extends SherlockActivity {
 		txtEmail = (EditText) this.findViewById(R.id.txt_login_email);
 		txtPassword = (EditText) this.findViewById(R.id.txt_login_password);
 
-		buttons[0] = (Button) findViewById(R.id.cmd_login);
+		buttons[0] = (Button) findViewById(R.id.btn_login);
 		buttons[1] = (Button) findViewById(R.id.btn_skip_login);
 		buttons[2] = (Button) findViewById(R.id.btn_register);
 
@@ -98,30 +99,34 @@ public class UserLogin extends SherlockActivity {
 		    				userEmail = txtEmail.getText().toString()+"@gmail.com";
 		    			}
 		    			
+		    			Log.i("", "Enter here..... log in");
 		    			//Check Email & Password on Server
-						NetworkEngine.getInstance().getAccessToken("password", "721685", "IgniteAdmin721685", userEmail, txtPassword.getText().toString(), "admin, sale, booking", "123456789", new Callback<AccessToken>() {
+		    			
+		    			NetworkEngine.setIP("app.easyticket.com.mm");
+						NetworkEngine.getInstance().getAccessToken("password", "clientID22222", "scrt123321098765432", userEmail, txtPassword.getText().toString(), "", "", new Callback<AccessToken>() {
 							
 							public void success(AccessToken arg0, Response arg1) {
 								// TODO Auto-generated method stub
 								dialog.dismiss();
+								
+								Log.i("", "Log in Success: "+arg0.toString());
 		   						
 								if (arg1.getStatus() == 200) {
 									if (arg0 != null) {
 										LoginUser user = new LoginUser(UserLogin.this);
-										user.setAccessToken(arg0.getAccess_token());
-										user.setTokenType(arg0.getToken_type());
-										user.setExpires(arg0.getExpires());
-										user.setExpiresIn(arg0.getExpires_in());
-										user.setRefreshToken(arg0.getRefresh_token());
-										user.setUserID(arg0.getUser().getId());
-										user.setUserGroupID(arg0.getUser().getOperatorgroup_id());
-										user.setLoginUserID(arg0.getUser().getUser_id());
-										user.setUserName(arg0.getUser().getName());
-										user.setUserType(arg0.getUser().getType());
+										user.setId(arg0.getId());
+										user.setName(arg0.getName());
+										user.setEmail(arg0.getEmail());
+										user.setCodeNo(arg0.getCodeNo());
+										user.setRole(arg0.getRole());
+										user.setAgentgroupId(arg0.getAgentgroupId());
+										user.setGroupBranch(arg0.getGroupBranch());
+										user.setAccessToken(arg0.getAccessToken());
+										user.setCreatedAt(arg0.getCreatedAt());
+										user.setUpdatedAt(arg0.getUpdatedAt());
 										user.login();
-									}else {
-										Log.i("", "Null !!");
 									}
+									//startActivity(new Intent(UserLogin.this, BusOperatorActivity.class));
 								}
 
 								if(isSkip){
@@ -130,15 +135,17 @@ public class UserLogin extends SherlockActivity {
 									finish();
 									startActivity(intent);
 								}else{
-									//Intent intent = new Intent(getApplicationContext(),	BusMenuActivity.class);
+									Log.i("", "Enter here.... home act:");
+									//Intent intent = new Intent(getApplicationContext(),	HomeActivity.class);
 									Intent intent = new Intent(getApplicationContext(),	BusOperatorActivity.class);
 			   						startActivity(intent);
-			   						finish();
+			   						//finish();
 								}
 							}
 							
 							public void failure(RetrofitError arg0) {
 								// TODO Auto-generated method stub
+								Log.i("", "Enter here... log in fail: "+arg0.getCause());
 								dialog.dismiss();
 								if(arg0.getResponse() != null){
 									if(arg0.getResponse().getStatus() == 400){
@@ -201,11 +208,11 @@ public class UserLogin extends SherlockActivity {
 	
 	public boolean checkFields() {
 		if (txtEmail.getText().toString().length() == 0) {
-			txtEmail.setError("Enter The User Email");
+			txtEmail.setError("Enter Your Email");
 			return false;
 		}
 		if (txtPassword.getText().toString().length() == 0) {
-			txtPassword.setError("Enter The User Password");
+			txtPassword.setError("Enter Your Password");
 			return false;
 		}
 

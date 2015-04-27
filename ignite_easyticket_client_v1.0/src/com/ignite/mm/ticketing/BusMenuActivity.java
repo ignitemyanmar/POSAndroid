@@ -225,7 +225,7 @@ public class BusMenuActivity extends BaseSherlockActivity {
 	
 	private void getNotiBooking(){
 		
-		NetworkEngine.getInstance().getNotiBooking(AppLoginUser.getAccessToken(), getToday() , new Callback<Integer>() {
+/*		NetworkEngine.getInstance().getNotiBooking(AppLoginUser.getAccessToken(), getToday() , new Callback<Integer>() {
 			
 			public void success(Integer arg0, Response arg1) {
 				// TODO Auto-generated method stub
@@ -248,6 +248,6 @@ public class BusMenuActivity extends BaseSherlockActivity {
 				// TODO Auto-generated method stub
 				
 			}
-		});
+		});*/
 	}
 }

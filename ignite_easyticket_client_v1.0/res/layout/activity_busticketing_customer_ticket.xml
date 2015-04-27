@@ -76,18 +76,16 @@
         android:layout_height="50dp"
         android:layout_alignParentBottom="true"
         android:background="@color/dark_blue"
-        android:gravity="center_vertical"
+        android:gravity="center"
         android:orientation="vertical" >
 
         <com.smk.custom.view.CustomButton
             android:id="@+id/btn_cancel"
             style="?android:attr/buttonStyleSmall"
-            android:layout_width="100dp"
+            android:layout_width="200dp"
             android:layout_height="40dp"
-            android:layout_gravity="right"
-            android:layout_marginRight="5dp"
-            android:background="@drawable/btn_orange"
-            android:text="ဖ်တ္မည္"
+            android:background="@drawable/btn_gold_light"
+            android:text="ဖ်က္ မည္"
             android:textColor="@color/white" />
 
     </LinearLayout>

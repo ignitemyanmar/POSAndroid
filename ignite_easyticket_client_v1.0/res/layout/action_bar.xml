@@ -35,7 +35,7 @@
             android:layout_toRightOf="@id/back_layout"
             android:orientation="vertical" >
 
-            <TextView
+            <com.smk.custom.view.CustomTextView
                 android:id="@+id/action_bar_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -44,9 +44,10 @@
                 android:textColor="@color/white"
                 android:textSize="18dp"
                 android:textStyle="bold"
+                android:singleLine="true"
                 android:typeface="sans" />
 
-            <TextView
+            <com.smk.custom.view.CustomTextView
                 android:id="@+id/action_bar_title2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -55,11 +56,12 @@
                 android:textColor="@color/white"
                 android:textSize="18dp"
                 android:textStyle="bold"
+                android:singleLine="true"
                 android:typeface="sans" />
 
         </LinearLayout>
 
-        <TextView
+        <com.smk.custom.view.CustomTextView
             android:id="@+id/txt_notify_booking"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -73,6 +75,26 @@
             android:textStyle="bold"
             android:typeface="sans"
             android:visibility="gone" />
+
+        <LinearLayout
+            android:id="@+id/img_print_layout"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="15dp"
+            android:background="@drawable/bg_blue"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="gone" >
+
+            <ImageView
+                android:id="@+id/img_print"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/print_icon"
+                 />
+
+        </LinearLayout>
 
     </RelativeLayout>
 

@@ -19,12 +19,20 @@ public class AllBusObject {
 	private String currentTime;
 	private String Barcode;
 	private Bitmap barcode_img;
+	private String CustomerName;
+	private String phone;
+	private String ticketNo;
+	private String seatCount;
+	private Integer discount;
+	private Integer amount;
 
+	
 	public AllBusObject(String trip, String date, String operatorID,
 			String operatorName, String time, String seatID, String seatNo,
 			String price, String status, String userName, String busClass,
 			String todayDate, String currentTime, String barcode,
-			Bitmap barcode_img) {
+			Bitmap barcode_img, String customerName, String phone,
+			String ticketNo, String seatCount, Integer discount, Integer amount) {
 		super();
 		Trip = trip;
 		Date = date;
@@ -41,6 +49,36 @@ public class AllBusObject {
 		this.currentTime = currentTime;
 		Barcode = barcode;
 		this.barcode_img = barcode_img;
+		CustomerName = customerName;
+		this.phone = phone;
+		this.ticketNo = ticketNo;
+		this.seatCount = seatCount;
+		this.discount = discount;
+		this.amount = amount;
+	}
+
+	public AllBusObject(String trip, String date, String operatorID,
+			String operatorName, String time, String seatID, String seatNo,
+			String price, String status, String userName, String busClass,
+			String todayDate, String currentTime, String barcode,
+			Bitmap barcode_img, String customerName) {
+		super();
+		Trip = trip;
+		Date = date;
+		OperatorID = operatorID;
+		OperatorName = operatorName;
+		Time = time;
+		SeatID = seatID;
+		SeatNo = seatNo;
+		Price = price;
+		Status = status;
+		UserName = userName;
+		BusClass = busClass;
+		this.todayDate = todayDate;
+		this.currentTime = currentTime;
+		Barcode = barcode;
+		this.barcode_img = barcode_img;
+		CustomerName = customerName;
 	}
 	
 	public AllBusObject(String trip, String date, String operatorID,
@@ -165,6 +203,57 @@ public class AllBusObject {
 		this.barcode_img = barcode_img;
 	}
 
+	
+	public String getCustomerName() {
+		return CustomerName;
+	}
+
+	public void setCustomerName(String customerName) {
+		CustomerName = customerName;
+	}
+	
+	
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	public String getTicketNo() {
+		return ticketNo;
+	}
+
+	public void setTicketNo(String ticketNo) {
+		this.ticketNo = ticketNo;
+	}
+
+	public String getSeatCount() {
+		return seatCount;
+	}
+
+	public void setSeatCount(String seatCount) {
+		this.seatCount = seatCount;
+	}
+
+	public Integer getDiscount() {
+		return discount;
+	}
+
+	public void setDiscount(Integer discount) {
+		this.discount = discount;
+	}
+
+	public Integer getAmount() {
+		return amount;
+	}
+
+	public void setAmount(Integer amount) {
+		this.amount = amount;
+	}
+
 	@Override
 	public String toString() {
 		return "AllBusObject [Trip=" + Trip + ", Date=" + Date
@@ -173,9 +262,9 @@ public class AllBusObject {
 				+ ", SeatNo=" + SeatNo + ", Price=" + Price + ", Status="
 				+ Status + ", UserName=" + UserName + ", BusClass=" + BusClass
 				+ ", todayDate=" + todayDate + ", currentTime=" + currentTime
-				+ ", Barcode=" + Barcode + "]";
+				+ ", Barcode=" + Barcode + ", barcode_img=" + barcode_img
+				+ ", CustomerName=" + CustomerName + ", phone=" + phone
+				+ ", ticketNo=" + ticketNo + ", seatCount=" + seatCount
+				+ ", discount=" + discount + ", amount=" + amount + "]";
 	}
-
-	
-
 }

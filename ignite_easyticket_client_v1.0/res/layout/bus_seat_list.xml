@@ -79,13 +79,14 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingRight="5dp" >
+                    android:padding="5dp" >
 
                     <LinearLayout
-                        android:layout_width="160dp"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:orientation="vertical"
+                        android:layout_weight="50"
                         android:padding="0dp" >
 
                         <LinearLayout
@@ -181,6 +182,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
+                         android:layout_weight="50"
                         android:padding="5dp" >
 
                         <com.smk.custom.view.CustomTextView
@@ -238,8 +240,9 @@
                             android:layout_width="match_parent"
                             android:layout_height="50dp"
                             android:layout_marginTop="50dp"
+                            android:layout_marginBottom="20dp"
                             android:background="@drawable/btn_green"
-                            android:text="ဝယ္ ရန္"
+                            android:text="ဝယ္ မည္"
                             android:textColor="@color/white"
                             android:textSize="14dp"
                             android:textStyle="bold"
@@ -256,7 +259,8 @@
                             android:text="Booking မွာမည္"
                             android:textColor="@color/white"
                             android:textSize="14dp"
-                            android:textStyle="bold" />
+                            android:textStyle="bold"
+                            android:visibility="visible" />
 
                         <com.smk.custom.view.CustomButton
                             android:id="@+id/btn_booking"
@@ -264,7 +268,6 @@
                             android:layout_width="match_parent"
                             android:layout_height="50dp"
                             android:layout_marginBottom="20dp"
-                            android:layout_marginTop="20dp"
                             android:background="@drawable/btn_gold"
                             android:text="Booking စာရင္းၾကည့္မည္"
                             android:textColor="@color/white"
@@ -304,7 +307,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:text="Please wait loading..."
+                android:text="Please wait loading ..."
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="#AAA"
                 android:textSize="12dp"

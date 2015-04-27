@@ -4,40 +4,32 @@ package com.ignite.mm.ticketing;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.json.JSONObject;
-
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 import android.app.Activity;
-import android.app.Dialog;
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.TextView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.ListView;
 
 import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.app.SherlockActivity;
 import com.google.gson.Gson;
 import com.ignite.mm.ticketing.application.BaseSherlockActivity;
+import com.ignite.mm.ticketing.application.MCrypt;
+import com.ignite.mm.ticketing.application.SecureParam;
 import com.ignite.mm.ticketing.clientapi.NetworkEngine;
-import com.ignite.mm.ticketing.custom.listview.adapter.OrderListViewAdapter;
 import com.ignite.mm.ticketing.custom.listview.adapter.CustomerTicketListViewAdapter;
 import com.ignite.mm.ticketing.sqlite.database.model.CreditOrder;
 import com.ignite.mm.ticketing.sqlite.database.model.Saleitem;
@@ -58,6 +50,7 @@ public class BusBookingDetailActivity extends BaseSherlockActivity {
 	private TextView txt_customer_name;
 	private TextView txt_phone;
 	private Button btn_delete;
+	private TextView action_bar_title2;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -70,7 +63,10 @@ public class BusBookingDetailActivity extends BaseSherlockActivity {
 		actionBarBack = (ImageButton) actionBar.getCustomView().findViewById(
 				R.id.action_bar_back);
 		actionBarBack.setOnClickListener(clickListener);
-		actionBarTitle.setText("Easy Ticket");
+		actionBarTitle.setText("ခံုနံပါတ္ မ်ား ဖ်က္ျခင္း");
+		action_bar_title2 = (TextView) actionBar.getCustomView().findViewById(
+				R.id.action_bar_title2);
+		action_bar_title2.setVisibility(View.GONE);
 		actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
 		
 		setContentView(R.layout.activity_busticketing_customer_ticket);
@@ -165,8 +161,10 @@ public class BusBookingDetailActivity extends BaseSherlockActivity {
         dialog.setCancelable(true);
 		SharedPreferences pref = getSharedPreferences("User", Activity.MODE_PRIVATE);
 		String accessToken = pref.getString("access_token", null);
+		
 		if(chk_remove_all.isChecked()){
-			NetworkEngine.getInstance().deleteAllOrder(accessToken, creditOrder.getId().toString(), new Callback<JSONObject>() {
+			String param = MCrypt.getInstance().encrypt(SecureParam.deleteAllOrderParam(accessToken));
+			NetworkEngine.getInstance().deleteAllOrder(param, creditOrder.getId().toString(), new Callback<Response>() {
 
 				public void failure(RetrofitError arg0) {
 					// TODO Auto-generated method stub
@@ -174,15 +172,18 @@ public class BusBookingDetailActivity extends BaseSherlockActivity {
 					SKToastMessage.showMessage(BusBookingDetailActivity.this, "Can't Delete Record.", SKToastMessage.ERROR);
 				}
 
-				public void success(JSONObject arg0, Response arg1) {
+				public void success(Response arg0, Response arg1) {
 					// TODO Auto-generated method stub
-					dialog.dismiss();
-					SKToastMessage.showMessage(BusBookingDetailActivity.this, "Successfully deleted.", SKToastMessage.SUCCESS);
-					finish();
+					if (arg0 != null) {
+						dialog.dismiss();
+						SKToastMessage.showMessage(BusBookingDetailActivity.this, "Successfully deleted.", SKToastMessage.SUCCESS);
+						finish();
+					}
 				}
 			});
 		}else{
 			String saleItem = "";
+			
 			for(int i=0;i<ticket_list.size();i++){
 				View childView = lst_customer_ticket.getChildAt(i);
 				CheckBox chk_remove = (CheckBox) childView.findViewById(R.id.chk_remove);
@@ -190,8 +191,11 @@ public class BusBookingDetailActivity extends BaseSherlockActivity {
 					saleItem += ticket_list.get(i).getId()+",";
 				}
 			}
+			
 			Log.i("","Hello Delete Str = "+ saleItem);
-			NetworkEngine.getInstance().deleteOrderItem(accessToken, saleItem, new Callback<JSONObject>() {
+			
+			String param = MCrypt.getInstance().encrypt(SecureParam.deleteOrderItemParam(accessToken, saleItem));
+			NetworkEngine.getInstance().deleteOrderItem(param, new Callback<Response>() {
 
 				public void failure(RetrofitError arg0) {
 					// TODO Auto-generated method stub
@@ -200,7 +204,7 @@ public class BusBookingDetailActivity extends BaseSherlockActivity {
 					SKToastMessage.showMessage(BusBookingDetailActivity.this, "Can't Delete Record.", SKToastMessage.ERROR);
 				}
 
-				public void success(JSONObject arg0, Response arg1) {
+				public void success(Response arg0, Response arg1) {
 					// TODO Auto-generated method stub
 					dialog.dismiss();
 					SKToastMessage.showMessage(BusBookingDetailActivity.this, "Successfully deleted.", SKToastMessage.SUCCESS);

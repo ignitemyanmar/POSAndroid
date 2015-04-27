@@ -7,7 +7,7 @@ import com.google.gson.annotations.Expose;
 public class Seat_plan {
 
 	@Expose
-	private Integer id;
+	private String id;
 	@Expose
 	private Integer from;
 	@Expose
@@ -35,7 +35,7 @@ public class Seat_plan {
 	@Expose
 	private List<Seat_list> seat_list = new ArrayList<Seat_list>();
 	
-	public Seat_plan(Integer id, Integer from, Integer to, String bus_no,
+	public Seat_plan(String id, Integer from, Integer to, String bus_no,
 			Integer seat_plan_id, String classes, String departure_time,
 			String arrival_time, Integer price, Integer operator_id,
 			Integer seat_layout_id, Integer row, Integer column,
@@ -57,11 +57,11 @@ public class Seat_plan {
 		this.seat_list = seat_list;
 	}
 
-	public Integer getId() {
+	public String getId() {
 	return id;
 	}
 	
-	public void setId(Integer id) {
+	public void setId(String id) {
 	this.id = id;
 	}
 	
