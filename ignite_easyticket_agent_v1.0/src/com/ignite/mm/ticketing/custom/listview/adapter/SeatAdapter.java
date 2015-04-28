@@ -55,7 +55,7 @@ public class SeatAdapter extends BaseAdapter
 			convertView = LayoutInflater.from(_context).inflate(R.layout.list_item_seat, null);
             holder = new ViewHolder();
             holder.seat = (CheckBox) convertView.findViewById(R.id.chk_seat);
-            holder.cover = (View) convertView.findViewById(R.id.v_cover);
+            holder.cover = (View) convertView.findViewById(R.id.view_cover);
             convertView.setTag(holder);
 		} else {
 			holder = (ViewHolder) convertView.getTag();
@@ -222,8 +222,8 @@ public class SeatAdapter extends BaseAdapter
         	// with choose price
         	
         	if(SelectingSeatActivity.SelectedPriceValue.equals(list.get(position).getPrice())){
-        		holder.cover.setVisibility(View.INVISIBLE);
-        		holder.cover.setClickable(false);
+        		//holder.cover.setVisibility(View.INVISIBLE);
+        		//holder.cover.setClickable(false);
         	}else{
         		holder.cover.setVisibility(View.VISIBLE);
         		holder.cover.setClickable(true);
@@ -281,8 +281,8 @@ public class SeatAdapter extends BaseAdapter
             
             if(list.get(position).getStatus().equals("3")){
             	holder.seat.setVisibility(View.INVISIBLE);
-            	holder.cover.setVisibility(View.INVISIBLE);
-        		holder.cover.setClickable(false);
+            	//holder.cover.setVisibility(View.INVISIBLE);
+        		//holder.cover.setClickable(false);
             }
         }
         

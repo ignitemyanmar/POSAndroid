@@ -23,6 +23,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -384,11 +385,6 @@ import com.smk.skalertmessage.SKToastMessage;
 		
         Log.i("","Hello From City: "+FromCity+" , To City : "+ToCity+" and Select Seat -> "+seats.toString());
         
-        /*SharedPreferences pref = this.getApplicationContext().getSharedPreferences("User", Activity.MODE_PRIVATE);
-		String accessToken = pref.getString("access_token", null);
-		int user_id = pref.getInt("user_id", 0);
-		String user_type = pref.getString("user_type", null);*/
-		
 		//if (AppLoginUser.getUserType().equals("agent")) {
 			AgentID = String.valueOf(AppLoginUser.getId());
 		//} else if (AgentID.length() == 0) {
@@ -605,7 +601,11 @@ import com.smk.skalertmessage.SKToastMessage;
 				setListViewHeightBasedOnChildren(lst_remark);
 			}
 			
+			//Set Seat List in Grid
 			mSeat.setNumColumns(BusSeats.get(0).getSeat_plan().get(0).getColumn());
+			
+			Log.i("", "Seat List (mseat): "+BusSeats.get(0).getSeat_plan().get(0).getSeat_list());
+			
 			mSeat.setAdapter(new BusSeatAdapter(this, BusSeats.get(0).getSeat_plan().get(0).getSeat_list()));	
 			setGridViewHeightBasedOnChildren(mSeat , Integer.valueOf(BusSeats.get(0).getSeat_plan().get(0).getColumn()));
 			

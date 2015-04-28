@@ -73,7 +73,8 @@
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
                     android:isScrollContainer="false"
-                    android:numColumns="3" >
+                    android:numColumns="3"
+                    android:listSelector="@android:color/transparent">
                 </GridView>
 
                 <LinearLayout
@@ -115,7 +116,7 @@
                             android:layout_marginBottom="20dp" >
 
                             <View
-                                android:id="@+id/view1"
+                                android:id="@+id/view_cover"
                                 android:layout_width="20dp"
                                 android:layout_height="20dp"
                                 android:background="@color/golden_brown_light"
