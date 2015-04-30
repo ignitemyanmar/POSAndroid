@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <ScrollView
+        android:id="@+id/scrollView1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
+
+            <com.smk.custom.view.CustomTextView
+                android:id="@+id/CustomTextView1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/golden_brown"
+                android:padding="5dp"
+                android:text="My Profile"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/white" />
+
+            <ImageButton
+                android:id="@+id/user_photo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:adjustViewBounds="true"
+                android:background="@drawable/ic_contact_picture_holo_light"
+                android:cropToPadding="true"
+                android:maxHeight="100dp"
+                android:maxWidth="100dp"
+                android:scaleType="fitXY" />
+
+            <View
+                android:id="@+id/view1"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@color/gray" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@drawable/border_radius"
+                android:orientation="vertical" >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" >
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical" >
+
+                        <com.smk.custom.view.CustomTextView
+                            android:id="@+id/CustomTextView1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="10dp"
+                            android:text="Name"
+                            android:textSize="18dp" />
+
+                        <com.smk.custom.view.CustomTextView
+                            android:id="@+id/CustomTextView2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="10dp"
+                            android:text="NRC"
+                            android:textSize="18dp" />
+
+                        <com.smk.custom.view.CustomTextView
+                            android:id="@+id/CustomTextView3"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="10dp"
+                            android:text="Email"
+                            android:textSize="18dp" />
+
+                        <com.smk.custom.view.CustomTextView
+                            android:id="@+id/CustomTextView4"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="10dp"
+                            android:text="Phone"
+                            android:textSize="18dp" />
+
+                        <com.smk.custom.view.CustomTextView
+                            android:id="@+id/CustomTextView5"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="10dp"
+                            android:text="Address"
+                            android:textSize="18dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="2"
+                        android:orientation="vertical" >
+
+                        <com.smk.custom.view.CustomTextView
+                            android:id="@+id/txt_name"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="10dp"
+                            android:text="-"
+                            android:textSize="18dp" />
+
+                        <com.smk.custom.view.CustomTextView
+                            android:id="@+id/txt_nrc"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="10dp"
+                            android:text="-"
+                            android:textSize="18dp" />
+
+                        <com.smk.custom.view.CustomTextView
+                            android:id="@+id/txt_email"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="10dp"
+                            android:text="-"
+                            android:textSize="18dp" />
+
+                        <com.smk.custom.view.CustomTextView
+                            android:id="@+id/txt_phone"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="10dp"
+                            android:text="-"
+                            android:textSize="18dp" />
+
+                        <com.smk.custom.view.CustomTextView
+                            android:id="@+id/txt_address"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="10dp"
+                            android:text="-"
+                            android:textSize="18dp" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center" >
+
+                <com.smk.custom.view.CustomButton
+                    android:id="@+id/btn_edit_info"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/btn_gold"
+                    android:text="Edit Info"
+                    android:textColor="@color/white"
+                    android:textSize="18dp" />
+
+                <com.smk.custom.view.CustomButton
+                    android:id="@+id/btn_booking_history"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/btn_gold"
+                    android:fadeScrollbars="true"
+                    android:text="Booking History"
+                    android:textColor="@color/white"
+                    android:textSize="18dp" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        
+
+    </ScrollView>
+
+</LinearLayout>

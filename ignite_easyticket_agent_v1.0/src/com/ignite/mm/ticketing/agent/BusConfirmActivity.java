@@ -866,25 +866,27 @@ public class BusConfirmActivity extends BaseSherlockActivity {
 
 				String jsonData = msg.getData().getString("data");
 				
-				try {
-					Log.i("","Hello Response Confirm Data:"+ jsonData);
-					
-					JSONObject jsonObj = new JSONObject(jsonData);
-					if(!jsonObj.getBoolean("status") && jsonObj.getString("device_id").equals(DeviceUtil.getInstance(BusConfirmActivity.this).getID())){
-						SKToastMessage.showMessage(BusConfirmActivity.this, "သင္ မွာယူေသာ လက္ မွတ္ မ်ားမွာ စကၠန့္ပိုင္း အတြင္း တစ္ ျခားသူ ယူ သြားေသာေၾကာင့္ သင္မွာေသာလက္မွတ္မ်ား မရႏိုင္ေတာ့ပါ။ ေက်းဇူးျပဳၿပီး တစ္ျခားလက္ မွတ္ မ်ား ျပန္ေရြး ေပးပါ။။", SKToastMessage.ERROR);
-						dialog.dismiss();
-					}else{
-						SKToastMessage.showMessage(BusConfirmActivity.this, "လက္မွတ္ ျဖတ္ၿပီးပါၿပီ !", SKToastMessage.SUCCESS);
-						closeAllActivities();
-						//Show Voucher
-						startActivity(new Intent(BusConfirmActivity.this, PDFBusActivity.class).putExtras(bundle));
-						//startActivity(new Intent(BusConfirmActivity.this, BusTripsCityActivity.class));
-						dialog.dismiss();
-						finish();
+				if (jsonData != null) {
+					try {
+						Log.i("","Hello Response Confirm Data:"+ jsonData);
+						
+						JSONObject jsonObj = new JSONObject(jsonData);
+						if(!jsonObj.getBoolean("status") && jsonObj.getString("device_id").equals(DeviceUtil.getInstance(BusConfirmActivity.this).getID())){
+							SKToastMessage.showMessage(BusConfirmActivity.this, "သင္ မွာယူေသာ လက္ မွတ္ မ်ားမွာ စကၠန့္ပိုင္း အတြင္း တစ္ ျခားသူ ယူ သြားေသာေၾကာင့္ သင္မွာေသာလက္မွတ္မ်ား မရႏိုင္ေတာ့ပါ။ ေက်းဇူးျပဳၿပီး တစ္ျခားလက္ မွတ္ မ်ား ျပန္ေရြး ေပးပါ။။", SKToastMessage.ERROR);
+							dialog.dismiss();
+						}else{
+							SKToastMessage.showMessage(BusConfirmActivity.this, "လက္မွတ္ ျဖတ္ၿပီးပါၿပီ !", SKToastMessage.SUCCESS);
+							closeAllActivities();
+							//Show Voucher
+							startActivity(new Intent(BusConfirmActivity.this, PDFBusActivity.class).putExtras(bundle));
+							//startActivity(new Intent(BusConfirmActivity.this, BusTripsCityActivity.class));
+							dialog.dismiss();
+							finish();
+						}
+					} catch (JSONException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
 					}
-				} catch (JSONException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
 				}
 			}
 		};

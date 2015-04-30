@@ -557,11 +557,14 @@ public class PDFBusActivity extends BaseSherlockActivity {
 	        //android.graphics.Canvas.throwIfCannotDraw  (Error)
 	        //if (bmp != null && !bmp.isRecycled()) {
 	        	
-		        bigcanvas.drawBitmap(bmp, 0, iHeight, paint);
+	        if (bmp != null) {
+	        	bigcanvas.drawBitmap(bmp, 0, iHeight, paint);
 		        iHeight+=bmp.getHeight();
+			}
 		        
-	        	//bmp.recycle();
-	        	bmp = null; 
+	      //bmp.recycle();
+        	//bmp = null;    
+	        	
 //	        }else {
 //				Log.i("", "Bitmap is already recycled!");
 //			}

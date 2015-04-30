@@ -146,8 +146,13 @@ public class UserLogin extends SherlockActivity {
 							public void failure(RetrofitError arg0) {
 								// TODO Auto-generated method stub
 								Log.i("", "Enter here... log in fail: "+arg0.getCause());
+								
+								//SKToastMessage.showMessage(UserLogin.this, "သင္၏ Login Email ႏွင့္ Password မွားေနပါသည္", SKToastMessage.ERROR);
+								
 								dialog.dismiss();
+								
 								if(arg0.getResponse() != null){
+									Log.i("", "Log in Fail resp: "+arg0.getResponse().getStatus());
 									if(arg0.getResponse().getStatus() == 400){
 										SKToastMessage.showMessage(UserLogin.this, "သင္၏ Login Email ႏွင့္ Password မွား ေနပါသည္", SKToastMessage.ERROR);
 									}
@@ -155,6 +160,10 @@ public class UserLogin extends SherlockActivity {
 									if(arg0.getResponse().getStatus() == 403){
 										SKToastMessage.showMessage(UserLogin.this, "သင္၏ Login Email ႏွင့္ Password မွားေနပါသည္", SKToastMessage.ERROR);
 									}
+									
+									/*if(arg0.getResponse().getStatus() == 200){
+										SKToastMessage.showMessage(UserLogin.this, "သင္၏ Login Email ႏွင့္ Password မွားေနပါသည္", SKToastMessage.ERROR);
+									}*/
 								}
 							}
 						});
@@ -176,9 +185,9 @@ public class UserLogin extends SherlockActivity {
 					editor.putString("user_name", "Elite");
 					editor.putString("user_type", "operator");
 					editor.commit();
-					Intent intent = new Intent(getApplicationContext(),	BusTripsCityActivity.class);
-					finish();
-					startActivity(intent);
+					//Intent intent = new Intent(getApplicationContext(),	BusTripsCityActivity.class);
+					//finish();
+					//startActivity(intent);
 				}
 			}//End Log in button
 			
