@@ -1,8 +1,8 @@
 package com.ignite.mm.ticketing.application;
 
 
-import com.ignite.mm.ticketing.PDFBusActivity;
-import com.ignite.mm.ticketing.R;
+import com.ignite.mm.ticketing.client.PDFBusActivity;
+import com.ignite.mm.ticketing.client.R;
 
 import android.app.Dialog;
 import android.content.Context;

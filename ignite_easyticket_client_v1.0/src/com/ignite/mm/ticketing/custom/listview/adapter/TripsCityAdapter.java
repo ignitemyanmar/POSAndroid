@@ -2,7 +2,7 @@ package com.ignite.mm.ticketing.custom.listview.adapter;
 
 import java.util.List;
 
-import com.ignite.mm.ticketing.R;
+import com.ignite.mm.ticketing.client.R;
 import com.ignite.mm.ticketing.sqlite.database.model.TripsCollection;
 
 import android.app.Activity;

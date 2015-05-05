@@ -5,10 +5,10 @@ import java.util.ArrayList;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
 import com.ignite.barcode.GenerateBarcode;
-import com.ignite.mm.ticketing.PDFBusActivity;
-import com.ignite.mm.ticketing.PDFTicketActivity;
-import com.ignite.mm.ticketing.R;
-import com.ignite.mm.ticketing.ShowInfoActivity;
+import com.ignite.mm.ticketing.client.PDFBusActivity;
+import com.ignite.mm.ticketing.client.PDFTicketActivity;
+import com.ignite.mm.ticketing.client.R;
+import com.ignite.mm.ticketing.client.ShowInfoActivity;
 import com.ignite.mm.ticketing.sqlite.database.model.AllBusObject;
 import com.ignite.mm.ticketing.sqlite.database.model.AllShowObject;
 

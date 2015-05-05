@@ -1,0 +1,382 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/RelativeLayout1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gray"
+    android:orientation="vertical"
+     >
+
+    <ScrollView
+        android:id="@+id/scrollView1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+         >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/border_radius"
+            android:gravity="center"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:padding="7dp" >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="7dp"
+                    android:layout_weight="3.50"
+                    android:gravity="center"
+                    android:orientation="vertical" >
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="20dp"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
+                        android:orientation="vertical"
+                        android:paddingBottom="7dp"
+                        android:paddingTop="7dp" >
+
+                        <LinearLayout
+                            android:id="@+id/LinearLayout1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:padding="10dp" >
+
+                            <com.smk.custom.view.CustomTextView
+                                android:id="@+id/CustomTextView1"
+                                android:layout_width="70dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="left"
+                                android:text="Name"
+                                android:textSize="14dp"
+                                android:textStyle="bold" />
+
+                            <EditText
+                                android:id="@+id/editTxt_name"
+                                android:layout_width="match_parent"
+                                android:layout_height="30dp"
+                                android:layout_weight="1"
+                                android:background="@drawable/bg_border_orange_selected"
+                                android:ems="10"
+                                android:inputType="textPersonName"
+                                android:padding="5dp"
+                                android:textColor="@color/black"
+                                android:textSize="14dp" >
+
+                                <requestFocus />
+                            </EditText>
+
+                        </LinearLayout>
+
+                        <View
+                            android:id="@+id/View05"
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/gray" />
+
+                        <LinearLayout
+                            android:id="@+id/LinearLayout05"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:padding="10dp" >
+
+                            <com.smk.custom.view.CustomTextView
+                                android:id="@+id/CustomTextView03"
+                                android:layout_width="70dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="left"
+                                android:text="NRC"
+                                android:textSize="14dp"
+                                android:textStyle="bold" />
+
+                            <EditText
+                                android:id="@+id/editTxt_nrc"
+                                android:layout_width="match_parent"
+                                android:layout_height="30dp"
+                                android:layout_weight="1"
+                                android:background="@drawable/bg_border_orange_selected"
+                                android:ems="10"
+                                android:inputType="text"
+                                android:padding="5dp"
+                                android:textColor="@color/black"
+                                android:textSize="14dp" />
+
+                        </LinearLayout>
+
+                        <View
+                            android:id="@+id/view1"
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/gray" />
+
+                        <LinearLayout
+                            android:id="@+id/LinearLayout01"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:padding="10dp" >
+
+                            <com.smk.custom.view.CustomTextView
+                                android:id="@+id/CustomTextView3"
+                                android:layout_width="70dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="left"
+                                android:text="Email"
+                                android:textSize="14dp"
+                                android:textStyle="bold" />
+
+                            <EditText
+                                android:id="@+id/editTxt_email"
+                                android:layout_width="match_parent"
+                                android:layout_height="30dp"
+                                android:layout_weight="1"
+                                android:background="@drawable/bg_border_orange_selected"
+                                android:ems="10"
+                                android:inputType="textEmailAddress"
+                                android:padding="5dp"
+                                android:textColor="@color/black"
+                                android:textSize="14dp" />
+                        </LinearLayout>
+
+                        <View
+                            android:id="@+id/View01"
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/gray" />
+
+                        <LinearLayout
+                            android:id="@+id/LinearLayout04"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:padding="10dp" >
+
+                            <com.smk.custom.view.CustomTextView
+                                android:id="@+id/CustomTextView02"
+                                android:layout_width="70dp"
+                                android:layout_height="wrap_content"
+                                android:gravity="left"
+                                android:text="Current Password"
+                                android:textSize="14dp"
+                                android:textStyle="bold" />
+
+                            <EditText
+                                android:id="@+id/editTxt_current_password"
+                                android:layout_width="match_parent"
+                                android:layout_height="30dp"
+                                android:layout_weight="1"
+                                android:background="@drawable/bg_border_orange_selected"
+                                android:ems="10"
+                                android:inputType="textPassword"
+                                android:padding="5dp"
+                                android:textColor="@color/black"
+                                android:textSize="14dp" />
+                        </LinearLayout>
+
+                        <View
+                            android:id="@+id/View04"
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/gray" />
+
+                        <LinearLayout
+                            android:id="@+id/LinearLayout03"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:padding="10dp" >
+
+                            <com.smk.custom.view.CustomTextView
+                                android:id="@+id/CustomTextView01"
+                                android:layout_width="70dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="left"
+                                android:gravity="left"
+                                android:text="New Password"
+                                android:textSize="14dp"
+                                android:textStyle="bold" />
+
+                            <EditText
+                                android:id="@+id/editTxt_new_password"
+                                android:layout_width="match_parent"
+                                android:layout_height="30dp"
+                                android:layout_weight="1"
+                                android:background="@drawable/bg_border_orange_selected"
+                                android:ems="10"
+                                android:inputType="textPassword"
+                                android:padding="5dp"
+                                android:textColor="@color/black"
+                                android:textSize="14dp" />
+                        </LinearLayout>
+
+                        <View
+                            android:id="@+id/View03"
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/gray" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:paddingBottom="10dp"
+                            android:paddingLeft="5dp"
+                            android:paddingRight="10dp"
+                            android:paddingTop="10dp" >
+
+                            <LinearLayout
+                                android:id="@+id/LinearLayout02"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal"
+                                android:padding="5dp" >
+
+                                <com.smk.custom.view.CustomTextView
+                                    android:id="@+id/CustomTextView5"
+                                    android:layout_width="70dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="left"
+                                    android:text="Phone"
+                                    android:textSize="14dp"
+                                    android:textStyle="bold" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_marginLeft="70dp"
+                                android:layout_marginRight="10dp"
+                                android:layout_marginTop="-26dp"
+                                android:orientation="vertical" >
+
+                                <com.smk.custom.view.CustomTextView
+                                    android:id="@+id/CustomTextView6"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="10dp"
+                                    android:layout_marginLeft="5dp"
+                                    android:text="Mobile" />
+
+                                <com.smk.custom.view.CustomTextView
+                                    android:id="@+id/CustomTextView7"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="5dp"
+                                    android:text="Home" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_marginLeft="120dp"
+                                android:layout_marginTop="-45dp"
+                                android:orientation="vertical" >
+
+                                <EditText
+                                    android:id="@+id/editTxt_mobile"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="30dp"
+                                    android:layout_marginBottom="5dp"
+                                    android:background="@drawable/bg_border_orange_selected"
+                                    android:ems="10"
+                                    android:inputType="phone"
+                                    android:padding="5dp"
+                                    android:textColor="@color/black"
+                                    android:textSize="14dp" />
+
+                                <EditText
+                                    android:id="@+id/editTxt_homePh"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="30dp"
+                                    android:background="@drawable/bg_border_orange_selected"
+                                    android:inputType="phone"
+                                    android:padding="5dp"
+                                    android:textColor="@color/black"
+                                    android:textSize="14dp" />
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <View
+                            android:id="@+id/View02"
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/gray" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="10dp" >
+
+                            <com.smk.custom.view.CustomTextView
+                                android:id="@+id/CustomTextView10"
+                                android:layout_width="70dp"
+                                android:layout_height="wrap_content"
+                                android:text="Address"
+                                android:textStyle="bold" />
+
+                            <EditText
+                                android:id="@+id/editTxt_address"
+                                android:layout_width="match_parent"
+                                android:layout_height="60dp"
+                                android:layout_weight="1"
+                                android:background="@drawable/bg_border_orange_selected"
+                                android:ems="10"
+                                android:gravity="left"
+                                android:inputType="textPostalAddress"
+                                android:padding="5dp"
+                                android:textColor="@color/black"
+                                android:textSize="14dp" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/LinearLayout1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="6dp"
+                        android:layout_marginRight="6dp"
+                        android:gravity="center"
+                        android:padding="5dp" >
+
+                        <com.smk.custom.view.CustomButton
+                            android:id="@+id/btn_cancel"
+                            android:layout_width="150dp"
+                            android:layout_height="45dp"
+                            android:layout_marginRight="5dp"
+                            android:background="@drawable/bg_gold"
+                            android:padding="5dp"
+                            android:text="Cancel"
+                            android:textColor="@color/white"
+                            android:textSize="16dp" />
+
+                        <com.smk.custom.view.CustomButton
+                            android:id="@+id/btn_done"
+                            android:layout_width="150dp"
+                            android:layout_height="45dp"
+                            android:layout_marginLeft="5dp"
+                            android:background="@drawable/bg_gold"
+                            android:padding="5dp"
+                            android:text="Done"
+                            android:textColor="@color/white"
+                            android:textSize="16dp" />
+                    </LinearLayout>
+
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</RelativeLayout>

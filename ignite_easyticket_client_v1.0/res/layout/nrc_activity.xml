@@ -6,7 +6,7 @@
     android:orientation="vertical" >
 
     <View
-        android:id="@+id/view1"
+        android:id="@+id/view_cover"
         android:layout_width="wrap_content"
         android:layout_height="2dp"
         android:background="@color/golden_brown" />

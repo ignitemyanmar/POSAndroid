@@ -13,8 +13,7 @@ import android.os.Message;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.ignite.mm.ticketing.PDFBusActivity;
-import com.ignite.mm.ticketing.R;
+import com.ignite.mm.ticketing.client.PDFBusActivity;
 import com.ignite.mm.ticketing.sqlite.database.model.Device;
 import com.zkc.helper.printer.BlueToothService;
 import com.zkc.helper.printer.PrintService;

@@ -3,7 +3,8 @@ package com.ignite.mm.ticketing.application;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import com.ignite.mm.ticketing.R;
+
+import com.ignite.mm.ticketing.client.R;
 import com.ignite.mm.ticketing.sqlite.database.model.From;
 import com.ignite.mm.ticketing.sqlite.database.model.TimesbyOperator;
 import com.ignite.mm.ticketing.sqlite.database.model.To;

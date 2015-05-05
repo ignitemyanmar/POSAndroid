@@ -73,7 +73,8 @@
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
                     android:isScrollContainer="false"
-                    android:numColumns="3" >
+                    android:numColumns="3"
+                    android:listSelector="@android:color/transparent">
                 </GridView>
 
                 <LinearLayout
@@ -85,6 +86,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
+                        android:layout_marginRight="2dp"
                         android:orientation="vertical"
                         android:layout_weight="50"
                         android:padding="0dp" >
@@ -114,10 +116,10 @@
                             android:layout_marginBottom="20dp" >
 
                             <View
-                                android:id="@+id/view1"
+                                android:id="@+id/view_cover"
                                 android:layout_width="20dp"
                                 android:layout_height="20dp"
-                                android:background="@color/golden_brown_light"
+                                android:background="@color/gray"
                                 android:paddingLeft="10dp" />
 
                             <com.smk.custom.view.CustomTextView
@@ -125,7 +127,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:padding="3dp"
-                                android:text="ခံုလြတ္မ်ား" />
+                                android:text="ေရာင္းခြင့္မရွိခံုမ်ား" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -172,9 +174,8 @@
                             android:id="@+id/lst_group_user"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_margin="5dp"
                             android:divider="#FFF"
-                            android:visibility="gone" >
+                            android:visibility="visible" >
                         </ListView>
                     </LinearLayout>
 
@@ -190,7 +191,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="0dp"
-                            android:text="ထြက္ခြာမည့္ ရက္ : 0000-00-00"
+                            android:text="ထြက္ခြာမည့္ ေန႔ရက္ : 0000-00-00"
                             android:textSize="14dp" />
 
                         <com.smk.custom.view.CustomTextView

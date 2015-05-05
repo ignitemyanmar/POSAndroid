@@ -5,6 +5,7 @@ import java.util.List;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,18 +13,20 @@ import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.ignite.mm.ticketing.R;
-import com.ignite.mm.ticketing.BusSelectSeatActivity;
+import com.ignite.mm.ticketing.client.BusSelectSeatActivity;
+import com.ignite.mm.ticketing.client.R;
 import com.ignite.mm.ticketing.sqlite.database.model.OperatorGroupUser;
 import com.ignite.mm.ticketing.sqlite.database.model.Seat_list;
 
 public class BusSeatAdapter extends BaseAdapter{
 	 private final Context _context;
 	    private final List<Seat_list> list;
-	  	    
+	    
+	  	
 	    public BusSeatAdapter(Activity atx, List<Seat_list> seat_list)
 	    {
 	        super();
@@ -60,7 +63,9 @@ public class BusSeatAdapter extends BaseAdapter{
 	            holder.txt_ticket_no = (TextView) convertView.findViewById(R.id.txt_ticket_no);
 	            holder.txt_agent = (TextView) convertView.findViewById(R.id.txt_agent);
 	            holder.txt_seating_no = (TextView) convertView.findViewById(R.id.txt_seating_no);
-	            holder.cover = (View) convertView.findViewById(R.id.v_cover);
+	            holder.cover = (View) convertView.findViewById(R.id.view_cover);
+	            holder.seat_no = (TextView)convertView.findViewById(R.id.seat_no);
+	            holder.seat_layout = (LinearLayout)convertView.findViewById(R.id.seat_layout);
 	            convertView.setTag(holder);
 			} else {
 				holder = (ViewHolder) convertView.getTag();
@@ -68,35 +73,91 @@ public class BusSeatAdapter extends BaseAdapter{
 			
 			switch(getColor(list.get(position).getOperatorgroup_id())){
 				case 1:
+					holder.cover.setVisibility(View.VISIBLE);
+					holder.seat_no.setVisibility(View.VISIBLE);
+					holder.seat_no.setText(list.get(position).getSeat_no());
 					if(list.get(position).getBooking() == 0)
-						holder.seat.setButtonDrawable(R.drawable.rdo_shape_1);
+						holder.seat.setButtonDrawable(R.drawable.rdo_shape_1); 
 					else
-						holder.seat.setButtonDrawable(R.drawable.rdo_shape_1_1);
+						holder.seat.setButtonDrawable(R.drawable.rdo_shape_1_1); 
 					break;
 				case 2:
 					if(list.get(position).getBooking() == 0)
-						holder.seat.setButtonDrawable(R.drawable.rdo_shape_2);
+						holder.seat.setButtonDrawable(R.drawable.rdo_shape_2); //Sale red
 					else
-						holder.seat.setButtonDrawable(R.drawable.rdo_shape_2_1);
+						holder.seat.setButtonDrawable(R.drawable.rdo_shape_2_1); //Booking red brown color
 					break;
 				case 3:
+					holder.cover.setVisibility(View.VISIBLE);
+					holder.seat_no.setVisibility(View.VISIBLE);
+					holder.seat_no.setText(list.get(position).getSeat_no());
 					if(list.get(position).getBooking() == 0)
 						holder.seat.setButtonDrawable(R.drawable.rdo_shape_3);
 					else
 						holder.seat.setButtonDrawable(R.drawable.rdo_shape_3_1);
 					break;
-				case 4:
+				case 4: //Online Sale
+					
 					if(list.get(position).getBooking() == 0)
+					{
 						holder.seat.setButtonDrawable(R.drawable.rdo_shape_4);
+					}
 					else
+					{
 						holder.seat.setButtonDrawable(R.drawable.rdo_shape_4_1);
+					}
+					
+					//holder.seat_no.setVisibility(View.INVISIBLE);
+					//Get Selected Seats of Online Sales
+	            	holder.layout_customer_info.setVisibility(View.INVISIBLE);
+	            	holder.seatNo.setText(list.get(position).getSeat_no());
+	            	holder.seat.setEnabled(true);
+	            	holder.seat.setTag(position);
+	            	holder.seat.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+						
+						public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+							if(isChecked){
+								//If checked the seat.
+								String[] seleted = BusSelectSeatActivity.SelectedSeat.split(",");
+								if(!BusSelectSeatActivity.SelectedSeat.isEmpty()){
+									boolean isExisted = false;
+									for (int i = 0; i < seleted.length; i++) {
+										if(seleted[i].equals(buttonView.getTag().toString())){
+											isExisted = true;
+										}
+									}
+									
+									if(!isExisted){
+										BusSelectSeatActivity.SelectedSeat += buttonView.getTag()+",";
+									}
+								}else{
+									BusSelectSeatActivity.SelectedSeat += buttonView.getTag()+",";
+								}
+							}else{
+								//If unchecked the seat.
+								String[] seleted = BusSelectSeatActivity.SelectedSeat.split(",");
+								if(!BusSelectSeatActivity.SelectedSeat.isEmpty()){
+									BusSelectSeatActivity.SelectedSeat = "";
+									for (int i = 0; i < seleted.length; i++) {
+										if(!seleted[i].equals(buttonView.getTag().toString())){
+											BusSelectSeatActivity.SelectedSeat += seleted[i]+",";
+										}
+									}
+									
+								}
+							}
+						}
+					});
+	            	
 					break;
 				default:
+					holder.cover.setVisibility(View.VISIBLE);
+					holder.seat_no.setVisibility(View.VISIBLE);
+					holder.seat_no.setText(list.get(position).getSeat_no());
 					if(list.get(position).getBooking() == 0)
 						holder.seat.setButtonDrawable(R.drawable.rdo_shape_0);
 					else
 						holder.seat.setButtonDrawable(R.drawable.rdo_shape_0_1);
-					
 			}
 			
 			//Already Purchase or Booking
@@ -110,9 +171,11 @@ public class BusSeatAdapter extends BaseAdapter{
             		holder.txt_ticket_no.setText(list.get(position).getCustomerInfo().getTicketNo());
             		holder.txt_agent.setText(list.get(position).getCustomerInfo().getAgentName());
             		holder.txt_seating_no.setText(list.get(position).getSeat_no());
+            		holder.seat_no.setVisibility(View.INVISIBLE);
+            		holder.seatNo.setVisibility(View.INVISIBLE);
             		//Check Remark
         			if(list.get(position).getRemark_type() != 0){
-        				holder.txt_seating_no.setBackgroundColor(Color.YELLOW);
+        				holder.txt_seating_no.setBackgroundColor(Color.BLUE);
         			}
             	}else{
             		holder.layout_customer_info.setVisibility(View.INVISIBLE);
@@ -125,7 +188,9 @@ public class BusSeatAdapter extends BaseAdapter{
             	holder.seatNo.setText(list.get(position).getSeat_no());
             }
             
-            if(list.get(position).getStatus() == 1){
+            /*//Get Selected Seats of Online Sales
+            
+            if(getColor(list.get(position).getOperatorgroup_id()) == 4){
             	holder.layout_customer_info.setVisibility(View.INVISIBLE);
             	holder.seatNo.setText(list.get(position).getSeat_no());
             	holder.seat.setEnabled(true);
@@ -150,8 +215,6 @@ public class BusSeatAdapter extends BaseAdapter{
 							}else{
 								BusSelectSeatActivity.SelectedSeat += buttonView.getTag()+",";
 							}
-							
-							
 						}else{
 							//If unchecked the seat.
 							String[] seleted = BusSelectSeatActivity.SelectedSeat.split(",");
@@ -165,15 +228,18 @@ public class BusSeatAdapter extends BaseAdapter{
 								
 							}
 						}
-						
 					}
 				});
-            }
+            }*/
             
             if(list.get(position).getStatus() == 0){
+            	holder.cover.setVisibility(View.INVISIBLE);
             	holder.layout_customer_info.setVisibility(View.INVISIBLE);
             	holder.seat.setVisibility(View.INVISIBLE);
+            	holder.seat_no.setVisibility(View.INVISIBLE);
             	holder.seatNo.setVisibility(View.INVISIBLE);
+            	holder.seat.setEnabled(false);
+            	holder.seat_layout.setEnabled(false);
             }
             
 	        return convertView;
@@ -192,6 +258,7 @@ public class BusSeatAdapter extends BaseAdapter{
 		
 		 static class ViewHolder {
 				CheckBox seat;
+				LinearLayout seat_layout;
 				RelativeLayout layout_customer_info;
 				TextView txt_name;
 				TextView txt_phone;
@@ -200,6 +267,6 @@ public class BusSeatAdapter extends BaseAdapter{
 				TextView txt_agent;
 				TextView txt_seating_no;
 				View cover;
-				TextView seatNo;
+				TextView seatNo, seat_no;
 			}
 }

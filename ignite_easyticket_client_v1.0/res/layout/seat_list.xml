@@ -63,7 +63,7 @@
                     android:text="ေရြးျပီး ခံုမ်ား" />
 
                 <View
-                    android:id="@+id/view1"
+                    android:id="@+id/view_cover"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_marginLeft="35dp"
