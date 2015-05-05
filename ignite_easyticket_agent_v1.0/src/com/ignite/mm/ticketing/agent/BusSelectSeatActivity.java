@@ -1,5 +1,6 @@
 package com.ignite.mm.ticketing.agent;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -124,9 +125,14 @@ import com.smk.skalertmessage.SKToastMessage;
 	private String permit_access_token = "";
 	private String permit_ip;
 	private String operator_name = "";
+	private Date tripDate;
+	private Date tDate;
+	private Date tripTime;
+	private Date tTime;
 	public static List<BusSeat> BusSeats;
 	public static List<OperatorGroupUser> groupUser = new ArrayList<OperatorGroupUser>();
 	public static String CheckOut;
+	
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -150,22 +156,7 @@ import com.smk.skalertmessage.SKToastMessage;
 		actionBarNoti.setOnClickListener(clickListener);
 		actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
 		
-		mSeat = (GridView) findViewById(R.id.grid_seat);
-		lst_group_user = (ListView) findViewById(R.id.lst_group_user);
-		layout_remark = (LinearLayout) findViewById(R.id.layout_remark);
-		connectionDetector = new ConnectionDetector(this);
-		
-		//Get TodayDate
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		todayDate = sdf.format(new Date());
-		
-		Log.i("", "Today date: "+todayDate);
-		
-		//Get Current Time
-		SimpleDateFormat sdf2 = new SimpleDateFormat("HH:mm:ss");
-		Calendar cal = Calendar.getInstance();
-		todayTime = sdf2.format(cal.getTime()).toString();
-				
+		//Get Data from past clicks
 		Bundle bundle = getIntent().getExtras();
 		permit_access_token = bundle.getString("permit_access_token");
 		AgentID = bundle.getString("agent_id");
@@ -180,7 +171,62 @@ import com.smk.skalertmessage.SKToastMessage;
 		permit_ip = bundle.getString("permit_ip");
 		operator_name = bundle.getString("operator_name");
 		
+		mSeat = (GridView) findViewById(R.id.grid_seat);
+		lst_group_user = (ListView) findViewById(R.id.lst_group_user);
+		layout_remark = (LinearLayout) findViewById(R.id.layout_remark);
+		connectionDetector = new ConnectionDetector(this);
 		
+		//Get TodayDate
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		todayDate = sdf.format(new Date());
+		
+		//Get Current Time
+		SimpleDateFormat sdf2 = new SimpleDateFormat("HH:mm:ss");
+		Calendar cal = Calendar.getInstance();
+		todayTime = sdf2.format(cal.getTime()).toString();
+		
+		//Get only 06:00 AM format
+		String time = Time.substring(0, 8);
+		
+		SimpleDateFormat serverFormat = new SimpleDateFormat("hh:mm aa");
+		Date timeTochange = null;
+		try {
+			timeTochange = serverFormat.parse(time);
+			Log.i("", "Server Time Format: "+serverFormat.format(timeTochange));
+		} catch (ParseException e2) {
+			// TODO Auto-generated catch block
+			Log.i("", "Server Time Exception: "+e2);
+			e2.printStackTrace();
+		}
+				
+		//Get Trip Date+Time format to check late date
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		String tripDateTime = Date+" "+sdf2.format(timeTochange);
+		
+		Log.i("", "Trip Date+Time: "+tripDateTime);
+		
+		try {
+			tripDate = df.parse(tripDateTime);
+			Log.i("", "Trip Date Format: "+df.format(tripDate));
+		} catch (ParseException e1) {
+			// TODO Auto-generated catch block
+			Log.i("", "Trip Date Format Exception: "+e1);
+			e1.printStackTrace();
+		}
+		
+		//Get Today Date+Time Format
+		SimpleDateFormat df2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		String todayDateTime = todayDate+" "+todayTime;
+				
+    	try {
+			tDate = df2.parse(todayDateTime);
+			Log.i("", "Today Date Format: "+df2.format(tDate));
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			Log.i("", "Today Date Format Exception: "+e);
+			e.printStackTrace();
+		}
+				
 		SharedPreferences notify = getSharedPreferences("NotifyBooking", Context.MODE_PRIVATE);
 		NotifyBooking = notify.getInt("count", 0);
 		if(NotifyBooking > 0){
@@ -511,20 +557,6 @@ import com.smk.skalertmessage.SKToastMessage;
 			    				bundle.putString("permit_ip", permit_ip);
 			    				bundle.putString("permit_access_token", permit_access_token);
 			    				
-		        				/*bundle.putString("Operator_Name", BusSeats.get(0).getOperator());
-		        				bundle.putString("Bus_Trip", From+"-"+To);
-		        				bundle.putString("Trip_Date", changeDate(Date));
-		        				bundle.putString("Trip_Time", Time);
-		        				bundle.putString("Bus_Class", BusClasses);
-		        				bundle.putString("Selected_Seats", SeatLists);
-		        				bundle.putString("Price", BusSeats.get(0).getSeat_plan().get(0).getPrice()+"");
-		        				bundle.putString("sale_order_no", jsonObject.getString("sale_order_no"));
-		        				bundle.putString("ConfirmDate", todayDate);
-		        				bundle.putString("ConfirmTime", todayTime);
-		        				bundle.putString("CustomerName", AppLoginUser.getUserName());
-		        				//Get Seat Count
-		        				String[] seats = SeatLists.split(",");
-		        				bundle.putString("SeatCount", seats.length+"");*/
 			    				
 		        				//Show Voucher
 		        				startActivity(new Intent(BusSelectSeatActivity.this, PDFBusActivity.class).putExtras(bundle));
@@ -541,7 +573,7 @@ import com.smk.skalertmessage.SKToastMessage;
 					}else{
 						isBooking = 0;
 						dialog.dismiss();
-						SKToastMessage.showMessage(BusSelectSeatActivity.this, jsonObject.getString("message"), SKToastMessage.ERROR);
+						SKToastMessage.showMessage(BusSelectSeatActivity.this, "အခ်ိန္ ေနာက္ က် ေနသည့္အတြက္ ၀ယ္ လုိ႔ မရပါ။", SKToastMessage.ERROR);
 					}
 				} catch (JSONException e) {
 					// TODO Auto-generated catch block
@@ -550,7 +582,6 @@ import com.smk.skalertmessage.SKToastMessage;
 			}
 		};
 		
-		//"http://elite.easyticket.com.mm/sale"
 		HttpConnection lt = new HttpConnection(handler,"POST", "http://"+ permit_ip +"/sale", params);
 		lt.execute();
 		
@@ -713,19 +744,43 @@ import com.smk.skalertmessage.SKToastMessage;
 						connectionDetector.showErrorDialog();
 					}
 				}else{
-					SKToastMessage.showMessage(BusSelectSeatActivity.this, "Please choose the seat.", SKToastMessage.ERROR);
+					SKToastMessage.showMessage(BusSelectSeatActivity.this, "ခံု ေရြးပါ။", SKToastMessage.ERROR);
 				}
 			}
 			
 			if(v == btn_check_out){
-				if(SelectedSeat.length() != 0){
-					if(connectionDetector.isConnectingToInternet()){
-						postSale();
-					}else{
-						connectionDetector.showErrorDialog();
+				if(SelectedSeat.length() != 0){									
+					
+/*					 String s = "2013-03-24 21:54:00";
+				        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+				        try
+				        {
+				            Date date = simpleDateFormat.parse(s);
+
+				            Log.i("", "Sample Date Time : "+simpleDateFormat.format(date));
+				        }
+				        catch (ParseException ex)
+				        {
+				        	Log.i("", "Sample Exception "+ex);
+				        }*/
+				        
+					//Check late date
+					if (tripDate != null && tDate != null) {
+						if (tripDate.compareTo(tDate) < 0) {
+							SKToastMessage.showMessage(BusSelectSeatActivity.this, "အခ်ိန္ ေနာက္ က် ေနသည့္အတြက္ ၀ယ္ လုိ႔ မရပါ။", SKToastMessage.ERROR);
+						}else {
+							if(connectionDetector.isConnectingToInternet()){
+								
+								postSale();
+							}else{
+								connectionDetector.showErrorDialog();
+							}
+						}
+					}else {
+						Log.i("", "trip date: "+tripDate+", current date: "+tDate);
 					}
 				}else{
-					SKToastMessage.showMessage(BusSelectSeatActivity.this, "Please choose the seat.", SKToastMessage.ERROR);
+					SKToastMessage.showMessage(BusSelectSeatActivity.this, "ခံု ေရြးပါ။", SKToastMessage.ERROR);
 				}
 			}				
 		}

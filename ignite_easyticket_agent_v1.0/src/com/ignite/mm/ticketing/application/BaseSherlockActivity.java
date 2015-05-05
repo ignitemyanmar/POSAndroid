@@ -87,13 +87,21 @@ public class BaseSherlockActivity extends SherlockActivity {
     }
 	public boolean onOptionsItemSelected(MenuItem item) {
 
-	    switch(item.getItemId()) {
+		if (item.getItemId() == R.id.menu_logout) {
+			AppLoginUser.logout();
+        	closeAllActivities();
+        	return true;
+		}else {
+			return false;  
+		}
+		
+	    /*switch(item.getItemId()) {
 	        case R.id.menu_logout:
 	        	AppLoginUser.logout();
 	        	closeAllActivities();
 	        	return true;
    	   	}
-		return false;  
+		return false; */ 
 	 }
 	
 	public static String changeDate(String date){

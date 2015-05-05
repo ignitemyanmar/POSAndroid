@@ -54,7 +54,7 @@ public class UserLogin extends SherlockActivity {
 		actionBarBack = (ImageButton) actionBar.getCustomView().findViewById(
 				R.id.action_bar_back);
 		actionBarBack.setOnClickListener(clickListener);
-		actionBarTitle.setText("User's Login");
+		actionBarTitle.setText("Agent's Login");
 		actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
 		
 		txtEmail = (EditText) this.findViewById(R.id.txt_login_email);
