@@ -265,8 +265,11 @@ public class UserRegister extends SherlockActivity implements OnClickListener {
 			
 			Log.i("", "Enter here.................... (Register)");
 			
-			NetworkEngine.getInstance().postRegister(FirstName, LastName, UserEmail, UserPassword
-					, Phone, NRC, Address, "agent", new Callback<LoginUser>() {
+			String userName = FirstName+" "+LastName;
+			
+			NetworkEngine.setIP("easyticket.com.mm");
+			NetworkEngine.getInstance().postRegister(userName, UserEmail, UserPassword
+					,Phone , NRC, Address, "agent", new Callback<LoginUser>() {
 				
 				public void success(LoginUser arg0, Response arg1) {
 					// TODO Auto-generated method stub

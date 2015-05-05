@@ -47,15 +47,7 @@
         <activity android:name=".DeperatureTimeActivity" android:screenOrientation="portrait"></activity>
         <activity android:name=".BusSelectSeatActivity" android:screenOrientation="portrait"></activity>
         <activity android:name=".Bus_Info_Activity" android:screenOrientation="portrait"></activity>
-        <activity android:name=".PDFBusActivity" android:screenOrientation="portrait">
-             
-            <!-- This activity handles "SEND" actions with text data -->
-		    <intent-filter>
-		        <action android:name="android.intent.action.SEND"/>
-		        <category android:name="android.intent.category.DEFAULT"/>
-		        <data android:mimeType="text/plain"/>
-		    </intent-filter>
-         </activity>
+        <activity android:name=".PDFBusActivity" android:screenOrientation="portrait"></activity>
          <activity android:name=".TicketPriceActivity" android:screenOrientation="portrait"></activity>
          <activity android:name=".ShowInfoActivity" android:screenOrientation="portrait"></activity>
          <activity android:name=".ShowInvoice" android:screenOrientation="portrait"></activity>
