@@ -11,7 +11,7 @@ import java.lang.reflect.Method;
 import java.util.Set;
 import java.util.UUID;
 
-import com.ignite.mm.ticketing.agent.PDFBusActivity;
+import com.ignite.mm.ticketing.client.PDFBusActivity;
 import com.zkc.helper.printer.bt.BtService;
 
 import android.bluetooth.BluetoothAdapter;

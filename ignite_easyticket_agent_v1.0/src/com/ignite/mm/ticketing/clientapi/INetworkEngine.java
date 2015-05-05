@@ -77,8 +77,7 @@ public interface INetworkEngine {
 	@FormUrlEncoded
 	@POST("/user-register")
 	void postRegister(
-			@Field("name") String first_name,
-			@Field("last_name") String last_name,
+			@Field("name") String name,
 			@Field("email") String email,
 			@Field("password") String password,
 			@Field("phone") String phone,

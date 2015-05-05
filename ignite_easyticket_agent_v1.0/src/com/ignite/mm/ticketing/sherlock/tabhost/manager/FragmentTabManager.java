@@ -2,8 +2,8 @@ package com.ignite.mm.ticketing.sherlock.tabhost.manager;
 
 import java.util.HashMap;
 
-import com.ignite.mm.ticketing.agent.MainFragment;
-import com.ignite.mm.ticketing.agent.R;
+import com.ignite.mm.ticketing.client.MainFragment;
+import com.ignite.mm.ticketing.client.R;
 
 import android.content.Context;
 import android.graphics.Color;

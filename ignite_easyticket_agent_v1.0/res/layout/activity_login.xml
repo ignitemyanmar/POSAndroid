@@ -19,7 +19,7 @@
                 android:orientation="vertical" >
 
                 <LinearLayout
-                    android:layout_width="300dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
@@ -84,8 +84,7 @@
                         android:layout_height="wrap_content"
                         android:text="Don&apos;t you have an account?"
                         android:textColor="@color/gray"
-                        android:textSize="16dp" 
-                        android:visibility="gone"/>
+                        android:textSize="16dp" />
 
                     <Button
                         android:id="@+id/btn_register"
@@ -97,8 +96,7 @@
                         android:maxWidth="300dp"
                         android:text="Register"
                         android:textColor="@color/black"
-                        android:textSize="18dp"
-                        android:visibility="gone" />
+                        android:textSize="18dp" />
 
                 </LinearLayout>
 

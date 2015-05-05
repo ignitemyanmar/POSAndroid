@@ -17,8 +17,8 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.ignite.mm.ticketing.agent.BusSelectSeatActivity;
-import com.ignite.mm.ticketing.agent.R;
+import com.ignite.mm.ticketing.client.BusSelectSeatActivity;
+import com.ignite.mm.ticketing.client.R;
 import com.ignite.mm.ticketing.sqlite.database.model.OperatorGroupUser;
 import com.ignite.mm.ticketing.sqlite.database.model.Seat_list;
 

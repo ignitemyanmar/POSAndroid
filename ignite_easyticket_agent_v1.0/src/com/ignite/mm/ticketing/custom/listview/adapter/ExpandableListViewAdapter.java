@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import com.ignite.mm.ticketing.agent.R;
+import com.ignite.mm.ticketing.client.R;
 import com.ignite.mm.ticketing.sqlite.database.model.MovieCinema;
 import com.ignite.mm.ticketing.sqlite.database.model.MovieDate;
 

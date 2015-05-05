@@ -191,7 +191,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="0dp"
-                            android:text="ထြက္ခြာမည့္ ရက္ : 0000-00-00"
+                            android:text="ထြက္ခြာမည့္ ေန႔ရက္ : 0000-00-00"
                             android:textSize="14dp" />
 
                         <com.smk.custom.view.CustomTextView
@@ -247,7 +247,7 @@
                             android:textColor="@color/white"
                             android:textSize="14dp"
                             android:textStyle="bold"
-                            android:visibility="visible" />
+                            android:visibility="gone" />
 
                         <com.smk.custom.view.CustomButton
                             android:id="@+id/btn_now_booking"
@@ -261,7 +261,7 @@
                             android:textColor="@color/white"
                             android:textSize="14dp"
                             android:textStyle="bold"
-                            android:visibility="gone" />
+                            android:visibility="visible" />
 
                         <com.smk.custom.view.CustomButton
                             android:id="@+id/btn_booking"

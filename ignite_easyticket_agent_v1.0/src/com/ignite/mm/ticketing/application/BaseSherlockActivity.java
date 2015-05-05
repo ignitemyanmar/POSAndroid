@@ -16,7 +16,7 @@ import android.util.Log;
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
-import com.ignite.mm.ticketing.agent.R;
+import com.ignite.mm.ticketing.client.R;
 
 public class BaseSherlockActivity extends SherlockActivity {
 	
@@ -87,21 +87,13 @@ public class BaseSherlockActivity extends SherlockActivity {
     }
 	public boolean onOptionsItemSelected(MenuItem item) {
 
-		if (item.getItemId() == R.id.menu_logout) {
-			AppLoginUser.logout();
-        	closeAllActivities();
-        	return true;
-		}else {
-			return false;  
-		}
-		
-	    /*switch(item.getItemId()) {
+	    switch(item.getItemId()) {
 	        case R.id.menu_logout:
 	        	AppLoginUser.logout();
 	        	closeAllActivities();
 	        	return true;
    	   	}
-		return false; */ 
+		return false;  
 	 }
 	
 	public static String changeDate(String date){
