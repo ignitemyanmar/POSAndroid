@@ -214,7 +214,7 @@ public class SaleActivity  extends BaseActivity{
 				Intent intent;
 				PackageManager manager = getPackageManager();
 				try {
-					intent = manager.getLaunchIntentForPackage("com.ignite.mm.ticketing");
+					intent = manager.getLaunchIntentForPackage("com.ignite.mm.ticketing.agent");
 					
 				    if (intent == null){
 				    	Toast.makeText(SaleActivity.this, "Not Found Application!", Toast.LENGTH_SHORT).show();
