@@ -5,6 +5,7 @@
 package EasyTicketBrowser.src.detailed.ui;
 
 import java.awt.Component;
+import java.awt.Font;
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -62,7 +63,8 @@ public class MenuBar extends JMenuBar {
   private final ControlPanel control_pane_;
   private final DownloadDialog downloadDialog_;
   private final CefCookieManager cookieManager_;
-
+  private final Font font;
+  
   public MenuBar(Frame owner,
                  CefBrowser browser,
                  ControlPanel control_pane,
@@ -76,7 +78,10 @@ public class MenuBar extends JMenuBar {
 
     setEnabled(browser_ != null);
 
+    font = new Font("Verdana", Font.PLAIN, 12);
+    
     JMenu fileMenu = new JMenu("File");
+    fileMenu.setFont(font);
 
     JMenuItem openFileItem = new JMenuItem("Open file...");
     openFileItem.addActionListener(new ActionListener() {
@@ -92,9 +97,10 @@ public class MenuBar extends JMenuBar {
         }
       }
     });
-    fileMenu.add(openFileItem);
+    //fileMenu.add(openFileItem);
 
     JMenuItem openFileDialog = new JMenuItem("Save as...");
+    openFileDialog.setFont(font);
     openFileDialog.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
@@ -121,6 +127,7 @@ public class MenuBar extends JMenuBar {
     fileMenu.add(openFileDialog);
 
     JMenuItem printItem = new JMenuItem("Print...");
+    printItem.setFont(font);
     printItem.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
@@ -136,7 +143,7 @@ public class MenuBar extends JMenuBar {
         new SearchDialog(owner_, browser_).setVisible(true);
       }
     });
-    fileMenu.add(searchItem);
+    //fileMenu.add(searchItem);
 
     fileMenu.addSeparator();
 
@@ -147,7 +154,7 @@ public class MenuBar extends JMenuBar {
         browser_.viewSource();
       }
     });
-    fileMenu.add(viewSource);
+    //fileMenu.add(viewSource);
 
     JMenuItem getSource = new JMenuItem("Get source...");
     getSource.addActionListener(new ActionListener() {
@@ -157,7 +164,7 @@ public class MenuBar extends JMenuBar {
         browser_.getSource(visitor);
       }
     });
-    fileMenu.add(getSource);
+    //fileMenu.add(getSource);
 
     JMenuItem getText = new JMenuItem("Get text...");
     getText.addActionListener(new ActionListener() {
@@ -167,11 +174,12 @@ public class MenuBar extends JMenuBar {
         browser_.getText(visitor);
       }
     });
-    fileMenu.add(getText);
+    //fileMenu.add(getText);
 
-    fileMenu.addSeparator();
+    //fileMenu.addSeparator();
 
     JMenuItem showDownloads = new JMenuItem("Show Downloads");
+    showDownloads.setFont(font);
     showDownloads.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
@@ -190,7 +198,7 @@ public class MenuBar extends JMenuBar {
         cookieManager.setVisible(true);
       }
     });
-    fileMenu.add(showCookies);
+    //fileMenu.add(showCookies);
 
     JMenuItem showPlugins = new JMenuItem("Show Plugins");
     showPlugins.addActionListener(new ActionListener() {
@@ -201,7 +209,7 @@ public class MenuBar extends JMenuBar {
         pluginManager.setVisible(true);
       }
     });
-    fileMenu.add(showPlugins);
+    //fileMenu.add(showPlugins);
 
     fileMenu.addSeparator();
 

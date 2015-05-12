@@ -14,11 +14,12 @@ import org.cef.callback.CefContextMenuParams;
 import org.cef.callback.CefMenuModel;
 import org.cef.callback.CefMenuModel.MenuId;
 import org.cef.handler.CefContextMenuHandler;
-
+import org.cef.handler.CefContextMenuHandler.EventFlags;
 import EasyTicketBrowser.src.dialog.SearchDialog;
 import EasyTicketBrowser.src.dialog.ShowTextDialog;
 
 
+@SuppressWarnings("unused")
 public class ContextMenuHandler implements CefContextMenuHandler {
   private final Frame owner_;
   private Map<Integer,String> suggestions_ = new HashMap<Integer, String>();
@@ -27,6 +28,8 @@ public class ContextMenuHandler implements CefContextMenuHandler {
     owner_ = owner;
   }
 
+  
+  
   @Override
   public void onBeforeContextMenu(CefBrowser browser,
                                   CefContextMenuParams params,
@@ -34,7 +37,8 @@ public class ContextMenuHandler implements CefContextMenuHandler {
 
     model.clear();
 
-    // Navigation menu
+    //Command to disable right click event
+/*    // Navigation menu
     model.addItem(MenuId.MENU_ID_BACK, "Back");
     model.setEnabled(MenuId.MENU_ID_BACK, browser.canGoBack());
 
@@ -65,8 +69,11 @@ public class ContextMenuHandler implements CefContextMenuHandler {
       if (++id > MenuId.MENU_ID_SPELLCHECK_SUGGESTION_LAST)
         break;
     }
+    */
+    
   }
 
+  
   @Override
   public boolean onContextMenuCommand(CefBrowser browser,
                                       CefContextMenuParams params,
@@ -103,4 +110,6 @@ public class ContextMenuHandler implements CefContextMenuHandler {
   public void onContextMenuDismissed(CefBrowser browser) {
     suggestions_.clear();
   }
+  
+  
 }

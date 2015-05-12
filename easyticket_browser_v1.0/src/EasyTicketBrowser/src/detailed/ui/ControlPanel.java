@@ -4,6 +4,9 @@
 
 package EasyTicketBrowser.src.detailed.ui;
 
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.KeyboardFocusManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -12,12 +15,14 @@ import java.awt.event.MouseEvent;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.border.Border;
 
 import org.cef.OS;
 import org.cef.browser.CefBrowser;
@@ -32,7 +37,10 @@ public class ControlPanel extends JPanel {
   private final JLabel zoom_label_;
   private double zoomLevel_ = 0;
   private final CefBrowser browser_;
-
+  private Font font;
+  private final Dimension d;
+  private int radius;
+  
   public ControlPanel(CefBrowser browser) {
     browser_ = browser;
     setEnabled(browser_ != null);
@@ -40,10 +48,17 @@ public class ControlPanel extends JPanel {
     setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 
     add(Box.createHorizontalStrut(5));
-    add(Box.createHorizontalStrut(5));
+    add(Box.createVerticalStrut(5));
 
+    font = new Font("Verdana", Font.PLAIN, 14);
+    //set button size
+    d = new Dimension(90,30);
+    radius = 5;
+    
     backButton_ = new JButton("Back");
-    backButton_.setAlignmentX(LEFT_ALIGNMENT);
+    backButton_.setFont(font);
+    backButton_.setAlignmentX(LEFT_ALIGNMENT);    
+    //backButton_.setBorder(new RoundedBorder(radius));
     backButton_.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
@@ -54,7 +69,9 @@ public class ControlPanel extends JPanel {
     add(Box.createHorizontalStrut(5));
 
     forwardButton_ = new JButton("Forward");
+    forwardButton_.setFont(font);
     forwardButton_.setAlignmentX(LEFT_ALIGNMENT);
+    //forwardButton_.setBorder(new RoundedBorder(radius));
     forwardButton_.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
@@ -65,6 +82,10 @@ public class ControlPanel extends JPanel {
     add(Box.createHorizontalStrut(5));
 
     reloadButton_ = new JButton("Reload");
+    reloadButton_.setFont(font);
+    reloadButton_.setPreferredSize(d);
+    
+    //reloadButton_.setBorder(new RoundedBorder(radius));
     reloadButton_.setAlignmentX(LEFT_ALIGNMENT);
     reloadButton_.addActionListener(new ActionListener() {
       @Override
@@ -94,8 +115,11 @@ public class ControlPanel extends JPanel {
     add(Box.createHorizontalStrut(5));
 
     address_field_ = new JTextField(100);
+    font = new Font("Verdana", Font.PLAIN, 13);
+    address_field_.setFont(font);
     address_field_.setAlignmentX(LEFT_ALIGNMENT);
     address_field_.disable();
+    //address_field_.setBorder(new RoundedBorder(radius));
     address_field_.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
@@ -114,7 +138,9 @@ public class ControlPanel extends JPanel {
     add(Box.createHorizontalStrut(5));
 
     JButton goButton = new JButton("Go");
+    goButton.setFont(font);
     goButton.setAlignmentX(LEFT_ALIGNMENT);
+    //goButton.setBorder(new RoundedBorder(radius));
     goButton.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
@@ -125,7 +151,9 @@ public class ControlPanel extends JPanel {
     add(Box.createHorizontalStrut(5));
 
     JButton minusButton = new JButton("-");
+    minusButton.setFont(font);
     minusButton.setAlignmentX(CENTER_ALIGNMENT);
+   // minusButton.setBorder(new RoundedBorder(radius));
     minusButton.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
@@ -139,7 +167,9 @@ public class ControlPanel extends JPanel {
     add(zoom_label_);
 
     JButton plusButton = new JButton("+");
+    plusButton.setFont(font);
     plusButton.setAlignmentX(CENTER_ALIGNMENT);
+    //plusButton.setBorder(new RoundedBorder(radius));
     plusButton.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
@@ -154,7 +184,9 @@ public class ControlPanel extends JPanel {
     if (browser == browser_) {
       backButton_.setEnabled(canGoBack);
       forwardButton_.setEnabled(canGoForward);
-      reloadButton_.setText( isLoading ? "Abort" : "Reload");
+      reloadButton_.setText( isLoading ? "X" : "Reload");
+      reloadButton_.setFont(font);
+      //reloadButton_.setForeground(Color.RED);
     }
   }
 

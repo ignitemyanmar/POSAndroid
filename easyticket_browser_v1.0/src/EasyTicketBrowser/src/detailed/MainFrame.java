@@ -7,6 +7,7 @@ package EasyTicketBrowser.src.detailed;
 import java.awt.BorderLayout;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -74,7 +75,10 @@ public class MainFrame extends JFrame {
   public static void main(String [] args) {
     // OSR mode is enabled by default on Linux.
     // and disabled by default on Windows and Mac OS X.
+	  
+	
     boolean osrEnabledArg = OS.isLinux();
+    
     String cookiePath = null;
     for (String arg : args) {
       arg = arg.toLowerCase();
@@ -107,6 +111,8 @@ public class MainFrame extends JFrame {
       }
     });
     
+   // Window.
+    
     Image icon = Toolkit.getDefaultToolkit().getImage("ic_launcher.gif");
     frame.setIconImage(icon);
     frame.setSize(800, 600);
@@ -136,12 +142,14 @@ public class MainFrame extends JFrame {
     CefApp myApp = CefApp.getInstance(args, settings);
     CefVersion version = myApp.getVersion();
     System.out.println("Using:\n" + version);
+    	
 
     //    We're registering our own AppHandler because we want to
     //    add an own schemes (search:// and client://) and its corresponding
     //    protocol handlers. So if you enter "search:something on the web", your
     //    search request "something on the web" is forwarded to www.google.com
     CefApp.addAppHandler(new AppHandler(args));
+    
    
     //    By calling the method createClient() the native part
     //    of JCEF/CEF will be initialized and an  instance of
@@ -165,6 +173,7 @@ public class MainFrame extends JFrame {
     client_.addJSDialogHandler(new JSDialogHandler());
     client_.addKeyboardHandler(new KeyboardHandler());
     client_.addRequestHandler(new RequestHandler(this));
+    
 
     //    Beside the normal handler instances, we're registering a MessageRouter
     //    as well. That gives us the opportunity to reply to JavaScript method
@@ -201,9 +210,12 @@ public class MainFrame extends JFrame {
     //      For example if you navigate to a URL which does not exist, the 
     //      browser will show up an error message.        
     
-    client_.addLoadHandler(new CefLoadHandlerAdapter() {
     
-
+   
+    
+    client_.addLoadHandler(new CefLoadHandlerAdapter() {
+ 
+    	
 	@Override
       public void onLoadingStateChange(CefBrowser browser,
                                        boolean isLoading,
@@ -213,103 +225,61 @@ public class MainFrame extends JFrame {
         control_pane_.update(browser, isLoading, canGoBack, canGoForward);
         status_panel_.setIsInProgress(isLoading);
 
-        if (!isLoading && !errorMsg_.isEmpty()) {
-          browser.loadString(errorMsg_, control_pane_.getAddress());
-          errorMsg_ = "";
+        if (!isLoading && !errorMsg_.equals("")) {
+         	browser.loadString(errorMsg_, control_pane_.getAddress());
+         	errorMsg_ = "";
         }
-        
-        System.out.println("On Loading ....!");
-        
-        //Delete All .txt files on user's Desktop
-        deleteAllTxtFiles(); 
-      }
+               
+        if (isLoading) {
+        	System.out.println("On Loading ....!");
+            //Delete All .txt files on user's Desktop
+            deleteAllTxtFiles();
+		}
+      }		  
       
-      @Override
-      public void onLoadError(CefBrowser browser,
-                              int frameIdentifer,
-                              ErrorCode errorCode,
-                              String errorText,
-                              String failedUrl) {
-    	  
-    	  System.out.println("On Load Error Result: "+browser.toString()+", FrameID: "+frameIdentifer
-    			  +", ErrorCode: "+errorCode+", FailedURL: "+failedUrl);
-    	  
-    	  ErrCode = errorCode;
-    	  ErrTxt = errorText;
-    	  FailedURL = failedUrl;
-    	  
-    	  if (errorCode != ErrorCode.ERR_NONE && errorCode != ErrorCode.ERR_ABORTED) {
-    		  
-          //Delete All .txt files on user's Desktop
-          deleteAllTxtFiles();
-          showErrorPage();
-          browser.stopLoad();
-        }                
-      }              
-      
-      @SuppressWarnings("resource")
-	@Override
-    	public void onLoadEnd(CefBrowser arg0, int arg1, int httpStatus) {
-    		// TODO Auto-generated method stub
-    		super.onLoadEnd(arg0, arg1, httpStatus);
-    		
-    		//Do something
-			//System.out.println("Enter On load End !!!!!!!!!!!!!!"+arg0+", id: "+arg1+", status: "+httpStatus);
-/*    		if (!errorCode.equals("200")) {
-			try {
-	    	   if (checkInternet(browser_)) {
-	    		   System.out.println("Reloading using cache....(AutoReload)");
-	    		   browser_.reload();
-			}else {
-				//Show pop up "No Internet Connection"
-				System.out.println("Connection Fail....(AutoReload)");
-				//browser_.stopLoad();
-			}
-	    	   
-			} catch (UnknownHostException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+    @Override
+    public void onLoadError(CefBrowser browser,
+                            int frameIdentifer,
+                            ErrorCode errorCode,
+                            String errorText,
+                            String failedUrl) {
+    	
+    	 System.out.println("On Load Error Result: "+browser.toString()+", FrameID: "+frameIdentifer
+   			  +", ErrorCode: "+errorCode+", FailedURL: "+failedUrl);
+    	     	 
+		try {
+    	   if (checkInternet(browser)) {
+    	    	if (errorCode == ErrorCode.ERR_INTERNET_DISCONNECTED) {
+    	    		 errorMsg_ = "<html><head>";
+    		         errorMsg_ += "<title>Error while loading</title>";
+    		         errorMsg_ += "</head><body><center>";
+    		         errorMsg_ += "<h1>" + (ErrCode == null ? "" : ErrCode) + "</h1>";
+    		         errorMsg_ += "<p><br/><br/><br/></p>";
+    		         errorMsg_ += "<h3>Fail to load ... :[ </h3>";
+    		         errorMsg_ += "<p>Pls check internet connection.(Connected)</p>";
+    		         errorMsg_ += "</center></body></html>";
+    		         browser.stopLoad();
+    		     }
 		}else {
-			System.out.println("No Error Page!");
-		}*/
-    		
-/*    		int port = 80; 
-    		ServerSocket server = new ServerSocket(port);
-  			// timeout after 60 seconds
-  			server.setSoTimeout(60000);
-  			try {
-  			  Socket socket = server.accept();
-  			  }
-  			catch ( java.io.InterruptedIOException e ) {
-  			  System.err.println( "Timed Out (60 sec)!" );
-  			  }*/
-    		
-    		/*InetAddress addr = null;
-			try {
-				addr = InetAddress.getByName(browser_.getURL());
-			} catch (UnknownHostException e) {
-				// TODO Auto-generated catch block
-				System.out.println("This webpage is not available");
-				e.printStackTrace();
-			}
-			  int port = 80; 
-			  SocketAddress sockaddr = new InetSocketAddress(addr, port);
-			  Socket sock = new Socket(); 
-			  int timeoutMs = 3000; 
-			  try {
-				sock.connect(sockaddr, timeoutMs);
-				System.out.println("No Connection Time Out");				
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				System.out.println("Connection Time Out!");
-				e.printStackTrace();
-				showErrorPage();				
-			}*/
-    	}
+			 errorMsg_ = "<html><head>";
+	         errorMsg_ += "<title>Error while loading</title>";
+	         errorMsg_ += "</head><body><center>";
+	         errorMsg_ += "<h1>" + (ErrCode == null ? "" : ErrCode) + "</h1>";
+	         errorMsg_ += "<p><br/><br/><br/></p>";
+	         errorMsg_ += "<h3>Fail to load ... :[ </h3>";
+	         errorMsg_ += "<p>Pls check internet connection</p>";
+	         errorMsg_ += "</center></body></html>";
+	         browser.stopLoad();
+		}
+    	   
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+     }         
     });   
     
         
@@ -332,14 +302,13 @@ public class MainFrame extends JFrame {
       cookieManager_ = CefCookieManager.getGlobalManager();
     }
     
+    //app.easyticket.com.mm/ezadmin
+    //app.easyticket.com.mm
     browser_ = client_.createBrowser("app.easyticket.com.mm/ezadmin",
                                      osrEnabled,
                                      false,
                                      requestContext);       
     
-    //app.easyticket.com.mm/ezadmin
-    //app.easyticket.com.mm
-
     //Last but not least we're setting up the UI for this example implementation.
     getContentPane().add(createContentPanel(), BorderLayout.CENTER);
     MenuBar menuBar = new MenuBar(this,
@@ -368,10 +337,11 @@ public class MainFrame extends JFrame {
   /**
    *  Show Error Page
    */
-  private void showErrorPage() {
+  private void showErrorPage(CefBrowser browser) {
 	// TODO Auto-generated method stub
-	  System.out.println("Show Error Page!!!!!!");
-	  errorMsg_  = "<html><head>";
+	  System.out.println("Show Error Page!!!!!!");	  
+	  
+	  errorMsg_ = "<html><head>";
       errorMsg_ += "<title>Error while loading</title>";
       errorMsg_ += "</head><body><center>";
       errorMsg_ += "<h1>" + (ErrCode == null ? "" : ErrCode) + "</h1>";
@@ -379,6 +349,7 @@ public class MainFrame extends JFrame {
       errorMsg_ += "<h3>Fail to load ... :[ " + FailedURL + "</h3>";
       errorMsg_ += "<p>Pls check internet connection. (or) check website address. </p>";
       errorMsg_ += "</center></body></html>";
+
 }
   
   /**
@@ -501,7 +472,7 @@ private boolean checkTimeOut() {
             }  
         }  
         
-/*	  	try 
+	  	try 
 	  		{ 
 	  		try 
 	  			{ 
@@ -519,7 +490,7 @@ private boolean checkTimeOut() {
 	  			}
 	  		} catch (Exception e){ 
 	  			e.printStackTrace(); 
-	  		} */
+	  		} 
 	  	
 	  	return isConnected;
 	  } 
