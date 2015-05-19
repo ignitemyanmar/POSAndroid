@@ -6,6 +6,7 @@ package com.ignite.mm.ticketing.sqlite.database.model;
 	private String name;
 	private String address;
 	private String phone;
+	private String cli_operator_id;
 	
 	public Operator(String id, String name, String address, String phone) {
 		super();
@@ -47,11 +48,21 @@ package com.ignite.mm.ticketing.sqlite.database.model;
 	this.phone = phone;
 	}
 
+	
+	public String getCli_operator_id() {
+		return cli_operator_id;
+	}
+
+	public void setCli_operator_id(String cli_operator_id) {
+		this.cli_operator_id = cli_operator_id;
+	}
+
 	@Override
 	public String toString() {
 		return "Operator [id=" + id + ", name=" + name + ", address=" + address
-				+ ", phone=" + phone + "]";
+				+ ", phone=" + phone + ", cli_operator_id=" + cli_operator_id
+				+ "]";
 	}
-	
+
 	
 }

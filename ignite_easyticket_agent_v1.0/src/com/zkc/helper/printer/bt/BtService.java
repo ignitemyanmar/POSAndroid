@@ -13,7 +13,7 @@ import android.os.Message;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.ignite.mm.ticketing.client.PDFBusActivity;
+import com.ignite.mm.ticketing.agent.PDFBusActivity;
 import com.ignite.mm.ticketing.sqlite.database.model.Device;
 import com.zkc.helper.printer.BlueToothService;
 import com.zkc.helper.printer.PrintService;
@@ -93,7 +93,9 @@ public class BtService extends PrintService implements PrinterClass {
 		}
 		if(mBTService.getState() == STATE_CONNECTED)
 		{
+			Log.i("", "mBTService is disconnected ????????");
 			mBTService.DisConnected();
+			
 		}
 		mBTService.ConnectToDevice(device);// ¡¨Ω”¿∂—¿
 		return true;

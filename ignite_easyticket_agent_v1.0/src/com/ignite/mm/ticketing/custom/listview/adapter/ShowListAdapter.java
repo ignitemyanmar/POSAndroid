@@ -2,7 +2,7 @@ package com.ignite.mm.ticketing.custom.listview.adapter;
 
 import java.util.ArrayList;
 
-import com.ignite.mm.ticketing.client.R;
+import com.ignite.mm.ticketing.agent.R;
 import com.ignite.mm.ticketing.sqlite.database.model.ShowList;
 
 import android.app.Activity;

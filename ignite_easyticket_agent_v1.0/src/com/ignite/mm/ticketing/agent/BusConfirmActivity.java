@@ -1,8 +1,11 @@
 package com.ignite.mm.ticketing.agent;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
@@ -123,6 +126,7 @@ public class BusConfirmActivity extends BaseSherlockActivity {
 	private List<RadioGroup> lst_rdo_gp_free = new ArrayList<RadioGroup>();
 	private List<EditText> lst_ticket_no = new ArrayList<EditText>();
 	private TextView actionBarTitle2;
+	private String Permit_agent_id;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -175,6 +179,10 @@ public class BusConfirmActivity extends BaseSherlockActivity {
 		
 		SaleOrderNo = bundle.getString("sale_order_no");
 		BusOccurence = bundle.getString("bus_occurence");
+		
+		Permit_agent_id = bundle.getString("permit_agent_id");
+		
+		Log.i("", "Permit_agent_id : "+Permit_agent_id);
 		
 		edt_buyer = (EditText) findViewById(R.id.edt_buyer);
 		edt_nrc_no = (AutoCompleteTextView) findViewById(R.id.edt_nrc_no);
@@ -806,7 +814,7 @@ public class BusConfirmActivity extends BaseSherlockActivity {
 				+"access: "+bundle.getString("permit_access_token")+
 				", SaleOrderNo: "+SaleOrderNo+
 				", Reference no: "+edt_ref_invoice_no.getText().toString()+
-				", AgentID: "+AgentID+
+				", AgentID: "+Permit_agent_id+
 				", Agent Name: "+auto_txt_agent.getText().toString()+
 				", Customer: "+edt_buyer.getText().toString()+
 				", Phone: "+edt_phone.getText().toString()+
@@ -826,7 +834,7 @@ public class BusConfirmActivity extends BaseSherlockActivity {
 				.encrypt(
 						SecureParam.postSaleConfirmParam(bundle.getString("permit_access_token")
 				, SaleOrderNo, edt_ref_invoice_no.getText().toString()
-				, AgentID, auto_txt_agent.getText().toString()
+				, Permit_agent_id, auto_txt_agent.getText().toString()
 				, edt_buyer.getText().toString()
 				, edt_phone.getText().toString(), edt_nrc_no.getText().toString()
 				, selectedRemarkType.toString(), edt_remark.getText().toString()
@@ -909,10 +917,40 @@ public class BusConfirmActivity extends BaseSherlockActivity {
     	{
     		edt_phone.setError("Enter Phone Number");
 			return false;
-		}    	
+		}   
+    	
+    	List<String> listTicketNo = new ArrayList<String>();
+    	for (int i = 0; i < lst_ticket_no.size(); i++) {
+    		listTicketNo.add(lst_ticket_no.get(i).getText().toString());
+		}
+    	
+    	//Set List doesn't accept duplicate values, & if (Not duplicate), return true
+    	                                            // if (duplicate), return false
+    	final Set<String> set1 = new HashSet<String>();
+
+    	for (String ticketNo : listTicketNo) {
+    		//If Duplicate Tickets are exists in List 
+    		if (!set1.add(ticketNo)) {
+    			SKToastMessage.showMessage(BusConfirmActivity.this, "လက္ မွတ္ နံပါတ္ "+ticketNo+" တူေနပါသည္။ တ ျခား နံပါတ္ ေျပာင္းထည့္ပါ။", SKToastMessage.ERROR);
+    			return false;
+    		}
+    	}
     	
     	return true;
    }
+	
+	public static Set<String> findDuplicates(List<String> listTicket) {
+	 
+	final Set<String> duplicate = new HashSet<String>();
+	final Set<String> set1 = new HashSet<String>();
+
+	for (String ticketNo : listTicket) {
+		if (!set1.add(ticketNo)) {
+			duplicate.add(ticketNo);
+		}
+	}
+	return duplicate;
+}
 	
 	public boolean checkFieldsOperator()
     {

@@ -118,6 +118,7 @@ public class BusOperatorActivity extends BaseSherlockActivity {
 			Bundle bundle = new Bundle();
 			bundle.putString("operator_id", operatorList.get(position).getId());
 			bundle.putString("operator_name", operatorList.get(position).getName());
+			bundle.putString("client_operator_id", operatorList.get(position).getCli_operator_id());
 			
 			Log.i("", "User's Operator ID: "+operatorList.get(position).getId());
 			

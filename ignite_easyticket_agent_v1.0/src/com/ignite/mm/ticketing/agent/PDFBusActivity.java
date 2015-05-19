@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
@@ -67,6 +68,7 @@ public class PDFBusActivity extends BaseSherlockActivity {
 	private String OperatorName = "";
 	private String BusTrip =  "";
 	private String TripTime = "";
+	
 	private String BusClass = "";
 	private String SeatPrice = "0";
 	public static String Bar_Code_No = "0";
@@ -106,6 +108,8 @@ public class PDFBusActivity extends BaseSherlockActivity {
 	private String Phone;
 	private String TicketNo;
 	private String SeatCount;
+	
+	private String deviceAddr;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -206,11 +210,20 @@ public class PDFBusActivity extends BaseSherlockActivity {
 			            SKToastMessage.showMessage(PDFBusActivity.this, "The device does not have Bluetooth support!", SKToastMessage.LENGTH_LONG);
 			            
 			        }else {
+			        	//Check Bluetooth Open or not 
 			        	if (!printerClass.IsOpen()) {
+			        		Log.i("", "Device Not Open yet!");
 							printerClass.open(PDFBusActivity.this);
+							checkState = false;
 							connectBluetoothService();
-							printSlip();
-						}else {
+							//printSlip();
+						} else if (printerClass.getState() == PrinterClass.LOSE_CONNECT
+								|| printerClass.getState() == PrinterClass.FAILED_CONNECT) {
+							checkState = false;
+							connectBluetoothService();
+							//printSlip();
+						} else {
+							Log.i("", "Device Opened!!!!!");
 							printSlip();
 						}
 			        	
@@ -308,6 +321,7 @@ public class PDFBusActivity extends BaseSherlockActivity {
 	 */
 	
 	protected ProgressDialog progressDialog;
+	
 	private void printSlip() {
 		// TODO Auto-generated method stub
 		
@@ -329,7 +343,7 @@ public class PDFBusActivity extends BaseSherlockActivity {
 		}
 		
 		//Print Ticket
-		//If not connected , show dialog for device list
+		//If not connected , show device list dialog
 		//If connected, print directly
 		final Bitmap ticketBitmap = getWholeListViewItemsToBitmap();
 		if (ticketBitmap != null) {
@@ -341,16 +355,16 @@ public class PDFBusActivity extends BaseSherlockActivity {
 				Log.i("", "Printer class is not null!");
 				
 				//If Bluetooth Support not have ... 
-		        if (!BlueToothService.HasDevice()) {
+		        /*if (!BlueToothService.HasDevice()) {
 		        	
 		            SKToastMessage.showMessage(PDFBusActivity.this, "The device does not have Bluetooth support!", SKToastMessage.LENGTH_LONG);
 		            
-		        }else {
+		        }else {*/
 		        	
 		        	Log.i("", "Check State (2nd) On Print Method ==> If bluetooth support: "+printerClass.getState());
 		        	
-					if(printerClass.getState() != PrinterClass.STATE_CONNECTED)
-					{
+		        	//If not connected with printer, Show Device Dialog
+		        		if (printerClass.getState() != PrinterClass.STATE_CONNECTED){
 						Log.i("", "Not connect yet with device !!! ");
 						
 						BluetoothDeviceDialog deviceDialog = new BluetoothDeviceDialog(PDFBusActivity.this);
@@ -426,43 +440,80 @@ public class PDFBusActivity extends BaseSherlockActivity {
 								deviceDialog.getListView().setAdapter(adapter);	
 							}
 							
+							
 						deviceDialog.setCallbackListener(new BluetoothDeviceDialog.Callback() {
 							
 							public void onDeviceChoose(int position) {
 								//Connect to Selected Device's Address
 								Log.i("", "Enter Here, device choose !!!!!!!!!!!!!!");
 								
-								//Connect with the selected device
-								printerClass.connect(deviceList.get(position).getDeviceAddress());
-															
-								/*if (printerClass.getState() == PrinterClass.STATE_CONNECTING) {
-									Toast.makeText(PDFBusActivity.this, "connecting , pls wait ... !", Toast.LENGTH_SHORT).show();
-								}*/ 
+								deviceAddr = deviceList.get(position).getDeviceAddress();
+								
+								try {
+									//Connect with the selected device
+									printerClass.connect(deviceAddr);
+									checkState = true;
+									
+								} catch (IndexOutOfBoundsException e) {
+									// TODO: handle exception
+									Log.i("", "IndexOutOfBoundsException : "+e);
+									checkState = false;
+									showAlert("Can't Print! Index Out Of Bound...");
+								} catch (Exception e) {
+									// TODO: handle exception
+									Log.i("", "Exception : "+e);
+									checkState = false;
+									showAlert("Can't Print! Something is wrong...");
+								}
 								
 								progressDialog = ProgressDialog.show(PDFBusActivity.this, "", "Connecting , pls wait  ...", true);
 								progressDialog.setCancelable(true);
+								
+								/*if (printerClass.getState() == PrinterClass.STATE_CONNECTING) {
+									Toast.makeText(PDFBusActivity.this, "connecting , pls wait ... !", Toast.LENGTH_SHORT).show();
+								}*/ 
 							}
 						});
 						
 						deviceDialog.show();
 						
-					}else if(printerClass.getState() == PrinterClass.STATE_CONNECTED){
+					}else if(printerClass.getState() == PrinterClass.STATE_CONNECTED){ // If already connected before... 
 						
-						Log.i("", "Connect with Device !!!!!!!!!");
-						
-						try {
+		        		/*try {
+		        			Log.i("", "Connected Already!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! "+deviceAddr);
+							//Connect with the selected device		        			
+		        			printerClass.connect(deviceAddr);
 							checkState = true;
-							printerClass.printImage(ticketBitmap);
-							Toast.makeText(PDFBusActivity.this, "Connected & Printing ...", Toast.LENGTH_SHORT).show();
+							
+						} catch (IndexOutOfBoundsException e) {
+							// TODO: handle exception
+							Log.i("", "IndexOutOfBoundsException : "+e);
+							checkState = false;
+							showAlert("Can't Print! Index Out Of Bound...");
 						} catch (Exception e) {
 							// TODO: handle exception
-							Toast.makeText(PDFBusActivity.this, "Fail to print!", Toast.LENGTH_LONG).show();
+							Log.i("", "Exception : "+e);
+							checkState = false;
+							showAlert("Can't Print! Something is wrong...");
+						}*/
+		        		
+						if (ticketBitmap != null) {
+							try {
+								checkState = true;
+								printerClass.printImage(ticketBitmap);
+								Toast.makeText(PDFBusActivity.this, "Connected & Printing ...", Toast.LENGTH_SHORT).show();
+							} catch (Exception e) {
+								// TODO: handle exception
+								Toast.makeText(PDFBusActivity.this, "Fail to print!", Toast.LENGTH_LONG).show();
+							}
 						}
+						
 					}//End if - check connected 
-				}//End if - check if have Bluetooth support
+				//}//End if - check if have Bluetooth support
 			}else {
 				Log.i("", "Printer class is null!");
 			}
+			
 		}
 	}
 
@@ -651,7 +702,6 @@ public class PDFBusActivity extends BaseSherlockActivity {
 						final Bitmap ticketBitmap = getWholeListViewItemsToBitmap();
 						if (ticketBitmap != null) {
 							if (printerClass.getState() == PrinterClass.STATE_CONNECTED) {
-								
 								checkState = true;
 								printerClass.printImage(ticketBitmap);
 								progressDialog.dismiss();
@@ -660,8 +710,12 @@ public class PDFBusActivity extends BaseSherlockActivity {
 						}
 						break;
 					case PrinterClass.FAILED_CONNECT:
+						SKToastMessage.showMessage(PDFBusActivity.this, "Check your Device's Power Turn on ... ", SKToastMessage.WARNING);
+						progressDialog.dismiss();
 						break;
 					case PrinterClass.LOSE_CONNECT:
+						SKToastMessage.showMessage(PDFBusActivity.this, "Connection Lost ... ", SKToastMessage.WARNING);
+						progressDialog.dismiss();
 						Log.i("", "LOSE_CONNECT");
 					}
 					break;
@@ -714,22 +768,24 @@ public class PDFBusActivity extends BaseSherlockActivity {
 				e.printStackTrace();
 			}
 			
-
-			
 			if (PDFBusActivity.printerClass != null) {								
 				
 				if (PDFBusActivity.printerClass.getState() == PrinterClass.STATE_CONNECTED) {
 					Toast.makeText(PDFBusActivity.this, "connected device", Toast.LENGTH_LONG).show();	
 					checkState=true;
+					//(Command Line _ if already connected with device before, not to put Printer Class's state (0))
+					//connectBluetoothService(); 
 				}else if (PDFBusActivity.printerClass.getState() == PrinterClass.STATE_CONNECTING) {
 					
 					Toast.makeText(PDFBusActivity.this, "connecting device ...", Toast.LENGTH_LONG).show();
-					connectBluetoothService();  //Edited by Su Wai on 24 Mar, 2015
+					connectBluetoothService();  //Edited by Su Wai on 24 Mar, 2015 
 					
 				}else if(PDFBusActivity.printerClass.getState() == PrinterClass.LOSE_CONNECT
 						|| PDFBusActivity.printerClass.getState() == PrinterClass.FAILED_CONNECT){
 					
 					checkState = false;
+					
+					Log.i("", "Lose or Fail connect, checkState =  "+checkState);
 					Toast.makeText(PDFBusActivity.this, "Not connect device yet!", Toast.LENGTH_LONG).show();
 					
 					connectBluetoothService();   //Edited by Su Wai on 24 Mar, 2015
@@ -744,6 +800,9 @@ public class PDFBusActivity extends BaseSherlockActivity {
 		}
 	}
 	
+	/**
+	 *  Connect Bluetooth & put Printer Class's State
+	 */
 	private void connectBluetoothService() {
 		// TODO Auto-generated method stub
 		//Connect Bluetooth Service
@@ -755,7 +814,6 @@ public class PDFBusActivity extends BaseSherlockActivity {
 		}
 	}
 
-	
     private boolean checkData(List<Device> list,Device d)
     {
     	for (Device device : list) {

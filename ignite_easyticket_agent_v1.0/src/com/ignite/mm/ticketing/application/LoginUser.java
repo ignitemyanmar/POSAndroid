@@ -389,4 +389,6 @@ public class LoginUser {
 				+ groupBranch + ", accessToken=" + accessToken + ", createdAt="
 				+ createdAt + ", updatedAt=" + updatedAt + "]";
 	}
+	
+	
 }

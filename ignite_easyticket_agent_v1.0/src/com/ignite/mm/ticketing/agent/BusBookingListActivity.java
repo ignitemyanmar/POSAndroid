@@ -60,6 +60,7 @@ public class BusBookingListActivity extends BaseSherlockActivity {
 	private SKConnectionDetector connectionDetector;
 	private String operatorId;
 	private String operatorName;
+	private String client_operator_id;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -86,6 +87,7 @@ public class BusBookingListActivity extends BaseSherlockActivity {
 		if (bundle != null) {
 			operatorId = bundle.getString("operator_id");
 			operatorName = bundle.getString("operator_name");
+			client_operator_id = bundle.getString("client_operator_id");
 		}
 				
 		actionBarTitle.setText(operatorName+" / Booking စာရင္း");
@@ -327,7 +329,7 @@ public class BusBookingListActivity extends BaseSherlockActivity {
 		});
 	}	
 	
-	private void showAlert() {
+	public void showAlert() {
 		// TODO Auto-generated method stub
 		AlertDialog.Builder alert = new AlertDialog.Builder(BusBookingListActivity.this);
 		alert.setIcon(R.drawable.attention_icon);

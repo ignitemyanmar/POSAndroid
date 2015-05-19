@@ -30,19 +30,25 @@ import android.widget.TextView;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockActivity;
+import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.ignite.mm.ticketing.agent.R;
 import com.ignite.mm.ticketing.application.BaseSherlockActivity;
 import com.ignite.mm.ticketing.application.DecompressGZIP;
 import com.ignite.mm.ticketing.application.DeviceUtil;
+import com.ignite.mm.ticketing.application.LoginUser;
 import com.ignite.mm.ticketing.application.MCrypt;
 import com.ignite.mm.ticketing.application.SecureParam;
 import com.ignite.mm.ticketing.clientapi.NetworkEngine;
 import com.ignite.mm.ticketing.custom.listview.adapter.TripsCityAdapter;
+import com.ignite.mm.ticketing.sqlite.database.model.BundleListObject;
+import com.ignite.mm.ticketing.sqlite.database.model.OnlineSalePermitTrips;
 import com.ignite.mm.ticketing.sqlite.database.model.Permission;
+import com.ignite.mm.ticketing.sqlite.database.model.PermissionGlobal;
 import com.ignite.mm.ticketing.sqlite.database.model.TripsCollection;
 import com.smk.calender.widget.SKCalender;
 import com.smk.calender.widget.SKCalender.Callbacks;
+import com.smk.skalertmessage.SKToastMessage;
 import com.smk.skconnectiondetector.SKConnectionDetector;
 
 public class BusTripsCityActivity extends BaseSherlockActivity{
@@ -58,8 +64,9 @@ public class BusTripsCityActivity extends BaseSherlockActivity{
 	private TextView actionBarTitle2;
 	
 	//Permission Variables
-	private String permit_ip, permit_access_token, permit_operator_id;
+	private String permit_ip, permit_access_token, permit_operator_id, permit_operator_group_id, permit_agent_id;
 	private String operator_name;
+	private String client_operator_id;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +81,7 @@ public class BusTripsCityActivity extends BaseSherlockActivity{
 		if (bundle != null) {
 			operatorId = bundle.getString("operator_id");
 			operator_name = bundle.getString("operator_name");
+			client_operator_id = bundle.getString("client_operator_id");
 		}
 		
 		actionBar = getSupportActionBar();
@@ -147,13 +155,15 @@ public class BusTripsCityActivity extends BaseSherlockActivity{
 
 	private Permission permission;	
 	private List<TripsCollection> tripsCollections;
-	
+	private List<OnlineSalePermitTrips> onlineSalePermitTrips;
+	private List<TripsCollection> showTripList;
 	
 	private void getTripsCity(){
 		
 		dialog = ProgressDialog.show(this, "", " Please wait...", true);
         dialog.setCancelable(true);
         
+        //1. Get Permission
         NetworkEngine.setIP("app.easyticket.com.mm");
 		NetworkEngine.getInstance().getPermission(AppLoginUser.getAccessToken(), operatorId, new Callback<Response>() {
 			
@@ -170,22 +180,35 @@ public class BusTripsCityActivity extends BaseSherlockActivity{
 			public void success(Response arg0, Response arg1) {
 				// TODO Auto-generated method stub
 				if (arg0 != null) {
+					Log.i("", "Get Trip Body : "+arg0.getBody());
 					permission = DecompressGZIP.fromBody(arg0.getBody(), new TypeToken<Permission>(){}.getType());
 					
 					if (permission != null) {
 						Log.i("", "Trip Operator ID: "+operatorId);
 						Log.i("", "Permission: "+permission.toString());
 						
+						/*PermissionGlobal pSave = new PermissionGlobal(BusTripsCityActivity.this);
+						pSave.setIp(permission.getIp());
+						pSave.setAccess_token(permission.getAccess_token());
+						pSave.setOperator_id(permission.getOperator_id());
+						pSave.setOperator_group_id(permission.getOperator_group_id());
+						pSave.setAgent_id(permission.getAgent_id());
+						pSave.permission();*/
+						
 						permit_ip = permission.getIp();
 						permit_access_token = permission.getAccess_token();
 						permit_operator_id = permission.getOperator_id();
+						permit_operator_group_id = permission.getOperatorgroup_id();
+						permit_agent_id = permission.getOnlinesaleagent_id();
 						
 						String param = MCrypt.getInstance().encrypt(SecureParam.getTripsParam(permit_access_token, permit_operator_id));
+						
 						NetworkEngine.setIP(permit_ip);
 						
 						Log.i("", "Permit IP: "+permit_ip);
 						Log.i("", "Network engine instance: "+NetworkEngine.instance);
 						
+						//2. Get Trips by OperatorId
 						NetworkEngine.getInstance().getTrips(param, new Callback<Response>() {
 
 							public void failure(RetrofitError arg0) {
@@ -206,10 +229,9 @@ public class BusTripsCityActivity extends BaseSherlockActivity{
 									if (tripsCollections != null && tripsCollections.size() > 0) {
 										
 										Log.i("", "Trip collection: "+tripsCollections.toString());
-										grd_trips_city.setAdapter(new TripsCityAdapter(BusTripsCityActivity.this, tripsCollections));
-										//grd_trips_city.setChoiceMode(GridView.CHOICE_MODE_SINGLE);
-										//setGridViewHeightBasedOnChildren(grd_trips_city, 2);
-										dialog.dismiss();
+										
+										//3. Get Filter Trips by 24 hrs
+										getOnlineSalePermitTrips(tripsCollections);
 									}
 								}
 							}
@@ -219,6 +241,81 @@ public class BusTripsCityActivity extends BaseSherlockActivity{
 			}
 		});
 	}
+	
+	/**
+	 *  Get Online Sale Permit Trips for 24 hrs
+	 * @param tripsCollections All Trips by Operator
+	 */
+	private BundleListObject bundleOnlineTrips;
+	
+	private void getOnlineSalePermitTrips(final List<TripsCollection> tripsCollections) {
+		
+		NetworkEngine.setIP("app.easyticket.com.mm");
+		NetworkEngine.getInstance().getOnlineSalePermitTrip(AppLoginUser.getAccessToken(), client_operator_id, new Callback<Response>() {
+			
+			public void success(Response arg0, Response arg1) {
+				// TODO Auto-generated method stub
+				Log.i("", "Token: "+AppLoginUser.getAccessToken()+", OperatorId: "+client_operator_id);
+				
+				if (arg0 != null) {
+					
+					onlineSalePermitTrips = DecompressGZIP.fromBody(arg0.getBody(), new TypeToken<List<OnlineSalePermitTrips>>(){}.getType());
+					
+					if (onlineSalePermitTrips != null && onlineSalePermitTrips.size() > 0) {
+						
+						Log.i("", "Online Sale Trips(24hrs): "+onlineSalePermitTrips.toString());
+						
+						showTripList = new ArrayList<TripsCollection>();
+						
+							for (int i = 0; i < tripsCollections.size(); i++) {
+								boolean flat = false;
+								for (int j = 0; j < onlineSalePermitTrips.size(); j++) {
+									//all trips fromId & toId  == 24 hrs trips fromId & toId ?? 
+									if (tripsCollections.get(i).getFrom_id().equals(onlineSalePermitTrips.get(j).getFromId()) && tripsCollections.get(i).getTo_id().equals(onlineSalePermitTrips.get(j).getToId())) {
+										flat = true;
+										break;
+									}
+								}
+								//check duplicate trip
+								if(flat){
+									showTripList.add(tripsCollections.get(i));
+								}
+							}
+							
+							//Put OnlineSalePermitTrips into bundle object to send into BusTimeActivity
+							bundleOnlineTrips = new BundleListObject();
+							for (int i = 0; i < onlineSalePermitTrips.size(); i++) {
+								bundleOnlineTrips.getOnlineSalePermitTrips().add(onlineSalePermitTrips.get(i));
+							}
+						
+
+						Log.i("", "Show Trip List size : "+showTripList.size()+", Show Trip List (24 hrs) : "+showTripList);
+						
+						if (showTripList != null && showTripList.size() > 0) {
+							grd_trips_city.setAdapter(new TripsCityAdapter(BusTripsCityActivity.this, showTripList));
+							//grd_trips_city.setChoiceMode(GridView.CHOICE_MODE_SINGLE);
+							//setGridViewHeightBasedOnChildren(grd_trips_city, 2);
+						}else {
+							showAlert("No Trips!");
+						}
+						
+					}
+				}
+				
+				dialog.dismiss();
+			}
+			
+			public void failure(RetrofitError arg0) {
+				// TODO Auto-generated method stub
+				if (arg0.getResponse() != null) {
+					Log.i("", "Error Response: "+arg0.getResponse().getStatus());
+				}
+				
+				dialog.dismiss();
+			}
+		});
+	}
+	
 	
 	private Integer bookCount;
 	private void getNotiBooking(){
@@ -275,18 +372,27 @@ public class BusTripsCityActivity extends BaseSherlockActivity{
 			        	selectedDate = DateFormat.format("yyyy-MM-dd",formatedDate).toString();
 			        	skCalender.dismiss();
 			        	
+			        	
 			        	Bundle bundle = new Bundle();
 			        	bundle.putString("permit_access_token", permit_access_token);
 			        	bundle.putString("operator_id", permit_operator_id);
-						bundle.putString("from_id", tripsCollections.get(arg2).getFrom_id());
-						bundle.putString("to_id", tripsCollections.get(arg2).getTo_id());
-						bundle.putString("from", tripsCollections.get(arg2).getFrom());
-						bundle.putString("to", tripsCollections.get(arg2).getTo());
+						bundle.putString("from_id", showTripList.get(arg2).getFrom_id());
+						bundle.putString("to_id", showTripList.get(arg2).getTo_id());
+						bundle.putString("from", showTripList.get(arg2).getFrom());
+						bundle.putString("to", showTripList.get(arg2).getTo());
 						bundle.putString("date", selectedDate);
 						bundle.putString("permit_ip", permit_ip);
 						bundle.putString("operator_name", operator_name);
+						bundle.putString("permit_operator_group_id", permit_operator_group_id);
+						bundle.putString("permit_agent_id", permit_agent_id);
+						bundle.putString("online_sale_permit_trips", new Gson().toJson(bundleOnlineTrips));
 						
-						startActivity(new Intent(getApplicationContext(), BusTimeActivity.class).putExtras(bundle));			        	
+						Log.i("", "To time (from) : "+tripsCollections.get(arg2).getFrom()+", To time(to): "+tripsCollections.get(arg2).getTo());
+						
+						startActivity(new Intent(getApplicationContext(), 
+								BusTimeActivity.class).putExtras(bundle));
+						
+						//startActivity(new Intent(getApplicationContext(), BusTimeActivity.class).putExtras(bundle));			        	
 			        	
 			        }
 			  });

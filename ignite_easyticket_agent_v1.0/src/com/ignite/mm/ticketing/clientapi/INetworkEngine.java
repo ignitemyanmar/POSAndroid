@@ -77,7 +77,8 @@ public interface INetworkEngine {
 	@FormUrlEncoded
 	@POST("/user-register")
 	void postRegister(
-			@Field("name") String name,
+			@Field("name") String first_name,
+			@Field("last_name") String last_name,
 			@Field("email") String email,
 			@Field("password") String password,
 			@Field("phone") String phone,
@@ -104,7 +105,8 @@ public interface INetworkEngine {
 			@Field("state") String state, Callback<AccessToken> callback);
 	
 	@GET("/api/gettrips")
-	void getPermission(@Query("access_token") String token, @Query("operator_id") String operatorId, Callback<Response> callback);
+	void getPermission(@Query("access_token") String token, 
+			@Query("operator_id") String operatorId, Callback<Response> callback);
 	
 	@GET("/sale/order")
 	void getBooking(@Query("access_token") String token,
@@ -114,4 +116,8 @@ public interface INetworkEngine {
 			@Query("to") String to,
 			@Query("time") String time,
 			@Query("book_code") String book_code, Callback<Response> callback);
+	
+	@GET("/api/olsalepermittrips")
+	void getOnlineSalePermitTrip(@Query("access_token") String access_token,
+			@Query("operator_id") String operator_id, Callback<Response> callback);
 }

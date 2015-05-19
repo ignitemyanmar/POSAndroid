@@ -2,7 +2,8 @@ package com.ignite.mm.ticketing.custom.listview.adapter;
 
 import java.util.List;
 
-import com.ignite.mm.ticketing.client.R;
+import com.ignite.mm.ticketing.agent.R;
+import com.ignite.mm.ticketing.sqlite.database.model.OnlineSalePermitTrips;
 import com.ignite.mm.ticketing.sqlite.database.model.TripsCollection;
 
 import android.app.Activity;
@@ -17,9 +18,9 @@ public class TripsCityAdapter extends BaseAdapter {
 	private List<TripsCollection> listItem;
 	private Activity aty;
 	
-	public TripsCityAdapter(Activity aty, List<TripsCollection> _list){
+	public TripsCityAdapter(Activity aty, List<TripsCollection> onlineSalePermitTrips){
 		mInflater = LayoutInflater.from(aty);
-		listItem = _list;
+		listItem = onlineSalePermitTrips;
 		this.aty = aty;
 	}
 	

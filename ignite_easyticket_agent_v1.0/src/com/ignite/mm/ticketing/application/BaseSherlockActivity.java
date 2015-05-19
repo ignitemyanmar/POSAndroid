@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -16,11 +17,15 @@ import android.util.Log;
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
-import com.ignite.mm.ticketing.client.R;
+import com.ignite.mm.ticketing.agent.BusBookingListActivity;
+import com.ignite.mm.ticketing.agent.R;
+import com.ignite.mm.ticketing.sqlite.database.model.Permission;
+import com.ignite.mm.ticketing.sqlite.database.model.PermissionGlobal;
 
 public class BaseSherlockActivity extends SherlockActivity {
 	
 	public LoginUser AppLoginUser;
+	public PermissionGlobal AppPermission;
 	
 	public static final String FINISH_ALL_ACTIVITIES_ACTIVITY_ACTION = "com.ignite.FINISH_ALL_ACTIVITIES_ACTIVITY_ACTION";
 	private BaseActivityReceiver baseActivityReceiver = new BaseActivityReceiver();
@@ -59,6 +64,7 @@ public class BaseSherlockActivity extends SherlockActivity {
 		super.onCreate(savedInstanceState);
 		registerBaseActivityReceiver();
 		AppLoginUser = new LoginUser(this);
+		AppPermission = new PermissionGlobal(this);
 	}
 
 	@Override
@@ -87,13 +93,21 @@ public class BaseSherlockActivity extends SherlockActivity {
     }
 	public boolean onOptionsItemSelected(MenuItem item) {
 
-	    switch(item.getItemId()) {
+		if (item.getItemId() == R.id.menu_logout) {
+			AppLoginUser.logout();
+        	closeAllActivities();
+        	return true;
+		}else {
+			return false;  
+		}
+		
+	    /*switch(item.getItemId()) {
 	        case R.id.menu_logout:
 	        	AppLoginUser.logout();
 	        	closeAllActivities();
 	        	return true;
    	   	}
-		return false;  
+		return false; */ 
 	 }
 	
 	public static String changeDate(String date){
@@ -121,6 +135,15 @@ public class BaseSherlockActivity extends SherlockActivity {
 			e.printStackTrace();
 		}
 		return DateFormat.format("dd-MMMM-yyyy", StartDate).toString();
+	}
+	
+	public void showAlert(String message) {
+		// TODO Auto-generated method stub
+		AlertDialog.Builder alert = new AlertDialog.Builder(this);
+		//alert.setIcon(R.drawable.attention_icon);
+		//alert.setTitle("Warning");
+		alert.setMessage(message);
+		alert.show();
 	}
 	
 }

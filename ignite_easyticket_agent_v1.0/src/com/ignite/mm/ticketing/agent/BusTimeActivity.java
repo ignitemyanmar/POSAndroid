@@ -1,10 +1,15 @@
 package com.ignite.mm.ticketing.agent;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -12,6 +17,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
@@ -31,6 +37,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
 
 import com.actionbarsherlock.app.ActionBar;
+import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.ignite.mm.ticketing.agent.R;
 import com.ignite.mm.ticketing.application.BaseSherlockActivity;
@@ -41,13 +48,16 @@ import com.ignite.mm.ticketing.clientapi.NetworkEngine;
 import com.ignite.mm.ticketing.connection.detector.ConnectionDetector;
 import com.ignite.mm.ticketing.custom.listview.adapter.OperatorListAdapter;
 import com.ignite.mm.ticketing.custom.listview.adapter.TimeAdapter;
+import com.ignite.mm.ticketing.sqlite.database.model.BundleListObject;
 import com.ignite.mm.ticketing.sqlite.database.model.City;
 import com.ignite.mm.ticketing.sqlite.database.model.OAuth2Error;
+import com.ignite.mm.ticketing.sqlite.database.model.OnlineSalePermitTrips;
 import com.ignite.mm.ticketing.sqlite.database.model.Operator;
 import com.ignite.mm.ticketing.sqlite.database.model.Operators;
 import com.ignite.mm.ticketing.sqlite.database.model.Time;
+import com.ignite.mm.ticketing.sqlite.database.model.TripsCollection;
 
-public class BusTimeActivity extends BaseSherlockActivity {
+@SuppressLint("SimpleDateFormat") public class BusTimeActivity extends BaseSherlockActivity {
 	
 	private ConnectionDetector connectionDetector;
 	private LinearLayout mLoadingView;
@@ -83,7 +93,14 @@ public class BusTimeActivity extends BaseSherlockActivity {
 	private String permit_access_token;
 	private String permit_ip;
 	private String operator_name;
+	private String permit_operator_group_id;
+	private String permit_agent_id;
+	private String onlineSaleTripString;
+	private BundleListObject bundleOnlineTrips;
+	private BundleListObject bundleOnlineTripsObject;
+	private List<OnlineSalePermitTrips> onlineSalePermitTrips;
 	
+	@SuppressWarnings("deprecation")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -139,6 +156,17 @@ public class BusTimeActivity extends BaseSherlockActivity {
 		selectedDate = bundle.getString("date");
 		permit_ip = bundle.getString("permit_ip");
 		operator_name = bundle.getString("operator_name");
+		permit_operator_group_id = bundle.getString("permit_operator_group_id");
+		permit_agent_id = bundle.getString("permit_agent_id");
+		
+		if(bundle != null){
+			onlineSaleTripString = bundle.getString("online_sale_permit_trips");
+		}
+		
+		bundleOnlineTripsObject = new Gson().fromJson(onlineSaleTripString, BundleListObject.class);
+		onlineSalePermitTrips = bundleOnlineTripsObject.getOnlineSalePermitTrips();
+		
+		Log.i("", "(Bus Time) Permit_operator_group_id : "+permit_operator_group_id+", Permit_agent_id : "+permit_agent_id);
 		
 		SharedPreferences notify = getSharedPreferences("NotifyBooking", Context.MODE_PRIVATE);
 		NotifyBooking = notify.getInt("count", 0);
@@ -185,7 +213,6 @@ public class BusTimeActivity extends BaseSherlockActivity {
 		//from.setOnItemSelectedListener(fromClickListener);
 		//to.setOnItemSelectedListener(toClickListener);
 		//time.setOnItemSelectedListener(timeClickListener);
-		
 	}
 	
 	@Override
@@ -236,6 +263,7 @@ public class BusTimeActivity extends BaseSherlockActivity {
 				/*Log.i("","Hello Error : "+arg0.getError());
 				Log.i("","Hello Error Desc : "+arg0.getError_description());*/
 			}
+			
 			public void success(Response arg0, Response arg1) {
 				// TODO Auto-generated method stub
 				Log.i("", "Success Time ==> accessToken: "+permit_access_token+", selectedOperatorId: "
@@ -251,14 +279,30 @@ public class BusTimeActivity extends BaseSherlockActivity {
 					
 					if (lst_time != null && lst_time.size() > 0) {
 						
-						for(Time time: lst_time){
-							//String timeStr = time.getTime().replaceAll(" ", "").toLowerCase();
-							//String timeTypeStr = timeStr.substring(timeStr.length() - 2, timeStr.length());
+						Log.i("", "Time All list: "+lst_time.toString());
+						
+						if (onlineSalePermitTrips != null && onlineSalePermitTrips.size() > 0) {
 							
-							if(time.getTime().toLowerCase().contains("am")){
-								time_morning_list.add(time);
-							}else{
-								time_evening_list.add(time);
+							Log.i("", "Online Sale Permit Trip(time) : "+onlineSalePermitTrips.toString());
+							
+							long longDateAddedHours = getLongDateAddedHours();
+							
+							for (int i = 0; i < lst_time.size(); i++) {
+								for (int j = 0; j < onlineSalePermitTrips.size(); j++) {
+									//all time tripId == 24 hrs trips 's tripId ?? 
+									if (lst_time.get(i).getTripid().equals(onlineSalePermitTrips.get(j).getTripId())) {
+										
+										long longChooseDate = getLongChooseDate(selectedDate, lst_time.get(i).getTime());
+										
+										if (longChooseDate > longDateAddedHours) {
+											if(lst_time.get(i).getTime().toLowerCase().contains("am")){
+												time_morning_list.add(lst_time.get(i));
+											}else{
+												time_evening_list.add(lst_time.get(i));
+											}
+										}
+									}
+								}							
 							}
 						}
 						
@@ -276,24 +320,95 @@ public class BusTimeActivity extends BaseSherlockActivity {
 						
 						if(time_morning_list.size() == 0 && time_evening_list.size() == 0){
 							
-							AlertDialog.Builder alertDialog = new AlertDialog.Builder(BusTimeActivity.this);
-							alertDialog.setTitle("Info");
-							alertDialog.setMessage("There is no trip yet.");
-							alertDialog.setCancelable(true);
-		/*					alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
-								
-								public void onClick(DialogInterface dialog, int which) {
-									// TODO Auto-generated method stub
-									finish();
-								}
-							});*/
-							alertDialog.show();
+							showAlert("No trip!");
 						}
 					}
 				}
 			}
 		});
 		
+	}
+	
+	/**
+	 *  Get Long Date of Server Time Check Added into CurrentDateTime
+	 * @return
+	 */
+	private long getLongDateAddedHours() {
+		// TODO Auto-generated method stub
+		//Get today Date+Time
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		Calendar cal = Calendar.getInstance();
+		Log.i("", "Current Date Time : " + dateFormat.format(cal.getTime()));
+
+		SimpleDateFormat df2 = new SimpleDateFormat("HH:mm:ss");
+		 
+		int toAddHour = Integer.valueOf(onlineSalePermitTrips.get(0).getTimeChecking().substring(0, 2));
+		Log.i("", "To add hour: "+toAddHour);
+		//Add server time checking to current date time
+		cal.add(Calendar.HOUR_OF_DAY, toAddHour);
+		Date addedTime = cal.getTime();
+		Long addedTimeLong = addedTime.getTime();
+		
+		Log.i("", "Added 24 hours: "+dateFormat.format(cal.getTime())+", Long Date: "+addedTimeLong);
+		
+		return addedTimeLong;
+	}
+	
+	/**
+	 *  Get Long Choose Date+Time
+	 * @return
+	 */
+	private long getLongChooseDate(String chooseDate, String chooseTime) {
+		// TODO Auto-generated method stub
+		Log.i("", "Choose Date: "+chooseDate+", ChooseTime: "+chooseTime);
+		
+		//Get only 06:00 AM format
+		String time = null;
+		try {
+			if (chooseTime.length() == 8) {
+				time = chooseTime;
+			}else if (chooseTime.length() < 8) {
+				time = "0"+chooseTime;
+			}else if (chooseTime.length() > 8) {
+				time = chooseTime.substring(0, 8);
+			}
+		} catch (StringIndexOutOfBoundsException e) {
+			// TODO: handle exception
+			Log.i("", "Time Out Of Bound Exception: "+e);
+		}
+		
+		String chooseDateTime = chooseDate+" "+time;
+		SimpleDateFormat readFormat = new SimpleDateFormat( "yyyy-MM-dd hh:mm aa");
+		SimpleDateFormat writeFormat = new SimpleDateFormat( "yyyy-MM-dd HH:mm:ss");
+		Date date = null;
+		try
+		{
+		    date = readFormat.parse(chooseDateTime);
+		}
+		catch ( ParseException e )
+		{
+		        e.printStackTrace();
+		}
+		
+		Long chooseDateTimeLong = null;
+		
+		if( date != null )
+		{
+		    String change24HoursFormatString = writeFormat.format(date);
+		    Date change24HoursFormatDate = null;
+			try {
+				change24HoursFormatDate = writeFormat.parse(change24HoursFormatString);
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		    
+			chooseDateTimeLong = change24HoursFormatDate.getTime();
+		    Log.i("", "24 Hours Format Date: "+writeFormat.format(change24HoursFormatDate)+", chooseDateTimeLong: "+chooseDateTimeLong);
+		    
+		}
+		
+		return chooseDateTimeLong;
 	}
 	
 	private OnItemClickListener morningTimeClickListener = new OnItemClickListener() {
@@ -317,6 +432,10 @@ public class BusTimeActivity extends BaseSherlockActivity {
 			bundle.putString("date", selectedDate);
 			bundle.putString("permit_ip", permit_ip);
 			bundle.putString("operator_name", operator_name);
+			bundle.putString("permit_operator_group_id", permit_operator_group_id);
+			bundle.putString("permit_agent_id", permit_agent_id);
+			
+			Log.i("", "to bus select : "+ permit_operator_group_id + ", "+permit_agent_id);
 			
 			startActivity(new Intent(getApplicationContext(), BusSelectSeatActivity.class).putExtras(bundle));
 			
@@ -343,6 +462,9 @@ public class BusTimeActivity extends BaseSherlockActivity {
 			bundle.putString("date", selectedDate);
 			bundle.putString("permit_ip", permit_ip);
 			bundle.putString("operator_name", operator_name);
+			bundle.putString("permit_operator_group_id", permit_operator_group_id);
+			bundle.putString("permit_agent_id", permit_agent_id);
+			
 			startActivity(new Intent(getApplicationContext(), BusSelectSeatActivity.class).putExtras(bundle));
 			
 		}

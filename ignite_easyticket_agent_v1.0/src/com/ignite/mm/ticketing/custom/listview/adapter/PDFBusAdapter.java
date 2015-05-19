@@ -1,8 +1,9 @@
 package com.ignite.mm.ticketing.custom.listview.adapter;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 
-import com.ignite.mm.ticketing.client.R;
+import com.ignite.mm.ticketing.agent.R;
 import com.ignite.mm.ticketing.sqlite.database.model.AllBusObject;
 import android.app.Activity;
 import android.text.Html;
@@ -101,9 +102,15 @@ public class PDFBusAdapter extends BaseAdapter {
 		holder.txt_seat_no.setText("Seat No        :  "+getItem(position).getSeatNo());		
 		
 		holder.txt_seat_total.setText("Seat Total    :  "+getItem(position).getSeatCount());
-		holder.txt_price.setText("Price             :  "+getItem(position).getPrice()+".00");
-		holder.txt_discount.setText("Disc (%)       :  "+getItem(position).getDiscount()+".00");
-		holder.txt_amount.setText("Amount        :  "+getItem(position).getAmount()+".00 Ks");
+		
+		NumberFormat nf = NumberFormat.getInstance();
+		String price = nf.format(Integer.valueOf(getItem(position).getPrice()));
+		String amount = nf.format(Integer.valueOf(getItem(position).getAmount()));
+		
+		holder.txt_price.setText("Price             :  "+price+" Ks");
+		holder.txt_discount.setText("Disc (%)       :  "+0.00);
+		holder.txt_amount.setText("Amount        :  "+amount+" Ks");
+		
 		if (getItem(position).getTicketNo() != null) {
 			holder.ticket_nos.setText(Html.fromHtml(getItem(position).getTicketNo()));
 		}

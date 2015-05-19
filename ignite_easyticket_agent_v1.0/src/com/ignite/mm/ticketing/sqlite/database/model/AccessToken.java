@@ -186,6 +186,7 @@ private String updatedAt;
 	return createdAt;
 	}
 	
+	
 	/**
 	* 
 	* @param createdAt
@@ -213,4 +214,9 @@ private String updatedAt;
 	this.updatedAt = updatedAt;
 	}
 
+	@Override
+	public String toString() {
+		return "LoginUser [AccessToken=" + accessToken +"]" ;
+	}
+	
 }
