@@ -127,6 +127,8 @@ public class BusConfirmActivity extends BaseSherlockActivity {
 	private List<EditText> lst_ticket_no = new ArrayList<EditText>();
 	private TextView actionBarTitle2;
 	private String Permit_agent_id;
+	private String client_operator_id;
+	private String permit_operator_group_id;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -179,7 +181,9 @@ public class BusConfirmActivity extends BaseSherlockActivity {
 		
 		SaleOrderNo = bundle.getString("sale_order_no");
 		BusOccurence = bundle.getString("bus_occurence");
+		client_operator_id = bundle.getString("client_operator_id");
 		
+		permit_operator_group_id = bundle.getString("permit_operator_group_id");
 		Permit_agent_id = bundle.getString("permit_agent_id");
 		
 		Log.i("", "Permit_agent_id : "+Permit_agent_id);
@@ -528,9 +532,9 @@ public class BusConfirmActivity extends BaseSherlockActivity {
 		skDetector.setMessageStyle(SKConnectionDetector.VERTICAL_TOASH);
 		if(skDetector.isConnectingToInternet()){
 			
-			SharedPreferences pref = this.getApplicationContext().getSharedPreferences("User", Activity.MODE_PRIVATE);
+			SharedPreferences pref2 = this.getApplicationContext().getSharedPreferences("User", Activity.MODE_PRIVATE);
 			
-			user_type = pref.getString("user_type", null);
+			user_type = pref2.getString("user_type", null);
 			
 			/*if(user_type.equals("operator")){
 				//getAgent();
@@ -807,7 +811,6 @@ public class BusConfirmActivity extends BaseSherlockActivity {
 			AgentID = String.valueOf(AppLoginUser.getId());
 		//}
 		
-		Log.i("", "(to confirm)AgentID: "+AgentID);
 		Log.i("", "Ticket Arrays: "+seats.toString());
 		
 		Log.i("", "Param (Confirm) to encrypt: "
@@ -825,7 +828,7 @@ public class BusConfirmActivity extends BaseSherlockActivity {
 				", Seats: "+seats.toString()+
 				", Cash or not: "+rdo_cash_down.isChecked()+
 				", Local or Foreign: "+rdo_local.isChecked()+
-				", working date: "+working_date+
+				", Order date: "+
 				", Device id: "+DeviceUtil.getInstance(this).getID()+
 				", isbooking: "+"0");
 		
@@ -856,12 +859,17 @@ public class BusConfirmActivity extends BaseSherlockActivity {
 		String ticketNo = "";
 		for (int j = 0; j < seats.size(); j++) {
 			
-			if (j == seats.size()-1) {
+/*			if (j == seats.size()-1) {
 				ticketNo += seats.get(j).getTicket_no()+" (seat no. "+seats.get(j).getSeat_no()+")";
 			}else {
 				ticketNo += seats.get(j).getTicket_no()+" (seat no. "+seats.get(j).getSeat_no()+"), <br/>";
-			}
+			}*/
 			
+			if (j == seats.size()-1) {
+				ticketNo += seats.get(j).getTicket_no();
+			}else {
+				ticketNo += seats.get(j).getTicket_no()+", ";
+			}
 			/*String styledText = "This is <font color='red'>simple</font>.";
 			textView.setText(Html.fromHtml(styledText), TextView.BufferType.SPANNABLE);*/
 		}
@@ -883,6 +891,9 @@ public class BusConfirmActivity extends BaseSherlockActivity {
 							SKToastMessage.showMessage(BusConfirmActivity.this, "သင္ မွာယူေသာ လက္ မွတ္ မ်ားမွာ စကၠန့္ပိုင္း အတြင္း တစ္ ျခားသူ ယူ သြားေသာေၾကာင့္ သင္မွာေသာလက္မွတ္မ်ား မရႏိုင္ေတာ့ပါ။ ေက်းဇူးျပဳၿပီး တစ္ျခားလက္ မွတ္ မ်ား ျပန္ေရြး ေပးပါ။။", SKToastMessage.ERROR);
 							dialog.dismiss();
 						}else{
+							//Store Sale Data into Online Sale Database
+							postOnlineSale();
+							
 							SKToastMessage.showMessage(BusConfirmActivity.this, "လက္မွတ္ ျဖတ္ၿပီးပါၿပီ !", SKToastMessage.SUCCESS);
 							closeAllActivities();
 							//Show Voucher
@@ -906,6 +917,35 @@ public class BusConfirmActivity extends BaseSherlockActivity {
 		Log.i("", "Permit IP: "+bundle.getString("permit_ip"));
 	}
 	
+	/**
+	 *  Store saled-data into Online Sale Database (app.easyticket.com.mm)
+	 */
+	protected void postOnlineSale() {
+		// TODO Auto-generated method stub
+		Log.i("", "SaleOrderNo: "+SaleOrderNo+", Op-Id: "+client_operator_id+", User code no: "+AppLoginUser.getCodeNo()
+				+", Token: "+AppLoginUser.getAccessToken());
+		
+		NetworkEngine.setIP("app.easyticket.com.mm");
+		NetworkEngine.getInstance().postOnlineSaleDB(SaleOrderNo, client_operator_id
+				, AppLoginUser.getCodeNo(), AppLoginUser.getAccessToken(), new Callback<Response>() {
+			
+					public void failure(RetrofitError arg0) {
+						// TODO Auto-generated method stub
+						if (arg0.getResponse() != null) {
+							Log.i("", "Error: "+arg0.getResponse().getStatus());
+						}
+					}
+
+					public void success(Response arg0, Response arg1) {
+						// TODO Auto-generated method stub
+						if (arg1 != null) {
+							Log.i("", "Server Response1: "+arg0.getStatus()+", "+arg0.getReason()+", "+arg0.getBody());
+							Log.i("", "Server Response: "+arg1.getStatus()+", "+arg1.getReason()+", "+arg1.getBody());
+						}
+					}
+				});
+	}
+
 	public boolean checkFieldsAgent()
     {
     	if(edt_buyer.getText().toString().length() == 0){

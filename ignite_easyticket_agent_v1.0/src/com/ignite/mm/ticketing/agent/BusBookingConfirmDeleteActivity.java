@@ -128,6 +128,8 @@ public class BusBookingConfirmDeleteActivity extends BaseSherlockActivity {
 				bundle.putString("ConfirmTime", todayTime);
 				bundle.putString("permit_access_token", creditOrder.getPermit_access_token());
 				bundle.putString("permit_ip", creditOrder.getPermit_ip());
+				bundle.putString("permit_operator_group_id", creditOrder.getPermit_operator_group_id());
+				bundle.putString("permit_agent_id", creditOrder.getPermit_agent_id());
 				//Get Seat Count
 				String[] seats = SeatLists.split(",");
 				bundle.putString("SeatCount", seats.length+"");

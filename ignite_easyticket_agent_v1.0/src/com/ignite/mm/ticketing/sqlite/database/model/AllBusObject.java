@@ -25,6 +25,7 @@ public class AllBusObject {
 	private String seatCount;
 	private Integer discount;
 	private Integer amount;
+	private String NRC;
 
 	
 	public AllBusObject(String trip, String date, String operatorID,
@@ -32,7 +33,7 @@ public class AllBusObject {
 			String price, String status, String userName, String busClass,
 			String todayDate, String currentTime, String barcode,
 			Bitmap barcode_img, String customerName, String phone,
-			String ticketNo, String seatCount, Integer discount, Integer amount) {
+			String ticketNo, String seatCount, Integer discount, Integer amount, String nrc) {
 		super();
 		Trip = trip;
 		Date = date;
@@ -55,6 +56,7 @@ public class AllBusObject {
 		this.seatCount = seatCount;
 		this.discount = discount;
 		this.amount = amount;
+		this.NRC = nrc;
 	}
 
 	public AllBusObject(String trip, String date, String operatorID,
@@ -253,6 +255,16 @@ public class AllBusObject {
 	public void setAmount(Integer amount) {
 		this.amount = amount;
 	}
+	
+	
+
+	public String getNRC() {
+		return NRC;
+	}
+
+	public void setNRC(String nRC) {
+		NRC = nRC;
+	}
 
 	@Override
 	public String toString() {
@@ -265,6 +277,9 @@ public class AllBusObject {
 				+ ", Barcode=" + Barcode + ", barcode_img=" + barcode_img
 				+ ", CustomerName=" + CustomerName + ", phone=" + phone
 				+ ", ticketNo=" + ticketNo + ", seatCount=" + seatCount
-				+ ", discount=" + discount + ", amount=" + amount + "]";
+				+ ", discount=" + discount + ", amount=" + amount + ", NRC="
+				+ NRC + "]";
 	}
+
+	
 }

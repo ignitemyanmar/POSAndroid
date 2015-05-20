@@ -2,6 +2,7 @@ package com.ignite.mm.ticketing.agent;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -49,6 +50,8 @@ public class HomeActivity extends BaseSherlockActivity{
 		actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
 		
 		setContentView(R.layout.activity_home);
+		
+		Log.i("", "User Login: "+AppLoginUser.getCodeNo());
 		
 		btn_sale_tickets = (Button)findViewById(R.id.btn_sale_tickets);
 		btn_book_confirm = (Button)findViewById(R.id.btn_book_confirm);

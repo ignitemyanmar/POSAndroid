@@ -9,7 +9,7 @@ public class SecureParam {
 	public static native String getAccessTokenParam(String grand_type, String app_id, String securet_key, String username, String password, String scope, String state);
 	
 	// Declare native method
-	public static native String getSeatPlanParam(String token, String op_id,String f_c,String t_c, String c_id, String d, String t);
+	public static native String getSeatPlanParam(String token, String op_id, String t_id,String f_c,String t_c, String c_id, String d, String t);
 	
 	// Declare native method
 	public static native String getTripsParam(String token, String op_id);

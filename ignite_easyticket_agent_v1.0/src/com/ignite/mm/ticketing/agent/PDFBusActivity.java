@@ -110,6 +110,7 @@ public class PDFBusActivity extends BaseSherlockActivity {
 	private String SeatCount;
 	
 	private String deviceAddr;
+	private String BuyerNRC;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -158,14 +159,17 @@ public class PDFBusActivity extends BaseSherlockActivity {
 			OrderDateTime = bundle.getString("order_date");
 			BuyerName = bundle.getString("BuyerName");
 			Phone = bundle.getString("BuyerPhone");
+			BuyerNRC = bundle.getString("BuyerNRC");
 			TicketNo = bundle.getString("TicketNo");
 			SeatCount = bundle.getString("SeatCount");
 		}
 
+		Log.i("", "buyer name: "+BuyerName+", buyer phone: "+Phone+", nrc: "+BuyerNRC);
+		
 		lv_bus_booking_sheet = (ListView)findViewById(R.id.lv_bus_booking_sheet);
 		getData();
 		
-		//to link another App
+		/*//to link another App
 		Intent sendIntent = new Intent();
 		sendIntent.setAction(Intent.ACTION_SEND);
 		sendIntent.putExtras(bundle);
@@ -174,7 +178,7 @@ public class PDFBusActivity extends BaseSherlockActivity {
 		// Verify that the intent will resolve to an activity
 		if (sendIntent.resolveActivity(getPackageManager()) != null) {
 			startActivity(sendIntent);
-		}
+		}*/
 	}
 	
 	/**
@@ -186,7 +190,7 @@ public class PDFBusActivity extends BaseSherlockActivity {
 		Integer amount = Integer.valueOf(SeatCount) * Integer.valueOf(SeatPrice);
 		allBusObject.add(new AllBusObject(BusTrip, TripDate, "", OperatorName, TripTime, ""
 				, SelectedSeat, SeatPrice, "", AppLoginUser.getUserName(), BusClass, ConfirmDate, ConfirmTime
-				, Bar_Code_No, getBarcode(), BuyerName, Phone, TicketNo, SeatCount, 0, amount));
+				, Bar_Code_No, getBarcode(), BuyerName, Phone, TicketNo, SeatCount, 0, amount, BuyerNRC));
 		
 		Log.i("", "All Bus Object: "+allBusObject.toString());
 		lv_bus_booking_sheet.setAdapter(new PDFBusAdapter(PDFBusActivity.this, allBusObject));

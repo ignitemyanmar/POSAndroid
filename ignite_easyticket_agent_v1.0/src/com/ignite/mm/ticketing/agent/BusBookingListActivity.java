@@ -188,6 +188,8 @@ public class BusBookingListActivity extends BaseSherlockActivity {
 			CreditOrder co = (CreditOrder)credit_list.get(arg2);
 			co.setPermit_access_token(permit_access_token);
 			co.setPermit_ip(permit_ip);
+			co.setPermit_operator_group_id(permit_operator_group_id);
+			co.setPermit_agent_id(permit_agent_id);
 			intent.putExtra("credit_order", new Gson().toJson(credit_list.get(arg2)));
 			startActivity(intent);
 			
@@ -230,7 +232,9 @@ public class BusBookingListActivity extends BaseSherlockActivity {
 	private Permission permission;
 	protected String permit_ip;
 	protected String permit_access_token;
-	protected String permit_operator_id;	
+	protected String permit_operator_id;
+	protected String permit_operator_group_id;
+	protected String permit_agent_id;	
 	
 	private void getBookingListByCodeNo(){
 		Log.i("", "Enter here............. get booking list!!!");
@@ -263,6 +267,8 @@ public class BusBookingListActivity extends BaseSherlockActivity {
 						permit_ip = permission.getIp();
 						permit_access_token = permission.getAccess_token();
 						permit_operator_id = permission.getOperator_id();
+						permit_operator_group_id = permission.getOperatorgroup_id();
+						permit_agent_id = permission.getOnlinesaleagent_id();	
 						
 						String book_code = auto_txt_codeno.getText().toString(); 
 				        

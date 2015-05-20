@@ -99,6 +99,7 @@ import com.ignite.mm.ticketing.sqlite.database.model.TripsCollection;
 	private BundleListObject bundleOnlineTrips;
 	private BundleListObject bundleOnlineTripsObject;
 	private List<OnlineSalePermitTrips> onlineSalePermitTrips;
+	private String client_operator_id;
 	
 	@SuppressWarnings("deprecation")
 	@Override
@@ -158,6 +159,7 @@ import com.ignite.mm.ticketing.sqlite.database.model.TripsCollection;
 		operator_name = bundle.getString("operator_name");
 		permit_operator_group_id = bundle.getString("permit_operator_group_id");
 		permit_agent_id = bundle.getString("permit_agent_id");
+		client_operator_id = bundle.getString("client_operator_id");
 		
 		if(bundle != null){
 			onlineSaleTripString = bundle.getString("online_sale_permit_trips");
@@ -434,6 +436,8 @@ import com.ignite.mm.ticketing.sqlite.database.model.TripsCollection;
 			bundle.putString("operator_name", operator_name);
 			bundle.putString("permit_operator_group_id", permit_operator_group_id);
 			bundle.putString("permit_agent_id", permit_agent_id);
+			bundle.putString("client_operator_id", client_operator_id);
+			bundle.putString("tripId", time_morning_list.get(arg2).getTripid());
 			
 			Log.i("", "to bus select : "+ permit_operator_group_id + ", "+permit_agent_id);
 			
@@ -464,6 +468,8 @@ import com.ignite.mm.ticketing.sqlite.database.model.TripsCollection;
 			bundle.putString("operator_name", operator_name);
 			bundle.putString("permit_operator_group_id", permit_operator_group_id);
 			bundle.putString("permit_agent_id", permit_agent_id);
+			bundle.putString("client_operator_id", client_operator_id);
+			bundle.putString("tripId", time_evening_list.get(arg2).getTripid());
 			
 			startActivity(new Intent(getApplicationContext(), BusSelectSeatActivity.class).putExtras(bundle));
 			

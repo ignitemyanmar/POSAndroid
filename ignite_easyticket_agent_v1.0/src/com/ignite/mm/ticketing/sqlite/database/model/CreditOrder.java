@@ -46,6 +46,10 @@ public class CreditOrder {
 	private String permit_access_token;
 	@Expose
 	private String permit_ip;
+	@Expose
+	private String permit_operator_group_id;
+	@Expose
+	private String permit_agent_id;
 	
 	public String getId() {
 	return id;
@@ -192,6 +196,24 @@ public class CreditOrder {
 	public void setPermit_ip(String permit_ip) {
 		this.permit_ip = permit_ip;
 	}
+	
+	
+
+	public String getPermit_operator_group_id() {
+		return permit_operator_group_id;
+	}
+
+	public void setPermit_operator_group_id(String permit_operator_group_id) {
+		this.permit_operator_group_id = permit_operator_group_id;
+	}
+
+	public String getPermit_agent_id() {
+		return permit_agent_id;
+	}
+
+	public void setPermit_agent_id(String permit_agent_id) {
+		this.permit_agent_id = permit_agent_id;
+	}
 
 	@Override
 	public String toString() {
@@ -203,9 +225,10 @@ public class CreditOrder {
 				+ ", totalTicket=" + totalTicket + ", price=" + price
 				+ ", amount=" + amount + ", saleitems=" + saleitems
 				+ ", permit_access_token=" + permit_access_token
-				+ ", permit_ip=" + permit_ip + "]";
+				+ ", permit_ip=" + permit_ip + ", permit_operator_group_id="
+				+ permit_operator_group_id + ", permit_agent_id="
+				+ permit_agent_id + "]";
 	}
 
 	
-
 }

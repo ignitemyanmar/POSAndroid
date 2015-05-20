@@ -120,4 +120,11 @@ public interface INetworkEngine {
 	@GET("/api/olsalepermittrips")
 	void getOnlineSalePermitTrip(@Query("access_token") String access_token,
 			@Query("operator_id") String operator_id, Callback<Response> callback);
+	
+	@FormUrlEncoded
+	@POST("/api/salecomfirm")
+	void postOnlineSaleDB(@Field("sale_order_no") String sale_order_no,
+			@Field("operator_id") String operator_id,
+			@Field("user_code_no") String user_code_no,
+			@Field("access_token") String access_token, Callback<Response> callback);
 }

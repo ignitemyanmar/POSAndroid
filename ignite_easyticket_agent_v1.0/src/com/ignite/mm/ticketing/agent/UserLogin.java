@@ -118,14 +118,16 @@ public class UserLogin extends SherlockActivity {
 										user.setName(arg0.getName());
 										user.setEmail(arg0.getEmail());
 										user.setCodeNo(arg0.getCodeNo());
-										user.setRole(arg0.getRole());
-										user.setAgentgroupId(arg0.getAgentgroupId());
-										user.setGroupBranch(arg0.getGroupBranch());
+										user.setRole(String.valueOf(arg0.getRole()));
+										user.setAgentGroupId(String.valueOf(arg0.getAgentgroupId()));
+										user.setGroupBranch(String.valueOf(arg0.getGroupBranch()));
 										user.setAccessToken(arg0.getAccessToken());
-										user.setCreatedAt(arg0.getCreatedAt());
-										user.setUpdatedAt(arg0.getUpdatedAt());
+										user.setCreateAt(arg0.getCreatedAt());
+										user.setUpdateAt(arg0.getUpdatedAt());
 										user.login();
 									}
+									
+									
 									//startActivity(new Intent(UserLogin.this, BusOperatorActivity.class));
 								}
 

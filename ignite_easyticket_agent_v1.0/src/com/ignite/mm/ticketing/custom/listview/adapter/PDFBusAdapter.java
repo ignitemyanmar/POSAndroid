@@ -7,7 +7,6 @@ import com.ignite.mm.ticketing.agent.R;
 import com.ignite.mm.ticketing.sqlite.database.model.AllBusObject;
 import android.app.Activity;
 import android.text.Html;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,28 +51,25 @@ public class PDFBusAdapter extends BaseAdapter {
 		if (convertView == null) {
 			
 			convertView = mInflater.inflate(R.layout.activity_pdf_bus_header, null);
+			convertView = mInflater.inflate(R.layout.activity_pdf_bus_voucher, null);
 			
 			holder = new ViewHolder();
 			
-			holder.txtPrintDate = (TextView) convertView.findViewById(R.id.txtPrintDate);
-			holder.txtPrintTime = (TextView)convertView.findViewById(R.id.txtPrintTime);
-			holder.img_barcode = (ImageView)convertView.findViewById(R.id.img_barcode);
-			
-			holder.txtBarcode = (TextView)convertView.findViewById(R.id.txtBarcode);
-			holder.txt_agent = (TextView)convertView.findViewById(R.id.txt_agent);
+			holder.txt_today_date_time = (TextView) convertView.findViewById(R.id.txt_today_date_time);
+			holder.txt_order_no = (TextView)convertView.findViewById(R.id.txt_order_no);
 			holder.txt_passenger = (TextView)convertView.findViewById(R.id.txt_passenger);
+			
 			holder.txt_phone = (TextView)convertView.findViewById(R.id.txt_phone);
+			holder.txt_nrc = (TextView)convertView.findViewById(R.id.txt_nrc);
 			holder.txt_operator = (TextView)convertView.findViewById(R.id.txt_operator);
-			holder.txt_trip = (TextView)convertView.findViewById(R.id.txt_trip);
-			holder.txt_date = (TextView)convertView.findViewById(R.id.txt_date);
-			holder.txt_time = (TextView)convertView.findViewById(R.id.txt_time);
-			holder.txt_class = (TextView)convertView.findViewById(R.id.txt_class);
+			holder.txt_trip_class = (TextView)convertView.findViewById(R.id.txt_trip_class);
+			holder.txt_trip_date_time = (TextView)convertView.findViewById(R.id.txt_trip_date_time);
 			holder.txt_seat_no = (TextView)convertView.findViewById(R.id.txt_seat_no);
-			holder.ticket_nos = (TextView)convertView.findViewById(R.id.ticket_nos);
-			holder.txt_seat_total = (TextView)convertView.findViewById(R.id.txt_seat_total);
+			
+			holder.txt_ticket_no = (TextView)convertView.findViewById(R.id.txt_ticket_no);
 			holder.txt_price = (TextView)convertView.findViewById(R.id.txt_price);
-			holder.txt_discount = (TextView)convertView.findViewById(R.id.txt_discount);
-			holder.txt_amount = (TextView)convertView.findViewById(R.id.txt_amount);
+			holder.txt_qty = (TextView)convertView.findViewById(R.id.txt_qty);
+			holder.txt_total = (TextView)convertView.findViewById(R.id.txt_total);
 			
 			convertView.setTag(holder);
 		}else {
@@ -83,48 +79,42 @@ public class PDFBusAdapter extends BaseAdapter {
 		
 		//holder.txt_vno.setText(Html.fromHtml(sv.getVid()+"(update) <font color=red> * </font>"));
 		
-		holder.txtPrintDate.setText("Print Date :  "+getItem(position).getTodayDate());
-		holder.txtPrintTime.setText("Print Time :  "+getItem(position).getCurrentTime());
-		holder.txtBarcode.setText(getItem(position).getBarcode());
+		holder.txt_today_date_time.setText(getItem(position).getTodayDate()+" "+getItem(position).getCurrentTime());
+		holder.txt_order_no.setText(": "+getItem(position).getBarcode());
 				
-		holder.txt_agent.setText("Agent  :  "+getItem(position).getUserName());
-		
-		if (getItem(position).getCustomerName() != null && getItem(position).getPhone() != null) {
-			holder.txt_passenger.setText("Passenger   :  "+getItem(position).getCustomerName());
-			holder.txt_phone.setText("Phone          :  "+getItem(position).getPhone());
+		if (getItem(position).getCustomerName() != null && getItem(position).getPhone() != null && getItem(position).getNRC() != null) {
+			holder.txt_passenger.setText(": "+getItem(position).getCustomerName());
+			holder.txt_phone.setText(": "+getItem(position).getPhone());
+			holder.txt_nrc.setText(": "+getItem(position).getNRC());
 		}
 		
-		holder.txt_operator.setText("Bus               :  "+getItem(position).getOperatorName());
-		holder.txt_trip.setText("Trip               :  "+getItem(position).getTrip());
-		holder.txt_date.setText("Dept. Date   :  "+getItem(position).getDate());
-		holder.txt_time.setText("Dept. Time   :  "+getItem(position).getTime());
-		holder.txt_class.setText("Bus Class     :  "+getItem(position).getBusClass());
-		holder.txt_seat_no.setText("Seat No        :  "+getItem(position).getSeatNo());		
+		holder.txt_operator.setText(": "+getItem(position).getOperatorName());
+		holder.txt_trip_class.setText(getItem(position).getTrip()+" [ "+getItem(position).getBusClass()+" ]");
+		holder.txt_trip_date_time.setText(getItem(position).getDate()+" ("+getItem(position).getTime()+")");
+		holder.txt_seat_no.setText(": "+getItem(position).getSeatNo());		
 		
-		holder.txt_seat_total.setText("Seat Total    :  "+getItem(position).getSeatCount());
+		if (getItem(position).getTicketNo() != null) {
+			holder.txt_ticket_no.setText(": "+getItem(position).getTicketNo());
+		}
 		
+		//Change (0,000,000) format
 		NumberFormat nf = NumberFormat.getInstance();
 		String price = nf.format(Integer.valueOf(getItem(position).getPrice()));
 		String amount = nf.format(Integer.valueOf(getItem(position).getAmount()));
 		
-		holder.txt_price.setText("Price             :  "+price+" Ks");
-		holder.txt_discount.setText("Disc (%)       :  "+0.00);
-		holder.txt_amount.setText("Amount        :  "+amount+" Ks");
+		holder.txt_price.setText(": KS "+price);
+		holder.txt_qty.setText(": "+getItem(position).getSeatCount());
+		holder.txt_total.setText("TOTAL : KS "+amount);
 		
-		if (getItem(position).getTicketNo() != null) {
-			holder.ticket_nos.setText(Html.fromHtml(getItem(position).getTicketNo()));
-		}
-		holder.img_barcode.setImageBitmap(getItem(position).getBarcode_img());
+		//holder.img_barcode.setImageBitmap(getItem(position).getBarcode_img());
 		
 		return convertView;
 	}
 
 	static class ViewHolder {
 		
-		ImageView img_barcode;
-		TextView txtPrintDate, txtPrintTime, txtBarcode;
-		TextView txt_agent, txt_passenger, txt_phone, txt_operator, txt_trip, txt_date, txt_time, txt_class, txt_seat_no;
-		TextView ticket_nos, txt_seat_total, txt_price, txt_discount, txt_amount;
+		TextView txt_today_date_time, txt_order_no, txt_passenger, txt_phone, txt_nrc, txt_operator, txt_trip_class;
+		TextView txt_trip_date_time, txt_seat_no, txt_ticket_no, txt_price, txt_qty, txt_total;
 	}
 
 

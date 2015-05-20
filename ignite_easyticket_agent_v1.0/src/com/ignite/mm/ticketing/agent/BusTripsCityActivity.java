@@ -199,7 +199,7 @@ public class BusTripsCityActivity extends BaseSherlockActivity{
 						permit_access_token = permission.getAccess_token();
 						permit_operator_id = permission.getOperator_id();
 						permit_operator_group_id = permission.getOperatorgroup_id();
-						permit_agent_id = permission.getOnlinesaleagent_id();
+						permit_agent_id = permission.getOnlinesaleagent_id();												
 						
 						String param = MCrypt.getInstance().encrypt(SecureParam.getTripsParam(permit_access_token, permit_operator_id));
 						
@@ -361,7 +361,10 @@ public class BusTripsCityActivity extends BaseSherlockActivity{
 
 					public void onChooseDate(String chooseDate) {
 			        	// TODO Auto-generated method stub
+						SimpleDateFormat ymd = new SimpleDateFormat("yyyy-MM-dd");
 			        	Date formatedDate = null;
+			        	Date todayDate = null; 
+			        	Date choosedDate = null;
 						try {
 							formatedDate = new SimpleDateFormat("dd-MMM-yyyy").parse(chooseDate);
 						} catch (ParseException e) {
@@ -369,31 +372,49 @@ public class BusTripsCityActivity extends BaseSherlockActivity{
 							e.printStackTrace();
 						}
 						
-			        	selectedDate = DateFormat.format("yyyy-MM-dd",formatedDate).toString();
-			        	skCalender.dismiss();
-			        	
-			        	
-			        	Bundle bundle = new Bundle();
-			        	bundle.putString("permit_access_token", permit_access_token);
-			        	bundle.putString("operator_id", permit_operator_id);
-						bundle.putString("from_id", showTripList.get(arg2).getFrom_id());
-						bundle.putString("to_id", showTripList.get(arg2).getTo_id());
-						bundle.putString("from", showTripList.get(arg2).getFrom());
-						bundle.putString("to", showTripList.get(arg2).getTo());
-						bundle.putString("date", selectedDate);
-						bundle.putString("permit_ip", permit_ip);
-						bundle.putString("operator_name", operator_name);
-						bundle.putString("permit_operator_group_id", permit_operator_group_id);
-						bundle.putString("permit_agent_id", permit_agent_id);
-						bundle.putString("online_sale_permit_trips", new Gson().toJson(bundleOnlineTrips));
+						try {
+							choosedDate = ymd.parse(ymd.format(formatedDate));
+						} catch (ParseException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
 						
-						Log.i("", "To time (from) : "+tripsCollections.get(arg2).getFrom()+", To time(to): "+tripsCollections.get(arg2).getTo());
+			        	Calendar cal = Calendar.getInstance();
+						todayDate = cal.getTime();
 						
-						startActivity(new Intent(getApplicationContext(), 
-								BusTimeActivity.class).putExtras(bundle));
+						Long choosedDateLong = choosedDate.getTime();
+						Long todayDateLong = todayDate.getTime();
 						
-						//startActivity(new Intent(getApplicationContext(), BusTimeActivity.class).putExtras(bundle));			        	
+			        	Log.i("", "choose date: "+ymd.format(choosedDate)+", todaydate: "+ymd.format(todayDate));
 			        	
+			        	if (choosedDateLong <= todayDateLong) {
+							//showAlert("Please choose grater than today!");
+			        		SKToastMessage.showMessage(BusTripsCityActivity.this, "Please choose grater than today!", SKToastMessage.WARNING);
+						}else {
+							selectedDate = DateFormat.format("yyyy-MM-dd",formatedDate).toString();
+				        	skCalender.dismiss();
+				        	
+				        	Bundle bundle = new Bundle();
+				        	bundle.putString("permit_access_token", permit_access_token);
+				        	bundle.putString("operator_id", permit_operator_id);
+							bundle.putString("from_id", showTripList.get(arg2).getFrom_id());
+							bundle.putString("to_id", showTripList.get(arg2).getTo_id());
+							bundle.putString("from", showTripList.get(arg2).getFrom());
+							bundle.putString("to", showTripList.get(arg2).getTo());
+							bundle.putString("date", selectedDate);
+							bundle.putString("permit_ip", permit_ip);
+							bundle.putString("operator_name", operator_name);
+							bundle.putString("permit_operator_group_id", permit_operator_group_id);
+							bundle.putString("permit_agent_id", permit_agent_id);
+							bundle.putString("online_sale_permit_trips", new Gson().toJson(bundleOnlineTrips));
+							bundle.putString("client_operator_id", client_operator_id);
+							
+							Log.i("", "To time (from) : "+tripsCollections.get(arg2).getFrom()+", To time(to): "+tripsCollections.get(arg2).getTo());
+							
+							startActivity(new Intent(getApplicationContext(), 
+									BusTimeActivity.class).putExtras(bundle));
+							
+						}
 			        }
 			  });
 

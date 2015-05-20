@@ -216,7 +216,13 @@ private String updatedAt;
 
 	@Override
 	public String toString() {
-		return "LoginUser [AccessToken=" + accessToken +"]" ;
+		return "AccessToken [id=" + id + ", name=" + name + ", email=" + email
+				+ ", codeNo=" + codeNo + ", role=" + role + ", agentgroupId="
+				+ agentgroupId + ", groupBranch=" + groupBranch
+				+ ", accessToken=" + accessToken + ", createdAt=" + createdAt
+				+ ", updatedAt=" + updatedAt + "]";
 	}
+
+	
 	
 }

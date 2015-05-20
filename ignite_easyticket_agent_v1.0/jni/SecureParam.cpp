@@ -35,19 +35,20 @@ using namespace std;
  * Signature: ()Ljava/lang/String;
  */
  JNIEXPORT jstring JNICALL Java_com_ignite_mm_ticketing_application_SecureParam_getSeatPlanParam
-  (JNIEnv * env, jobject pObj, jstring token, jstring op_id,jstring f_c,jstring t_c, jstring c_id, jstring d, jstring t){
+  (JNIEnv * env, jobject pObj, jstring token, jstring op_id, jstring t_id,jstring f_c,jstring t_c, jstring c_id, jstring d, jstring t){
   		
 	stringstream stream;
 
 	const char *access_token = env->GetStringUTFChars(token, JNI_FALSE);
 	const char *operator_id = env->GetStringUTFChars(op_id, JNI_FALSE);
+	const char *trip_id = env->GetStringUTFChars(t_id, JNI_FALSE);
 	const char *from_city = env->GetStringUTFChars(f_c, JNI_FALSE);
 	const char *to_city = env->GetStringUTFChars(t_c, JNI_FALSE);
 	const char *class_id = env->GetStringUTFChars(c_id, JNI_FALSE);
 	const char *date = env->GetStringUTFChars(d, JNI_FALSE);
 	const char *times = env->GetStringUTFChars(t, JNI_FALSE);
 
-	stream << "{\"access_token\":\""<<access_token<<"\",\"operator_id\":\""<<operator_id<<"\",\"from_city\":\""<<from_city<<"\",\"to_city\":\""<<to_city<<"\",\"class_id\":\""<<class_id<<"\",\"date\":\""<<date<<"\",\"time\":\""<<times<<"\"}";
+	stream << "{\"access_token\":\""<<access_token<<"\",\"operator_id\":\""<<operator_id<<"\",\"trip_id\":\""<<trip_id<<"\",\"from_city\":\""<<from_city<<"\",\"to_city\":\""<<to_city<<"\",\"class_id\":\""<<class_id<<"\",\"date\":\""<<date<<"\",\"time\":\""<<times<<"\"}";
 
 	string result = stream.str();
 

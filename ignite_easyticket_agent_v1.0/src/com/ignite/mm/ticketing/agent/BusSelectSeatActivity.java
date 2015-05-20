@@ -131,6 +131,8 @@ import com.smk.skalertmessage.SKToastMessage;
 	private Date tTime;
 	private String permit_operator_group_id;
 	private String permit_agent_id;
+	private String client_operator_id;
+	private String tripId;
 	public static List<BusSeat> BusSeats;
 	public static List<OperatorGroupUser> groupUser = new ArrayList<OperatorGroupUser>();
 	public static String CheckOut;
@@ -174,6 +176,8 @@ import com.smk.skalertmessage.SKToastMessage;
 		operator_name = bundle.getString("operator_name");
 		permit_operator_group_id = bundle.getString("permit_operator_group_id");
 		permit_agent_id = bundle.getString("permit_agent_id");
+		client_operator_id = bundle.getString("client_operator_id");
+		tripId = bundle.getString("tripId");
 		
 		Log.i("", "(Bus Select Seat) Permit_operator_group_id : "+permit_operator_group_id+", Permit_agent_id : "+permit_agent_id);
 		
@@ -188,8 +192,16 @@ import com.smk.skalertmessage.SKToastMessage;
 		
 		//Get Current Time
 		SimpleDateFormat sdf2 = new SimpleDateFormat("HH:mm:ss");
+		SimpleDateFormat writeFormat = new SimpleDateFormat("hh:mm aa");
 		Calendar cal = Calendar.getInstance();
-		todayTime = sdf2.format(cal.getTime()).toString();
+		Date tTime = null;
+		try {
+			tTime = sdf2.parse(sdf2.format(cal.getTime()));
+		} catch (ParseException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		todayTime = writeFormat.format(tTime);
 		
 		//Get only 06:00 AM format
 		String time = null;
@@ -221,7 +233,7 @@ import com.smk.skalertmessage.SKToastMessage;
 			e2.printStackTrace();
 		}
 				
-		//Get Trip Date+Time format to check late date
+		/*//Get Trip Date+Time format to check late date
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		String tripDateTime = null;
 		if (timeTochange != null) {
@@ -252,7 +264,7 @@ import com.smk.skalertmessage.SKToastMessage;
 			// TODO Auto-generated catch block
 			Log.i("", "Today Date Format Exception: "+e);
 			e.printStackTrace();
-		}
+		}*/
 				
 		SharedPreferences notify = getSharedPreferences("NotifyBooking", Context.MODE_PRIVATE);
 		NotifyBooking = notify.getInt("count", 0);
@@ -407,7 +419,7 @@ import com.smk.skalertmessage.SKToastMessage;
 	
 	private void getSeatPlan() {
 		
-		String param = MCrypt.getInstance().encrypt(SecureParam.getSeatPlanParam(permit_access_token, OperatorID, FromCity, ToCity, Classes, Date, Time));
+		String param = MCrypt.getInstance().encrypt(SecureParam.getSeatPlanParam(permit_access_token, OperatorID, tripId, FromCity, ToCity, Classes, Date, Time));
 		NetworkEngine.getInstance().getItems(param, new Callback<Response>() {
 			
 			public void success(Response arg0, Response arg1) {
@@ -540,10 +552,10 @@ import com.smk.skalertmessage.SKToastMessage;
 			    				Bundle bundle = new Bundle();
 			    				bundle.putString("from_intent", "checkout");
 			    				bundle.putString("Operator_Name", BusSeats.get(0).getOperator());			    				
-			    				bundle.putString("from_to", From+"-"+To);
+			    				bundle.putString("from_to", From+" => "+To);
 			    				bundle.putString("time", Time);
 			    				bundle.putString("classes", BusClasses);
-			    				bundle.putString("date", changeDateString(Date));
+			    				bundle.putString("date", Date);
 			    				bundle.putString("selected_seat",  SeatLists);
 			    				bundle.putString("sale_order_no", jsonObject.getString("sale_order_no"));
 			    				bundle.putString("bus_occurence", BusSeats.get(0).getSeat_plan().get(0).getId().toString());
@@ -559,6 +571,8 @@ import com.smk.skalertmessage.SKToastMessage;
 			    				
 			    				bundle.putString("permit_operator_group_id", permit_operator_group_id);
 								bundle.putString("permit_agent_id", permit_agent_id);
+								
+								bundle.putString("client_operator_id", client_operator_id);
 			    				
 			    				nextScreen.putExtras(bundle);
 			    				startActivity(nextScreen);
@@ -781,21 +795,13 @@ import com.smk.skalertmessage.SKToastMessage;
 			
 			if(v == btn_check_out){
 				if(SelectedSeat.length() != 0){									
-				        
-					//Check late date
-					if (tripDate != null && tDate != null) {
-						if (tripDate.compareTo(tDate) < 0) {
-							SKToastMessage.showMessage(BusSelectSeatActivity.this, "အခ်ိန္ ေနာက္ က် ေနသည့္အတြက္ ၀ယ္ လုိ႔ မရပါ။", SKToastMessage.ERROR);
-						}else {
-							if(connectionDetector.isConnectingToInternet()){
-								postSale();
-							}else{
-								connectionDetector.showErrorDialog();
-							}
-						}
-					}else {
-						Log.i("", "trip date: "+tripDate+", current date: "+tDate);
+					
+					if(connectionDetector.isConnectingToInternet()){
+						postSale();
+					}else{
+						connectionDetector.showErrorDialog();
 					}
+						
 				}else{
 					SKToastMessage.showMessage(BusSelectSeatActivity.this, "ခံု ေရြးပါ။", SKToastMessage.ERROR);
 				}

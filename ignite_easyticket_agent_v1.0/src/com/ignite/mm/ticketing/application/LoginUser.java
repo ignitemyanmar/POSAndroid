@@ -55,26 +55,21 @@ public class LoginUser {
 	private String name;
 	@Expose
 	private String email;
-	@SerializedName("code_no")
-	@Expose
-	private String codeNo;
-	@Expose
-	private int role;
-	@SerializedName("agentgroup_id")
-	@Expose
-	private int agentgroupId;
-	@SerializedName("group_branch")
-	@Expose
-	private int groupBranch;
 	@SerializedName("access_token")
 	@Expose
 	private String accessToken;
-	@SerializedName("created_at")
 	@Expose
-	private String createdAt;
-	@SerializedName("updated_at")
+	private String CodeNo;
 	@Expose
-	private String updatedAt;
+	private String Role;
+	@Expose
+	private String AgentGroupId;
+	@Expose
+	private String GroupBranch;
+	@Expose
+	private String CreateAt;
+	@Expose
+	private String UpdateAt;
 	
 
 	public LoginUser(Context ctx){
@@ -96,6 +91,12 @@ public class LoginUser {
 		Email = pref.getString("email", null);
 		NRC = pref.getString("NRC", null);
 		Address = pref.getString("Address", null);
+		CodeNo = pref.getString("code_no", null);
+		//Role = pref.getString("role", null);
+		//AgentGroupId = pref.getString("agent_group_id", null);
+		//GroupBranch = pref.getString("group_branch", null);
+		//CreateAt = pref.getString("create_at", null);
+		//UpdateAt = pref.getString("update_at", null);
         
 		Log.d("","Today ---> "+" Long is "+TodayLong +" and "+ convertTime(TodayLong));
 		Log.d("","Expires ---> "+" Long is "+Expires +" and "+ convertServerTime(Expires));
@@ -129,11 +130,11 @@ public class LoginUser {
 		editor.putString("user_name", getName());
 		editor.putString("email", getEmail());
 		editor.putString("code_no", getCodeNo());
-		editor.putInt("role", getRole());
-		editor.putInt("agent_group_id", getAgentgroupId());
-		editor.putInt("group_branch", getGroupBranch());
-		editor.putString("create_at", getCreatedAt());
-		editor.putString("update_at", getUpdatedAt());
+		editor.putString("role", getRole());
+		editor.putString("agent_group_id", getAgentGroupId());
+		editor.putString("group_branch", getGroupBranch());
+		editor.putString("create_at", getCreateAt());
+		editor.putString("update_at", getUpdateAt());
 		
 		editor.commit();
 	}
@@ -327,51 +328,51 @@ public class LoginUser {
 	}
 
 	public String getCodeNo() {
-		return codeNo;
+		return CodeNo;
 	}
 
 	public void setCodeNo(String codeNo) {
-		this.codeNo = codeNo;
+		CodeNo = codeNo;
 	}
 
-	public int getRole() {
-		return role;
+	public String getRole() {
+		return Role;
 	}
 
-	public void setRole(int role) {
-		this.role = role;
+	public void setRole(String role) {
+		Role = role;
 	}
 
-	public int getAgentgroupId() {
-		return agentgroupId;
+	public String getAgentGroupId() {
+		return AgentGroupId;
 	}
 
-	public void setAgentgroupId(int agentgroupId) {
-		this.agentgroupId = agentgroupId;
+	public void setAgentGroupId(String agentGroupId) {
+		AgentGroupId = agentGroupId;
 	}
 
-	public int getGroupBranch() {
-		return groupBranch;
+	public String getGroupBranch() {
+		return GroupBranch;
 	}
 
-	public void setGroupBranch(int groupBranch) {
-		this.groupBranch = groupBranch;
+	public void setGroupBranch(String groupBranch) {
+		GroupBranch = groupBranch;
 	}
 
-	public String getCreatedAt() {
-		return createdAt;
+	public String getCreateAt() {
+		return CreateAt;
 	}
 
-	public void setCreatedAt(String createdAt) {
-		this.createdAt = createdAt;
+	public void setCreateAt(String createAt) {
+		CreateAt = createAt;
 	}
 
-	public String getUpdatedAt() {
-		return updatedAt;
+	public String getUpdateAt() {
+		return UpdateAt;
 	}
 
-	public void setUpdatedAt(String updatedAt) {
-		this.updatedAt = updatedAt;
+	public void setUpdateAt(String updateAt) {
+		UpdateAt = updateAt;
 	}
 
 	@Override
@@ -384,11 +385,11 @@ public class LoginUser {
 				+ UserType + ", TodayString=" + TodayString + ", TodayLong="
 				+ TodayLong + ", ctx=" + ctx + ", Email=" + Email + ", NRC="
 				+ NRC + ", Address=" + Address + ", id=" + id + ", name="
-				+ name + ", email=" + email + ", codeNo=" + codeNo + ", role="
-				+ role + ", agentgroupId=" + agentgroupId + ", groupBranch="
-				+ groupBranch + ", accessToken=" + accessToken + ", createdAt="
-				+ createdAt + ", updatedAt=" + updatedAt + "]";
+				+ name + ", email=" + email + ", accessToken=" + accessToken
+				+ ", CodeNo=" + CodeNo + ", Role=" + Role + ", AgentGroupId="
+				+ AgentGroupId + ", GroupBranch=" + GroupBranch + ", CreateAt="
+				+ CreateAt + ", UpdateAt=" + UpdateAt + "]";
 	}
-	
+
 	
 }
