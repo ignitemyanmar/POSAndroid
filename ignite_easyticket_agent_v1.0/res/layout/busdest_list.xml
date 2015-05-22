@@ -245,7 +245,7 @@
             android:text="သြားမည့္အခ်ိန္ေရြးပါ ~"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="@color/white"
-            android:textSize="16dp" />
+            android:textSize="18dp" />
     </LinearLayout>
 
     <LinearLayout

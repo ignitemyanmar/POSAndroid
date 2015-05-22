@@ -50,7 +50,8 @@ public class PDFBusAdapter extends BaseAdapter {
 		
 		if (convertView == null) {
 			
-			convertView = mInflater.inflate(R.layout.activity_pdf_bus_header, null);
+			//convertView = mInflater.inflate(R.layout.activity_pdf_bus_header, null);
+			
 			convertView = mInflater.inflate(R.layout.activity_pdf_bus_voucher, null);
 			
 			holder = new ViewHolder();
@@ -89,7 +90,7 @@ public class PDFBusAdapter extends BaseAdapter {
 		}
 		
 		holder.txt_operator.setText(": "+getItem(position).getOperatorName());
-		holder.txt_trip_class.setText(getItem(position).getTrip()+" [ "+getItem(position).getBusClass()+" ]");
+		holder.txt_trip_class.setText(getItem(position).getTrip()+" ["+getItem(position).getBusClass()+"]");
 		holder.txt_trip_date_time.setText(getItem(position).getDate()+" ("+getItem(position).getTime()+")");
 		holder.txt_seat_no.setText(": "+getItem(position).getSeatNo());		
 		

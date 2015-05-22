@@ -46,7 +46,7 @@ public class BusBookingConfirmDeleteActivity extends BaseSherlockActivity {
 		actionBarBack = (ImageButton) actionBar.getCustomView().findViewById(
 				R.id.action_bar_back);
 		actionBarBack.setOnClickListener(clickListener);
-		actionBarTitle.setText("Easy Ticket");
+		actionBarTitle.setText("Star Ticket");
 		action_bar_title2 = (TextView) actionBar.getCustomView().findViewById(
 				R.id.action_bar_title2);
 		action_bar_title2.setVisibility(View.GONE);

@@ -19,7 +19,7 @@
             android:text="ခရီးသြား၀န္ေဆာင္မႈလုပ္ငန္းေရြးပါ ~"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="@color/white"
-            android:textSize="16dp" />
+            android:textSize="18dp" />
     </LinearLayout>
 
     <View

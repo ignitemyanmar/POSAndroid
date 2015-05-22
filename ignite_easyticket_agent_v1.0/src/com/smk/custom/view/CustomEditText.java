@@ -8,13 +8,13 @@ import android.widget.EditText;
 public class CustomEditText extends EditText{
 	public CustomEditText(Context context){
 		super(context);
-		if(!isInEditMode())
-			setTypeface(Typeface.createFromAsset(context.getAssets(),"fonts/ZawgyiOne2008.ttf"));
+		//if(!isInEditMode())
+			//setTypeface(Typeface.createFromAsset(context.getAssets(),"fonts/ZawgyiOne2008.ttf"));
 	}
 	public CustomEditText(Context context, AttributeSet attrs) {
 		super(context, attrs);
-		if(!isInEditMode())
-			setTypeface(Typeface.createFromAsset(context.getAssets(),"fonts/ZawgyiOne2008.ttf"));
+		//if(!isInEditMode())
+			//setTypeface(Typeface.createFromAsset(context.getAssets(),"fonts/ZawgyiOne2008.ttf"));
 	}
 	
 	

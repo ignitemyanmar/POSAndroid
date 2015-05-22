@@ -498,7 +498,7 @@ import com.smk.skalertmessage.SKToastMessage;
 		
 		//Do Encrypt of Params
 		String param = MCrypt.getInstance().encrypt(SecureParam.postSaleParam(permit_access_token
-					, OperatorID, AgentID, CustName, CustPhone, String
+					, OperatorID, permit_agent_id, CustName, CustPhone, String
 					.valueOf(RemarkType), Remark, permit_operator_group_id, MCrypt.getInstance()
 					.encrypt(seats.toString()), BusSeats.get(0).getSeat_plan()
 					.get(0).getId().toString(), Date, FromCity, ToCity, String.valueOf(AppLoginUser

@@ -957,11 +957,23 @@ public class BusConfirmActivity extends BaseSherlockActivity {
     	{
     		edt_phone.setError("Enter Phone Number");
 			return false;
-		}   
+		}
+    	
+    	
+    	if(edt_phone.getText().toString().length() < 5)
+    	{
+    		edt_phone.setError("Check Your Phone No.");
+			return false;
+		} 
     	
     	List<String> listTicketNo = new ArrayList<String>();
     	for (int i = 0; i < lst_ticket_no.size(); i++) {
     		listTicketNo.add(lst_ticket_no.get(i).getText().toString());
+    		
+    		if (lst_ticket_no.get(i).getText().toString().length() == 0) {
+    			lst_ticket_no.get(i).setError("Enter Ticket No");
+    			return false;
+			}
 		}
     	
     	//Set List doesn't accept duplicate values, & if (Not duplicate), return true
@@ -970,6 +982,7 @@ public class BusConfirmActivity extends BaseSherlockActivity {
 
     	for (String ticketNo : listTicketNo) {
     		//If Duplicate Tickets are exists in List 
+
     		if (!set1.add(ticketNo)) {
     			SKToastMessage.showMessage(BusConfirmActivity.this, "လက္ မွတ္ နံပါတ္ "+ticketNo+" တူေနပါသည္။ တ ျခား နံပါတ္ ေျပာင္းထည့္ပါ။", SKToastMessage.ERROR);
     			return false;
@@ -1002,6 +1015,12 @@ public class BusConfirmActivity extends BaseSherlockActivity {
     	if(edt_phone.getText().toString().length() == 0)
     	{
     		edt_phone.setError("Enter Phone Number");
+			return false;
+		}
+
+    	if(edt_phone.getText().toString().length() < 5)
+    	{
+    		edt_phone.setError("Check Your Phone No");
 			return false;
 		}
     	

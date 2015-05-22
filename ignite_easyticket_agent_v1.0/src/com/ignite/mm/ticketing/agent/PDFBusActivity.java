@@ -483,24 +483,6 @@ public class PDFBusActivity extends BaseSherlockActivity {
 						
 					}else if(printerClass.getState() == PrinterClass.STATE_CONNECTED){ // If already connected before... 
 						
-		        		/*try {
-		        			Log.i("", "Connected Already!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! "+deviceAddr);
-							//Connect with the selected device		        			
-		        			printerClass.connect(deviceAddr);
-							checkState = true;
-							
-						} catch (IndexOutOfBoundsException e) {
-							// TODO: handle exception
-							Log.i("", "IndexOutOfBoundsException : "+e);
-							checkState = false;
-							showAlert("Can't Print! Index Out Of Bound...");
-						} catch (Exception e) {
-							// TODO: handle exception
-							Log.i("", "Exception : "+e);
-							checkState = false;
-							showAlert("Can't Print! Something is wrong...");
-						}*/
-		        		
 						if (ticketBitmap != null) {
 							try {
 								checkState = true;
@@ -592,7 +574,7 @@ public class PDFBusActivity extends BaseSherlockActivity {
 	        allitemsheight += childView.getMeasuredHeight();
 	    }
 	    
-	    Log.i("", "Bit Map Size after adding List Items: "+bmps.size());
+	    Log.i("", "Bit Map Size after adding List Items: "+bmps.size()+"List view width: "+lv_bus_booking_sheet.getWidth());
 	    
 	    Bitmap bigbitmap    = Bitmap.createBitmap(lv_bus_booking_sheet.getWidth(), allitemsheight, Bitmap.Config.ARGB_8888);
 	    Canvas bigcanvas    = new Canvas(bigbitmap);
@@ -847,8 +829,9 @@ public class PDFBusActivity extends BaseSherlockActivity {
 		// TODO Auto-generated method stub
 		super.onBackPressed();
 		closeAllActivities();
-		UserLogin login = new UserLogin();
-		login.finish();
+		startActivity(new Intent(getApplicationContext(), BusOperatorActivity.class));
+		/*UserLogin login = new UserLogin();
+		login.finish();*/
 		//android.os.Process.killProcess(android.os.Process.myPid());
 	}
 }

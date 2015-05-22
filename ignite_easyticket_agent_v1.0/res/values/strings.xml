@@ -1,10 +1,10 @@
 <resources>
 
-    <string name="app_name_client">Easy Ticket User</string>
-    <string name="app_name_agent">Easy Ticket Agent</string>
+    <string name="app_name_client">Star Ticket User</string>
+    <string name="app_name_agent">Star Ticket Agent</string>
     <string name="hello_world">Ticketing</string>
     <string name="menu_settings">Settings</string>
-    <string name="title_activity_main">Easy Ticket Agent</string>
+    <string name="title_activity_main">Star Ticket Agent</string>
     
     <string name="str_checkdevice">check equipment </string>
     <string name="str_open">turn on Bluetooth</string>

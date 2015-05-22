@@ -87,14 +87,15 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginRight="2dp"
-                        android:orientation="vertical"
                         android:layout_weight="50"
+                        android:orientation="vertical"
                         android:padding="0dp" >
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginBottom="20dp" >
+                            android:layout_marginBottom="20dp"
+                            android:gravity="center_vertical" >
 
                             <View
                                 android:id="@+id/view3"
@@ -107,13 +108,15 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:padding="3dp"
-                                android:text="ေရြးျပီး ခံုမ်ား" />
+                                android:text="ေရြးျပီး ခံုမ်ား"
+                                android:textSize="18dp" />
                         </LinearLayout>
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginBottom="20dp" >
+                            android:layout_marginBottom="20dp"
+                            android:gravity="center_vertical" >
 
                             <View
                                 android:id="@+id/view_cover"
@@ -127,13 +130,15 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:padding="3dp"
-                                android:text="ေရာင္းခြင့္မရွိခံုမ်ား" />
+                                android:text="ေရာင္းခြင့္မရွိခံုမ်ား"
+                                android:textSize="18dp" />
                         </LinearLayout>
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="20dp"
+                            android:gravity="center_vertical"
                             android:orientation="horizontal" >
 
                             <View
@@ -147,13 +152,15 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:padding="3dp"
-                                android:text="၀ယ္ျပီး ခံုမ်ား" />
+                                android:text="၀ယ္ျပီး ခံုမ်ား"
+                                android:textSize="18dp" />
                         </LinearLayout>
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="20dp"
+                            android:gravity="center_vertical"
                             android:orientation="horizontal" >
 
                             <View
@@ -167,7 +174,8 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:padding="3dp"
-                                android:text="Booking ခံုမ်ား" />
+                                android:text="Booking ခံုမ်ား"
+                                android:textSize="18dp" />
                         </LinearLayout>
 
                         <ListView
@@ -182,8 +190,8 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_weight="50"
                         android:orientation="vertical"
-                         android:layout_weight="50"
                         android:padding="5dp" >
 
                         <com.smk.custom.view.CustomTextView
@@ -192,7 +200,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="0dp"
                             android:text="ထြက္ခြာမည့္ ရက္ : 0000-00-00"
-                            android:textSize="14dp" />
+                            android:textSize="18dp" />
 
                         <com.smk.custom.view.CustomTextView
                             android:id="@+id/txt_departure_time"
@@ -200,7 +208,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
                             android:text="ထြက္ခြာမည့္ အခ်ိန္ : 00:00 AM"
-                            android:textSize="14dp" />
+                            android:textSize="18dp" />
 
                         <com.smk.custom.view.CustomTextView
                             android:id="@+id/txt_operator"
@@ -208,7 +216,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
                             android:text="Operator: -"
-                            android:textSize="14dp" />
+                            android:textSize="18dp" />
 
                         <com.smk.custom.view.CustomTextView
                             android:id="@+id/txt_classes"
@@ -216,7 +224,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
                             android:text="Classes: -"
-                            android:textSize="14dp" />
+                            android:textSize="18dp" />
 
                         <com.smk.custom.view.CustomTextView
                             android:id="@+id/txt_price"
@@ -224,7 +232,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
                             android:text="Price: 0 Kyats"
-                            android:textSize="14dp" />
+                            android:textSize="18dp" />
 
                         <ListView
                             android:id="@+id/lvBusClass"
@@ -240,12 +248,12 @@
                             android:id="@+id/btn_check_out"
                             android:layout_width="match_parent"
                             android:layout_height="50dp"
-                            android:layout_marginTop="50dp"
                             android:layout_marginBottom="20dp"
+                            android:layout_marginTop="50dp"
                             android:background="@drawable/btn_green"
                             android:text="ဝယ္ မည္"
                             android:textColor="@color/white"
-                            android:textSize="14dp"
+                            android:textSize="20dp"
                             android:textStyle="bold"
                             android:visibility="visible" />
 
@@ -254,8 +262,8 @@
                             style="?android:attr/buttonStyleSmall"
                             android:layout_width="match_parent"
                             android:layout_height="50dp"
-                            android:layout_marginTop="20dp"
                             android:layout_marginBottom="20dp"
+                            android:layout_marginTop="20dp"
                             android:background="@drawable/btn_dark_blue"
                             android:text="Booking မွာမည္"
                             android:textColor="@color/white"
@@ -273,9 +281,10 @@
                             android:text="Booking စာရင္းၾကည့္မည္"
                             android:textColor="@color/white"
                             android:textSize="14dp"
-                            android:textStyle="bold" 
-                            android:visibility="gone"/>
+                            android:textStyle="bold"
+                            android:visibility="gone" />
                     </LinearLayout>
+
                 </LinearLayout>
 
                 <LinearLayout
@@ -332,7 +341,7 @@
                 android:text="ထုိင္ခံုေရြးပါ ~"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="@color/white"
-                android:textSize="16dp" />
+                android:textSize="18dp" />
         </LinearLayout>
 
         <View

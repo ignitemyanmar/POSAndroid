@@ -8,13 +8,13 @@ import android.widget.Button;
 public class CustomButton extends Button{
 	public CustomButton(Context context){
 		super(context);
-		if(!isInEditMode())
-			setTypeface(Typeface.createFromAsset(context.getAssets(),"fonts/ZawgyiOne2008.ttf"));
+		/*if(!isInEditMode())
+			setTypeface(Typeface.createFromAsset(context.getAssets(),"fonts/ZawgyiOne2008.ttf"));*/
 	}
 	public CustomButton(Context context, AttributeSet attrs) {
 		super(context, attrs);
-		if(!isInEditMode())
-			setTypeface(Typeface.createFromAsset(context.getAssets(),"fonts/ZawgyiOne2008.ttf"));
+		/*if(!isInEditMode())
+			setTypeface(Typeface.createFromAsset(context.getAssets(),"fonts/ZawgyiOne2008.ttf"));*/
 	}
 	
 	

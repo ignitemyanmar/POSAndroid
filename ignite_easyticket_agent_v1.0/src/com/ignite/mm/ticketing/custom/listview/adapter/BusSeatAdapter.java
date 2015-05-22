@@ -71,11 +71,12 @@ public class BusSeatAdapter extends BaseAdapter{
 				holder = (ViewHolder) convertView.getTag();
 			}
 			
+			
 			switch(getColor(list.get(position).getOperatorgroup_id())){
 				case 1:
-					holder.cover.setVisibility(View.VISIBLE);
-					holder.seat_no.setVisibility(View.VISIBLE);
-					holder.seat_no.setText(list.get(position).getSeat_no());
+					//holder.cover.setVisibility(View.VISIBLE);
+					//holder.seat_no.setVisibility(View.VISIBLE);
+					//holder.seat_no.setText(list.get(position).getSeat_no());
 					if(list.get(position).getBooking() == 0)
 						holder.seat.setButtonDrawable(R.drawable.rdo_shape_1); 
 					else
@@ -88,9 +89,9 @@ public class BusSeatAdapter extends BaseAdapter{
 						holder.seat.setButtonDrawable(R.drawable.rdo_shape_2_1); //Booking red brown color
 					break;
 				case 3:
-					holder.cover.setVisibility(View.VISIBLE);
-					holder.seat_no.setVisibility(View.VISIBLE);
-					holder.seat_no.setText(list.get(position).getSeat_no());
+					//holder.cover.setVisibility(View.VISIBLE);
+					//holder.seat_no.setVisibility(View.VISIBLE);
+					//holder.seat_no.setText(list.get(position).getSeat_no());
 					if(list.get(position).getBooking() == 0)
 						holder.seat.setButtonDrawable(R.drawable.rdo_shape_3);
 					else
@@ -107,9 +108,9 @@ public class BusSeatAdapter extends BaseAdapter{
 						holder.seat.setButtonDrawable(R.drawable.rdo_shape_4_1);
 					}
 					
-					//holder.seat_no.setVisibility(View.INVISIBLE);
 					//Get Selected Seats of Online Sales
 	            	holder.layout_customer_info.setVisibility(View.INVISIBLE);
+	            	
 	            	holder.seatNo.setText(list.get(position).getSeat_no());
 	            	holder.seat.setEnabled(true);
 	            	holder.seat.setTag(position);
@@ -148,21 +149,37 @@ public class BusSeatAdapter extends BaseAdapter{
 							}
 						}
 					});
-	            	
 					break;
 				default:
+					if(list.get(position).getBooking() == 0)
+					{
+						//holder.cover.setVisibility(View.INVISIBLE);
+						//holder.seat_no.setVisibility(View.INVISIBLE);
+						//holder.seatNo.setText(list.get(position).getSeat_no());
+						holder.seat.setButtonDrawable(R.drawable.rdo_shape_0);
+					}
+					else 
+					{
+						//holder.cover.setVisibility(View.INVISIBLE);
+						//holder.seat_no.setVisibility(View.INVISIBLE);
+						//holder.seatNo.setText(list.get(position).getSeat_no());
+						holder.seat.setButtonDrawable(R.drawable.rdo_shape_0_1);
+					}					
+					
+					holder.layout_customer_info.setVisibility(View.INVISIBLE);
 					holder.cover.setVisibility(View.VISIBLE);
 					holder.seat_no.setVisibility(View.VISIBLE);
 					holder.seat_no.setText(list.get(position).getSeat_no());
-					if(list.get(position).getBooking() == 0)
-						holder.seat.setButtonDrawable(R.drawable.rdo_shape_0);
-					else
-						holder.seat.setButtonDrawable(R.drawable.rdo_shape_0_1);
 			}
 			
 			//Already Purchase or Booking
 			if(list.get(position).getStatus() == 2){
+				
+				holder.cover.setVisibility(View.INVISIBLE);
+				holder.seat_no.setVisibility(View.INVISIBLE);
+				holder.seatNo.setText(list.get(position).getSeat_no());
 				holder.seat.setEnabled(false);
+				
             	if(list.get(position).getCustomerInfo() != null){
             		holder.layout_customer_info.setVisibility(View.VISIBLE);
             		holder.txt_name.setText(list.get(position).getCustomerInfo().getName());
@@ -232,6 +249,7 @@ public class BusSeatAdapter extends BaseAdapter{
 				});
             }*/
             
+            //If seats are not to show ..... 
             if(list.get(position).getStatus() == 0){
             	holder.cover.setVisibility(View.INVISIBLE);
             	holder.layout_customer_info.setVisibility(View.INVISIBLE);

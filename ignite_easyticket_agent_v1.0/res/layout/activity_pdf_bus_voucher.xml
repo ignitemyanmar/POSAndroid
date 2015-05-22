@@ -14,13 +14,15 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp"
             android:orientation="vertical" >
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
+                android:layout_marginBottom="30dp"
                 android:gravity="center_horizontal"
                 android:orientation="vertical" >
 
@@ -29,9 +31,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:editable="false"
-                    android:fadeScrollbars="false"
+                    android:fadeScrollbars="true"
+                    android:filterTouchesWhenObscured="true"
                     android:text="SEIN GAY HAR"
-                    android:textSize="40dp" />
+                    android:textSize="30dp" />
 
                 <com.smk.custom.view.CustomTextView
                     android:id="@+id/CustomTextView1"
@@ -39,8 +42,9 @@
                     android:layout_height="wrap_content"
                     android:editable="false"
                     android:fadeScrollbars="false"
+                    android:filterTouchesWhenObscured="true"
                     android:text="(Parami)"
-                    android:textSize="35dp" />
+                    android:textSize="28dp" />
             </LinearLayout>
 
             <LinearLayout
@@ -53,8 +57,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:editable="false"
+                    android:filterTouchesWhenObscured="true"
                     android:text="-"
-                    android:textSize="35dp" />
+                    android:textSize="24dp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -74,8 +79,9 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="60"
                             android:editable="false"
+                            android:filterTouchesWhenObscured="true"
                             android:text="NO"
-                            android:textSize="35dp" />
+                            android:textSize="24dp" />
 
                         <com.smk.custom.view.CustomTextView
                             android:id="@+id/txt_order_no"
@@ -83,8 +89,9 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="40"
                             android:editable="false"
+                            android:filterTouchesWhenObscured="true"
                             android:text=": -"
-                            android:textSize="35dp" />
+                            android:textSize="24dp" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -100,8 +107,9 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="60"
                             android:editable="false"
+                            android:filterTouchesWhenObscured="true"
                             android:text="PASSENGER"
-                            android:textSize="35dp" />
+                            android:textSize="24dp" />
 
                         <com.smk.custom.view.CustomTextView
                             android:id="@+id/txt_passenger"
@@ -109,8 +117,9 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="40"
                             android:editable="false"
+                            android:filterTouchesWhenObscured="true"
                             android:text=": -"
-                            android:textSize="35dp" />
+                            android:textSize="24dp" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -126,8 +135,9 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="60"
                             android:editable="false"
+                            android:filterTouchesWhenObscured="true"
                             android:text="PHONE"
-                            android:textSize="35dp" />
+                            android:textSize="24dp" />
 
                         <com.smk.custom.view.CustomTextView
                             android:id="@+id/txt_phone"
@@ -135,8 +145,9 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="40"
                             android:editable="false"
+                            android:filterTouchesWhenObscured="true"
                             android:text=": -"
-                            android:textSize="35dp" />
+                            android:textSize="24dp" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -152,8 +163,9 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="60"
                             android:editable="false"
+                            android:filterTouchesWhenObscured="true"
                             android:text="NRC"
-                            android:textSize="35dp" />
+                            android:textSize="24dp" />
 
                         <com.smk.custom.view.CustomTextView
                             android:id="@+id/txt_nrc"
@@ -161,8 +173,9 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="40"
                             android:editable="false"
+                            android:filterTouchesWhenObscured="true"
                             android:text=": -"
-                            android:textSize="35dp" />
+                            android:textSize="24dp" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -178,8 +191,9 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="60"
                             android:editable="false"
+                            android:filterTouchesWhenObscured="true"
                             android:text="BUS"
-                            android:textSize="35dp" />
+                            android:textSize="24dp" />
 
                         <com.smk.custom.view.CustomTextView
                             android:id="@+id/txt_operator"
@@ -187,15 +201,16 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="40"
                             android:editable="false"
+                            android:filterTouchesWhenObscured="true"
                             android:text=": -"
-                            android:textSize="35dp" />
+                            android:textSize="24dp" />
                     </LinearLayout>
                 </LinearLayout>
 
                 <View
                     android:id="@+id/view1"
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
+                    android:layout_height="2dp"
                     android:background="@color/black" />
             </LinearLayout>
 
@@ -210,16 +225,18 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:editable="false"
+                    android:filterTouchesWhenObscured="true"
                     android:text="-"
-                    android:textSize="35dp" />
+                    android:textSize="24dp" />
 
                 <com.smk.custom.view.CustomTextView
                     android:id="@+id/txt_trip_date_time"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:editable="false"
+                    android:filterTouchesWhenObscured="true"
                     android:text="0000-00-00 (00:00 pm)"
-                    android:textSize="35dp" />
+                    android:textSize="24dp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -239,8 +256,9 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="60"
                             android:editable="false"
+                            android:filterTouchesWhenObscured="true"
                             android:text="SEAT NO"
-                            android:textSize="35dp" />
+                            android:textSize="24dp" />
 
                         <com.smk.custom.view.CustomTextView
                             android:id="@+id/txt_seat_no"
@@ -248,8 +266,9 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="40"
                             android:editable="false"
+                            android:filterTouchesWhenObscured="true"
                             android:text=": -"
-                            android:textSize="35dp" />
+                            android:textSize="24dp" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -265,8 +284,9 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="60"
                             android:editable="false"
+                            android:filterTouchesWhenObscured="true"
                             android:text="TICKET NO"
-                            android:textSize="35dp" />
+                            android:textSize="24dp" />
 
                         <com.smk.custom.view.CustomTextView
                             android:id="@+id/txt_ticket_no"
@@ -274,8 +294,9 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="40"
                             android:editable="false"
+                            android:filterTouchesWhenObscured="true"
                             android:text=": -"
-                            android:textSize="35dp" />
+                            android:textSize="24dp" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -291,8 +312,9 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="60"
                             android:editable="false"
+                            android:filterTouchesWhenObscured="true"
                             android:text="PRICE"
-                            android:textSize="35dp" />
+                            android:textSize="24dp" />
 
                         <com.smk.custom.view.CustomTextView
                             android:id="@+id/txt_price"
@@ -300,8 +322,9 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="40"
                             android:editable="false"
+                            android:filterTouchesWhenObscured="true"
                             android:text=": KS 0"
-                            android:textSize="35dp" />
+                            android:textSize="24dp" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -317,8 +340,9 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="60"
                             android:editable="false"
+                            android:filterTouchesWhenObscured="true"
                             android:text="QTY"
-                            android:textSize="35dp" />
+                            android:textSize="24dp" />
 
                         <com.smk.custom.view.CustomTextView
                             android:id="@+id/txt_qty"
@@ -326,8 +350,9 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="40"
                             android:editable="false"
+                            android:filterTouchesWhenObscured="true"
                             android:text=": 0"
-                            android:textSize="35dp" />
+                            android:textSize="24dp" />
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
@@ -341,7 +366,7 @@
                 <View
                     android:id="@+id/View01"
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
+                    android:layout_height="2dp"
                     android:layout_weight="60"
                     android:background="@color/black" />
 
@@ -357,8 +382,9 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="60"
                         android:editable="false"
+                        android:filterTouchesWhenObscured="true"
                         android:text="QTY"
-                        android:textSize="35dp"
+                        android:textSize="24dp"
                         android:visibility="invisible" />
 
                     <com.smk.custom.view.CustomTextView
@@ -367,14 +393,15 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="40"
                         android:editable="false"
+                        android:filterTouchesWhenObscured="true"
                         android:text="TOTAL : KS 0"
-                        android:textSize="35dp" />
+                        android:textSize="24dp" />
                 </LinearLayout>
 
                 <View
                     android:id="@+id/View02"
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
+                    android:layout_height="2dp"
                     android:layout_weight="60"
                     android:background="@color/black" />
             </LinearLayout>
@@ -392,7 +419,7 @@
                     android:layout_marginTop="5dp"
                     android:editable="false"
                     android:text="1) ကားမထြက္မီ ၃၀ မိနစ္အလုိ ကားဂိတ္ကုိ ေရာက္ရွိေပးပါရန္"
-                    android:textSize="35dp" />
+                    android:textSize="24dp" />
 
                 <com.smk.custom.view.CustomTextView
                     android:id="@+id/CustomTextView2"
@@ -401,7 +428,7 @@
                     android:layout_marginBottom="16dp"
                     android:editable="false"
                     android:text="2) လက္မွတ္အား ျပန္လဲခြင့္မျပဳပါ"
-                    android:textSize="35dp" />
+                    android:textSize="24dp" />
 
                 <com.smk.custom.view.CustomTextView
                     android:id="@+id/CustomTextView3"
@@ -410,12 +437,12 @@
                     android:layout_marginBottom="16dp"
                     android:editable="false"
                     android:text="3) ကားမထြက္ပါက ကားဂိတ္ႏွင့္သာ သက္ဆုိင္ၿပီး၊ Easy Ticket ႏွင့္ မသက္ဆုိင္ပါ"
-                    android:textSize="35dp" />
+                    android:textSize="24dp" />
 
                 <View
                     android:id="@+id/View03"
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
+                    android:layout_height="2dp"
                     android:layout_weight="60"
                     android:background="@color/black" />
 
@@ -425,9 +452,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="20dp"
                     android:editable="false"
+                    android:filterTouchesWhenObscured="true"
                     android:gravity="center"
                     android:text="&quot;THANK YOU!&quot;"
-                    android:textSize="35dp" />
+                    android:textSize="24dp" />
 
                 <TextView
                     android:id="@+id/textView2"
@@ -435,9 +463,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="30dp"
                     android:editable="false"
+                    android:filterTouchesWhenObscured="true"
                     android:gravity="center"
-                    android:text="EASY TICKET"
-                    android:textSize="35dp" />
+                    android:text="STAR TICKET"
+                    android:textSize="24dp" />
             </LinearLayout>
         </LinearLayout>
 

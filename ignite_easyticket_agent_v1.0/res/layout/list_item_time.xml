@@ -61,8 +61,8 @@
                 android:id="@+id/txt_class"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Business"
                 android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Business"
                 android:textSize="28dp" />
 
             <TextView
