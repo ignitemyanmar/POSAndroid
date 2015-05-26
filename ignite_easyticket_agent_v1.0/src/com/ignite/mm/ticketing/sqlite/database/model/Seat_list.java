@@ -20,6 +20,8 @@ public class Seat_list {
 	private Integer operatorgroup_id;
 	@Expose
 	private CustomerInfo customer_info;
+	@Expose
+	private Integer operatorgroup_color;
 	
 	public Seat_list(Integer id, String seat_no, Integer status) {
 		super();
@@ -92,14 +94,32 @@ public class Seat_list {
 		this.customer_info = customerInfo;
 	}
 
+	
+	public CustomerInfo getCustomer_info() {
+		return customer_info;
+	}
+
+	public void setCustomer_info(CustomerInfo customer_info) {
+		this.customer_info = customer_info;
+	}
+
+	public Integer getOperatorgroup_color() {
+		return operatorgroup_color;
+	}
+
+	public void setOperatorgroup_color(Integer operatorgroup_color) {
+		this.operatorgroup_color = operatorgroup_color;
+	}
+
 	@Override
 	public String toString() {
 		return "Seat_list [id=" + id + ", seat_no=" + seat_no + ", status="
 				+ status + ", booking=" + booking + ", remark_type="
 				+ remark_type + ", remark=" + remark + ", operatorgroup_id="
-				+ operatorgroup_id + ", customer_info=" + customer_info + "]";
+				+ operatorgroup_id + ", customer_info=" + customer_info
+				+ ", operatorgroup_color=" + operatorgroup_color + "]";
 	}
-	
+
 	
 	
 }

@@ -1,14 +1,12 @@
 package com.zkc.helper.printer;
 
 import java.util.List;
-import java.util.Set;
 
 import com.ignite.mm.ticketing.sqlite.database.model.Device;
 
-import android.bluetooth.BluetoothDevice;
+
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.widget.ArrayAdapter;
 
 public interface PrinterClass {
 	

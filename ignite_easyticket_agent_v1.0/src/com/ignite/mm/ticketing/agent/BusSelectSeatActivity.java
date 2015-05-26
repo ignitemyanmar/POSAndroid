@@ -231,40 +231,7 @@ import com.smk.skalertmessage.SKToastMessage;
 			// TODO Auto-generated catch block
 			Log.i("", "Server Time Exception: "+e2);
 			e2.printStackTrace();
-		}
-				
-		/*//Get Trip Date+Time format to check late date
-		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		String tripDateTime = null;
-		if (timeTochange != null) {
-			tripDateTime = Date+" "+sdf2.format(timeTochange);
-			
-			Log.i("", "Trip Date+Time: "+tripDateTime);
-		}
-		
-		try {
-			if (tripDateTime != null) {
-				tripDate = df.parse(tripDateTime);
-				Log.i("", "Trip Date Format: "+df.format(tripDate));
-			}
-		} catch (ParseException e1) {
-			// TODO Auto-generated catch block
-			Log.i("", "Trip Date Format Exception: "+e1);
-			e1.printStackTrace();
-		}
-		
-		//Get Today Date+Time Format
-		SimpleDateFormat df2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		String todayDateTime = todayDate+" "+todayTime;
-				
-    	try {
-			tDate = df2.parse(todayDateTime);
-			Log.i("", "Today Date Format: "+df2.format(tDate));
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			Log.i("", "Today Date Format Exception: "+e);
-			e.printStackTrace();
-		}*/
+		}				
 				
 		SharedPreferences notify = getSharedPreferences("NotifyBooking", Context.MODE_PRIVATE);
 		NotifyBooking = notify.getInt("count", 0);
@@ -345,7 +312,7 @@ import com.smk.skalertmessage.SKToastMessage;
 					
 					if (groupUser != null && groupUser.size() > 0) {
 						
-						Log.i("","Hello Group User: "+ groupUser.size());
+						Log.i("","Hello Group User(size): "+ groupUser.size()+"Group User: "+groupUser.toString());
 						
 						lst_group_user.setAdapter(new GroupUserListAdapter(BusSelectSeatActivity.this, groupUser));
 						setListViewHeightBasedOnChildren(lst_group_user);
@@ -420,6 +387,9 @@ import com.smk.skalertmessage.SKToastMessage;
 	private void getSeatPlan() {
 		
 		String param = MCrypt.getInstance().encrypt(SecureParam.getSeatPlanParam(permit_access_token, OperatorID, tripId, FromCity, ToCity, Classes, Date, Time));
+		
+		Log.i("", "Param to get Seats: "+param);
+		
 		NetworkEngine.getInstance().getItems(param, new Callback<Response>() {
 			
 			public void success(Response arg0, Response arg1) {
@@ -683,6 +653,7 @@ import com.smk.skalertmessage.SKToastMessage;
 			Log.i("", "Seat List (mseat): "+BusSeats.get(0).getSeat_plan().get(0).getSeat_list());
 			
 			mSeat.setAdapter(new BusSeatAdapter(this, BusSeats.get(0).getSeat_plan().get(0).getSeat_list()));	
+			
 			setGridViewHeightBasedOnChildren(mSeat , Integer.valueOf(BusSeats.get(0).getSeat_plan().get(0).getColumn()));
 			
 			lvClass = (ListView)findViewById(R.id.lvBusClass);

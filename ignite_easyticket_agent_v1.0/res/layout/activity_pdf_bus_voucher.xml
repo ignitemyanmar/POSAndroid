@@ -409,7 +409,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical" >
+                android:orientation="vertical"
+                android:padding="2dp" >
 
                 <com.smk.custom.view.CustomTextView
                     android:id="@+id/CustomTextView1"
@@ -418,8 +419,8 @@
                     android:layout_marginBottom="16dp"
                     android:layout_marginTop="5dp"
                     android:editable="false"
-                    android:text="1) ကားမထြက္မီ ၃၀ မိနစ္အလုိ ကားဂိတ္ကုိ ေရာက္ရွိေပးပါရန္"
-                    android:textSize="24dp" />
+                    android:text="1) ကားမထြက္မီ ၃၀ မိနစ္အလုိ ကားဂိတ္ကုိ ေရာက္ ရွိ ေပးပါရန္"
+                    android:textSize="23dp" />
 
                 <com.smk.custom.view.CustomTextView
                     android:id="@+id/CustomTextView2"
@@ -428,16 +429,16 @@
                     android:layout_marginBottom="16dp"
                     android:editable="false"
                     android:text="2) လက္မွတ္အား ျပန္လဲခြင့္မျပဳပါ"
-                    android:textSize="24dp" />
+                    android:textSize="23dp" />
 
                 <com.smk.custom.view.CustomTextView
                     android:id="@+id/CustomTextView3"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_marginBottom="16dp"
                     android:editable="false"
-                    android:text="3) ကားမထြက္ပါက ကားဂိတ္ႏွင့္သာ သက္ဆုိင္ၿပီး၊ Easy Ticket ႏွင့္ မသက္ဆုိင္ပါ"
-                    android:textSize="24dp" />
+                    android:text="3) ကားမထြက္ပါက ကားဂိတ္ႏွင့္သာ သက္ဆုိင္ၿပီး၊ Easy Ticket ႏွင့္ မသက္ဆုိင္ ပါ"
+                    android:textSize="23dp" />
 
                 <View
                     android:id="@+id/View03"

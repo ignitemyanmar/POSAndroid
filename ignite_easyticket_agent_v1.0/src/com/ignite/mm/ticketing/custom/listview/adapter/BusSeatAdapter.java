@@ -71,8 +71,10 @@ public class BusSeatAdapter extends BaseAdapter{
 				holder = (ViewHolder) convertView.getTag();
 			}
 			
+			Log.i("", "Seat No: "+list.get(position).getSeat_no()+", Operator Group Color: "+list.get(position).getOperatorgroup_color());
 			
-			switch(getColor(list.get(position).getOperatorgroup_id())){
+			switch(list.get(position).getOperatorgroup_color()){
+			
 				case 1:
 					//holder.cover.setVisibility(View.VISIBLE);
 					//holder.seat_no.setVisibility(View.VISIBLE);
@@ -110,6 +112,10 @@ public class BusSeatAdapter extends BaseAdapter{
 					
 					//Get Selected Seats of Online Sales
 	            	holder.layout_customer_info.setVisibility(View.INVISIBLE);
+	            	
+	            	//Edited on 25 May 2015 by Su Wai (Sometimes, not show Online Sale seats, so, we invisible cover seat)	            	
+	            	holder.cover.setVisibility(View.INVISIBLE);
+					holder.seat_no.setVisibility(View.INVISIBLE);
 	            	
 	            	holder.seatNo.setText(list.get(position).getSeat_no());
 	            	holder.seat.setEnabled(true);
@@ -153,16 +159,10 @@ public class BusSeatAdapter extends BaseAdapter{
 				default:
 					if(list.get(position).getBooking() == 0)
 					{
-						//holder.cover.setVisibility(View.INVISIBLE);
-						//holder.seat_no.setVisibility(View.INVISIBLE);
-						//holder.seatNo.setText(list.get(position).getSeat_no());
 						holder.seat.setButtonDrawable(R.drawable.rdo_shape_0);
 					}
 					else 
 					{
-						//holder.cover.setVisibility(View.INVISIBLE);
-						//holder.seat_no.setVisibility(View.INVISIBLE);
-						//holder.seatNo.setText(list.get(position).getSeat_no());
 						holder.seat.setButtonDrawable(R.drawable.rdo_shape_0_1);
 					}					
 					
@@ -205,50 +205,6 @@ public class BusSeatAdapter extends BaseAdapter{
             	holder.seatNo.setText(list.get(position).getSeat_no());
             }
             
-            /*//Get Selected Seats of Online Sales
-            
-            if(getColor(list.get(position).getOperatorgroup_id()) == 4){
-            	holder.layout_customer_info.setVisibility(View.INVISIBLE);
-            	holder.seatNo.setText(list.get(position).getSeat_no());
-            	holder.seat.setEnabled(true);
-            	holder.seat.setTag(position);
-            	holder.seat.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-					
-					public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-						if(isChecked){
-							//If checked the seat.
-							String[] seleted = BusSelectSeatActivity.SelectedSeat.split(",");
-							if(!BusSelectSeatActivity.SelectedSeat.isEmpty()){
-								boolean isExisted = false;
-								for (int i = 0; i < seleted.length; i++) {
-									if(seleted[i].equals(buttonView.getTag().toString())){
-										isExisted = true;
-									}
-								}
-								
-								if(!isExisted){
-									BusSelectSeatActivity.SelectedSeat += buttonView.getTag()+",";
-								}
-							}else{
-								BusSelectSeatActivity.SelectedSeat += buttonView.getTag()+",";
-							}
-						}else{
-							//If unchecked the seat.
-							String[] seleted = BusSelectSeatActivity.SelectedSeat.split(",");
-							if(!BusSelectSeatActivity.SelectedSeat.isEmpty()){
-								BusSelectSeatActivity.SelectedSeat = "";
-								for (int i = 0; i < seleted.length; i++) {
-									if(!seleted[i].equals(buttonView.getTag().toString())){
-										BusSelectSeatActivity.SelectedSeat += seleted[i]+",";
-									}
-								}
-								
-							}
-						}
-					}
-				});
-            }*/
-            
             //If seats are not to show ..... 
             if(list.get(position).getStatus() == 0){
             	holder.cover.setVisibility(View.INVISIBLE);
@@ -266,11 +222,15 @@ public class BusSeatAdapter extends BaseAdapter{
 		private int getColor(int Id){
 			int color = 0;
 			for(OperatorGroupUser groupUser: BusSelectSeatActivity.groupUser){
+				Log.i("", "Group User's Id: "+groupUser.getId()+", Seat Plan's OperatorGroupId: "+Id);
 				if(groupUser.getId() == Id){
 					color = groupUser.getColor();
 					break;
 				}
 			}
+			
+			Log.i("", "OperatorGroupUser's Color status: "+color);
+			
 			return color;
 		}
 		

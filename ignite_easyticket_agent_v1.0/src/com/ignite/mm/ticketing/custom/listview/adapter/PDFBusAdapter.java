@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import com.ignite.mm.ticketing.agent.R;
 import com.ignite.mm.ticketing.sqlite.database.model.AllBusObject;
 import android.app.Activity;
+import android.content.res.Configuration;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -50,8 +51,8 @@ public class PDFBusAdapter extends BaseAdapter {
 		
 		if (convertView == null) {
 			
-			//convertView = mInflater.inflate(R.layout.activity_pdf_bus_header, null);
-			
+			//convertView = mInflater.inflate(R.layout.activity_pdf_bus_header, null);						
+	        
 			convertView = mInflater.inflate(R.layout.activity_pdf_bus_voucher, null);
 			
 			holder = new ViewHolder();

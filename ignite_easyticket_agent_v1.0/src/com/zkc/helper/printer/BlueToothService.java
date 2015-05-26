@@ -1,19 +1,12 @@
 package com.zkc.helper.printer;
 
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.UnsupportedEncodingException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Set;
 import java.util.UUID;
-
-import com.ignite.mm.ticketing.agent.PDFBusActivity;
-import com.zkc.helper.printer.bt.BtService;
-
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothServerSocket;
@@ -22,11 +15,9 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Handler;
 import android.util.Log;
-import android.widget.Toast;
 
 public class BlueToothService {
 
@@ -284,8 +275,8 @@ public class BlueToothService {
 
 		setState(PrinterClass.STATE_CONNECTED);
 		
-		Log.i("", "Printer class state (connected thread): "+PDFBusActivity.printerClass.getState());
-		Log.i("", "BluetoothSerice connected thread state: "+getState());
+		//Log.i("", "Printer class state (connected thread): "+VoucherSlipActivity.printerClass.getState());
+		//Log.i("", "BluetoothSerice connected thread state: "+getState());
 	}
 
 	/**
@@ -312,8 +303,8 @@ public class BlueToothService {
 	private void connectionSuccess() {
 		setState(PrinterClass.STATE_CONNECTED);
 		
-		Log.i("", "Printer class state: "+PDFBusActivity.printerClass.getState());
-		Log.i("", "BluetoothSerice Current state: "+getState());
+		//Log.i("", "Printer class state: "+VoucherSlipActivity.printerClass.getState());
+		//Log.i("", "BluetoothSerice Current state: "+getState());
 		
 		mHandler.obtainMessage(PrinterClass.MESSAGE_STATE_CHANGE,
 				PrinterClass.SUCCESS_CONNECT, -1).sendToTarget();
@@ -323,7 +314,7 @@ public class BlueToothService {
 	private void connectionFailed() {
 		setState(PrinterClass.STATE_LISTEN);
 		mHandler.obtainMessage(PrinterClass.MESSAGE_STATE_CHANGE,
-				PrinterClass.FAILED_CONNECT, -1).sendToTarget();
+				PrinterClass.FAILED_CONNECT, -1).sendToTarget();				
 	}
 
 	/**
@@ -592,12 +583,13 @@ public class BlueToothService {
 			try {
 
 				mmOutStream.write(buffer);
-				Log.i("BTPWRITE", new String(buffer));
+				//Log.i("BTPWRITE", new String(buffer));
 				// Share the sent message back to the UI Activity
 				mHandler.obtainMessage(PrinterClass.MESSAGE_WRITE, -1, -1,
 						buffer).sendToTarget();
 			} catch (IOException e) {
-
+				Log.i("", "Fail to continue to print.......");
+				e.printStackTrace();
 			}
 		}
 

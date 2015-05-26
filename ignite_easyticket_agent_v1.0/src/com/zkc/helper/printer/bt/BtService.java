@@ -1,17 +1,14 @@
 package com.zkc.helper.printer.bt;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-
 import android.bluetooth.BluetoothDevice;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.ignite.mm.ticketing.agent.PDFBusActivity;
 import com.ignite.mm.ticketing.sqlite.database.model.Device;
@@ -93,9 +90,7 @@ public class BtService extends PrintService implements PrinterClass {
 		}
 		if(mBTService.getState() == STATE_CONNECTED)
 		{
-			Log.i("", "mBTService is disconnected ????????");
 			mBTService.DisConnected();
-			
 		}
 		mBTService.ConnectToDevice(device);// ¡¨Ω”¿∂—¿
 		return true;
@@ -190,9 +185,18 @@ public class BtService extends PrintService implements PrinterClass {
 
 	public void stopScan() {
 		// TODO Auto-generated method stub
-		if (PDFBusActivity.printerClass.getState() == PrinterClass.STATE_SCANING) {
-			mBTService.StopScan();
-			mBTService.setState(PrinterClass.STATE_SCAN_STOP);
+		if (PDFBusActivity.printerClass != null) {
+			if (PDFBusActivity.printerClass.getState() == PrinterClass.STATE_SCANING) {
+				mBTService.StopScan();
+				mBTService.setState(PrinterClass.STATE_SCAN_STOP);
+			}
+		}
+		
+		if (PDFBusActivity.printerClass != null) {
+			if (PDFBusActivity.printerClass.getState() == PrinterClass.STATE_SCANING) {
+				mBTService.StopScan();
+				mBTService.setState(PrinterClass.STATE_SCAN_STOP);
+			}
 		}
 	}
 
