@@ -15,6 +15,7 @@ import com.ignite.mm.ticketing.application.LoginUser;
 import com.ignite.mm.ticketing.sqlite.database.model.AccessToken;
 import com.ignite.mm.ticketing.sqlite.database.model.Operator;
 import com.ignite.mm.ticketing.sqlite.database.model.Operators;
+import com.ignite.mm.ticketing.sqlite.database.model.ThreeDaySale;
 
 public interface INetworkEngine {
 	
@@ -120,6 +121,10 @@ public interface INetworkEngine {
 	@GET("/api/olsalepermittrips")
 	void getOnlineSalePermitTrip(@Query("access_token") String access_token,
 			@Query("operator_id") String operator_id, Callback<Response> callback);
+	
+	@GET("/api/threedayssale")
+	void getThreeDaySales(@Query("access_token") String token, 
+			@Query("code_no") String code_no, Callback<List<ThreeDaySale>> callback);
 	
 	@FormUrlEncoded
 	@POST("/api/salecomfirm")

@@ -23,6 +23,7 @@ public class HomeActivity extends BaseSherlockActivity{
 	private TextView actionBarTitle;
 	private TextView actionBarTitle2;
 	private ImageButton actionBarBack;
+	private Button btn_three_day_sales;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +56,7 @@ public class HomeActivity extends BaseSherlockActivity{
 		
 		btn_sale_tickets = (Button)findViewById(R.id.btn_sale_tickets);
 		btn_book_confirm = (Button)findViewById(R.id.btn_book_confirm);
+		btn_three_day_sales = (Button)findViewById(R.id.btn_three_day_sales);
 		
 		btn_sale_tickets.setOnClickListener(new OnClickListener() {
 			
@@ -73,6 +75,14 @@ public class HomeActivity extends BaseSherlockActivity{
 				Bundle bundle = new Bundle();
 				bundle.putString("from_intent", "reservation");
 				startActivity(new Intent(getApplicationContext(), BusOperatorActivity.class).putExtras(bundle));
+			}
+		});
+		
+		btn_three_day_sales.setOnClickListener(new OnClickListener() {
+			
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				startActivity(new Intent(getApplicationContext(), ThreeDaySalesActivity.class));
 			}
 		});
 	}

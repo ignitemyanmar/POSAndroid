@@ -1,0 +1,476 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    android:orientation="vertical"
+    android:gravity="center_horizontal" >
+
+    <ScrollView
+        android:id="@+id/scrollView1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="30dp"
+                android:gravity="center_horizontal"
+                android:orientation="vertical" >
+
+                <com.smk.custom.view.CustomTextView
+                    android:id="@+id/CustomTextView01"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:editable="false"
+                    android:fadeScrollbars="true"
+                    android:filterTouchesWhenObscured="true"
+                    android:text="SEIN GAY HAR"
+                    android:textSize="38dp" />
+
+                <com.smk.custom.view.CustomTextView
+                    android:id="@+id/CustomTextView1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:editable="false"
+                    android:fadeScrollbars="false"
+                    android:filterTouchesWhenObscured="true"
+                    android:text="(Parami)"
+                    android:textSize="36dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+                <com.smk.custom.view.CustomTextView
+                    android:id="@+id/txt_today_date_time"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:editable="false"
+                    android:filterTouchesWhenObscured="true"
+                    android:text="-"
+                    android:textSize="32dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical" >
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="50"
+                        android:orientation="horizontal" >
+
+                        <com.smk.custom.view.CustomTextView
+                            android:id="@+id/CustomTextView3"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="60"
+                            android:editable="false"
+                            android:filterTouchesWhenObscured="true"
+                            android:text="NO"
+                            android:textSize="32dp" />
+
+                        <com.smk.custom.view.CustomTextView
+                            android:id="@+id/txt_order_no"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="40"
+                            android:editable="false"
+                            android:filterTouchesWhenObscured="true"
+                            android:text=": -"
+                            android:textSize="32dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="50"
+                        android:orientation="horizontal" >
+
+                        <com.smk.custom.view.CustomTextView
+                            android:id="@+id/CustomTextView6"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="60"
+                            android:editable="false"
+                            android:filterTouchesWhenObscured="true"
+                            android:text="PASSENGER"
+                            android:textSize="32dp" />
+
+                        <com.smk.custom.view.CustomTextView
+                            android:id="@+id/txt_passenger"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="40"
+                            android:editable="false"
+                            android:filterTouchesWhenObscured="true"
+                            android:text=": -"
+                            android:textSize="32dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="50"
+                        android:orientation="horizontal" >
+
+                        <com.smk.custom.view.CustomTextView
+                            android:id="@+id/CustomTextView7"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="60"
+                            android:editable="false"
+                            android:filterTouchesWhenObscured="true"
+                            android:text="PHONE"
+                            android:textSize="32dp" />
+
+                        <com.smk.custom.view.CustomTextView
+                            android:id="@+id/txt_phone"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="40"
+                            android:editable="false"
+                            android:filterTouchesWhenObscured="true"
+                            android:text=": -"
+                            android:textSize="32dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="50"
+                        android:orientation="horizontal" >
+
+                        <com.smk.custom.view.CustomTextView
+                            android:id="@+id/CustomTextView9"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="60"
+                            android:editable="false"
+                            android:filterTouchesWhenObscured="true"
+                            android:text="NRC"
+                            android:textSize="32dp" />
+
+                        <com.smk.custom.view.CustomTextView
+                            android:id="@+id/txt_nrc"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="40"
+                            android:editable="false"
+                            android:filterTouchesWhenObscured="true"
+                            android:text=": -"
+                            android:textSize="32dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:layout_weight="50"
+                        android:orientation="horizontal" >
+
+                        <com.smk.custom.view.CustomTextView
+                            android:id="@+id/CustomTextView11"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="60"
+                            android:editable="false"
+                            android:filterTouchesWhenObscured="true"
+                            android:text="BUS"
+                            android:textSize="32dp" />
+
+                        <com.smk.custom.view.CustomTextView
+                            android:id="@+id/txt_operator"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="40"
+                            android:editable="false"
+                            android:filterTouchesWhenObscured="true"
+                            android:text=": -"
+                            android:textSize="32dp" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <View
+                    android:id="@+id/view1"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:background="@color/black" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="vertical" >
+
+                <com.smk.custom.view.CustomTextView
+                    android:id="@+id/txt_trip_class"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:editable="false"
+                    android:filterTouchesWhenObscured="true"
+                    android:text="-"
+                    android:textSize="32dp" />
+
+                <com.smk.custom.view.CustomTextView
+                    android:id="@+id/txt_trip_date_time"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:editable="false"
+                    android:filterTouchesWhenObscured="true"
+                    android:text="0000-00-00 (00:00 pm)"
+                    android:textSize="32dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical" >
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="50"
+                        android:orientation="horizontal" >
+
+                        <com.smk.custom.view.CustomTextView
+                            android:id="@+id/CustomTextView15"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="60"
+                            android:editable="false"
+                            android:filterTouchesWhenObscured="true"
+                            android:text="SEAT NO"
+                            android:textSize="32dp" />
+
+                        <com.smk.custom.view.CustomTextView
+                            android:id="@+id/txt_seat_no"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="40"
+                            android:editable="false"
+                            android:filterTouchesWhenObscured="true"
+                            android:text=": -"
+                            android:textSize="32dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="50"
+                        android:orientation="horizontal" >
+
+                        <com.smk.custom.view.CustomTextView
+                            android:id="@+id/CustomTextView17"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="60"
+                            android:editable="false"
+                            android:filterTouchesWhenObscured="true"
+                            android:text="TICKET NO"
+                            android:textSize="32dp" />
+
+                        <com.smk.custom.view.CustomTextView
+                            android:id="@+id/txt_ticket_no"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="40"
+                            android:editable="false"
+                            android:filterTouchesWhenObscured="true"
+                            android:text=": -"
+                            android:textSize="32dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="50"
+                        android:orientation="horizontal" >
+
+                        <com.smk.custom.view.CustomTextView
+                            android:id="@+id/CustomTextView19"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="60"
+                            android:editable="false"
+                            android:filterTouchesWhenObscured="true"
+                            android:text="PRICE"
+                            android:textSize="32dp" />
+
+                        <com.smk.custom.view.CustomTextView
+                            android:id="@+id/txt_price"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="40"
+                            android:editable="false"
+                            android:filterTouchesWhenObscured="true"
+                            android:text=": KS 0"
+                            android:textSize="32dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:layout_weight="50"
+                        android:orientation="horizontal" >
+
+                        <com.smk.custom.view.CustomTextView
+                            android:id="@+id/CustomTextView21"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="60"
+                            android:editable="false"
+                            android:filterTouchesWhenObscured="true"
+                            android:text="QTY"
+                            android:textSize="32dp" />
+
+                        <com.smk.custom.view.CustomTextView
+                            android:id="@+id/txt_qty"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="40"
+                            android:editable="false"
+                            android:filterTouchesWhenObscured="true"
+                            android:text=": 0"
+                            android:textSize="32dp" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="50"
+                android:orientation="vertical" >
+
+                <View
+                    android:id="@+id/View01"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_weight="60"
+                    android:background="@color/black" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="60"
+                    android:paddingTop="10dp" >
+
+                    <com.smk.custom.view.CustomTextView
+                        android:id="@+id/CustomTextView23"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="60"
+                        android:editable="false"
+                        android:filterTouchesWhenObscured="true"
+                        android:text="QTY"
+                        android:textSize="32dp"
+                        android:visibility="invisible" />
+
+                    <com.smk.custom.view.CustomTextView
+                        android:id="@+id/txt_total"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="40"
+                        android:editable="false"
+                        android:filterTouchesWhenObscured="true"
+                        android:text="TOTAL : KS 0"
+                        android:textSize="32dp" />
+                </LinearLayout>
+
+                <View
+                    android:id="@+id/View02"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_weight="60"
+                    android:background="@color/black" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="2dp" >
+
+                <com.smk.custom.view.CustomTextView
+                    android:id="@+id/CustomTextView1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:layout_marginTop="5dp"
+                    android:editable="false"
+                    android:text="1) ကားမထြက္မီ ၃၀ မိနစ္အလုိ ကားဂိတ္ကုိ ေရာက္ ရွိ ေပးပါရန္"
+                    android:textSize="32dp" />
+
+                <com.smk.custom.view.CustomTextView
+                    android:id="@+id/CustomTextView2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:editable="false"
+                    android:text="2) လက္မွတ္အား ျပန္လဲခြင့္မျပဳပါ"
+                    android:textSize="32dp" />
+
+                <com.smk.custom.view.CustomTextView
+                    android:id="@+id/CustomTextView3"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="16dp"
+                    android:editable="false"
+                    android:text="3) ကားမထြက္ပါက ကားဂိတ္ႏွင့္သာ သက္ဆုိင္ၿပီး၊ Easy Ticket ႏွင့္ မသက္ဆုိင္ ပါ"
+                    android:textSize="32dp" />
+
+                <View
+                    android:id="@+id/View03"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_weight="60"
+                    android:background="@color/black" />
+
+                <TextView
+                    android:id="@+id/textView1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:editable="false"
+                    android:filterTouchesWhenObscured="true"
+                    android:gravity="center"
+                    android:text="&quot;THANK YOU!&quot;"
+                    android:textSize="32dp" />
+
+                <TextView
+                    android:id="@+id/textView2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="30dp"
+                    android:editable="false"
+                    android:filterTouchesWhenObscured="true"
+                    android:gravity="center"
+                    android:text="STAR TICKET"
+                    android:textSize="32dp" />
+            </LinearLayout>
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

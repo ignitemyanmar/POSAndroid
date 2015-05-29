@@ -8,16 +8,16 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import android.annotation.SuppressLint;
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Bitmap.Config;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Bitmap.CompressFormat;
 import android.graphics.Matrix;
+import android.graphics.RectF;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -29,7 +29,6 @@ import android.view.View.MeasureSpec;
 import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -113,6 +112,9 @@ public class PDFBusActivity extends BaseSherlockActivity {
 	
 	private String deviceAddr;
 	private String BuyerNRC;
+	private String from_intent;
+	
+	int imgWidth=72;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -165,8 +167,10 @@ public class PDFBusActivity extends BaseSherlockActivity {
 			BuyerNRC = bundle.getString("BuyerNRC");
 			TicketNo = bundle.getString("TicketNo");
 			SeatCount = bundle.getString("SeatCount");
+			from_intent = bundle.getString("from_intent");
 		}
 
+		Log.i("", "from intent: "+from_intent);
 		Log.i("", "buyer name: "+BuyerName+", buyer phone: "+Phone+", nrc: "+BuyerNRC);
 		
 		lv_bus_booking_sheet = (ListView)findViewById(R.id.lv_bus_booking_sheet);
@@ -210,6 +214,21 @@ public class PDFBusActivity extends BaseSherlockActivity {
 			if (v == img_print) {
 				if (printerClass != null) {
 					Log.i("", "Check State (2nd) On Print Click: "+printerClass.getState());
+					
+					//Save Ticket
+					if (saveTicket()) {
+						
+						Log.i("", "Saved!");
+						
+						/*Toast.makeText(
+								this,
+								"Your ticket is saved to " + PDF_FILE_PATH
+										+ "BookingSheet", Toast.LENGTH_SHORT).show();*/
+					} else {
+						Log.i("", "Fail Saved!");
+						/*Toast.makeText(this, "Can't save your ticket!",
+								Toast.LENGTH_LONG).show();*/
+					}
 					
 					//If Bluetooth Support not have ... 
 			        if (!BlueToothService.HasDevice()) {
@@ -294,7 +313,9 @@ public class PDFBusActivity extends BaseSherlockActivity {
 		boolean printed = false;
 		bmTicketView = getWholeListViewItemsToBitmap();
 		
-		if (storeImage(bmTicketView, PDF_FILE_PATH, "BookingSheet.png")) {
+		//getResizedBitmap(bmTicketView, imgWidth * 8, bmTicketView.getHeight()), PDF_FILE_PATH, "BookingSheet.png")
+		
+		if (storeImage(resizeImage(bmTicketView, imgWidth * 8, bmTicketView.getHeight()), PDF_FILE_PATH, "BookingSheet.png")) {
 			printed = true;
 		}
 		
@@ -332,22 +353,7 @@ public class PDFBusActivity extends BaseSherlockActivity {
 		// TODO Auto-generated method stub
 		
 		Log.i("", "Check State (2nd) On Print Method: "+printerClass.getState());
-		
-		//Save Ticket
-		if (saveTicket()) {
-			
-			Log.i("", "Saved!");
-			
-			/*Toast.makeText(
-					this,
-					"Your ticket is saved to " + PDF_FILE_PATH
-							+ "BookingSheet", Toast.LENGTH_SHORT).show();*/
-		} else {
-			Log.i("", "Fail Saved!");
-			/*Toast.makeText(this, "Can't save your ticket!",
-					Toast.LENGTH_LONG).show();*/
-		}
-		
+
 		//Print Ticket
 		//If not connected , show device list dialog
 		//If connected, print directly
@@ -481,7 +487,8 @@ public class PDFBusActivity extends BaseSherlockActivity {
 						
 						try {
 							checkState = true;
-							printerClass.printImage(bitmapVoucher);
+							//getResizedBitmap(bitmapVoucher, imgWidth * 8, bitmapVoucher.getHeight())
+							printerClass.printImage(resizeImage(bitmapVoucher, imgWidth * 8, bitmapVoucher.getHeight()));
 							Toast.makeText(PDFBusActivity.this, "Connected & Printing ...", Toast.LENGTH_SHORT).show();
 						} catch (Exception e) {
 							// TODO: handle exception
@@ -495,23 +502,68 @@ public class PDFBusActivity extends BaseSherlockActivity {
 		}
 	}	
 
-	public Bitmap getResizedBitmap(Bitmap bm, int newWidth, int newHeight) {
-		int width = bm.getWidth();
-		int height = bm.getHeight();
-		float scaleWidth = ((float) newWidth) / width;
-		float scaleHeight = ((float) newHeight) / height;
+	public Bitmap getResizedBitmap(Bitmap bm, int reqWidth, int reqHeight) {
+		
+		int bWidth = bm.getWidth();
+        int bHeight = bm.getHeight();
+        
+        Log.i("", "Bitmap Width + height: "+bWidth+" , "+bHeight);
+        
+        int nWidth = reqWidth;
+        int nHeight = reqHeight;
+        
 		// CREATE A MATRIX FOR THE MANIPULATION
-		Matrix matrix = new Matrix();
-		// RESIZE THE BIT MAP
-		matrix.postScale(scaleWidth, scaleHeight);
-
-		// "RECREATE" THE NEW BITMAP
-		Bitmap resizedBitmap = Bitmap.createBitmap(bm, 0, 0, width, height,
-				null, false);
-		// Bitmap resizedBitmap = Bitmap.createScaledBitmap(bm, newWidth,
-		// newHeight, false);
-		return resizedBitmap;
+		Matrix m = new Matrix();
+		m.setScale((float) nWidth / bWidth, (float) nHeight / bHeight);
+		m.setRectToRect(new RectF(0, 0, bWidth, bHeight), new RectF(0, 0, nWidth, nHeight), Matrix.ScaleToFit.CENTER);
+		
+		Bitmap resizedBitMap = Bitmap.createBitmap(bm, 0, 0, bm.getWidth(), bm.getHeight(), m, true);
+		return resizedBitMap;		
 	}
+	
+	/**
+	 * resize the bitmap
+	 * @param bitmap
+	 * @param w
+	 * @param h
+	 * @return
+	 */
+	private static Bitmap resizeImage(Bitmap bitmap, int w, int h) {
+		Bitmap BitmapOrg = bitmap;
+		
+		int width = BitmapOrg.getWidth();
+		int height = BitmapOrg.getHeight();
+		
+		Log.i("", "Bitmap size before resize: "+width+" x "+height);
+
+		if(width>w)
+		{
+			float scaleWidth = ((float) w) / width;
+			float scaleHeight = ((float) h) / height+24;
+			Matrix matrix = new Matrix();
+			matrix.postScale(scaleWidth, scaleWidth);
+			Bitmap resizedBitmap = Bitmap.createBitmap(BitmapOrg, 0, 0, width,
+					height, matrix, true);
+			return resizedBitmap;
+		}else{
+			Bitmap resizedBitmap = Bitmap.createBitmap(w, height+24, Config.RGB_565);
+			Canvas canvas = new Canvas(resizedBitmap);
+			Paint paint = new Paint();
+			canvas.drawColor(Color.WHITE);
+			canvas.drawBitmap(bitmap, (w-width)/2, 0, paint);
+			return resizedBitmap;
+		}
+	}
+	
+	public static Bitmap scaleBitmap(Bitmap bitmap, int wantedWidth, int wantedHeight) {
+        Bitmap output = Bitmap.createBitmap(wantedWidth, wantedHeight, Config.ARGB_8888);
+        Canvas canvas = new Canvas(output);
+        Matrix m = new Matrix();
+        m.setScale((float) wantedWidth / bitmap.getWidth(), (float) wantedHeight / bitmap.getHeight());
+        canvas.drawBitmap(bitmap, m, new Paint());
+
+        return output;
+    }
 	
 	//Generate Bar Code Image (Bitmap)
 	public static Bitmap getBarcode() {
@@ -681,7 +733,8 @@ public class PDFBusActivity extends BaseSherlockActivity {
 						if (ticketBitmap != null) {
 							if (printerClass.getState() == PrinterClass.STATE_CONNECTED) {
 								checkState = true;
-								printerClass.printImage(ticketBitmap);
+								//getResizedBitmap(ticketBitmap, imgWidth * 8, ticketBitmap.getHeight())
+								printerClass.printImage(resizeImage(ticketBitmap, imgWidth * 8, ticketBitmap.getHeight()));
 								progressDialog.dismiss();
 								Toast.makeText(PDFBusActivity.this, "Connected & printing ... !", Toast.LENGTH_SHORT).show();
 							}
@@ -819,10 +872,14 @@ public class PDFBusActivity extends BaseSherlockActivity {
 	public void onBackPressed() {
 		// TODO Auto-generated method stub
 		super.onBackPressed();
-		closeAllActivities();
-		startActivity(new Intent(getApplicationContext(), BusOperatorActivity.class));
-		/*UserLogin login = new UserLogin();
-		login.finish();*/
-		//android.os.Process.killProcess(android.os.Process.myPid());
+		
+		if (from_intent.equals("from_threeday_sales")) {
+			startActivity(new Intent(getApplicationContext(), ThreeDaySalesActivity.class));
+		}else {
+			startActivity(new Intent(getApplicationContext(), BusOperatorActivity.class));
+			/*UserLogin login = new UserLogin();
+			login.finish();*/
+			//android.os.Process.killProcess(android.os.Process.myPid());
+		}
 	}
 }

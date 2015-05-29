@@ -14,7 +14,9 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.graphics.RectF;
 import android.graphics.Bitmap.Config;
+import android.util.Log;
 
 import com.zkc.helper.printer.PrinterLib;
 
@@ -24,7 +26,7 @@ import com.zkc.helper.printer.PrinterLib;
  * @DateTime 2014-10-07 18:09:17
  */
 public class PrintService{
-	public static boolean isFUll=false;
+	public static boolean isFUll=true;
 
 	/**
 	 * Image Width<br/>
@@ -103,6 +105,8 @@ public class PrintService{
 		Bitmap BitmapOrg = bitmap;
 		int width = BitmapOrg.getWidth();
 		int height = BitmapOrg.getHeight();
+		
+		Log.i("", "Printer to resize: "+width+" x "+height);
 
 		if(width>w)
 		{
@@ -112,6 +116,9 @@ public class PrintService{
 			matrix.postScale(scaleWidth, scaleWidth);
 			Bitmap resizedBitmap = Bitmap.createBitmap(BitmapOrg, 0, 0, width,
 					height, matrix, true);
+			
+			Log.i("", "Printer resized bitmap:(image bigger than paper) "+resizedBitmap.getWidth()+" x "+resizedBitmap.getHeight());
+			
 			return resizedBitmap;
 		}else{
 			Bitmap resizedBitmap = Bitmap.createBitmap(w, height+24, Config.RGB_565);
@@ -119,6 +126,9 @@ public class PrintService{
 			Paint paint = new Paint();
 			canvas.drawColor(Color.WHITE);
 			canvas.drawBitmap(bitmap, (w-width)/2, 0, paint);
+			
+			Log.i("", "Printer resized bitmap:(image smaller than paper) "+resizedBitmap.getWidth()+" x "+resizedBitmap.getHeight());
+			
 			return resizedBitmap;
 		}
 	}

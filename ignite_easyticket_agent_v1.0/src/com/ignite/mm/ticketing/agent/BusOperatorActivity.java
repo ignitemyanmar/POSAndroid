@@ -278,6 +278,6 @@ public class BusOperatorActivity extends BaseSherlockActivity {
 		listView.setLayoutParams(params);
 		listView.requestLayout();
 	}
-
+	
 }
 

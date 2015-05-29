@@ -6,8 +6,8 @@ import java.util.ArrayList;
 import com.ignite.mm.ticketing.agent.R;
 import com.ignite.mm.ticketing.sqlite.database.model.AllBusObject;
 import android.app.Activity;
+import android.content.Context;
 import android.content.res.Configuration;
-import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,10 +20,12 @@ public class PDFBusAdapter extends BaseAdapter {
 	private ImageView iv;
 	private LayoutInflater mInflater;
 	private ArrayList<AllBusObject> allBusObject;
+	private final Context _context;
 	
 	public PDFBusAdapter(Activity aty,
 			 ArrayList<AllBusObject> allBusObject) {
 		// TODO Auto-generated constructor stub
+		this._context = aty;
 		this.mInflater= LayoutInflater.from(aty);
 		this.allBusObject=allBusObject;
 		//Log.i("","AllMovie :" + allMovieObject);
@@ -49,11 +51,20 @@ public class PDFBusAdapter extends BaseAdapter {
 		
 		ViewHolder holder = null;
 		
+		
 		if (convertView == null) {
 			
-			//convertView = mInflater.inflate(R.layout.activity_pdf_bus_header, null);						
-	        
-			convertView = mInflater.inflate(R.layout.activity_pdf_bus_voucher, null);
+			//Check Screen Size
+			Configuration config = _context.getResources().getConfiguration();
+	       
+			if (config.smallestScreenWidthDp >= 700) {
+				convertView = mInflater.inflate(R.layout.activity_pdf_bus_voucher_10inch, null);
+			} 
+	        else if (config.smallestScreenWidthDp >= 600 && config.smallestScreenWidthDp < 700) {
+	        	convertView = mInflater.inflate(R.layout.activity_pdf_bus_voucher, null);
+			}else if (config.smallestScreenWidthDp < 600){
+				convertView = mInflater.inflate(R.layout.activity_pdf_bus_voucher, null);
+	        }
 			
 			holder = new ViewHolder();
 			

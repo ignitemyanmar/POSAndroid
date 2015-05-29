@@ -845,7 +845,7 @@ public class BusConfirmActivity extends BaseSherlockActivity {
 				.encrypt(seats.toString())
 				, rdo_cash_down.isChecked() == true ? "1" : "2"
 				, rdo_local.isChecked() == true ? "local" : "foreign"
-				, "-", DeviceUtil.getInstance(this).getID(), "0"));
+				, "0", DeviceUtil.getInstance(this).getID(), "0"));
 				
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
 		params.add(new BasicNameValuePair("param", param));
