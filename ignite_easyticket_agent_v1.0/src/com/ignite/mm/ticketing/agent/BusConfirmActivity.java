@@ -127,8 +127,11 @@ public class BusConfirmActivity extends BaseSherlockActivity {
 	private List<EditText> lst_ticket_no = new ArrayList<EditText>();
 	private TextView actionBarTitle2;
 	private String Permit_agent_id;
-	private String client_operator_id;
 	private String permit_operator_group_id;
+	private String permit_operator_id;
+	private String permit_access_token;
+	private String permit_ip;
+	private String Nrc = "";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -171,6 +174,7 @@ public class BusConfirmActivity extends BaseSherlockActivity {
 				AgentID = bundle.getString("agent_id");
 				Name = bundle.getString("name");
 				Phone = bundle.getString("phone");
+				Nrc = bundle.getString("nrc");
 			}
 		}
 		
@@ -181,16 +185,27 @@ public class BusConfirmActivity extends BaseSherlockActivity {
 		
 		SaleOrderNo = bundle.getString("sale_order_no");
 		BusOccurence = bundle.getString("bus_occurence");
-		client_operator_id = bundle.getString("client_operator_id");
+		permit_operator_id = bundle.getString("permit_operator_id");
 		
 		permit_operator_group_id = bundle.getString("permit_operator_group_id");
 		Permit_agent_id = bundle.getString("permit_agent_id");
+		permit_access_token = bundle.getString("permit_access_token");
+		permit_ip = bundle.getString("permit_ip");
 		
 		Log.i("", "Permit_agent_id : "+Permit_agent_id);
 		
-		edt_buyer = (EditText) findViewById(R.id.edt_buyer);
+		edt_buyer = (EditText) findViewById(R.id.edt_buyer);	
+		if (Name != null) {
+			edt_buyer.setText(Name);
+		}
 		edt_nrc_no = (AutoCompleteTextView) findViewById(R.id.edt_nrc_no);
+		if (Nrc != null) {
+			edt_nrc_no.setText(Nrc);
+		}
 		edt_phone = (EditText) findViewById(R.id.edt_phone);
+		if (Phone != null) {
+			edt_phone.setText(Phone);
+		}
 		txt_agent = (CustomTextView) findViewById(R.id.txt_seller);
 		edt_ref_invoice_no = (EditText) findViewById(R.id.edt_ref_invoice_no);
 		rdo_cash_down = (RadioButton) findViewById(R.id.rdo_cash_down);
@@ -661,7 +676,7 @@ public class BusConfirmActivity extends BaseSherlockActivity {
 			layout_ticket_no_container.addView(edt_discount);
 
 			EditText ticket_no = new EditText(this);
-			ticket_no.setInputType(InputType.TYPE_CLASS_TEXT);
+			ticket_no.setInputType(InputType.TYPE_CLASS_NUMBER);
 			// ticket_no.setId(i+1);
 			lst_ticket_no.add(ticket_no);
 			ticket_no.setSingleLine(true);
@@ -814,14 +829,13 @@ public class BusConfirmActivity extends BaseSherlockActivity {
 		Log.i("", "Ticket Arrays: "+seats.toString());
 		
 		Log.i("", "Param (Confirm) to encrypt: "
-				+"access: "+bundle.getString("permit_access_token")+
+				+"access: "+permit_access_token+
 				", SaleOrderNo: "+SaleOrderNo+
 				", Reference no: "+edt_ref_invoice_no.getText().toString()+
 				", AgentID: "+Permit_agent_id+
 				", Agent Name: "+auto_txt_agent.getText().toString()+
 				", Customer: "+edt_buyer.getText().toString()+
 				", Phone: "+edt_phone.getText().toString()+
-				", Remark type: "+selectedRemarkType.toString()+
 				", Remark : "+edt_remark.getText().toString()+
 				", Nrc: "+edt_nrc_no.getText().toString()+
 				", Extra city id: "+ExtraCityID.toString()+
@@ -835,17 +849,17 @@ public class BusConfirmActivity extends BaseSherlockActivity {
 		//Do Encrypt of Params				
 		String param = MCrypt.getInstance()
 				.encrypt(
-						SecureParam.postSaleConfirmParam(bundle.getString("permit_access_token")
+						SecureParam.postSaleConfirmParam(permit_access_token
 				, SaleOrderNo, edt_ref_invoice_no.getText().toString()
 				, Permit_agent_id, auto_txt_agent.getText().toString()
 				, edt_buyer.getText().toString()
 				, edt_phone.getText().toString(), edt_nrc_no.getText().toString()
-				, selectedRemarkType.toString(), edt_remark.getText().toString()
+				, "0", edt_remark.getText().toString()
 				, ExtraCityID.toString(),  MCrypt.getInstance()
 				.encrypt(seats.toString())
 				, rdo_cash_down.isChecked() == true ? "1" : "2"
 				, rdo_local.isChecked() == true ? "local" : "foreign"
-				, "0", DeviceUtil.getInstance(this).getID(), "0"));
+				, "0", DeviceUtil.getInstance(this).getID(), "0",String.valueOf(AppLoginUser.getId())));
 				
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
 		params.add(new BasicNameValuePair("param", param));
@@ -868,13 +882,14 @@ public class BusConfirmActivity extends BaseSherlockActivity {
 			if (j == seats.size()-1) {
 				ticketNo += seats.get(j).getTicket_no();
 			}else {
-				ticketNo += seats.get(j).getTicket_no()+", ";
+				ticketNo += seats.get(j).getTicket_no()+",";
 			}
 			/*String styledText = "This is <font color='red'>simple</font>.";
 			textView.setText(Html.fromHtml(styledText), TextView.BufferType.SPANNABLE);*/
 		}
 
 		bundle.putString("TicketNo", ticketNo);
+		bundle.putString("time", bundle.getString("time"));
 		
 		final Handler handler = new Handler() {
 
@@ -893,23 +908,19 @@ public class BusConfirmActivity extends BaseSherlockActivity {
 						}else{
 							//Store Sale Data into Online Sale Database
 							postOnlineSale();
-							
-							SKToastMessage.showMessage(BusConfirmActivity.this, "လက္မွတ္ ျဖတ္ၿပီးပါၿပီ !", SKToastMessage.SUCCESS);
-							closeAllActivities();
-							//Show Voucher
-							startActivity(new Intent(BusConfirmActivity.this, PDFBusActivity.class).putExtras(bundle));
-							//startActivity(new Intent(BusConfirmActivity.this, BusTripsCityActivity.class));
-							dialog.dismiss();
-							finish();
 						}
 					} catch (JSONException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
+				}else {
+					Log.i("", "Response confirm is null!");
+					dialog.dismiss();
 				}
 			}
 		};
 		
+		//bundle.getString("permit_ip")
 		HttpConnection lt = new HttpConnection(handler, "POST",
 				"http://"+bundle.getString("permit_ip")+"/sale/comfirm", params);
 		lt.execute();
@@ -918,15 +929,16 @@ public class BusConfirmActivity extends BaseSherlockActivity {
 	}
 	
 	/**
-	 *  Store saled-data into Online Sale Database (app.easyticket.com.mm)
+	 *  Store saled-data into Online Sale Database (starticketmyanmar.com)
 	 */
 	protected void postOnlineSale() {
 		// TODO Auto-generated method stub
-		Log.i("", "SaleOrderNo: "+SaleOrderNo+", Op-Id: "+client_operator_id+", User code no: "+AppLoginUser.getCodeNo()
+		Log.i("", "SaleOrderNo: "+SaleOrderNo+", Op-Id: "+permit_operator_id+", User code no: "+AppLoginUser.getCodeNo()
 				+", Token: "+AppLoginUser.getAccessToken());
 		
-		NetworkEngine.setIP("app.easyticket.com.mm");
-		NetworkEngine.getInstance().postOnlineSaleDB(SaleOrderNo, client_operator_id
+		NetworkEngine.setIP("starticketmyanmar.com");
+		//NetworkEngine.setIP("128.199.255.246");
+		NetworkEngine.getInstance().postOnlineSaleDB(SaleOrderNo, permit_operator_id
 				, AppLoginUser.getCodeNo(), AppLoginUser.getAccessToken(), new Callback<Response>() {
 			
 					public void failure(RetrofitError arg0) {
@@ -934,11 +946,24 @@ public class BusConfirmActivity extends BaseSherlockActivity {
 						if (arg0.getResponse() != null) {
 							Log.i("", "Error: "+arg0.getResponse().getStatus());
 						}
+						
+						dialog.dismiss();
 					}
 
 					public void success(Response arg0, Response arg1) {
 						// TODO Auto-generated method stub
 						if (arg1 != null) {
+							
+							SKToastMessage.showMessage(BusConfirmActivity.this, "လက္မွတ္ ျဖတ္ၿပီးပါၿပီ !", SKToastMessage.SUCCESS);
+							closeAllActivities();
+							//Show Voucher		
+							if(Intents.equals("booking")){
+								bundle.putString("from_intent", "booking");
+							}
+							startActivity(new Intent(BusConfirmActivity.this, PDFBusActivity.class).putExtras(bundle));
+							dialog.dismiss();
+							finish();
+							
 							Log.i("", "Server Response1: "+arg0.getStatus()+", "+arg0.getReason()+", "+arg0.getBody());
 							Log.i("", "Server Response: "+arg1.getStatus()+", "+arg1.getReason()+", "+arg1.getBody());
 						}
@@ -1140,7 +1165,7 @@ public class BusConfirmActivity extends BaseSherlockActivity {
 							if (SKConnectionDetector.getInstance(
 									BusConfirmActivity.this)
 									.isConnectingToInternet()) {
-								String param = MCrypt.getInstance().encrypt(SecureParam.deleteSaleOrderParam(bundle.getString("permit_access_token")));
+								String param = MCrypt.getInstance().encrypt(SecureParam.deleteSaleOrderParam(permit_access_token));
 								
 								Log.i("", "Param to delete: "+param+", SaleOrderNo to delete: "+MCrypt.getInstance().encrypt(SaleOrderNo));
 								

@@ -64,7 +64,15 @@ public class ThreeDaySalesActivity extends BaseSherlockActivity{
 		actionBarTitle.setText("3 Days Sales");
 		actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
 		
-		lv_threeday_sales = (ListView)findViewById(R.id.lst_threeday_sales);				
+		lv_threeday_sales = (ListView)findViewById(R.id.lst_threeday_sales);	
+		
+		skDetector = SKConnectionDetector.getInstance(this);
+		skDetector.setMessageStyle(SKConnectionDetector.VERTICAL_TOASH);
+		if(skDetector.isConnectingToInternet()){
+			getThreeDaySales();
+		}else{
+			skDetector.showErrorMessage();
+		}
 	}
 
 	/**
@@ -73,11 +81,11 @@ public class ThreeDaySalesActivity extends BaseSherlockActivity{
 	private void getThreeDaySales() {
 		// TODO Auto-generated method stub
 		dialog = ProgressDialog.show(ThreeDaySalesActivity.this, "", "Please wait ...", true);
-		dialog.setCancelable(false);
+		dialog.setCancelable(true);
 		
 		Log.i("", "Access Token: "+AppLoginUser.getAccessToken()+"Code No: "+AppLoginUser.getCodeNo());
 		
-		NetworkEngine.setIP("app.easyticket.com.mm");
+		NetworkEngine.setIP("starticketmyanmar.com");
 		NetworkEngine.getInstance().getThreeDaySales(AppLoginUser.getAccessToken(), AppLoginUser.getCodeNo(), 
 				new Callback<List<ThreeDaySale>>() {
 
@@ -89,6 +97,7 @@ public class ThreeDaySalesActivity extends BaseSherlockActivity{
 									+ arg0.getResponse()
 											.getStatus());
 					Log.e("", "Error URL: "+arg0.getUrl());
+					showAlert("Something's Wrong in Server!");
 				}
 				
 				dialog.dismiss();
@@ -108,6 +117,12 @@ public class ThreeDaySalesActivity extends BaseSherlockActivity{
 					if (lst_threeday_sale != null && lst_threeday_sale.size() > 0) {
 						Log.i("", "Three Day Sale List: "+lst_threeday_sale.toString());
 						
+						
+						for (int i = 0; i < lst_threeday_sale.size(); i++) {
+							ThreeDaySale sale = (ThreeDaySale)lst_threeday_sale.get(i);
+							sale.setDepartureDate(changeDate(lst_threeday_sale.get(i).getDepartureDate()));
+						}
+						
 						lv_threeday_sales.setAdapter(new ThreeDaySalesLvAdapter(ThreeDaySalesActivity.this, lst_threeday_sale));
 					}
 					
@@ -116,18 +131,4 @@ public class ThreeDaySalesActivity extends BaseSherlockActivity{
 			}
 		});		
 	}
-	
-	@Override
-	protected void onResume() {
-		// TODO Auto-generated method stub
-		super.onResume();
-		skDetector = SKConnectionDetector.getInstance(this);
-		skDetector.setMessageStyle(SKConnectionDetector.VERTICAL_TOASH);
-		if(skDetector.isConnectingToInternet()){
-			getThreeDaySales();
-		}else{
-			skDetector.showErrorMessage();
-		}
-	}
-
 }

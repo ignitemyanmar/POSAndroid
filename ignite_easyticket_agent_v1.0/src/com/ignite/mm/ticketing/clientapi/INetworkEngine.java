@@ -132,4 +132,34 @@ public interface INetworkEngine {
 			@Field("operator_id") String operator_id,
 			@Field("user_code_no") String user_code_no,
 			@Field("access_token") String access_token, Callback<Response> callback);
+	
+	@GET("/api/from_cities")
+	void getFromCities(@Query("access_token") String access_token, Callback<Response> callback);
+	
+	@GET("/api/to_cities")
+	void getToCities(@Query("access_token") String access_token, Callback<Response> callback);
+	
+	@GET("/api/times")
+	void getTimes(@Query("access_token") String access_token, Callback<Response> callback);
+	
+	@GET("/api/timesbyfrom_to")
+	void getTimesByTrip(@Query("access_token") String access_token,
+			@Query("from_city") String from_city,
+			@Query("to_city") String to_city, Callback<Response> callback);
+	
+	@FormUrlEncoded
+	@POST("/api/search")
+	void postSearch(@Field("from") String from, 
+			@Field("to") String to, 
+			@Field("date") String date,
+			@Field("time") String time,
+			@Field("access_token") String access_token, Callback<Response> callback);
+	
+	@GET("/api/bookingsearch")
+	void getBookingByCodeNoPhone(@Query("access_token") String access_token,
+			@Query("search") String codeOrPhone, Callback<Response> callback);
+	
+	@GET("/api/bookingsearch")
+	void getBookingListAll(@Query("access_token") String access_token, Callback<Response> callback);
+	
 }

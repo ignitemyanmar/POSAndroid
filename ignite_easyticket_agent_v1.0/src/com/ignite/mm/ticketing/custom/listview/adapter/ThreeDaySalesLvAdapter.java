@@ -66,13 +66,13 @@ public class ThreeDaySalesLvAdapter extends BaseAdapter{
 			holder = (ViewHolder) convertView.getTag();
 		}
 		holder.txt_sale_date.setText("Sale Date :  "+getItem(position).getDate());
-		holder.txt_customer_name.setText("Name :  "+getItem(position).getCustomerName());
-		holder.txt_trip_operator.setText("Trip :  "+getItem(position).getTrip()+" ["+getItem(position).getOperator()+"]");
-		holder.txt_trip_date_time_class.setText("Dept Info :  ["+getItem(position).getDepartureDate()+" - "
-				+getItem(position).getTime()+"] "+getItem(position).getClass_());
-		holder.txt_seats.setText("Seats :  "+getItem(position).getSeatNo());
-		holder.txt_price.setText("Price :  "+getItem(position).getPrice()+" Ks");
-		holder.txt_amount.setText("Amount :  "+getItem(position).getTotalAmount()+" Ks");
+		holder.txt_customer_name.setText(getItem(position).getCustomerName()+" ["+getItem(position).getCustomerPhone()+"]");
+		holder.txt_trip_operator.setText(getItem(position).getTrip()+" ["+getItem(position).getOperator()+"]");
+		holder.txt_trip_date_time_class.setText("["+getItem(position).getDepartureDate()+" - "
+				+getItem(position).getTime()+"] "+getItem(position).getClass_()+" ["+getItem(position).getPrice()+" Ks]");
+		holder.txt_seats.setText(getItem(position).getSeatNo());
+		//holder.txt_price.setText("Price :  "+getItem(position).getPrice()+" Ks");
+		holder.txt_amount.setText(getItem(position).getTotalAmount()+" Ks");
 		
 		holder.btn_print.setOnClickListener(new OnClickListener() {
 			
@@ -100,8 +100,6 @@ public class ThreeDaySalesLvAdapter extends BaseAdapter{
 				
 				showVoucher.putExtras(bundle);
 				aty.startActivity(showVoucher);
-				aty.finish();
-				
 			}
 		});
 		

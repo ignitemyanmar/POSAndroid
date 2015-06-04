@@ -23,39 +23,101 @@
             android:textColor="@color/white" />
     </LinearLayout>
 
-    <com.smk.custom.view.CustomTextView
-        android:id="@+id/txt_customer_name"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:layout_marginTop="10dp"
-        android:text="Name: -"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:layout_height="wrap_content" >
 
-    <com.smk.custom.view.CustomTextView
-        android:id="@+id/txt_trip_operator"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:layout_marginTop="10dp"
-        android:text="Trip: -"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        <com.smk.custom.view.CustomTextView
+            android:id="@+id/CustomTextView01"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_marginTop="10dp"
+            android:layout_weight="70"
+            android:text="Name : "
+            android:textAppearance="?android:attr/textAppearanceMedium" />
 
-    <com.smk.custom.view.CustomTextView
-        android:id="@+id/txt_trip_date_time_class"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:text="Dept Info: -"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        <com.smk.custom.view.CustomTextView
+            android:id="@+id/txt_customer_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_marginTop="10dp"
+            android:layout_weight="30"
+            android:text="-"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+    </LinearLayout>
 
-    <com.smk.custom.view.CustomTextView
-        android:id="@+id/txt_seats"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:text="Seats : - "
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:layout_height="wrap_content" >
+
+        <com.smk.custom.view.CustomTextView
+            android:id="@+id/CustomTextView02"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_marginTop="10dp"
+            android:layout_weight="70"
+            android:text="Trip : "
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <com.smk.custom.view.CustomTextView
+            android:id="@+id/txt_trip_operator"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_marginTop="10dp"
+            android:layout_weight="30"
+            android:text="-"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <com.smk.custom.view.CustomTextView
+            android:id="@+id/CustomTextView03"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_weight="70"
+            android:text="Dept Info : "
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <com.smk.custom.view.CustomTextView
+            android:id="@+id/txt_trip_date_time_class"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_weight="30"
+            android:text="-"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <com.smk.custom.view.CustomTextView
+            android:id="@+id/CustomTextView04"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_weight="70"
+            android:text="Seats : "
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <com.smk.custom.view.CustomTextView
+            android:id="@+id/txt_seats"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_weight="30"
+            android:text="-"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+    </LinearLayout>
 
     <com.smk.custom.view.CustomTextView
         android:id="@+id/txt_price"
@@ -63,15 +125,31 @@
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
         android:text="Price: - Ks"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:visibility="gone" />
 
-    <com.smk.custom.view.CustomTextView
-        android:id="@+id/txt_amount"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:text="Amount: - Ks"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:layout_height="wrap_content" >
+
+        <com.smk.custom.view.CustomTextView
+            android:id="@+id/CustomTextView05"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_weight="70"
+            android:text="Amount : "
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <com.smk.custom.view.CustomTextView
+            android:id="@+id/txt_amount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_weight="30"
+            android:text="- Ks"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -88,7 +166,6 @@
             android:text="Print"
             android:textColor="@color/white"
             android:textStyle="bold" />
-
     </LinearLayout>
 
 </LinearLayout>

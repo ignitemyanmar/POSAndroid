@@ -10,14 +10,12 @@ import java.util.List;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
@@ -29,14 +27,11 @@ import android.widget.ListAdapter;
 import android.widget.TextView;
 
 import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.app.SherlockActivity;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.ignite.mm.ticketing.agent.R;
 import com.ignite.mm.ticketing.application.BaseSherlockActivity;
 import com.ignite.mm.ticketing.application.DecompressGZIP;
-import com.ignite.mm.ticketing.application.DeviceUtil;
-import com.ignite.mm.ticketing.application.LoginUser;
 import com.ignite.mm.ticketing.application.MCrypt;
 import com.ignite.mm.ticketing.application.SecureParam;
 import com.ignite.mm.ticketing.clientapi.NetworkEngine;
@@ -44,7 +39,6 @@ import com.ignite.mm.ticketing.custom.listview.adapter.TripsCityAdapter;
 import com.ignite.mm.ticketing.sqlite.database.model.BundleListObject;
 import com.ignite.mm.ticketing.sqlite.database.model.OnlineSalePermitTrips;
 import com.ignite.mm.ticketing.sqlite.database.model.Permission;
-import com.ignite.mm.ticketing.sqlite.database.model.PermissionGlobal;
 import com.ignite.mm.ticketing.sqlite.database.model.TripsCollection;
 import com.smk.calender.widget.SKCalender;
 import com.smk.calender.widget.SKCalender.Callbacks;
@@ -164,7 +158,7 @@ public class BusTripsCityActivity extends BaseSherlockActivity{
         dialog.setCancelable(true);
         
         //1. Get Permission
-        NetworkEngine.setIP("app.easyticket.com.mm");
+        NetworkEngine.setIP("starticketmyanmar.com");
 		NetworkEngine.getInstance().getPermission(AppLoginUser.getAccessToken(), operatorId, new Callback<Response>() {
 			
 			public void failure(RetrofitError arg0) {
@@ -250,7 +244,7 @@ public class BusTripsCityActivity extends BaseSherlockActivity{
 	
 	private void getOnlineSalePermitTrips(final List<TripsCollection> tripsCollections) {
 		
-		NetworkEngine.setIP("app.easyticket.com.mm");
+		NetworkEngine.setIP("starticketmyanmar.com");
 		NetworkEngine.getInstance().getOnlineSalePermitTrip(AppLoginUser.getAccessToken(), client_operator_id, new Callback<Response>() {
 			
 			public void success(Response arg0, Response arg1) {
@@ -355,6 +349,7 @@ public class BusTripsCityActivity extends BaseSherlockActivity{
 
 		public void onItemClick(AdapterView<?> arg0, View arg1, final int arg2,
 				long arg3) {
+			
 			final SKCalender skCalender = new SKCalender(BusTripsCityActivity.this);
 			
 			  skCalender.setCallbacks(new Callbacks() {

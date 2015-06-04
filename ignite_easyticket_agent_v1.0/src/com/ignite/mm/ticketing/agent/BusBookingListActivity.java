@@ -35,6 +35,7 @@ import com.ignite.mm.ticketing.application.SecureParam;
 import com.ignite.mm.ticketing.clientapi.NetworkEngine;
 import com.ignite.mm.ticketing.custom.listview.adapter.OrderListViewAdapter;
 import com.ignite.mm.ticketing.custom.listview.adapter.TripsCityAdapter;
+import com.ignite.mm.ticketing.sqlite.database.model.BookingSearch;
 import com.ignite.mm.ticketing.sqlite.database.model.Cities;
 import com.ignite.mm.ticketing.sqlite.database.model.CreditOrder;
 import com.ignite.mm.ticketing.sqlite.database.model.From;
@@ -59,8 +60,8 @@ public class BusBookingListActivity extends BaseSherlockActivity {
 	private TextView action_bar_title2;
 	private SKConnectionDetector connectionDetector;
 	private String operatorId;
-	private String operatorName;
-	private String client_operator_id;
+	private String book_code;
+	protected List<BookingSearch> bookingList;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -81,16 +82,7 @@ public class BusBookingListActivity extends BaseSherlockActivity {
 		//setContentView(R.layout.activity_busticketing_credit);
 		setContentView(R.layout.activity_bus_booking_list);
 		
-		//Get Operator ID
-		Bundle bundle = getIntent().getExtras();
-		
-		if (bundle != null) {
-			operatorId = bundle.getString("operator_id");
-			operatorName = bundle.getString("operator_name");
-			client_operator_id = bundle.getString("client_operator_id");
-		}
-				
-		actionBarTitle.setText(operatorName+" / Booking စာရင္း");
+		actionBarTitle.setText("Booking စာရင္း");
 		
 		auto_txt_codeno = (EditText)findViewById(R.id.auto_txt_codeno);
 		btn_search_codeno = (Button)findViewById(R.id.btn_search_codeno);
@@ -120,10 +112,52 @@ public class BusBookingListActivity extends BaseSherlockActivity {
 		super.onResume();
 		connectionDetector = SKConnectionDetector.getInstance(this);
 		if(connectionDetector.isConnectingToInternet()){
-			//getBookingListByCodeNo();
+			getBookingList();
 		}else{
 			connectionDetector.showErrorMessage();
 		}
+	}
+	
+	private void getBookingList() {
+		// TODO Auto-generated method stub
+		dialog = ProgressDialog.show(this, "", " Please wait...", true);
+        dialog.setCancelable(true);
+        
+        NetworkEngine.setIP("starticketmyanmar.com");
+		NetworkEngine.getInstance().getBookingListAll(AppLoginUser.getAccessToken(), new Callback<Response>() {
+
+			public void failure(RetrofitError arg0) {
+				// TODO Auto-generated method stub
+				if (arg0.getResponse() != null) {
+					Log.i("", "Fail permission: "+arg0.getResponse().getStatus());
+				}
+				
+				dialog.dismiss();
+			}
+
+			public void success(Response arg0, Response arg1) {
+				// TODO Auto-generated method stub
+				if (arg0 != null) {
+					bookingList = DecompressGZIP.fromBody(arg0.getBody(), new TypeToken<List<BookingSearch>>(){}.getType());
+					
+					if (bookingList != null && bookingList.size() > 0) {
+						
+						for (int i = 0; i < bookingList.size(); i++) {
+							String changeDate = changeDateString(bookingList.get(i).getDate());
+							BookingSearch bs = (BookingSearch)bookingList.get(i);
+							bs.setDate(changeDate);
+						}
+						
+						lv_booking_list.setAdapter(new OrderListViewAdapter(BusBookingListActivity.this, bookingList));
+					}else {
+						showAlert("No Booking List!");
+						lv_booking_list.setAdapter(null);
+					}
+				}
+				
+				dialog.dismiss();
+			}
+		});
 	}
 	
 	private OnClickListener clickListener = new OnClickListener() {
@@ -135,10 +169,14 @@ public class BusBookingListActivity extends BaseSherlockActivity {
 			}
 			if(v == btn_search_codeno){
 				if (auto_txt_codeno.getText().toString().length() == 0) {
-					SKToastMessage.showMessage(BusBookingListActivity.this, "Enter Booking Code No.", SKToastMessage.WARNING);
+					SKToastMessage.showMessage(BusBookingListActivity.this, "Enter Booking Code No (or) Phone No.", SKToastMessage.WARNING);
 				}else {
+					
+					book_code = auto_txt_codeno.getText().toString(); 
+					
 					if(connectionDetector.isConnectingToInternet()){
-						getBookingListByCodeNo();
+						//getBookingListByCodeNo();
+						getBookingListByCodeNoPhone();
 					}else{
 						connectionDetector.showErrorMessage();
 					}
@@ -185,16 +223,15 @@ public class BusBookingListActivity extends BaseSherlockActivity {
 			// TODO Auto-generated method stub
 			Intent intent = new Intent(getApplicationContext(), BusBookingConfirmDeleteActivity.class);
 			
-			CreditOrder co = (CreditOrder)credit_list.get(arg2);
-			co.setPermit_access_token(permit_access_token);
-			co.setPermit_ip(permit_ip);
-			co.setPermit_operator_group_id(permit_operator_group_id);
-			co.setPermit_agent_id(permit_agent_id);
-			intent.putExtra("credit_order", new Gson().toJson(credit_list.get(arg2)));
+			Bundle bundle = new Bundle();
+			bundle.putString("booking_order", new Gson().toJson(bookingList.get(arg2)));
+			
+			intent.putExtras(bundle);
 			startActivity(intent);
 			
 		}
 	};
+	
 	private ProgressDialog dialog;
 	protected List<From> fromCities;
 	protected List<To> toCities;
@@ -228,21 +265,15 @@ public class BusBookingListActivity extends BaseSherlockActivity {
 			}
 		});*/
 	}
+
 	
-	private Permission permission;
-	protected String permit_ip;
-	protected String permit_access_token;
-	protected String permit_operator_id;
-	protected String permit_operator_group_id;
-	protected String permit_agent_id;	
-	
-	private void getBookingListByCodeNo(){
+	/*private void getBookingListByCodeNo(){
 		Log.i("", "Enter here............. get booking list!!!");
 		
 		dialog = ProgressDialog.show(this, "", " Please wait...", true);
         dialog.setCancelable(true);
         
-        NetworkEngine.setIP("app.easyticket.com.mm");
+        NetworkEngine.setIP("starticketmyanmar.com");
         NetworkEngine.getInstance().getPermission(AppLoginUser.getAccessToken(), operatorId, new Callback<Response>() {
 			
 			public void failure(RetrofitError arg0) {
@@ -333,14 +364,57 @@ public class BusBookingListActivity extends BaseSherlockActivity {
 				}
 			}
 		});
-	}	
+	}*/
 	
-	public void showAlert() {
+	private void getBookingListByCodeNoPhone() {
+		// TODO Auto-generated method stub
+		dialog = ProgressDialog.show(this, "", " Please wait...", true);
+        dialog.setCancelable(true);
+        
+        NetworkEngine.setIP("starticketmyanmar.com");
+		NetworkEngine.getInstance().getBookingByCodeNoPhone(AppLoginUser.getAccessToken(), book_code, new Callback<Response>() {
+
+			public void failure(RetrofitError arg0) {
+				// TODO Auto-generated method stub
+				if (arg0.getResponse() != null) {
+					Log.i("", "Fail permission: "+arg0.getResponse().getStatus());
+					Log.i("", "Book code: "+book_code);
+				}
+				
+				dialog.dismiss();
+			}
+
+			public void success(Response arg0, Response arg1) {
+				// TODO Auto-generated method stub
+				if (arg0 != null) {
+					bookingList = DecompressGZIP.fromBody(arg0.getBody(), new TypeToken<List<BookingSearch>>(){}.getType());
+					
+					if (bookingList != null && bookingList.size() > 0) {
+						
+						String changeDate = changeDateString(bookingList.get(0).getDate());
+						String deptDate = changeDateString(bookingList.get(0).getDepartureDate());
+						BookingSearch bs = (BookingSearch)bookingList.get(0);
+						bs.setDate(changeDate);
+						bs.setDepartureDate(deptDate);
+						
+						lv_booking_list.setAdapter(new OrderListViewAdapter(BusBookingListActivity.this, bookingList));
+					}else {
+						showAlert("Not Found This Reservation Code!");
+						lv_booking_list.setAdapter(null);
+					}
+				}
+				
+				dialog.dismiss();
+			}
+		});
+	}
+	
+	
+	public void showAlert(String msg) {
 		// TODO Auto-generated method stub
 		AlertDialog.Builder alert = new AlertDialog.Builder(BusBookingListActivity.this);
-		alert.setIcon(R.drawable.attention_icon);
-		alert.setTitle("Not Found");
-		alert.setMessage("There is no reservation with this code! Reservation has been confirmed (or) please check reservation code.");
+		//alert.setIcon(R.drawable.attention_icon);
+		alert.setMessage(msg);
 		alert.show();
 	}
 	

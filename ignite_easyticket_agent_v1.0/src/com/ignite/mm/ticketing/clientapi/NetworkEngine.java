@@ -4,7 +4,8 @@ import retrofit.RestAdapter;
 
 public class NetworkEngine {
 	public static INetworkEngine instance;
-	public static String ip = "app.easyticket.com.mm"; 
+	public static String ip = "starticketmyanmar.com";
+	//128.199.255.246
 	public static void setIP(String address){
 		ip = address;
 		instance = null;

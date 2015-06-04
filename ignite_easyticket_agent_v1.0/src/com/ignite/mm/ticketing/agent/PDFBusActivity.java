@@ -114,7 +114,7 @@ public class PDFBusActivity extends BaseSherlockActivity {
 	private String BuyerNRC;
 	private String from_intent;
 	
-	int imgWidth=72;
+	int imgWidth=48;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -207,9 +207,15 @@ public class PDFBusActivity extends BaseSherlockActivity {
 
 		public void onClick(View v) {
 			if (v == actionBarBack) {
-				closeAllActivities();
-				UserLogin login = new UserLogin();
-				login.finish();
+				if (from_intent.equals("from_threeday_sales")) {
+					finish();
+				}else if (from_intent.equals("booking")) {
+					closeAllActivities();
+					startActivity(new Intent(getApplicationContext(), BusBookingListActivity.class));
+				}else{
+					closeAllActivities();
+					startActivity(new Intent(getApplicationContext(), SaleTicketActivity.class));
+				}
 			}
 			if (v == img_print) {
 				if (printerClass != null) {
@@ -871,15 +877,11 @@ public class PDFBusActivity extends BaseSherlockActivity {
 	@Override
 	public void onBackPressed() {
 		// TODO Auto-generated method stub
-		super.onBackPressed();
-		
 		if (from_intent.equals("from_threeday_sales")) {
-			startActivity(new Intent(getApplicationContext(), ThreeDaySalesActivity.class));
+			finish();
 		}else {
-			startActivity(new Intent(getApplicationContext(), BusOperatorActivity.class));
-			/*UserLogin login = new UserLogin();
-			login.finish();*/
-			//android.os.Process.killProcess(android.os.Process.myPid());
+			closeAllActivities();
+			startActivity(new Intent(getApplicationContext(), SaleTicketActivity.class));
 		}
 	}
 }

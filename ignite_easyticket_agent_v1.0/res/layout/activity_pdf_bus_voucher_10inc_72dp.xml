@@ -34,7 +34,7 @@
                     android:fadeScrollbars="true"
                     android:filterTouchesWhenObscured="true"
                     android:text="SEIN GAY HAR"
-                    android:textSize="40dp" />
+                    android:textSize="38dp" />
 
                 <com.smk.custom.view.CustomTextView
                     android:id="@+id/CustomTextView1"
@@ -44,7 +44,7 @@
                     android:fadeScrollbars="false"
                     android:filterTouchesWhenObscured="true"
                     android:text="(Parami)"
-                    android:textSize="38dp" />
+                    android:textSize="36dp" />
             </LinearLayout>
 
             <LinearLayout
@@ -59,7 +59,7 @@
                     android:editable="false"
                     android:filterTouchesWhenObscured="true"
                     android:text="-"
-                    android:textSize="34dp" />
+                    android:textSize="30dp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -81,7 +81,7 @@
                             android:editable="false"
                             android:filterTouchesWhenObscured="true"
                             android:text="NO"
-                            android:textSize="34dp" />
+                            android:textSize="30dp" />
 
                         <com.smk.custom.view.CustomTextView
                             android:id="@+id/txt_order_no"
@@ -91,7 +91,7 @@
                             android:editable="false"
                             android:filterTouchesWhenObscured="true"
                             android:text=": -"
-                            android:textSize="34dp" />
+                            android:textSize="30dp" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -109,7 +109,7 @@
                             android:editable="false"
                             android:filterTouchesWhenObscured="true"
                             android:text="PASSENGER"
-                            android:textSize="34dp" />
+                            android:textSize="30dp" />
 
                         <com.smk.custom.view.CustomTextView
                             android:id="@+id/txt_passenger"
@@ -119,7 +119,7 @@
                             android:editable="false"
                             android:filterTouchesWhenObscured="true"
                             android:text=": -"
-                            android:textSize="34dp" />
+                            android:textSize="30dp" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -137,7 +137,7 @@
                             android:editable="false"
                             android:filterTouchesWhenObscured="true"
                             android:text="PHONE"
-                            android:textSize="34dp" />
+                            android:textSize="30dp" />
 
                         <com.smk.custom.view.CustomTextView
                             android:id="@+id/txt_phone"
@@ -147,7 +147,7 @@
                             android:editable="false"
                             android:filterTouchesWhenObscured="true"
                             android:text=": -"
-                            android:textSize="34dp" />
+                            android:textSize="30dp" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -165,7 +165,7 @@
                             android:editable="false"
                             android:filterTouchesWhenObscured="true"
                             android:text="NRC"
-                            android:textSize="34dp" />
+                            android:textSize="30dp" />
 
                         <com.smk.custom.view.CustomTextView
                             android:id="@+id/txt_nrc"
@@ -175,7 +175,7 @@
                             android:editable="false"
                             android:filterTouchesWhenObscured="true"
                             android:text=": -"
-                            android:textSize="34dp" />
+                            android:textSize="30dp" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -193,7 +193,7 @@
                             android:editable="false"
                             android:filterTouchesWhenObscured="true"
                             android:text="BUS"
-                            android:textSize="34dp" />
+                            android:textSize="30dp" />
 
                         <com.smk.custom.view.CustomTextView
                             android:id="@+id/txt_operator"
@@ -203,7 +203,7 @@
                             android:editable="false"
                             android:filterTouchesWhenObscured="true"
                             android:text=": -"
-                            android:textSize="34dp" />
+                            android:textSize="30dp" />
                     </LinearLayout>
                 </LinearLayout>
 
@@ -227,7 +227,7 @@
                     android:editable="false"
                     android:filterTouchesWhenObscured="true"
                     android:text="-"
-                    android:textSize="34dp" />
+                    android:textSize="30dp" />
 
                 <com.smk.custom.view.CustomTextView
                     android:id="@+id/txt_trip_date_time"
@@ -236,7 +236,7 @@
                     android:editable="false"
                     android:filterTouchesWhenObscured="true"
                     android:text="0000-00-00 (00:00 pm)"
-                    android:textSize="34dp" />
+                    android:textSize="30dp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -258,7 +258,7 @@
                             android:editable="false"
                             android:filterTouchesWhenObscured="true"
                             android:text="SEAT NO"
-                            android:textSize="34dp" />
+                            android:textSize="30dp" />
 
                         <com.smk.custom.view.CustomTextView
                             android:id="@+id/txt_seat_no"
@@ -268,7 +268,7 @@
                             android:editable="false"
                             android:filterTouchesWhenObscured="true"
                             android:text=": -"
-                            android:textSize="34dp" />
+                            android:textSize="30dp" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -286,7 +286,7 @@
                             android:editable="false"
                             android:filterTouchesWhenObscured="true"
                             android:text="TICKET NO"
-                            android:textSize="34dp" />
+                            android:textSize="30dp" />
 
                         <com.smk.custom.view.CustomTextView
                             android:id="@+id/txt_ticket_no"
@@ -296,7 +296,7 @@
                             android:editable="false"
                             android:filterTouchesWhenObscured="true"
                             android:text=": -"
-                            android:textSize="34dp" />
+                            android:textSize="30dp" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -314,7 +314,7 @@
                             android:editable="false"
                             android:filterTouchesWhenObscured="true"
                             android:text="PRICE"
-                            android:textSize="34dp" />
+                            android:textSize="30dp" />
 
                         <com.smk.custom.view.CustomTextView
                             android:id="@+id/txt_price"
@@ -324,7 +324,7 @@
                             android:editable="false"
                             android:filterTouchesWhenObscured="true"
                             android:text=": KS 0"
-                            android:textSize="34dp" />
+                            android:textSize="30dp" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -342,7 +342,7 @@
                             android:editable="false"
                             android:filterTouchesWhenObscured="true"
                             android:text="QTY"
-                            android:textSize="34dp" />
+                            android:textSize="30dp" />
 
                         <com.smk.custom.view.CustomTextView
                             android:id="@+id/txt_qty"
@@ -352,7 +352,7 @@
                             android:editable="false"
                             android:filterTouchesWhenObscured="true"
                             android:text=": 0"
-                            android:textSize="34dp" />
+                            android:textSize="30dp" />
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
@@ -384,7 +384,7 @@
                         android:editable="false"
                         android:filterTouchesWhenObscured="true"
                         android:text="QTY"
-                        android:textSize="34dp"
+                        android:textSize="30dp"
                         android:visibility="invisible" />
 
                     <com.smk.custom.view.CustomTextView
@@ -395,7 +395,7 @@
                         android:editable="false"
                         android:filterTouchesWhenObscured="true"
                         android:text="TOTAL : KS 0"
-                        android:textSize="34dp" />
+                        android:textSize="30dp" />
                 </LinearLayout>
 
                 <View
@@ -420,7 +420,7 @@
                     android:layout_marginTop="5dp"
                     android:editable="false"
                     android:text="1) ကားမထြက္မီ ၃၀ မိနစ္အလုိ ကားဂိတ္ကုိ ေရာက္ ရွိ ေပးပါရန္"
-                    android:textSize="34dp" />
+                    android:textSize="30dp" />
 
                 <com.smk.custom.view.CustomTextView
                     android:id="@+id/CustomTextView2"
@@ -429,7 +429,7 @@
                     android:layout_marginBottom="16dp"
                     android:editable="false"
                     android:text="2) လက္မွတ္အား ျပန္လဲခြင့္မျပဳပါ"
-                    android:textSize="34dp" />
+                    android:textSize="30dp" />
 
                 <com.smk.custom.view.CustomTextView
                     android:id="@+id/CustomTextView3"
@@ -438,7 +438,7 @@
                     android:layout_marginBottom="16dp"
                     android:editable="false"
                     android:text="3) ကားမထြက္ပါက ကားဂိတ္ႏွင့္သာ သက္ဆုိင္ၿပီး၊ Star Ticket ႏွင့္ မသက္ဆုိင္ ပါ"
-                    android:textSize="34dp" />
+                    android:textSize="30dp" />
 
                 <View
                     android:id="@+id/View03"
@@ -456,7 +456,7 @@
                     android:filterTouchesWhenObscured="true"
                     android:gravity="center"
                     android:text="&quot;THANK YOU!&quot;"
-                    android:textSize="34dp" />
+                    android:textSize="30dp" />
 
                 <TextView
                     android:id="@+id/textView2"
@@ -467,7 +467,7 @@
                     android:filterTouchesWhenObscured="true"
                     android:gravity="center"
                     android:text="STAR TICKET"
-                    android:textSize="34dp" />
+                    android:textSize="30dp" />
             </LinearLayout>
         </LinearLayout>
 

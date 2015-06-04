@@ -5,6 +5,32 @@
     android:layout_height="wrap_content"
     android:gravity="center_horizontal|center_vertical"
     android:orientation="vertical" >
+
+    <com.smk.custom.view.CustomTextView
+        android:id="@+id/txt_order_no"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:layout_marginTop="10dp"
+        android:text="Order No : -"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <com.smk.custom.view.CustomTextView
+        android:id="@+id/txt_order_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:text="Order Date: -"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <com.smk.custom.view.CustomTextView
+        android:id="@+id/txt_customer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:layout_marginTop="10dp"
+        android:text="Customer : -"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <com.smk.custom.view.CustomTextView
         android:id="@+id/txt_trip"
@@ -12,53 +38,44 @@
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
         android:layout_marginTop="10dp"
-        android:text="Trip: YGN - MDY (Mandalarmin)"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:text="Trip: -"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <com.smk.custom.view.CustomTextView
         android:id="@+id/txt_date"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
-        android:text="Date : 31/03/2015"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-         />
+        android:text="Date : -"
+       android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <com.smk.custom.view.CustomTextView
         android:id="@+id/txt_time"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
-        android:text="Time : 06:30 AM I"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:text="Time : -"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <com.smk.custom.view.CustomTextView
         android:id="@+id/txt_seats"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
-        android:text="Seat No : 1, 2, 3"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:text="Seat No : -"
+        android:textAppearance="?android:attr/textAppearanceLarge"/>
 
     <com.smk.custom.view.CustomTextView
         android:id="@+id/txt_price"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
-        android:text="Price: 1000 Ks"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-    <com.smk.custom.view.CustomTextView
-        android:id="@+id/txt_order_date"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:text="Order Date: 10/03/2015 11:00:00 am"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:text="Price: 0 Ks"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="60dp"
         android:layout_marginTop="5dp"
         android:background="@color/dark_blue"
         android:gravity="center" >
@@ -70,8 +87,8 @@
             android:layout_weight="50"
             android:gravity="left|center_vertical"
             android:padding="3dp"
-            android:text="Total Seats : 10"
-            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Total Seats : 0"
+            android:textAppearance="?android:attr/textAppearanceLarge"
             android:textColor="@color/white" />
 
         <com.smk.custom.view.CustomTextView
@@ -81,8 +98,8 @@
             android:layout_weight="50"
             android:gravity="left|center_vertical"
             android:padding="3dp"
-            android:text="Amount: 30000Ks"
-            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Amount: 0 Ks"
+            android:textAppearance="?android:attr/textAppearanceLarge"
             android:textColor="@color/white" />
 
     </LinearLayout>

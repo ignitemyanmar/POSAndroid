@@ -103,7 +103,7 @@ using namespace std;
  * Method:    postSaleParam
  * Signature: ()Ljava/lang/String;
  */
- JNIEXPORT jstring JNICALL Java_com_ignite_mm_ticketing_application_SecureParam_postSaleParam(JNIEnv * env, jobject pObj, jstring token, jstring op_id, jstring ag_id, jstring name, jstring ph, jstring rmk_type, jstring rmk, jstring gp_op_id, jstring lst_seat,jstring trip_id, jstring date, jstring f_c, jstring t_c, jstring usr_id, jstring dev, jstring bking){
+ JNIEXPORT jstring JNICALL Java_com_ignite_mm_ticketing_application_SecureParam_postSaleParam(JNIEnv * env, jobject pObj, jstring token, jstring op_id, jstring ag_id, jstring name, jstring ph, jstring rmk_type, jstring rmk, jstring gp_op_id, jstring lst_seat,jstring trip_id, jstring date, jstring f_c, jstring t_c, jstring usr_id, jstring dev, jstring bking, jstring bking_usr_id){
   		
 	stringstream stream;
 
@@ -123,8 +123,10 @@ using namespace std;
 	const char *user_id = env->GetStringUTFChars(usr_id, JNI_FALSE);
 	const char *device_id = env->GetStringUTFChars(dev, JNI_FALSE);
 	const char *booking = env->GetStringUTFChars(bking, JNI_FALSE);
+	const char *booking_user_id = env->GetStringUTFChars(bking_usr_id, JNI_FALSE);
+	
 
-	stream << "{\"access_token\":\""<<access_token<<"\",\"operator_id\":\""<<operator_id<<"\",\"agent_id\":\""<<agent_id<<"\",\"name\":\""<<username<<"\",\"phone\":\""<<phone<<"\",\"remark_type\":\""<<remark_type<<"\",\"remark\":\""<<remark<<"\",\"group_operator_id\":\""<<group_operator_id<<"\",\"seat_list\":\""<<seat_list<<"\",\"trip_id\":\""<<t_id<<"\",\"trip_date\":\""<<trip_date<<"\",\"from_city\":\""<<from_city<<"\",\"to_city\":\""<<to_city<<"\",\"user_id\":\""<<user_id<<"\",\"device_id\":\""<<device_id<<"\",\"booking\":\""<<booking<<"\"}";
+	stream << "{\"access_token\":\""<<access_token<<"\",\"operator_id\":\""<<operator_id<<"\",\"agent_id\":\""<<agent_id<<"\",\"name\":\""<<username<<"\",\"phone\":\""<<phone<<"\",\"remark_type\":\""<<remark_type<<"\",\"remark\":\""<<remark<<"\",\"group_operator_id\":\""<<group_operator_id<<"\",\"seat_list\":\""<<seat_list<<"\",\"trip_id\":\""<<t_id<<"\",\"trip_date\":\""<<trip_date<<"\",\"from_city\":\""<<from_city<<"\",\"to_city\":\""<<to_city<<"\",\"user_id\":\""<<user_id<<"\",\"device_id\":\""<<device_id<<"\",\"booking\":\""<<booking<<"\",\"booking_user_id\":\""<<booking_user_id<<"\"}";
 
 	string result = stream.str();
 
@@ -137,7 +139,7 @@ using namespace std;
  * Method:    postSaleConfirmParam
  * Signature: ()Ljava/lang/String;
  */
- JNIEXPORT jstring JNICALL Java_com_ignite_mm_ticketing_application_SecureParam_postSaleConfirmParam(JNIEnv * env, jobject pObj,jstring token,jstring order_id, jstring ref_id, jstring ag_id, jstring ag_name, jstring name, jstring ph, jstring nrc, jstring rmk_type,jstring rmk, jstring ext_dest_id, jstring lst_seat, jstring cash, jstring nation, jstring or_date, jstring dev, jstring bking){
+ JNIEXPORT jstring JNICALL Java_com_ignite_mm_ticketing_application_SecureParam_postSaleConfirmParam(JNIEnv * env, jobject pObj,jstring token,jstring order_id, jstring ref_id, jstring ag_id, jstring ag_name, jstring name, jstring ph, jstring nrc, jstring rmk_type,jstring rmk, jstring ext_dest_id, jstring lst_seat, jstring cash, jstring nation, jstring or_date, jstring dev, jstring bking, jstring usr_id){
   		
 	stringstream stream;
 
@@ -158,8 +160,9 @@ using namespace std;
 	const char *order_date = env->GetStringUTFChars(or_date, JNI_FALSE);
 	const char *device_id = env->GetStringUTFChars(dev, JNI_FALSE);
 	const char *booking = env->GetStringUTFChars(bking, JNI_FALSE);
+	const char *user_id = env->GetStringUTFChars(usr_id, JNI_FALSE);
 
-	stream << "{\"access_token\":\""<<access_token<<"\",\"sale_order_no\":\""<<sale_order_no<<"\",\"reference_no\":\""<<reference_no<<"\",\"agent_id\":\""<<agent_id<<"\",\"agent_name\":\""<<agent_name<<"\",\"buyer_name\":\""<<buyer_name<<"\",\"phone\":\""<<phone<<"\",\"nrc_no\":\""<<nrc_no<<"\",\"remark_type\":\""<<remark_type<<"\",\"remark\":\""<<remark<<"\",\"extra_dest_id\":\""<<extra_dest_id<<"\",\"tickets\":\""<<tickets<<"\",\"cash_credit\":\""<<cash_credit<<"\",\"nationality\":\""<<nationality<<"\",\"order_date\":\""<<order_date<<"\",\"device_id\":\""<<device_id<<"\",\"booking\":\""<<booking<<"\"}";
+	stream << "{\"access_token\":\""<<access_token<<"\",\"sale_order_no\":\""<<sale_order_no<<"\",\"reference_no\":\""<<reference_no<<"\",\"agent_id\":\""<<agent_id<<"\",\"agent_name\":\""<<agent_name<<"\",\"buyer_name\":\""<<buyer_name<<"\",\"phone\":\""<<phone<<"\",\"nrc_no\":\""<<nrc_no<<"\",\"remark_type\":\""<<remark_type<<"\",\"remark\":\""<<remark<<"\",\"extra_dest_id\":\""<<extra_dest_id<<"\",\"tickets\":\""<<tickets<<"\",\"cash_credit\":\""<<cash_credit<<"\",\"nationality\":\""<<nationality<<"\",\"order_date\":\""<<order_date<<"\",\"device_id\":\""<<device_id<<"\",\"booking\":\""<<booking<<"\",\"user_id\":\""<<user_id<<"\"}";
 
 	string result = stream.str();
 

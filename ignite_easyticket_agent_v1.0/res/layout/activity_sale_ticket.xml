@@ -2,44 +2,166 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical" 
+    android:background="@drawable/app_background">
 
     <LinearLayout
+        android:id="@+id/ly_title"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/golden_brown"
+        android:gravity="center_vertical"
+        android:orientation="vertical"
+        android:visibility="visible" >
+
+        <com.smk.custom.view.CustomTextView
+            android:id="@+id/txt_operator_name"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:padding="5dp"
+            android:text="ခရီးစဥ္၊ ရက္၊ အခ်ိန္ ေရြးပါ ~"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/white"
+            android:textSize="18dp" />
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/View01"
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:background="@color/golden_brown_dark"
+        android:visibility="visible" />
+
+    <ScrollView
+        android:id="@+id/scrollView1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal" >
+        android:background="@color/white" >
 
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:orientation="vertical" >
 
-            <Spinner
-                android:id="@+id/Spinner01"
-                android:layout_width="200dp"
-                android:layout_height="wrap_content" />
-
-            <Spinner
-                android:id="@+id/Spinner02"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="match_parent"
+                android:orientation="vertical" >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:layout_weight="50"
+                    android:gravity="center_vertical"
+                    android:padding="20dp" >
+
+                    <TextView
+                        android:id="@+id/textView1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginRight="10dp"
+                        android:layout_weight="70"
+                        android:gravity="center_vertical"
+                        android:text="ခရီးစဥ္ ( မွ )"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                    <Spinner
+                        android:id="@+id/spn_from_trip"
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"
+                        android:layout_weight="30" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:layout_weight="50"
+                    android:gravity="center_vertical"
+                    android:padding="20dp" >
+
+                    <TextView
+                        android:id="@+id/TextView03"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginRight="10dp"
+                        android:layout_weight="70"
+                        android:gravity="center_vertical"
+                        android:text="ခရီးစဥ္ ( သုိ႔ )"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                    <Spinner
+                        android:id="@+id/spn_to_trip"
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"
+                        android:layout_weight="30" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:layout_weight="50"
+                    android:gravity="center_vertical"
+                    android:padding="20dp" >
+
+                    <TextView
+                        android:id="@+id/TextView02"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginRight="10dp"
+                        android:layout_weight="70"
+                        android:gravity="center_vertical"
+                        android:text="ထြက္ခြာမည့္ ေန႔"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                    <Button
+                        android:id="@+id/btn_trip_date"
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"
+                        android:layout_weight="30"
+                        android:background="@drawable/btn_border_radius_"
+                        android:text="Choose Date" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:layout_weight="50"
+                    android:gravity="center_vertical"
+                    android:padding="20dp" >
+
+                    <TextView
+                        android:id="@+id/TextView01"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginRight="10dp"
+                        android:layout_weight="70"
+                        android:gravity="center_vertical"
+                        android:text="ထြက္ခြာမည့္ အခ်ိန္"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                    <Spinner
+                        android:id="@+id/spn_trip_time"
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"
+                        android:layout_weight="30" />
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/btn_search"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_margin="10dp"
+                    android:layout_weight="50"
+                    android:background="@drawable/btn_green"
+                    android:gravity="center"
+                    android:text="ရွာမည္"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="@color/white" />
+            </LinearLayout>
+
         </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" >
-
-            <Spinner
-                android:id="@+id/spinner1"
-                android:layout_width="200dp"
-                android:layout_height="wrap_content" />
-
-            <Spinner
-                android:id="@+id/spinner2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
-    </LinearLayout>
+    </ScrollView>
 
 </LinearLayout>

@@ -126,7 +126,7 @@ public class BusSeatAdapter extends BaseAdapter{
 							if(isChecked){
 								//If checked the seat.
 								String[] seleted = BusSelectSeatActivity.SelectedSeat.split(",");
-								if(!BusSelectSeatActivity.SelectedSeat.isEmpty()){
+								if(BusSelectSeatActivity.SelectedSeat.length() > 0){
 									boolean isExisted = false;
 									for (int i = 0; i < seleted.length; i++) {
 										if(seleted[i].equals(buttonView.getTag().toString())){

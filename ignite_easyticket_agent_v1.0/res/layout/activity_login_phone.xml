@@ -1,0 +1,150 @@
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/LinearLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:background="@drawable/app_background"
+        android:gravity="center"
+        android:orientation="vertical" >
+
+        <ScrollView
+            android:id="@+id/scrollView1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_horizontal|center_vertical"
+                android:orientation="vertical" >
+
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:background="@drawable/border_radius"
+                    android:gravity="center_vertical"
+                    android:minWidth="320dp"
+                    android:orientation="vertical"
+                    android:padding="30dp" >
+
+
+                    <EditText
+                        android:id="@+id/txt_login_email"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:background="@drawable/apptheme_edit_text_holo_light"
+                        android:drawablePadding="10dp"
+                        android:ems="30"
+                        android:hint="Email"
+                        android:inputType="textEmailAddress"
+                        android:maxWidth="300dp"
+                        android:paddingLeft="5dp"
+                        android:textColor="@color/black"
+                        android:textSize="18dp" >
+
+                        <requestFocus />
+
+                    </EditText>
+
+
+                    <EditText
+                        android:id="@+id/txt_login_password"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginTop="10dp"
+                        android:ems="10"
+                        android:hint="Password"
+                        android:inputType="textPassword"
+                        android:maxWidth="300dp"
+                        android:paddingLeft="5dp"
+                        android:typeface="normal"
+                        android:background="@drawable/apptheme_edit_text_holo_light"
+                        android:textColor="@color/black"
+                        android:textSize="18dp" />
+
+
+
+
+                    <Button
+                        android:id="@+id/btn_login"
+                        android:layout_width="fill_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/btn_gold"
+                        android:maxWidth="300dp"
+                        android:text="LOGIN"
+                        android:textColor="@color/white"
+                        android:textSize="20dp" />
+
+                    <TextView
+                        android:id="@+id/txt_notrip"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Don&apos;t you have an account?"
+                        android:textColor="@color/gray"
+                        android:textSize="16dp" 
+                        android:visibility="gone"/>
+
+                    <Button
+                        android:id="@+id/btn_register"
+                        android:layout_width="fill_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginTop="5dp"
+                        android:background="@drawable/border_radius_orange"
+                        android:maxWidth="300dp"
+                        android:text="Register"
+                        android:textColor="@color/black"
+                        android:textSize="18dp"
+                        android:visibility="gone" />
+
+                </LinearLayout>
+
+
+                <Button
+                    android:id="@+id/btn_skip_login"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/ticketing_background"
+                    android:gravity="bottom|center_horizontal"
+                    android:shadowColor="#E2E2E2"
+                    android:shadowDx="1"
+                    android:shadowDy="1"
+                    android:shadowRadius="5"
+                    android:text="SKIP LOGIN?"
+                    android:textColor="#2073D3"
+                    android:visibility="gone" />
+
+
+                <Button
+                    android:id="@+id/cmd_to_register"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/ticketing_background"
+                    android:gravity="bottom|center_horizontal"
+                    android:shadowColor="#E2E2E2"
+                    android:shadowDx="1"
+                    android:shadowDy="1"
+                    android:shadowRadius="5"
+                    android:text="DON&apos;T HAVE AN ACCOUNT?"
+                    android:textColor="#2073D3"
+                    android:visibility="gone" />
+
+            </LinearLayout>
+
+        </ScrollView>
+
+</LinearLayout>
+    
+    
+

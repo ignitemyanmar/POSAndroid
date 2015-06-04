@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:id="@+id/ly_title"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/golden_brown"
+        android:gravity="center_vertical"
+        android:orientation="vertical"
+        android:visibility="visible" >
+
+        <com.smk.custom.view.CustomTextView
+            android:id="@+id/txt_operator_name"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:padding="5dp"
+            android:text="ကားဂိတ္ ႏွင့္ အခ်ိန္ ေရြးပါ ~"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/white"
+            android:textSize="18dp" />
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/View01"
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:background="@color/golden_brown_dark"
+        android:visibility="visible" />
+
+    <LinearLayout
+        android:id="@+id/ly_loading"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:gravity="center_horizontal|center_vertical"
+        android:padding="5dp"
+        android:visibility="gone" >
+
+        <ProgressBar
+            android:id="@+id/progressBar1"
+            style="?android:attr/progressBarStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/action_bar_title2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="Please wait loading..."
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="#AAA"
+            android:textSize="12dp"
+            android:typeface="sans" />
+    </LinearLayout>
+
+    <ScrollView
+        android:id="@+id/scrollView1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <LinearLayout
+            android:id="@+id/lymain"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+             >
+
+            <ListView
+                android:id="@+id/lv_operator_seats"
+                android:layout_width="fill_parent"
+                android:layout_height="match_parent"
+                android:choiceMode="singleChoice"
+                 >
+            </ListView>
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

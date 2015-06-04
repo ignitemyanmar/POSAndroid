@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.ignite.mm.ticketing.agent"
-    android:versionCode="4"
-    android:versionName="1.4" >
+    android:versionCode="5"
+    android:versionName="1.5" >
 
     <uses-sdk
         android:minSdkVersion="9"
@@ -28,7 +28,8 @@
         <activity
             android:name=".MainActivity"
             android:label="@string/title_activity_main"
-            android:theme="@style/Theme.Mytheme" >
+            android:theme="@style/Theme.Mytheme"
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -75,6 +76,9 @@
          <activity android:name=".CheckBluetoothConnect" android:screenOrientation="portrait"></activity>
          <activity android:name=".HomeActivity" android:screenOrientation="portrait"></activity>
          <activity android:name=".ThreeDaySalesActivity" android:screenOrientation="portrait"></activity>
+         <activity android:name=".SaleTicketActivity" android:screenOrientation="portrait"></activity>
+         <activity android:name=".BusOperatorSeatsActivity" android:screenOrientation="portrait"></activity>
+         <activity android:name=".BusSelectSeatActivity" android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>

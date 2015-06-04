@@ -66,6 +66,7 @@ import com.ignite.mm.ticketing.http.connection.HttpConnection;
 import com.ignite.mm.ticketing.sqlite.database.model.Agent;
 import com.ignite.mm.ticketing.sqlite.database.model.BusSeat;
 import com.ignite.mm.ticketing.sqlite.database.model.OperatorGroupUser;
+import com.ignite.mm.ticketing.sqlite.database.model.Permission;
 import com.ignite.mm.ticketing.sqlite.database.model.ReturnComfrim;
 import com.ignite.mm.ticketing.sqlite.database.model.Seat;
 import com.ignite.mm.ticketing.sqlite.database.model.Seat_list;
@@ -132,11 +133,12 @@ import com.smk.skalertmessage.SKToastMessage;
 	private String permit_operator_group_id;
 	private String permit_agent_id;
 	private String client_operator_id;
-	private String tripId;
+	private String tripId = "0";
 	public static List<BusSeat> BusSeats;
 	public static List<OperatorGroupUser> groupUser = new ArrayList<OperatorGroupUser>();
 	public static String CheckOut;
-	
+	private Permission permission;
+	private String permit_operator_id = "0";
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -162,24 +164,27 @@ import com.smk.skalertmessage.SKToastMessage;
 		
 		//Get Data from past clicks
 		Bundle bundle = getIntent().getExtras();
-		permit_access_token = bundle.getString("permit_access_token");
-		AgentID = bundle.getString("agent_id");
-		OperatorID = bundle.getString("operator_id");
-		FromCity = bundle.getString("from_city_id");
-		ToCity = bundle.getString("to_city_id");
-		From = bundle.getString("from_city");
-		To = bundle.getString("to_city");
-		Classes = bundle.getString("class_id");
-		Time = bundle.getString("time");
-		Date = bundle.getString("date");
-		permit_ip = bundle.getString("permit_ip");
-		operator_name = bundle.getString("operator_name");
-		permit_operator_group_id = bundle.getString("permit_operator_group_id");
-		permit_agent_id = bundle.getString("permit_agent_id");
-		client_operator_id = bundle.getString("client_operator_id");
-		tripId = bundle.getString("tripId");
 		
-		Log.i("", "(Bus Select Seat) Permit_operator_group_id : "+permit_operator_group_id+", Permit_agent_id : "+permit_agent_id);
+		if (bundle != null) {
+			//permit_access_token = bundle.getString("permit_access_token");
+			AgentID = bundle.getString("agent_id");
+			OperatorID = bundle.getString("operator_id");
+			FromCity = bundle.getString("from_city_id");
+			ToCity = bundle.getString("to_city_id");
+			From = bundle.getString("from_city");
+			To = bundle.getString("to_city");
+			Classes = bundle.getString("class_id");
+			Time = bundle.getString("trip_time");
+			Date = bundle.getString("trip_date");
+			//permit_ip = bundle.getString("permit_ip");
+			operator_name = bundle.getString("operator_name");
+			//permit_operator_group_id = bundle.getString("permit_operator_grou/p_id");
+			//permit_agent_id = bundle.getString("permit_agent_id");
+			//client_operator_id = bundle.getString("client_operator_id");
+			tripId = bundle.getString("tripId");
+		}
+		
+		//Log.i("", "(Bus Select Seat) Permit_operator_group_id : "+permit_operator_group_id+", Permit_agent_id : "+permit_agent_id);
 		
 		mSeat = (GridView) findViewById(R.id.grid_seat);
 		lst_group_user = (ListView) findViewById(R.id.lst_group_user);
@@ -217,7 +222,6 @@ import com.smk.skalertmessage.SKToastMessage;
 			// TODO: handle exception
 			Log.i("", "Time Out Of Bound Exception: "+e);
 		}
-		
 		
 		SimpleDateFormat serverFormat = new SimpleDateFormat("hh:mm aa");
 		Date timeTochange = null;
@@ -272,15 +276,16 @@ import com.smk.skalertmessage.SKToastMessage;
 		if(connectionDetector.isConnectingToInternet())
 		{ 	mLoadingView.setVisibility(View.VISIBLE);
 			mLoadingView.startAnimation(topInAnimaiton());
+			//getOperatorGroupUser();
 			
-			getOperatorGroupUser();
-			
-			getSeatPlan();
+			//Get permission & Get seat plan 
+			getPermission();
 			
 			//getAgent();
 		}else {
-			mNoConnection.setVisibility(View.VISIBLE);
-			mNoConnection.startAnimation(topInAnimaiton());
+			connectionDetector.showErrorDialog();
+			/*mNoConnection.setVisibility(View.VISIBLE);
+			mNoConnection.startAnimation(topInAnimaiton());*/
 		}
 	}
 	
@@ -383,13 +388,53 @@ import com.smk.skalertmessage.SKToastMessage;
 			}
 		});
 	}
+		
+	
+	private void getPermission() {
+		// TODO Auto-generated method stub
+		//1. Get Permission
+        NetworkEngine.setIP("starticketmyanmar.com");
+		NetworkEngine.getInstance().getPermission(AppLoginUser.getAccessToken(), OperatorID, new Callback<Response>() {
+
+			public void failure(RetrofitError arg0) {
+				// TODO Auto-generated method stub
+				if (arg0.getResponse() != null) {
+					Log.i("", "Fail permission: "+arg0.getResponse().getStatus());
+					Log.i("", "Trip Operator ID: "+OperatorID);
+				}
+			}
+
+			public void success(Response arg0, Response arg1) {
+				// TODO Auto-generated method stub
+				if (arg0 != null) {
+					permission = DecompressGZIP.fromBody(arg0.getBody(), new TypeToken<Permission>(){}.getType());
+					
+					if (permission != null) {
+						permit_ip = permission.getIp();
+						permit_access_token = permission.getAccess_token();
+						permit_operator_id = permission.getOperator_id();
+						permit_operator_group_id = permission.getOperatorgroup_id();
+						permit_agent_id = permission.getOnlinesaleagent_id();
+						
+						getSeatPlan();
+					}
+				}
+			}
+		});
+	}
 	
 	private void getSeatPlan() {
 		
-		String param = MCrypt.getInstance().encrypt(SecureParam.getSeatPlanParam(permit_access_token, OperatorID, tripId, FromCity, ToCity, Classes, Date, Time));
+		String param = MCrypt.getInstance().encrypt(SecureParam.getSeatPlanParam(permit_access_token, permit_operator_id, tripId, "", "", "", Date, ""));
+		
+		Log.i("", "Permit token: "+permit_access_token
+				+", Operator Id: "+permit_operator_id
+				+", Trip Id: "+tripId+", Date: "+Date);
 		
 		Log.i("", "Param to get Seats: "+param);
 		
+		//NetworkEngine.setIP("128.199.81.168");
+		NetworkEngine.setIP(permit_ip);
 		NetworkEngine.getInstance().getItems(param, new Callback<Response>() {
 			
 			public void success(Response arg0, Response arg1) {
@@ -448,7 +493,7 @@ import com.smk.skalertmessage.SKToastMessage;
                
 		Log.i("", "Param sale to encrypt: "
 		+"access: "+permit_access_token+
-		"operatorID: "+OperatorID+
+		"operatorID: "+permit_operator_id+
 		"agent id: "+AgentID+
 		"Cus Name: "+CustName+
 		"cus ph: "+CustPhone+
@@ -468,11 +513,12 @@ import com.smk.skalertmessage.SKToastMessage;
 		
 		//Do Encrypt of Params
 		String param = MCrypt.getInstance().encrypt(SecureParam.postSaleParam(permit_access_token
-					, OperatorID, permit_agent_id, CustName, CustPhone, String
+					, permit_operator_id, permit_agent_id, CustName, CustPhone, String
 					.valueOf(RemarkType), Remark, permit_operator_group_id, MCrypt.getInstance()
 					.encrypt(seats.toString()), BusSeats.get(0).getSeat_plan()
 					.get(0).getId().toString(), Date, FromCity, ToCity, String.valueOf(AppLoginUser
-					.getId()), DeviceUtil.getInstance(this).getID(), isBooking.toString()));
+					.getId()), DeviceUtil.getInstance(this).getID(), isBooking.toString(),
+					String.valueOf(AppLoginUser.getId())));
 			
 			Log.i("","Hello param (for sale) : "+ param);
 		
@@ -541,8 +587,9 @@ import com.smk.skalertmessage.SKToastMessage;
 			    				
 			    				bundle.putString("permit_operator_group_id", permit_operator_group_id);
 								bundle.putString("permit_agent_id", permit_agent_id);
+								bundle.putString("permit_operator_id", permit_operator_id);
 								
-								bundle.putString("client_operator_id", client_operator_id);
+								//bundle.putString("client_operator_id", client_operator_id);
 			    				
 			    				nextScreen.putExtras(bundle);
 			    				startActivity(nextScreen);
@@ -572,7 +619,6 @@ import com.smk.skalertmessage.SKToastMessage;
 			    				bundle.putString("permit_ip", permit_ip);
 			    				bundle.putString("permit_access_token", permit_access_token);
 			    				
-			    				
 		        				//Show Voucher
 		        				startActivity(new Intent(BusSelectSeatActivity.this, PDFBusActivity.class).putExtras(bundle));
 		        				
@@ -583,7 +629,8 @@ import com.smk.skalertmessage.SKToastMessage;
 		        		}else{
 		        			dialog.dismiss();
 		        			SKToastMessage.showMessage(BusSelectSeatActivity.this, "သင္ မွာယူေသာ လက္ မွတ္ မ်ားမွာ စကၠန့္ပိုင္ အတြင္း တစ္ ျခားသူ ယူ သြားေသာေၾကာင့္ သင္မွာေသာလက္မွတ္မ်ား မရႏိုင္ေတာ့ပါ။ ေက်းဇူးျပဳၿပီး တစ္ျခားလက္ မွတ္ မ်ား ျပန္ေရႊးေပးပါ။။", SKToastMessage.ERROR);
-		        			getSeatPlan();
+		        			//Get permission & Seat Plan 
+		        			getPermission();		
 		        		}
 					}else{
 						isBooking = 0;

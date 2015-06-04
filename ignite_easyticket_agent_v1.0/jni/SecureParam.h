@@ -45,14 +45,14 @@ JNIEXPORT jstring JNICALL Java_com_ignite_mm_ticketing_application_SecureParam_g
  * Method:    postSaleParam
  * Signature: ()Ljava/lang/String;
  */
- JNIEXPORT jstring JNICALL Java_com_ignite_mm_ticketing_application_SecureParam_postSaleParam(JNIEnv *,jobject,jstring, jstring, jstring, jstring, jstring, jstring, jstring, jstring, jstring, jstring, jstring, jstring, jstring, jstring, jstring, jstring);
+ JNIEXPORT jstring JNICALL Java_com_ignite_mm_ticketing_application_SecureParam_postSaleParam(JNIEnv *,jobject,jstring, jstring, jstring, jstring, jstring, jstring, jstring, jstring, jstring, jstring, jstring, jstring, jstring, jstring, jstring, jstring, jstring);
 
 /*
  * Class:     SecureParam
  * Method:    postSaleConfirmParam
  * Signature: ()Ljava/lang/String;
  */
- JNIEXPORT jstring JNICALL Java_com_ignite_mm_ticketing_application_SecureParam_postSaleConfirmParam(JNIEnv *, jobject,jstring,jstring,jstring,jstring,jstring,jstring,jstring,jstring,jstring,jstring,jstring,jstring,jstring,jstring,jstring,jstring,jstring);
+ JNIEXPORT jstring JNICALL Java_com_ignite_mm_ticketing_application_SecureParam_postSaleConfirmParam(JNIEnv *, jobject,jstring,jstring,jstring,jstring,jstring,jstring,jstring,jstring,jstring,jstring,jstring,jstring,jstring,jstring,jstring,jstring,jstring,jstring);
 
 /*
  * Class:     SecureParam

@@ -208,7 +208,7 @@ public class BusOperatorActivity extends BaseSherlockActivity {
 		String userID = pref.getString("user_id", null);	*/			
 		
 		//String param = MCrypt.getInstance().encrypt(SecureParam.getAllOperatorsParam(AppLoginUser.getAccessToken()));
-		NetworkEngine.setIP("app.easyticket.com.mm");
+		NetworkEngine.setIP("starticketmyanmar.com");
 		NetworkEngine.getInstance().getAllOperator(AppLoginUser.getAccessToken(), new Callback<List<Operator>>() {
 
 			public void failure(RetrofitError arg0) {

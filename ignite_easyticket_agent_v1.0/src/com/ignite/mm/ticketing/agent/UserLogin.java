@@ -7,6 +7,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -42,9 +43,17 @@ public class UserLogin extends SherlockActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		setContentView(R.layout.activity_login);
+		//Check Screen Size
+		Configuration config = getResources().getConfiguration();
+       
+		//For Tablet
+		if (config.smallestScreenWidthDp >= 600) {
+			setContentView(R.layout.activity_login);
+		}else {
+			setContentView(R.layout.activity_login_phone);
+		}
 		
-		actionBar = getSupportActionBar();
+/*		actionBar = getSupportActionBar();
 		actionBar.setCustomView(R.layout.action_bar);
 		actionBarTitle = (TextView) actionBar.getCustomView().findViewById(
 				R.id.action_bar_title);
@@ -55,7 +64,7 @@ public class UserLogin extends SherlockActivity {
 				R.id.action_bar_back);
 		actionBarBack.setOnClickListener(clickListener);
 		actionBarTitle.setText("Agent's Login");
-		actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+		actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);*/
 		
 		txtEmail = (EditText) this.findViewById(R.id.txt_login_email);
 		txtPassword = (EditText) this.findViewById(R.id.txt_login_password);
@@ -102,7 +111,7 @@ public class UserLogin extends SherlockActivity {
 		    			Log.i("", "Enter here..... log in");
 		    			//Check Email & Password on Server
 		    			
-		    			NetworkEngine.setIP("app.easyticket.com.mm");
+		    			NetworkEngine.setIP("starticketmyanmar.com");
 						NetworkEngine.getInstance().getAccessToken("password", "clientID22222", "scrt123321098765432", userEmail, txtPassword.getText().toString(), "", "", new Callback<AccessToken>() {
 							
 							public void success(AccessToken arg0, Response arg1) {

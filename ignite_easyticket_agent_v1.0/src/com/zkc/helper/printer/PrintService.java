@@ -33,7 +33,7 @@ public class PrintService{
 	 * 58mm paper please set imageWidth=48<br/>
 	 * 80mm paper please set imageWidth=72
 	 */
-	int imageWidth=72;
+	int imageWidth=48;
 	
 	/**
 	 * change the text to gbk byte array

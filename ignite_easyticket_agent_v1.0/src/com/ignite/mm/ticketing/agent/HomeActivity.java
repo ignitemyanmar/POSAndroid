@@ -1,6 +1,7 @@
 package com.ignite.mm.ticketing.agent;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.TypedValue;
@@ -11,11 +12,12 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.app.SherlockActivity;
 import com.ignite.mm.ticketing.agent.R;
 import com.ignite.mm.ticketing.application.BaseSherlockActivity;
 import com.smk.skconnectiondetector.SKConnectionDetector;
 
-public class HomeActivity extends BaseSherlockActivity{
+public class HomeActivity extends SherlockActivity{
 
 	private Button btn_sale_tickets;
 	private Button btn_book_confirm;
@@ -50,9 +52,18 @@ public class HomeActivity extends BaseSherlockActivity{
 		actionBarTitle.setText("Menu");
 		actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
 		
-		setContentView(R.layout.activity_home);
+		//Check Screen Size
+		Configuration config = getResources().getConfiguration();
+       
+		//For Tablet
+		if (config.smallestScreenWidthDp >= 600) {
+			setContentView(R.layout.activity_home);
+		}else {
+			setContentView(R.layout.activity_home_phone);
+		}
 		
-		Log.i("", "User Login: "+AppLoginUser.getCodeNo());
+		
+		//Log.i("", "User Login: "+AppLoginUser.getCodeNo());
 		
 		btn_sale_tickets = (Button)findViewById(R.id.btn_sale_tickets);
 		btn_book_confirm = (Button)findViewById(R.id.btn_book_confirm);
@@ -64,7 +75,7 @@ public class HomeActivity extends BaseSherlockActivity{
 				// TODO Auto-generated method stub
 				Bundle bundle = new Bundle();
 				bundle.putString("from_intent", "sale");
-				startActivity(new Intent(getApplicationContext(), BusOperatorActivity.class).putExtras(bundle));
+				startActivity(new Intent(getApplicationContext(), SaleTicketActivity.class).putExtras(bundle));
 			}
 		});
 		
@@ -74,7 +85,7 @@ public class HomeActivity extends BaseSherlockActivity{
 				// TODO Auto-generated method stub
 				Bundle bundle = new Bundle();
 				bundle.putString("from_intent", "reservation");
-				startActivity(new Intent(getApplicationContext(), BusOperatorActivity.class).putExtras(bundle));
+				startActivity(new Intent(getApplicationContext(), BusBookingListActivity.class).putExtras(bundle));
 			}
 		});
 		
