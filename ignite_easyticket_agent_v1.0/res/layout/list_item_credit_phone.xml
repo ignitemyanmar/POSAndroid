@@ -1,0 +1,134 @@
+<LinearLayout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/LinearLayout1"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal|center_vertical"
+    android:orientation="vertical" >
+
+    <com.smk.custom.view.CustomTextView
+        android:id="@+id/txt_order_no"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:layout_marginTop="10dp"
+        android:text="Order No : -"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <com.smk.custom.view.CustomTextView
+        android:id="@+id/txt_order_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:text="Order Date: -"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <com.smk.custom.view.CustomTextView
+        android:id="@+id/txt_customer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:layout_marginTop="10dp"
+        android:text="Customer : -"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+
+
+
+
+
+    <com.smk.custom.view.CustomTextView
+        android:id="@+id/txt_trip"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:layout_marginTop="10dp"
+        android:text="Trip: -"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+
+
+
+    <com.smk.custom.view.CustomTextView
+        android:id="@+id/txt_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:text="Date : -"
+       android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <com.smk.custom.view.CustomTextView
+        android:id="@+id/txt_time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:text="Time : -"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <com.smk.custom.view.CustomTextView
+        android:id="@+id/txt_seats"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:text="Seat No : -"
+        android:textAppearance="?android:attr/textAppearanceMedium"/>
+
+    <com.smk.custom.view.CustomTextView
+        android:id="@+id/txt_price"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:text="Price: 0 Ks"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+
+
+
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginTop="5dp"
+        android:background="@color/dark_blue"
+        android:gravity="center" >
+
+
+
+
+
+
+
+
+        <com.smk.custom.view.CustomTextView
+            android:id="@+id/txt_seat_count"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="50"
+            android:gravity="left|center_vertical"
+            android:padding="3dp"
+            android:text="Total Seats : 0"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/white" />
+
+
+
+
+
+
+
+        <com.smk.custom.view.CustomTextView
+            android:id="@+id/txt_amount"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="50"
+            android:gravity="left|center_vertical"
+            android:padding="3dp"
+            android:text="Amount: 0 Ks"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/white" />
+
+    </LinearLayout>
+
+</LinearLayout>

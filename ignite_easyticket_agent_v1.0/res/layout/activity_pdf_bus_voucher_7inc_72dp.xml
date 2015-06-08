@@ -27,6 +27,16 @@
                 android:orientation="vertical" >
 
                 <com.smk.custom.view.CustomTextView
+                    android:id="@+id/CustomTextView02"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:editable="false"
+                    android:fadeScrollbars="true"
+                    android:filterTouchesWhenObscured="true"
+                    android:text="STAR TICKET"
+                    android:textSize="30dp" />
+
+                <com.smk.custom.view.CustomTextView
                     android:id="@+id/CustomTextView01"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -34,7 +44,8 @@
                     android:fadeScrollbars="true"
                     android:filterTouchesWhenObscured="true"
                     android:text="SEIN GAY HAR"
-                    android:textSize="30dp" />
+                    android:textSize="30dp"
+                    android:visibility="gone" />
 
                 <com.smk.custom.view.CustomTextView
                     android:id="@+id/CustomTextView1"
@@ -44,7 +55,8 @@
                     android:fadeScrollbars="false"
                     android:filterTouchesWhenObscured="true"
                     android:text="(Parami)"
-                    android:textSize="28dp" />
+                    android:textSize="28dp"
+                    android:visibility="gone" />
             </LinearLayout>
 
             <LinearLayout

@@ -154,7 +154,7 @@
                     android:layout_height="60dp"
                     android:layout_margin="10dp"
                     android:layout_weight="50"
-                    android:background="@drawable/btn_green"
+                    android:background="@drawable/btn_gold_light"
                     android:gravity="center"
                     android:text="ရွာမည္"
                     android:textAppearance="?android:attr/textAppearanceMedium"

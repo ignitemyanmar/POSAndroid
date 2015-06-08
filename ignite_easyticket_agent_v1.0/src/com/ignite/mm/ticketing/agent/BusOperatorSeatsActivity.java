@@ -130,7 +130,7 @@ public class BusOperatorSeatsActivity extends BaseSherlockActivity{
 						lv_operator_seats.setAdapter(new OperatorSeatsAdapter(BusOperatorSeatsActivity.this, OperatorSeats));
 						setListViewHeightBasedOnChildren(lv_operator_seats);
 					}else {
-						showAlert("No Trip!");
+						showAlert("သင္ ရွာေဖြေသာ ခရီးစဥ္သည္ လက္မွတ္မ်ားကုန္သြားပါသျဖင့္ အျခားေန႕ေရြးျပီးရွာႏိုင္ပါသည္။");
 					}
 				}
 				

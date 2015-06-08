@@ -879,7 +879,10 @@ public class PDFBusActivity extends BaseSherlockActivity {
 		// TODO Auto-generated method stub
 		if (from_intent.equals("from_threeday_sales")) {
 			finish();
-		}else {
+		}else if (from_intent.equals("booking")) {
+			closeAllActivities();
+			startActivity(new Intent(getApplicationContext(), BusBookingListActivity.class));
+		}else{
 			closeAllActivities();
 			startActivity(new Intent(getApplicationContext(), SaleTicketActivity.class));
 		}

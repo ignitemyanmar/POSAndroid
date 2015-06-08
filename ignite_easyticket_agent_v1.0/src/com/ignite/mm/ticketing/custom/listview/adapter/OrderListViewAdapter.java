@@ -6,6 +6,7 @@ import com.ignite.mm.ticketing.agent.R;
 import com.ignite.mm.ticketing.sqlite.database.model.BookingSearch;
 
 import android.app.Activity;
+import android.content.res.Configuration;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,7 +41,14 @@ public class OrderListViewAdapter extends BaseAdapter {
 		ViewHolder holder = null;
 		if (convertView == null) {
 			holder = new ViewHolder();
-        	convertView = mInflater.inflate(R.layout.list_item_credit, null);
+			
+			Configuration config = aty.getResources().getConfiguration();
+			if (config.smallestScreenWidthDp >= 600) {
+				convertView = mInflater.inflate(R.layout.list_item_credit, null);
+			}else {
+				convertView = mInflater.inflate(R.layout.list_item_credit_phone, null);
+			}
+        	
         	holder.txt_trip = (TextView) convertView.findViewById(R.id.txt_trip);
         	holder.txt_date = (TextView) convertView.findViewById(R.id.txt_date);
         	holder.txt_time = (TextView) convertView.findViewById(R.id.txt_time);
@@ -58,7 +66,8 @@ public class OrderListViewAdapter extends BaseAdapter {
 		}
 		
 		holder.txt_order_no.setText("Order No :  "+getItem(position).getId());
-		holder.txt_customer.setText("Customer :  "+getItem(position).getCustomerName());
+		holder.txt_customer.setText("Customer :  "+getItem(position).getCustomerName()+" ("
+				+getItem(position).getCustomerPhone()+")");
 		holder.txt_trip.setText("Trip:  "+getItem(position).getTrip()+" ["+getItem(position).getOperator()+"] "
 												+getItem(position).getClass_());
 		holder.txt_date.setText("Dept. Date:  "+getItem(position).getDepartureDate());
