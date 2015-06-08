@@ -58,15 +58,15 @@ public class PDFBusAdapter extends BaseAdapter {
 			Configuration config = _context.getResources().getConfiguration();
 	       
 			if (config.smallestScreenWidthDp >= 700) {
-				convertView = mInflater.inflate(R.layout.activity_pdf_bus_voucher_10inch, null); //48dp
-				//convertView = mInflater.inflate(R.layout.activity_pdf_bus_voucher_10inc_72dp, null);
+				//convertView = mInflater.inflate(R.layout.activity_pdf_bus_voucher_10inch, null); //48dp
+				convertView = mInflater.inflate(R.layout.activity_pdf_bus_voucher_10inc_72dp, null);
 			} 
 	        else if (config.smallestScreenWidthDp >= 600 && config.smallestScreenWidthDp < 700) {
-	        	convertView = mInflater.inflate(R.layout.activity_pdf_bus_voucher, null); //48dp
-	        	//convertView = mInflater.inflate(R.layout.activity_pdf_bus_voucher_7inc_72dp, null);
+	        	//convertView = mInflater.inflate(R.layout.activity_pdf_bus_voucher, null); //48dp
+	        	convertView = mInflater.inflate(R.layout.activity_pdf_bus_voucher_7inc_72dp, null);
 			}else if (config.smallestScreenWidthDp < 600){
-				convertView = mInflater.inflate(R.layout.activity_pdf_bus_voucher, null); //48dp
-				//convertView = mInflater.inflate(R.layout.activity_pdf_bus_voucher_7inc_72dp, null);
+				//convertView = mInflater.inflate(R.layout.activity_pdf_bus_voucher, null); //48dp
+				convertView = mInflater.inflate(R.layout.activity_pdf_bus_voucher_7inc_72dp, null);
 	        }
 			
 			holder = new ViewHolder();

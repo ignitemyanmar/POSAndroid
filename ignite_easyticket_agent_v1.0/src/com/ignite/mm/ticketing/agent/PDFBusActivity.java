@@ -114,7 +114,7 @@ public class PDFBusActivity extends BaseSherlockActivity {
 	private String BuyerNRC;
 	private String from_intent;
 	
-	int imgWidth=48;
+	int imgWidth=72;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
